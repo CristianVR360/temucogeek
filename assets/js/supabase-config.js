@@ -21,10 +21,7 @@ async function loadEnvConfig() {
     if (SUPABASE_CONFIG.isLoaded) return SUPABASE_CONFIG;
     SUPABASE_CONFIG.isLoaded = true;
 
-    // Si ya tenemos credenciales válidas por defecto, las usamos directamente para evitar 404 en Live Server
-    if (SUPABASE_CONFIG.URL && SUPABASE_CONFIG.ANON_KEY) {
-        return SUPABASE_CONFIG;
-    }
+    // Intentamos cargar desde .env siempre para obtener las variables privadas locales (ej. NVIDIA_API_KEY)
 
     try {
         const response = await fetch('./.env');
