@@ -1812,17 +1812,23 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Carga variables del .env
         await loadEnvConfig();
-        const apiKey = SUPABASE_CONFIG.NVIDIA_API_KEY;
+        let apiKey = SUPABASE_CONFIG.NVIDIA_API_KEY || sessionStorage.getItem("TG_NVIDIA_API_KEY");
         
         if (!apiKey) {
-            // Fallback divertido si no hay API Key configurada
-            setSprite('hurt');
-            showBubble("¡Ups! Configura mi NVIDIA_API_KEY en el .env", 4000);
-            setTimeout(() => {
-                setSprite('idle');
-                isBusy = false;
-            }, 4000);
-            return;
+            // Preguntar amigablemente la API Key en local si falló la carga automática por seguridad del navegador
+            const inputKey = prompt("🔑 Para hablar conmigo, introduce tu API Key de NVIDIA (se guardará solo para esta sesión):");
+            if (inputKey && inputKey.trim().startsWith("nvapi-")) {
+                apiKey = inputKey.trim();
+                sessionStorage.setItem("TG_NVIDIA_API_KEY", apiKey);
+            } else {
+                setSprite('hurt');
+                showBubble("¡Necesito mi NVIDIA_API_KEY!", 4000);
+                setTimeout(() => {
+                    setSprite('idle');
+                    isBusy = false;
+                }, 4000);
+                return;
+            }
         }
 
         setSprite('speak1');
