@@ -12,6 +12,7 @@ const SUPABASE_CONFIG = {
     RESEND_API_KEY: "",
     ADMIN_EMAIL: "",
     FROM_EMAIL: "",
+    NVIDIA_API_KEY: "",
     isLoaded: false
 };
 
@@ -53,6 +54,9 @@ async function loadEnvConfig() {
                     }
                     if (key === 'FROM_EMAIL' && value) {
                         SUPABASE_CONFIG.FROM_EMAIL = value;
+                    }
+                    if (key === 'NVIDIA_API_KEY' && value) {
+                        SUPABASE_CONFIG.NVIDIA_API_KEY = value;
                     }
                 }
             });
