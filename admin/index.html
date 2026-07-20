@@ -602,7 +602,7 @@ CREATE POLICY "Permitir actualización pública" ON postulaciones FOR UPDATE USI
 
             // Fallback Check using Master Config Pass from .env
             if (!loginSuccess) {
-                if (pass === SUPABASE_CONFIG.ADMIN_MASTER_PASS || (user === "admin@temugeek.cl" && pass === "temugeek2026")) {
+                if (SUPABASE_CONFIG.ADMIN_MASTER_PASS && pass === SUPABASE_CONFIG.ADMIN_MASTER_PASS) {
                     loginSuccess = true;
                 }
             }
