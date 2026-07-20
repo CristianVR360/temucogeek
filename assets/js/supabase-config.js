@@ -82,3 +82,8 @@ async function getSupabaseClient() {
 
 // Auto-iniciar la lectura
 loadEnvConfig();
+
+// Exportar globalmente en window para evitar ReferenceError
+window.SUPABASE_CONFIG = SUPABASE_CONFIG;
+window.loadEnvConfig = loadEnvConfig;
+window.getSupabaseClient = getSupabaseClient;
