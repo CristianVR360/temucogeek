@@ -21,11 +21,11 @@ async function loadEnvConfig() {
     if (SUPABASE_CONFIG.isLoaded) return SUPABASE_CONFIG;
     SUPABASE_CONFIG.isLoaded = true;
 
-    // Intentamos cargar desde .env siempre para obtener las variables privadas locales (ej. NVIDIA_API_KEY)
-
-    try {
-        const response = await fetch('./.env');
-        if (response.ok) {
+    // Carga .env solo si estamos ejecutando en servidor local (localhost)
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        try {
+            const response = await fetch('./.env');
+            if (response.ok) {
             const envText = await response.text();
             const lines = envText.split('\n');
             lines.forEach(line => {
