@@ -463,15 +463,24 @@
         <section id="home-section" class="hero hero-style--two pos-rel bg_img" data-background="assets/img/bg/geek.jpg">
             <div class="container">
                 <div class="xb-hero_content text-center">
-                    <div class="logo-hero wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms" style="margin-bottom: 25px;">
-                        <img src="assets/img/logo/logo-principal-color.png" alt="TemuGeek Expo" style="max-height: 250px; filter: drop-shadow(0 0 20px rgba(233, 38, 82, 0.45));">
+                    <div class="hero-badge wow fadeInUp mb-3" data-wow-delay="0ms" data-wow-duration="600ms">
+                        <span style="background: rgba(233, 38, 82, 0.2); border: 1px solid #e92652; color: #ffe62e; font-family: 'Righteous', sans-serif; padding: 6px 18px; border-radius: 20px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">
+                            🚀 ¡Convocatoria Abierta para Expositores, Tiendas y Artistas!
+                        </span>
                     </div>
-                    <h3 class="hero-subtitle wow fadeInUp" data-wow-delay="100ms" data-wow-duration="600ms" style="font-family: 'Righteous', sans-serif; font-size: 24px; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 35px; text-shadow: 0 0 10px rgba(0,0,0,0.6);">
+                    <div class="logo-hero wow fadeInUp" data-wow-delay="100ms" data-wow-duration="600ms" style="margin-bottom: 20px;">
+                        <img src="assets/img/logo/logo-principal-color.png" alt="TemuGeek Expo" style="max-height: 230px; filter: drop-shadow(0 0 20px rgba(233, 38, 82, 0.45));">
+                    </div>
+                    <h3 class="hero-subtitle wow fadeInUp" data-wow-delay="150ms" data-wow-duration="600ms" style="font-family: 'Righteous', sans-serif; font-size: 22px; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; text-shadow: 0 0 10px rgba(0,0,0,0.6);">
                         <span style="color: #e92652;">16 de Agosto, 2026</span> &bull; Recinto SOFO, Temuco
                     </h3>
-                    <div class="hero-btn mt-20 wow fadeInUp" data-wow-delay="200ms" data-wow-duration="600ms">
+                    <div class="hero-btn mt-20 wow fadeInUp d-flex justify-content-center gap-3 flex-wrap" data-wow-delay="200ms" data-wow-duration="600ms">
+                        <a href="postulacion/" class="thm-btn design-btn" style="background-color: #ffe62e !important; color: #141519 !important; border-color: #ffe62e !important; font-weight: bold;">
+                            🚀 Postular como Expositor / Stand
+                            <img src="assets/img/icon/right-arrow.svg" alt="" style="filter: invert(1);">
+                        </a>
                         <a href="#pricing-section" class="thm-btn design-btn">
-                            Registra tu Entrada
+                            Ver Entradas
                             <img src="assets/img/icon/right-arrow.svg" alt="">
                         </a>
                     </div>
@@ -1380,10 +1389,9 @@
                                 </span>
                                 <ul class="xb-item--list list-unstyled">
                                     <li> ⚡ Todos los beneficios del Pase General</li>
-                                    <li> ⚡ 1 carrera en Karting Extremo</li>
-                                    <li> ⚡ 1 partida en Paintball Táctico</li>
-                                    <li> ⚡ Acceso preferente a las filas</li>
-                                    <li> ⚡ Kit de Bienvenida oficial (Póster + Stickers)</li>
+                                    <li> ⚡ Acceso preferente y fila rápida</li>
+                                    <li> ⚡ Experiencia VIP en diseño (Detalles muy pronto)</li>
+                                    <li> ⚡ Kit de Bienvenida oficial TemuGeek</li>
                                 </ul>
                                 <div class="pricing-btn mt-55">
                                     <a href="#pricing-section" class="thm-btn design-btn">
@@ -1444,7 +1452,7 @@
                                 <img src="assets/img/icon/question-icon.svg" alt=""> ¿Qué incluye cada tipo de pase?
                             </span>
                             <p class="xb-content">
-                                El Pase General incluye acceso al Galpón Principal (gaming, arcades, torneos, charlas, callejón de artistas) y al Main Stage. El Pase VIP / Extremo suma 1 carrera en Karting, 1 partida de Paintball (con fila preferente) y un Kit de Bienvenida.
+                                El Pase General incluye acceso a todas las zonas del evento (escenario, torneos gaming, arcades, actividades, callejón de artistas y feria). El Pase VIP brindará una experiencia diferenciada y beneficios exclusivos cuyos detalles finales se revelarán muy pronto.
                             </p>
                         </div>
                     </div>
@@ -1628,16 +1636,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Speeches
     const messages = [
-        "¡TemuGeek 2026!",
-        "¡A jugar!",
-        "¡16 de Agosto!",
-        "¡Recinto SOFO!",
-        "🎮 ¡Esports!",
-        "✨ ¡Hola, Geek!",
-        "🕹️ ¡Retro Time!",
-        "🎨 Callejón de Artistas",
-        "⚡ ¡Pase VIP!",
-        "¡Cosplay!"
+        "🚀 ¡Postula tu Stand!",
+        "💬 ¡Chatea conmigo aquí!",
+        "🎨 Convocatoria Expositores",
+        "🛍️ ¡Postula tu Tienda Geek!",
+        "⚡ ¡Hazme una pregunta!",
+        "🎮 TemuGeek 2026",
+        "✨ 16 de Agosto SOFO",
+        "🕹️ ¡Te responderé con IA!",
+        "🎨 Artistas y Ilustradores",
+        "✨ ¡Haz clic para hablar!"
     ];
 
     function showBubble(text, duration = 2000) {
