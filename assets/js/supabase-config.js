@@ -26,40 +26,41 @@ async function loadEnvConfig() {
         try {
             const response = await fetch('./.env');
             if (response.ok) {
-            const envText = await response.text();
-            const lines = envText.split('\n');
-            lines.forEach(line => {
-                const trimmed = line.trim();
-                if (trimmed && !trimmed.startsWith('#')) {
-                    const [key, ...valueParts] = trimmed.split('=');
-                    const value = valueParts.join('=').trim().replace(/^["']|["']$/g, '');
+                const envText = await response.text();
+                const lines = envText.split('\n');
+                lines.forEach(line => {
+                    const trimmed = line.trim();
+                    if (trimmed && !trimmed.startsWith('#')) {
+                        const [key, ...valueParts] = trimmed.split('=');
+                        const value = valueParts.join('=').trim().replace(/^["']|["']$/g, '');
 
-                    if ((key === 'SUPABASE_URL' || key === 'VITE_SUPABASE_URL') && value) {
-                        SUPABASE_CONFIG.URL = value;
+                        if ((key === 'SUPABASE_URL' || key === 'VITE_SUPABASE_URL') && value) {
+                            SUPABASE_CONFIG.URL = value;
+                        }
+                        if ((key === 'SUPABASE_ANON_KEY' || key === 'VITE_SUPABASE_ANON_KEY') && value) {
+                            SUPABASE_CONFIG.ANON_KEY = value;
+                        }
+                        if (key === 'ADMIN_MASTER_PASS' && value) {
+                            SUPABASE_CONFIG.ADMIN_MASTER_PASS = value;
+                        }
+                        if (key === 'RESEND_API_KEY' && value) {
+                            SUPABASE_CONFIG.RESEND_API_KEY = value;
+                        }
+                        if (key === 'ADMIN_EMAIL' && value) {
+                            SUPABASE_CONFIG.ADMIN_EMAIL = value;
+                        }
+                        if (key === 'FROM_EMAIL' && value) {
+                            SUPABASE_CONFIG.FROM_EMAIL = value;
+                        }
+                        if (key === 'NVIDIA_API_KEY' && value) {
+                            SUPABASE_CONFIG.NVIDIA_API_KEY = value;
+                        }
                     }
-                    if ((key === 'SUPABASE_ANON_KEY' || key === 'VITE_SUPABASE_ANON_KEY') && value) {
-                        SUPABASE_CONFIG.ANON_KEY = value;
-                    }
-                    if (key === 'ADMIN_MASTER_PASS' && value) {
-                        SUPABASE_CONFIG.ADMIN_MASTER_PASS = value;
-                    }
-                    if (key === 'RESEND_API_KEY' && value) {
-                        SUPABASE_CONFIG.RESEND_API_KEY = value;
-                    }
-                    if (key === 'ADMIN_EMAIL' && value) {
-                        SUPABASE_CONFIG.ADMIN_EMAIL = value;
-                    }
-                    if (key === 'FROM_EMAIL' && value) {
-                        SUPABASE_CONFIG.FROM_EMAIL = value;
-                    }
-                    if (key === 'NVIDIA_API_KEY' && value) {
-                        SUPABASE_CONFIG.NVIDIA_API_KEY = value;
-                    }
-                }
-            });
+                });
+            }
+        } catch (err) {
+            // Silencioso
         }
-    } catch (err) {
-        // Silencioso
     }
 
     return SUPABASE_CONFIG;
