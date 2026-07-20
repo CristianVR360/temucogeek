@@ -208,23 +208,23 @@
             max-width: 100% !important;
         }
         /* Mascot Sprite Animation Styles */
+        /* Mascot Sprite Animation Styles - Global Floating Widget */
         .mascot-animation-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
+            width: 100px;
+            height: 100px;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
             cursor: pointer;
-        }
-        .mascot-animation-container::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
+            pointer-events: auto;
+            will-change: transform;
         }
         .mascot-character {
-            width: 65px;
-            height: 65px;
+            width: 80px;
+            height: 80px;
             position: absolute;
-            bottom: 25px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             background-size: contain;
@@ -232,29 +232,29 @@
             background-position: center;
             background-image: url('assets/img/game-sprites/base-idle01.png');
             transition: left 0.4s ease-in-out, bottom 0.25s ease-out, transform 0.25s ease-out;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
             will-change: left, bottom, transform;
         }
         .mascot-speech {
             position: absolute;
             background: #ffe62e;
             color: #141519 !important;
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 12px;
             font-family: 'Righteous', sans-serif;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.2s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
             border: 2px solid #141519;
             white-space: nowrap;
-            z-index: 10;
+            z-index: 10000;
             left: 50%;
-            bottom: 95px;
+            bottom: 105px;
             transform: translateX(-50%) translateY(5px);
         }
         .mascot-speech::after {
@@ -323,6 +323,13 @@
     </a>
 </div>
 <!-- backtotop-end -->
+
+<!-- Mascot Global Floating Widget -->
+<div class="mascot-animation-container" id="mascot-container">
+    <div class="mascot-character" id="mascot-char"></div>
+    <div class="mascot-speech" id="mascot-bubble">¡Hola!</div>
+    <div class="mascot-projectile-layer" id="mascot-projectiles"></div>
+</div>
 
 <!-- Preloader-Start -->
 <div id="preloader" class="preloader preloader--two">
@@ -488,11 +495,7 @@
                                 </div>
                                 <div class="col-lg-4 mt-30">
                                     <div class="xb-about-right">
-                                        <div class="mascot-animation-container" id="mascot-container">
-                                            <div class="mascot-character" id="mascot-char"></div>
-                                            <div class="mascot-speech" id="mascot-bubble">¡Hola!</div>
-                                            <div class="mascot-projectile-layer" id="mascot-projectiles"></div>
-                                        </div>
+                                        <!-- Espacio vacío o información adicional de diseño -->
                                     </div>
                                 </div>
                             </div>
