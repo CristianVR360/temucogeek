@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'ARPDisplay';
+    src: url('../fonts/ARP-240.woff2') format('woff2'),
+    url('../fonts/ARP-240.woff') format('woff');
+    
+    font-weight: 900;
+    font-style: normal;
+}

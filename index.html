@@ -1,0 +1,1811 @@
+<!doctype html>
+<html lang="zxx">
+
+<head>
+
+    <!--========= Required meta tags =========-->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>TemuGeek Expo 2026 - Recinto SOFO, Temuco</title>
+    <meta name="description" content="El punto de encuentro definitivo para amantes de la cultura pop, la tecnología, el anime, el cosplay y los videojuegos en el sur de Chile.">
+
+    <link rel="shortcut icon" href="assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- css include -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/swiper.min.css">
+    <link rel="stylesheet" href="assets/css/odometer.css">
+    <link rel="stylesheet" href="assets/css/mousecursor.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/custom-fonts.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/jquery-ui.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    
+    <!-- TemuGeek Custom Styles Overrides -->
+    <style>
+        .design-conference {
+            --color-primary: #e92652 !important;     /* Fucsia */
+            --color-secondary: #e92652 !important;   /* Magenta / Fucsia */
+            --color-heading: #e92652 !important;     /* Magenta / Fucsia headings */
+            --color-body: #141519 !important;        /* Negro body bg */
+            --color-default: #d1d1d6 !important;     /* Light gray default text */
+        }
+        body.design-conference {
+            background-color: #141519 !important;
+            color: #d1d1d6 !important;
+        }
+        /* Mix background images with black background using multiply blend mode */
+        .design-conference .bg_img {
+            background-color: #141519 !important;
+            background-blend-mode: multiply !important;
+        }
+        .design-conference .sec-title .sub-title {
+            color: #e92652 !important;
+        }
+        .design-conference .sec-title .title {
+            color: #e92652 !important;
+        }
+        /* Custom buttons styling */
+        .design-conference .thm-btn.design-btn {
+            background-color: #e92652 !important;
+            color: #141519 !important;
+            border-color: #e92652 !important;
+        }
+        .design-conference .thm-btn.design-btn:hover {
+            background-color: #ff4a75 !important;
+            color: #141519 !important;
+            border-color: #ff4a75 !important;
+        }
+        /* Schedule section active tabs */
+        .design-conference .xb-schedule-nav .nav-link {
+            border: 2px solid #e92652 !important;
+            color: #e92652 !important;
+            background-color: transparent !important;
+        }
+        .design-conference .xb-schedule-nav .nav-link.active {
+            background-color: #e92652 !important;
+            color: #141519 !important;
+        }
+        .design-conference .xb-schedule-nav .nav-link span {
+            color: inherit !important;
+        }
+        /* Pricing section styling */
+        .design-conference .pricing {
+            background-color: #141519 !important;
+        }
+        .design-conference .xb-pricing-item {
+            background-color: #1c1d24 !important;
+            border: 1px solid #323541 !important;
+        }
+        .design-conference .xb-pricing-item .xb-item--title {
+            color: #e92652 !important;
+        }
+        .design-conference .xb-pricing-item .xb-item--content {
+            color: #b5b5c0 !important;
+        }
+        .design-conference .xb-pricing-item .xb-item--dollar {
+            color: #e92652 !important;
+        }
+        .design-conference .xb-pricing-item .xb-item--list li {
+            color: #d1d1d6 !important;
+        }
+        .design-conference .xb-pricing-item.active {
+            background-color: #e92652 !important;
+            border-color: #e92652 !important;
+        }
+        .design-conference .xb-pricing-item.active .xb-item--title,
+        .design-conference .xb-pricing-item.active .xb-item--dollar,
+        .design-conference .xb-pricing-item.active .xb-item--list li {
+            color: #ffffff !important;
+        }
+        .design-conference .xb-pricing-item.active .xb-item--content {
+            color: #f1f1f1 !important;
+        }
+        .design-conference .xb-pricing-item.active .pricing-btn a {
+            background-color: #ffffff !important;
+            color: #141519 !important;
+        }
+        /* FAQ section styling */
+        .design-conference .faq {
+            background-color: #1a1b22 !important;
+        }
+        .design-conference .faq .sec-title .title {
+            color: #e92652 !important;
+        }
+        .design-conference .faq .xb-faq-item {
+            background-color: #23252e !important;
+            border: 1px solid #323541 !important;
+        }
+        .design-conference .faq .xb-faq-item .xb-icon {
+            color: #e92652 !important;
+        }
+        .design-conference .faq .xb-faq-item .xb-content {
+            color: #d1d1d6 !important;
+        }
+        /* Funfact section text contrast */
+        .design-conference .xb-item--text {
+            color: #e92652 !important;
+        }
+        .design-conference .suffix {
+            color: #e92652 !important;
+        }
+        /* Attractions carousel items */
+        .design-conference .dc-speaker-item .xb-item--name a {
+            color: #e92652 !important;
+        }
+        .design-conference .dc-speaker-item .xb-item--desig {
+            color: #e92652 !important;
+        }
+        /* Schedule table design */
+        .design-conference .xb-schedule-content td, 
+        .design-conference .xb-schedule-content th {
+            color: #d1d1d6 !important;
+        }
+        .design-conference .xb-schedule-content th {
+            color: #e92652 !important;
+            border-bottom: 2px solid #e92652 !important;
+        }
+        .design-conference .xb-schedule-content span {
+            color: #ffffff !important;
+        }
+        /* Preloader spinner colors */
+        .design-conference .preloader .main-loader span {
+            background: #e92652 !important;
+        }
+        /* Custom Selection highlights */
+        ::selection {
+            background-color: #e92652 !important;
+            color: #141519 !important;
+        }
+        /* Scrollbar customizing */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #141519;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e92652;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff4a75;
+        }
+        /* Preloader background styling */
+        .preloader.preloader--two {
+            background-color: #141519 !important;
+        }
+        /* Glow effects for geek branding */
+        .sec-title--two .title {
+            text-shadow: 0 0 12px rgba(233, 38, 82, 0.25) !important;
+        }
+        /* Hover transitions for pricing cards */
+        .design-conference .xb-pricing-item {
+            transition: all 0.3s ease-in-out !important;
+        }
+        .design-conference .xb-pricing-item:hover {
+            border-color: #e92652 !important;
+            box-shadow: 0 10px 30px rgba(233, 38, 82, 0.15) !important;
+            transform: translateY(-5px);
+        }
+        /* Feature Highlight text gradient of brand colors (Fuchsia to Yellow) */
+        .design-conference .hilight-text {
+            background: linear-gradient(135deg, #e92652 0%, #ffe62e 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            display: inline-block !important;
+            font-weight: 900 !important;
+        }
+        .xb-about-right {
+            width: 301px !important;
+            height: 161px !important;
+            max-width: 100% !important;
+        }
+        /* Mascot Sprite Animation Styles */
+        .mascot-animation-container {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #20132b 0%, #0d0912 100%);
+            border: 2px solid #e92652;
+            border-radius: 107px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: inset 0 0 25px rgba(233, 38, 82, 0.4), 0 0 15px rgba(233, 38, 82, 0.2);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .mascot-animation-container:hover {
+            border-color: #ffe62e;
+            box-shadow: inset 0 0 25px rgba(255, 230, 46, 0.4), 0 0 20px rgba(255, 230, 46, 0.25);
+        }
+        .mascot-animation-container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(233, 38, 82, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(233, 38, 82, 0.08) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+        .mascot-character {
+            width: 65px;
+            height: 65px;
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url('assets/img/game-sprites/base-idle01.png');
+            transition: left 0.4s ease-in-out, bottom 0.25s ease-out, transform 0.25s ease-out;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+            will-change: left, bottom, transform;
+        }
+        .mascot-speech {
+            position: absolute;
+            background: #ffe62e;
+            color: #141519 !important;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-family: 'Righteous', sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            border: 2px solid #141519;
+            white-space: nowrap;
+            z-index: 10;
+            left: 50%;
+            bottom: 95px;
+            transform: translateX(-50%) translateY(5px);
+        }
+        .mascot-speech::after {
+            content: "";
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px 5px 0;
+            border-style: solid;
+            border-color: #ffe62e transparent;
+            display: block;
+            width: 0;
+        }
+        .mascot-projectile-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .mascot-projectile {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-image: url('assets/img/game-sprites/glare-star01.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 0 6px #ffe62e);
+            animation: mascot-projectile-spin 0.5s linear infinite;
+        }
+        @keyframes mascot-projectile-spin {
+            100% { transform: rotate(360deg); }
+        }
+        .mascot-impact {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-image: url('assets/img/game-sprites/impact-burst01.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation: mascot-impact-fade 0.25s ease-out forwards;
+        }
+        @keyframes mascot-impact-fade {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .mascot-bobbing {
+            animation: mascot-float 2.5s ease-in-out infinite;
+        }
+        @keyframes mascot-float {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-6px); }
+        }
+    </style>
+</head>
+
+<body class="design-conference">
+
+<!-- backtotop-start -->
+<div class="xb-backtotop style-two">
+    
+    <a href="#" class="scroll">
+        <i class="far fa-arrow-up"></i>
+    </a>
+</div>
+<!-- backtotop-end -->
+
+<!-- Preloader-Start -->
+<div id="preloader" class="preloader preloader--two">
+    <div class="preloader-inner-wrap">
+        <div class="preloader-inner">
+            <div class="main-loader">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader-end -->
+
+<div class="body_wrap o-clip">
+
+    <!-- header start -->
+    <header id="xb-header-area" class="header-area header-style header-style--two header-transparent">
+        <div class="xb-header stricky">
+            <div class="container">
+                <div class="header__wrap ul_li_between">
+                    <div class="xb-header-logo">
+                        <a href="#home-section" class="logo1"><img src="assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 40px;"></a>
+                    </div>
+                    <div class="main-menu__wrap  navbar navbar-expand-lg p-0">
+                        <nav class="main-menu collapse navbar-collapse">
+                            <ul>
+                                <li class="active"><a href="#home-section"><span>Inicio</span></a></li>
+                                <li><a href="#about-section"><span>El Evento</span></a></li>
+                                <li><a href="#schedule-section"><span>Cronograma</span></a></li>
+                                <li><a href="#pricing-section"><span>Entradas</span></a></li>
+                                <li><a href="postulacion/"><span>Postulación Expositores</span></a></li>
+                                <li><a href="#faq-section"><span>Preguntas Frecuentes</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="header-bar-mobile side-menu d-lg-none">
+                        <a class="xb-nav-mobile" href="javascript:void(0);">
+                            <i class="far fa-bars"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="xb-header-wrap">
+                    <div class="xb-header-menu">
+                        <div class="xb-header-menu-scroll">
+                            <div class="xb-menu-close xb-hide-xl xb-close"></div>
+                            <div class="xb-logo-mobile xb-hide-xl">
+                            <a href="#home-section" rel="home"><img src="assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 40px;"></a></div>
+                            <div class="xb-header-mobile-search xb-hide-xl">
+                                <form role="search" action="#">
+                                    <input type="text" placeholder="Search..." name="s" class="search-field">
+                                    <button class="search-submit" type="submit"><i class="far fa-search"></i></button>
+                                </form>
+                            </div>
+                            <nav class="xb-header-nav">
+                                <ul class="xb-menu-primary clearfix">
+                                    <li class="menu-item"><a href="#home-section"><span>Inicio</span></a></li>
+                                    <li class="menu-item"><a href="#about-section"><span>El Evento</span></a></li>
+                                    <li class="menu-item"><a href="#schedule-section"><span>Cronograma</span></a></li>
+                                    <li class="menu-item"><a href="#pricing-section"><span>Entradas</span></a></li>
+                                    <li class="menu-item"><a href="postulacion/"><span>Postulación Expositores</span></a></li>
+                                    <li class="menu-item"><a href="#faq-section"><span>Preguntas Frecuentes</span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="xb-header-menu-backdrop"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+        
+    <!-- main area start -->
+    <main>
+        <!-- hero start -->
+        <section id="home-section" class="hero hero-style--two pos-rel bg_img" data-background="assets/img/bg/geek.jpg">
+            <div class="container">
+                <div class="xb-hero_content text-center">
+                    <div class="logo-hero wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms" style="margin-bottom: 25px;">
+                        <img src="assets/img/logo/logo-principal-color.png" alt="TemuGeek Expo" style="max-height: 250px; filter: drop-shadow(0 0 20px rgba(233, 38, 82, 0.45));">
+                    </div>
+                    <h3 class="hero-subtitle wow fadeInUp" data-wow-delay="100ms" data-wow-duration="600ms" style="font-family: 'Righteous', sans-serif; font-size: 24px; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 35px; text-shadow: 0 0 10px rgba(0,0,0,0.6);">
+                        <span style="color: #e92652;">16 de Agosto, 2026</span> &bull; Recinto SOFO, Temuco
+                    </h3>
+                    <div class="hero-btn mt-20 wow fadeInUp" data-wow-delay="200ms" data-wow-duration="600ms">
+                        <a href="#pricing-section" class="thm-btn design-btn">
+                            Registra tu Entrada
+                            <img src="assets/img/icon/right-arrow.svg" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-content-img">
+                <div class="img img--1" data-speed="2" data-parallax='{"y" : 90, "scale" : 0.3}'>
+                    <div class="wow zoomIn" data-wow-delay="ms">
+                        <img src="assets/img/shape/star-shape.png" alt="">
+                    </div>
+                </div>
+                <div class="img img--2" data-speed="3" data-parallax='{"y" : 90, "scale" : 0.3}'>
+                    <div class="wow zoomIn" data-wow-delay="ms">
+                        
+                        <img src="assets/img/shape/man-shape.png" alt="">
+                    </div>
+                </div>
+                <div class="img img--3" data-speed="-3" data-parallax='{"y" : 90, "scale" : 0.3}'>
+                    <div class="wow zoomIn" data-wow-delay="ms">
+                        <img src="assets/img/shape/man-shape02.png" alt="">
+                    </div>
+                </div>
+                <div class="img img--4" data-speed="2" data-parallax='{"y" : 180, "x" : -90, "scale" : 0.3}'>
+                    <div class="wow zoomIn" data-wow-delay="ms">
+                        <img src="assets/img/shape/cursor-shape.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- hero end -->
+
+        <!-- offer start -->
+        <section class="offer-section dark-bg">
+            <div class="container">
+                <div class="offer-wrap offer-wrapper ul_li_between">
+                    <div class="offer-item">
+                        <div class="sec-title sec-title--two">
+                            <span class="sub-title">
+                                <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                                Cuenta Regresiva
+                                <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                            </span>
+                        </div>
+                        <div class="countdown ul_li_center" data-countdown="2026-08-16 11:00"></div>
+                    </div>
+                    <div class="offer-item">
+                        <div class="xb-inner ul_li">
+                            <div class="xb-location"><img src="assets/img/icon/location-icon.svg" alt=""></div>
+                            <p class="xb-vanue">Lugar: Recinto SOFO, Temuco, Chile</p>
+                        </div>
+                        <div class="xb-inner ul_li">
+                            <div class="xb-location"><img src="assets/img/icon/calendar-icon.svg" alt=""></div>
+                            <p class="xb-vanue">Fecha: Domingo, 16 de Agosto de 2026</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- offer end -->
+
+        <div class="dark-bg">
+
+            <!-- about start -->
+            <section id="about-section" class="about pt-125 pb-120">
+                <div class="container">
+                    <div class="xb-about-wrap">
+                        <div class="xb-about-top mb-60">
+                            <div class="row mt-none-30">
+                                <div class="col-lg-8 mt-30">
+                                    <div class="sec-title sec-title--two wow xb-animetion-left" data-wow-delay="0ms" data-wow-duration="700ms">
+                                        <h2 class="title color-heading">El punto de encuentro definitivo para amantes de la cultura pop, la tecnología, el anime, el cosplay y los videojuegos en el sur de Chile.</h2>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 mt-30">
+                                    <div class="xb-about-right">
+                                        <div class="mascot-animation-container" id="mascot-container">
+                                            <div class="mascot-character" id="mascot-char"></div>
+                                            <div class="mascot-speech" id="mascot-bubble">¡Hola!</div>
+                                            <div class="mascot-projectile-layer" id="mascot-projectiles"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dc-about-img-item ul_li_between">
+                            <div class="img xb-mouseenter wow xb-animetion-left" data-wow-delay="0ms" data-wow-duration="700ms">
+                                <a href="#!"><img src="assets/img/bg/geek.jpg" alt=""></a>
+                            </div>
+                            <div class="img xb-mouseenter wow xb-animetion-left" data-wow-delay="150ms" data-wow-duration="700ms"> 
+                                <a href="#!"><img src="assets/img/video/cine.jpg" alt=""></a>
+                            </div>
+                            <div class="img xb-mouseenter active wow xb-animetion-left" data-wow-delay="300ms" data-wow-duration="700ms">
+                                <a href="#!"><img src="assets/img/about/cosplay.jpg" alt="Cosplay TemuGeek" style="object-fit: cover; border: 2px solid #ffe62e; border-radius: 8px;"></a>
+                            </div>
+                            <div class="img xb-mouseenter wow xb-animetion-left" data-wow-delay="450ms" data-wow-duration="700ms">
+                                <a href="#!"><img src="assets/img/logo/foto-perfil.png" alt=""></a>
+                            </div>
+                            <div class="img xb-mouseenter wow xb-animetion-left" data-wow-delay="600ms" data-wow-duration="700ms">
+                                <a href="#!"><img src="assets/img/bg/geek.jpg" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- about end -->
+
+            <!-- feature start -->
+            <section class="feature pb-120" style="display: none;">
+                <div class="container">
+                    <div class="xb-feature-content wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms">
+                        <h2>Con TemuGeek, vas a
+                         <span class="hilight-text">subir de nivel 
+                            <img src="assets/img/shape/feature-shape01.png" alt="">
+                            <img src="assets/img/shape/feature-shape02.png" alt="">
+                            <img src="assets/img/shape/feature-shape03.png" alt="">
+                         </span>
+                         tu pasión, Conocer 
+                         <span class="hilight-text active">Mentes Creativas
+                            <img src="assets/img/shape/feature-shape04.png" alt="">
+                            <img src="assets/img/shape/feature-shape05.png" alt="">
+                            <img src="assets/img/shape/feature-shape06.png" alt="">
+                         </span>, Compartir en
+                         <span class="hilight-text">Comunidad,
+                            <img src="assets/img/shape/feature-shape07.png" alt="">
+                            <img src="assets/img/shape/feature-shape08.png" alt="">
+                            <img src="assets/img/shape/feature-shape09.png" alt="">
+                         </span> Impulsar tu
+                         <span class="hilight-text">Inspiración.
+                            <img src="assets/img/shape/feature-shape10.png" alt="">
+                            <img src="assets/img/shape/feature-shape11.png" alt="">
+                            <img src="assets/img/shape/feature-shape12.png" alt="">
+                         </span>
+                        </h2>
+                    </div>
+                </div>
+            </section>
+            <!-- feature end -->
+            
+        </div>
+
+        <!-- team start -->
+        <section class="team pt-125 pb-125" style="display: none;">
+            <div class="container">
+                <div class="dc-team-wrapper pos-rel">
+                    <div class="dec-team-top ul_li_between mb-55">
+                        <div class="sec-title sec-title--two wow xb-animetion-left" data-wow-delay="0ms" data-wow-duration="700ms">
+                            <span class="sub-title">
+                                <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                                Actividades
+                                <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                            </span>
+                            <h2 class="title">Zonas & Atracciones</h2>
+                        </div>
+                        <div class="team-btn">
+                            <a href="#schedule-section" class="thm-btn design-btn">
+                                Ver Cronograma
+                                <img src="assets/img/icon/right-arrow.svg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="dc-team-slider swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="dc-team-item">
+                                    <div class="xb-item--inner">
+                                        <div class="xb-item--avatar">
+                                            <img src="assets/img/event/img01.jpg" alt="Image">
+                                        </div>
+                                        <div class="xb-item--author">
+                                            <h3 class="xb-item--name"><a href="#!">Gran Concurso Cosplay</a></h3>
+                                            <p class="xb-item--desig">Pasarela Cosplay y premios en efectivo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="dc-team-item">
+                                    <div class="xb-item--inner">
+                                        <div class="xb-item--avatar">
+                                            <img src="assets/img/event/img02.jpg" alt="Image">
+                                        </div>
+                                        <div class="xb-item--author">
+                                            <h3 class="xb-item--name"><a href="#!">Torneos Gaming & Esports</a></h3>
+                                            <p class="xb-item--desig">Valorant, LoL y Fighting Games</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="dc-team-item">
+                                    <div class="xb-item--inner">
+                                        <div class="xb-item--avatar">
+                                            <img src="assets/img/event/img03.jpg" alt="Image">
+                                        </div>
+                                        <div class="xb-item--author">
+                                            <h3 class="xb-item--name"><a href="#!">Karting Extremo</a></h3>
+                                            <p class="xb-item--desig">Pista al aire libre de karts de velocidad</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="dc-team-item">
+                                    <div class="xb-item--inner">
+                                        <div class="xb-item--avatar">
+                                            <img src="assets/img/event/img04.jpg" alt="Image">
+                                        </div>
+                                        <div class="xb-item--author">
+                                            <h3 class="xb-item--name"><a href="#!">Tarreo Ciber 2000</a></h3>
+                                            <p class="xb-item--desig">Ciber center retro y LAN (CS 1.6 & SC)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="dc-team-item">
+                                    <div class="xb-item--inner">
+                                        <div class="xb-item--avatar">
+                                            <img src="assets/img/event/img05.jpg" alt="Image">
+                                        </div>
+                                        <div class="xb-item--author">
+                                            <h3 class="xb-item--name"><a href="#!">Paintball Táctico</a></h3>
+                                            <p class="xb-item--desig">Combate en grupo al aire libre</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="dc-team-item">
+                                    <div class="xb-item--inner">
+                                        <div class="xb-item--avatar">
+                                            <img src="assets/img/event/img06.jpg" alt="Image">
+                                        </div>
+                                        <div class="xb-item--author">
+                                            <h3 class="xb-item--name"><a href="#!">Monopoly "Gran Temuco"</a></h3>
+                                            <p class="xb-item--desig">Edición especial con calles de Temuco</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="dc-team-item">
+                                    <div class="xb-item--inner">
+                                        <div class="xb-item--avatar">
+                                            <img src="assets/img/about/cosplay.jpg" alt="Image">
+                                        </div>
+                                        <div class="xb-item--author">
+                                            <h3 class="xb-item--name"><a href="#!">Callejón de Artistas</a></h3>
+                                            <p class="xb-item--desig">Ilustradores, dibujantes y artesanos</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-shape"></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="team-slide-btn">
+                        <div class="swiper-button-next"><i class="fa-regular fa-arrow-right"></i></div>
+                        <div class="swiper-button-prev"><i class="fa-regular fa-arrow-left"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- team end -->
+
+        <div class="dark-bg">
+            <!-- funfact start -->
+            <section class="funfact pt-130 pb-125" style="display: none;">
+                <div class="container">
+                    <div class="dc-funfact-wrap bg_img" data-background="assets/img/bg/funfact-bg.jpg">
+                        <div class="row mt-none-50">
+                            <div class="col-lg-6 mt-50">
+                                <div class="funfact-heading">
+                                    <div class="sec-title sec-title--two">
+                                        <span class="sub-title wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms">
+                                            <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                                            Cifras TemuGeek
+                                            <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                                        </span>
+                                        <h2 class="title wow fadeInUp" data-wow-delay="150ms" data-wow-duration="600ms">¡Todo lo que te espera!</h2>
+                                        <p class="content wow fadeInUp" data-wow-delay="300ms" data-wow-duration="600ms">Desde la emoción de los videojuegos de última generación hasta la nostalgia retro y el talento del callejón de artistas. ¡Prepárate para un día lleno de cultura geek!</p>
+                                    </div>
+                                    <div class="hero-btn mt-55 wow fadeInUp" data-wow-delay="450ms" data-wow-duration="600ms">
+                                        <a href="#pricing-section" class="thm-btn design-btn">
+                                            Registra tu Entrada
+                                            <img src="assets/img/icon/right-arrow.svg" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mt-50">
+                                <div class="xb-funfact-image wow xb-animetion-right" data-wow-delay="600ms" data-wow-duration="600ms">
+                                    <img src="assets/img/funfact/img01.png" alt="Image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dc-funfact-inner mt-80">
+                            <div class="dc-funfact-item">
+                                <h3 class="xb-item--number xb-odm"><span class="xbo" data-count="3">00</span><span class="suffix"></span></h3>
+                                <span class="xb-item--text">Zonas del Evento</span>
+                            </div>
+                            <div class="dc-funfact-item">
+                                <h3 class="xb-item--number xb-odm">
+                                    <span class="xbo" data-count="5">00</span><span class="suffix">k+</span>
+                                </h3>
+                                <span class="xb-item--text">Asistentes Estimados</span>
+                            </div>
+                            <div class="dc-funfact-item">
+                                <h3 class="xb-item--number xb-odm">
+                                    <span class="xbo" data-count="15">00</span><span class="suffix">+</span>
+                                </h3>
+                                <span class="xb-item--text">Torneos & Shows</span>
+                            </div>
+                            <div class="dc-funfact-item">
+                                <h3 class="xb-item--number xb-odm">
+                                    <span class="xbo" data-count="50">00</span><span class="suffix">+</span>
+                                </h3>
+                                <span class="xb-item--text">Expositores & Tiendas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- funfact end -->
+
+            <!-- brand start -->
+            <section class="brand pb-125">
+                <div class="dc-brand-wrap">
+                    <div class="sec-title sec-title--two text-center mb-40">
+                        <span class="sub-title color-heading">
+                            <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                            Organizan y Auspician
+                            <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                        </span>
+                    </div>
+                    <div class="dc-brand-item marquee-left">
+                        <ul class="dc-brand-inner ul_li list-unstyled">
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Vintage Room (Producción General)">
+                                    <img src="assets/img/brand/vintage.png" alt="Vintage Room" style="max-height: 35px;">
+                                </a>
+                            </li>
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Astra (Producción Asociada)">
+                                    <img src="assets/img/brand/logo-full-color.png" alt="Astra" style="max-height: 35px;">
+                                </a>
+                            </li>
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Top 8 (Auspiciador Oficial)">
+                                    <img src="assets/img/brand/top8.png" alt="Top 8" style="max-height: 35px;">
+                                </a>
+                            </li>
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Vintage Room (Producción General)">
+                                    <img src="assets/img/brand/vintage.png" alt="Vintage Room" style="max-height: 35px;">
+                                </a>
+                            </li>
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Astra (Producción Asociada)">
+                                    <img src="assets/img/brand/logo-full-color.png" alt="Astra" style="max-height: 35px;">
+                                </a>
+                            </li>
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Top 8 (Auspiciador Oficial)">
+                                    <img src="assets/img/brand/top8.png" alt="Top 8" style="max-height: 35px;">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dc-brand-item marquee-right">
+                        <ul class="dc-brand-inner ul_li list-unstyled">
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Top 8 (Auspiciador Oficial)">
+                                    <img src="assets/img/brand/top8.png" alt="Top 8" style="max-height: 35px;">
+                                </a>
+                            </li>
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Astra (Producción Asociada)">
+                                    <img src="assets/img/brand/logo-full-color.png" alt="Astra" style="max-height: 35px;">
+                                </a>
+                            </li>
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Vintage Room (Producción General)">
+                                    <img src="assets/img/brand/vintage.png" alt="Vintage Room" style="max-height: 35px;">
+                                </a>
+                            </li>
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Top 8 (Auspiciador Oficial)">
+                                    <img src="assets/img/brand/top8.png" alt="Top 8" style="max-height: 35px;">
+                                </a>
+                            </li>
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Astra (Producción Asociada)">
+                                    <img src="assets/img/brand/logo-full-color.png" alt="Astra" style="max-height: 35px;">
+                                </a>
+                            </li>
+                            <li class="dc-brand-logo">
+                                <a href="#!" title="Vintage Room (Producción General)">
+                                    <img src="assets/img/brand/vintage.png" alt="Vintage Room" style="max-height: 35px;">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <!-- brand end -->
+        </div>
+
+        <!-- schedule start -->
+        <section id="schedule-section" class="schedule pt-125 pb-130 bg_img" data-background="assets/img/bg/schedule-bg.jpg" style="display: none;">
+            <div class="xb-schedule-wrapper">
+                <div class="container">
+                    <div class="sec-title sec-title--two text-center mb-60">
+                        <span class="sub-title wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms">
+                            <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                            TemuGeek Expo 2026
+                            <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                        </span>
+                        <h2 class="title wow fadeInUp" data-wow-delay="150ms" data-wow-duration="600ms">Cronograma de Actividades</h2>
+                    </div>
+                    <div class="xb-schedule-wrap pos-rel z-1">
+                        <div class="xb-schedule-nav-wrap mb-30">
+                            <ul class="xb-schedule-nav ul_li nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
+                                     <span>Bloque 01</span>
+                                     Esports & Gaming
+                                     <span class="arrow">
+                                        <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
+                                            <path d="M9.99992 15L-5.96007e-07 1.58893e-07L20 0L9.99992 15Z" fill="#fff" />
+                                        </svg>
+                                     </span>
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">
+                                     <span>Bloque 02</span>
+                                     Comunidad & Rol
+                                     <span class="arrow">
+                                        <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
+                                            <path d="M9.99992 15L-5.96007e-07 1.58893e-07L20 0L9.99992 15Z" fill="#fff" />
+                                        </svg>
+                                     </span>
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab2" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">
+                                     <span>Bloque 03</span>
+                                     Escenario & Show
+                                     <span class="arrow">
+                                        <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
+                                            <path d="M9.99992 15L-5.96007e-07 1.58893e-07L20 0L9.99992 15Z" fill="#fff" />
+                                     </svg>
+                                     </span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="xb-schedule-content-wrap">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="table-responsive">
+                                        <table class="table xb-schedule-content">
+                                            <thead>
+                                                <tr>
+                                                    <th><img src="assets/img/icon/calendar.svg" alt="Icon"> HORA</th>
+                                                    <th><img src="assets/img/icon/task-bord.svg" alt="Icon"> ACTIVIDAD</th>
+                                                    <th><img src="assets/img/icon/speaker.svg" alt="Icon"> ORGANIZACIÓN</th>
+                                                    <th><img src="assets/img/icon/location-icon04.svg" alt="Icon"> ZONA / LUGAR</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>11:00 AM â€“ 01:00 PM</td>
+                                                    <td>Torneos Competitivos (Valorant, LoL & Fighting Games)</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/vintage.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Vintage Room & Astra
+                                                        </span>
+                                                    </td>
+                                                    <td>Main Stage & Gaming Zone</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>01:00 PM â€“ 03:00 PM</td>
+                                                    <td>Tarreos LAN (CS 1.6 & StarCraft) & Desafíos Arcade</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/vintage.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Vintage Room
+                                                        </span>
+                                                    </td>
+                                                    <td>Tarreo Ciber 2000 & Arcades Clásicos</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03:00 PM â€“ 05:00 PM</td>
+                                                    <td>Consolas de Última Generación & Juego Libre</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/vintage.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Vintage Room
+                                                        </span>
+                                                    </td>
+                                                    <td>Zona Gaming</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>05:00 PM â€“ 06:00 PM</td>
+                                                    <td>Finales de Torneos Competitivos & Transmisión en vivo</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/vintage.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Vintage Room & Astra
+                                                        </span>
+                                                    </td>
+                                                    <td>Main Stage</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="table-responsive">
+                                        <table class="table xb-schedule-content">
+                                            <thead>
+                                                <tr>
+                                                    <th><img src="assets/img/icon/calendar.svg" alt="Icon"> HORA</th>
+                                                    <th><img src="assets/img/icon/task-bord.svg" alt="Icon"> ACTIVIDAD</th>
+                                                    <th><img src="assets/img/icon/speaker.svg" alt="Icon"> ORGANIZACIÓN</th>
+                                                    <th><img src="assets/img/icon/location-icon04.svg" alt="Icon"> ZONA / LUGAR</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>11:00 AM â€“ 01:00 PM</td>
+                                                    <td>Torneos de Cartas Coleccionables (TCG - Magic & Pokémon TCG)</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/logo-full-color.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Astra
+                                                        </span>
+                                                    </td>
+                                                    <td>Juegos de Mesa y Cartas</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>01:00 PM â€“ 03:00 PM</td>
+                                                    <td>Campañas de Rol Introductorias (Guiadas por Narradores)</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/logo-full-color.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Astra
+                                                        </span>
+                                                    </td>
+                                                    <td>Juegos de Mesa y Cartas</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03:00 PM â€“ 05:00 PM</td>
+                                                    <td>Monopoly "Gran Temuco" (Tablero personalizado local)</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/logo-full-color.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Astra
+                                                        </span>
+                                                    </td>
+                                                    <td>Interiores & Zonas Comunes</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>05:00 PM â€“ 06:00 PM</td>
+                                                    <td>Zona Lofi (Chill & Play con música ambiental)</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/logo-full-color.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Astra
+                                                        </span>
+                                                    </td>
+                                                    <td>Zona Lofi</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="profile-tab2">
+                                    <div class="table-responsive">
+                                        <table class="table xb-schedule-content">
+                                            <thead>
+                                                <tr>
+                                                    <th><img src="assets/img/icon/calendar.svg" alt="Icon"> HORA</th>
+                                                    <th><img src="assets/img/icon/task-bord.svg" alt="Icon"> ACTIVIDAD</th>
+                                                    <th><img src="assets/img/icon/speaker.svg" alt="Icon"> ORGANIZACIÓN</th>
+                                                    <th><img src="assets/img/icon/location-icon04.svg" alt="Icon"> ZONA / LUGAR</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>11:00 AM â€“ 01:00 PM</td>
+                                                    <td>Parrilla de Show: Bandas tocando OST de anime/videojuegos</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/vintage.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Astra & Vintage Room
+                                                        </span>
+                                                    </td>
+                                                    <td>Main Stage</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>01:00 PM â€“ 03:00 PM</td>
+                                                    <td>Trivias Geek con premios y bloques dedicados a K-Pop</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/logo-full-color.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Astra
+                                                        </span>
+                                                    </td>
+                                                    <td>Main Stage</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03:00 PM â€“ 05:00 PM</td>
+                                                    <td>Cosplay Infantil (Categoría especial no competitiva para niños)</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/vintage.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Vintage Room
+                                                        </span>
+                                                    </td>
+                                                    <td>Main Stage</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>05:00 PM â€“ 07:30 PM</td>
+                                                    <td>Gran Concurso Cosplay (Pasarela principal & Jurado destacado)</td>
+                                                    <td>
+                                                        <span>
+                                                            <img src="assets/img/brand/vintage.png" style="border-radius: 50%; max-width: 32px;" alt="">
+                                                            Vintage Room
+                                                        </span>
+                                                    </td>
+                                                    <td>Main Stage</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shedule-shape">
+                            <img src="assets/img/shape/shedual-shape.png" alt="">
+                        </div>
+                    </div>
+               </div>
+           </div>
+        </section>
+        <!-- schedule end -->
+        
+        <!-- event-gallery start -->
+        <section class="event-gallery pt-80 pb-50 pos-rel bg_img" data-background="assets/img/video/cine.jpg" style="display: none;">
+            <div class="container">
+                <div class="xb-gallery-wrap text-center wow zoomIn" data-wow-delay="0ms" data-wow-duration="600ms">
+                    <div class="step step--1">
+                        <div class="img-gallery">
+                            <div class="img img--1"><img src="assets/img/bg/geek.jpg" alt="image"></div>
+                            <div class="img img--2"><img src="assets/img/about/cosplay.jpg" alt="image"></div>
+                        </div>
+                        <div class="img-gallery">
+                            <div class="img img--1"><img src="assets/img/video/cine.jpg" alt="image"></div>
+                            <div class="img img--2"><img src="assets/img/logo/foto-perfil.png" alt="image"></div>
+                        </div>
+                        <div class="img-gallery">
+                            <div class="img img--1"><img src="assets/img/bg/geek.jpg" alt="image"></div>
+                            <div class="img img--2"><img src="assets/img/about/cosplay.jpg" alt="image"></div>
+                        </div>
+                    </div>
+                    <div class="step step--2">
+                        <div class="img-gallery">
+                            <div class="img img--1"><img src="assets/img/video/cine.jpg" alt="image"></div>
+                            <div class="img img--2"><img src="assets/img/logo/foto-perfil.png" alt="image"></div>
+                        </div>
+                        <div class="img-gallery">
+                            <div class="img img--1"><img src="assets/img/bg/geek.jpg" alt="image"></div>
+                            <div class="img img--2"><img src="assets/img/about/cosplay.jpg" alt="image"></div>
+                        </div>
+                        <div class="img-gallery">
+                            <div class="img img--1"><img src="assets/img/video/cine.jpg" alt="image"></div>
+                            <div class="img img--2"><img src="assets/img/logo/foto-perfil.png" alt="image"></div>
+                        </div>
+                        <div class="img-gallery">
+                            <div class="img img--1"><img src="assets/img/bg/geek.jpg" alt="image"></div>
+                            <div class="img img--2"><img src="assets/img/about/cosplay.jpg" alt="image"></div>
+                        </div>
+                    </div>
+                    <div class="step step--3">
+                        <div class="img-gallery">
+                            <div class="img img--1"><img src="assets/img/video/cine.jpg" alt="image"></div>
+                            <div class="img img--2"><img src="assets/img/logo/foto-perfil.png" alt="image"></div>
+                        </div>
+                        <div class="img-gallery">
+                            <div class="img img--1"><img src="assets/img/bg/geek.jpg" alt="image"></div>
+                            <div class="img img--2"><img src="assets/img/about/cosplay.jpg" alt="image"></div>
+                        </div>
+                        <div class="img-gallery">
+                            <div class="img img--1"><img src="assets/img/video/cine.jpg" alt="image"></div>
+                            <div class="img img--2"><img src="assets/img/logo/foto-perfil.png" alt="image"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- event-gallery end -->
+
+        <!-- testimonial start -->
+        <section class="testimonial bg_img pt-120 pb-125" data-background="assets/img/bg/testimonial-bg.jpg" style="display: none;">
+            <div class="container">
+                <div class="sec-title sec-title--two text-center mb-60">
+                    <span class="sub-title wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms">
+                        <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                        attendees Testimonial
+                        <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                    </span>
+                    <h2 class="title wow fadeInUp" data-wow-delay="150ms" data-wow-duration="600ms">Voices from the Summit</h2>
+                </div>
+            </div>
+            <div class="dc-testimonial-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="dc-testimonial-item">
+                            <div class="xb-item--inner">
+                                <div class="xb-item--author ul_li">
+                                    <div class="xb-item--avatar">
+                                        <img src="assets/img/avatar/tes-avatar01.png" alt="">
+                                    </div>
+                                    <div class="xb-item--holder">
+                                        <span class="xb-item--name">Daniel Roberts</span>
+                                        <span class="xb-item--desig">UX/UI Consultant</span>
+                                    </div>
+                                </div>
+                                <div class="xb-item--holder">
+                                    <p class="xb-item--content">
+                                        "The MeetCo Design Summit brought together an amazing community of creatives. The workshops were interactive and gave me tangible skills I could immediately implement. The event was perfectly structured."
+                                    </p>
+                                    <div class="xb-item--img">
+                                        <img src="assets/img/testimonial/img01.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="xb-item--shape">
+                                    <img src="assets/img/shape/tes-shape.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="dc-testimonial-item">
+                            <div class="xb-item--inner">
+                                <div class="xb-item--author ul_li">
+                                    <div class="xb-item--avatar">
+                                        <img src="assets/img/avatar/tes-avatar02.png" alt="">
+                                    </div>
+                                    <div class="xb-item--holder">
+                                        <span class="xb-item--name">Emily Rodriguez</span>
+                                        <span class="xb-item--desig">Branding Strategist</span>
+                                    </div>
+                                </div>
+                                <div class="xb-item--holder">
+                                    <p class="xb-item--content">
+                                        â€œMeetco was game-changer. The talks were inspiring, the workshops were hands-on, and the creative energy was off the charts. I left with fresh ideas and valuable and the creative energy was off the charts connections.â€
+                                    </p>
+                                    <div class="xb-item--img">
+                                        <img src="assets/img/testimonial/img02.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="xb-item--shape">
+                                    <img src="assets/img/shape/tes-shape.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="dc-testimonial-item">
+                            <div class="xb-item--inner">
+                                <div class="xb-item--author ul_li">
+                                    <div class="xb-item--avatar">
+                                        <img src="assets/img/avatar/tes-avatar03.png" alt="">
+                                    </div>
+                                    <div class="xb-item--holder">
+                                        <span class="xb-item--name">Jessica Harrison</span>
+                                        <span class="xb-item--desig">Interaction Designer</span>
+                                    </div>
+                                </div>
+                                <div class="xb-item--holder">
+                                    <p class="xb-item--content">
+                                        "From the speakers to the breakout sessions, the summit provided an amazing opportunity to learn and connect with like-minded professionals. I walked away feeling inspired and ready to tackle new design challenges!"
+                                    </p>
+                                    <div class="xb-item--img">
+                                        <img src="assets/img/testimonial/img03.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="xb-item--shape">
+                                    <img src="assets/img/shape/tes-shape.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="dc-testimonial-item">
+                            <div class="xb-item--inner">
+                                <div class="xb-item--author ul_li">
+                                    <div class="xb-item--avatar">
+                                        <img src="assets/img/avatar/tes-avatar04.png" alt="">
+                                    </div>
+                                    <div class="xb-item--holder">
+                                        <span class="xb-item--name"> Laura Thompson</span>
+                                        <span class="xb-item--desig">CEO & Board Director</span>
+                                    </div>
+                                </div>
+                                <div class="xb-item--holder">
+                                    <p class="xb-item--content">
+                                        "Attending the MeetCo Design Summit was one of the best decisions Iâ€™ve made for my career. The insights I gained into user experience and design systems were practical and inspiring. I can't wait for next year!"
+                                    </p>
+                                    <div class="xb-item--img">
+                                        <img src="assets/img/testimonial/img04.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="xb-item--shape">
+                                    <img src="assets/img/shape/tes-shape.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="dc-testimonial-item">
+                            <div class="xb-item--inner">
+                                <div class="xb-item--author ul_li">
+                                    <div class="xb-item--avatar">
+                                        <img src="assets/img/avatar/tes-avatar05.png" alt="">
+                                    </div>
+                                    <div class="xb-item--holder">
+                                        <span class="xb-item--name">Michael Stewart</span>
+                                        <span class="xb-item--desig">Senior UI Designer</span>
+                                    </div>
+                                </div>
+                                <div class="xb-item--holder">
+                                    <p class="xb-item--content">
+                                        "The Meetco summit gave me a fresh perspective on design, and the opportunities to interact with industry leaders were priceless. The hands-on sessions were incredibly valuable, and I left with new skills."
+                                    </p>
+                                    <div class="xb-item--img">
+                                        <img src="assets/img/testimonial/img05.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="xb-item--shape">
+                                    <img src="assets/img/shape/tes-shape.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- testimonial end -->
+
+        <!-- pricing start -->
+        <section id="pricing-section" class="pricing pt-125 pb-115" data-bg-color="#fff">
+            <div class="container">
+                <div class="sec-title sec-title--two text-center mb-60">
+                    <span class="sub-title color-heading wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms">
+                        <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                        Entradas TemuGeek
+                        <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                    </span>
+                    <h2 class="title color-heading wow fadeInUp" data-wow-delay="150ms" data-wow-duration="600ms">Elige tu Pase</h2>
+                </div>
+                <div class="xb-pricing-table wow fadeInUp" data-wow-delay="300ms" data-wow-duration="600ms">
+                    <div class="row mt-none-30 justify-content-md-center">
+                        <div class="col-lg-4 col-md-8 mt-30">
+                            <div class="xb-pricing-item">
+                                <div class="xb-item--holder">
+                                    <div class="xb-item--icon">
+                                        <img src="assets/img/icon/pricing-icon01.svg" alt="icon">
+                                    </div>
+                                    <span class="xb-item--title">Pase General</span>
+                                    <p class="xb-item--content">Perfecto para disfrutar de toda la cultura geek y ferias</p>
+                                    <span class="xb-item--line"></span>
+                                    <h2 class="xb-item--dollar">$5.000 <span style="font-size: 16px; font-weight: normal; color: #888;">CLP</span></h2>
+                                </div>
+                                <ul class="xb-item--list list-unstyled">
+                                    <li>🎮 Acceso al Galpón Principal</li>
+                                    <li>🎮 Charlas de expositores</li>
+                                    <li>🎮 Callejón de Artistas & Feria</li>
+                                    <li>🎮 Espectador de Esports & Escenario</li>
+                                    <li>🚫 Acceso a Karting y Paintball</li>
+                                </ul>
+                                <div class="pricing-btn mt-55">
+                                    <a href="#pricing-section" class="thm-btn design-btn">
+                                        Obtener Pase General
+                                        <img src="assets/img/icon/white-icon.svg" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-8 mt-30">
+                            <div class="xb-pricing-item active">
+                                <div class="xb-item--holder">
+                                    <div class="xb-item--icon">
+                                        <img src="assets/img/icon/pricing-icon02.svg" alt="icon">
+                                    </div>
+                                    <span class="xb-item--title">Pase VIP / Extremo</span>
+                                    <p class="xb-item--content">Próximamente revelaremos los detalles</p>
+                                    <span class="xb-item--line"></span>
+                                    <h2 class="xb-item--dollar">$15.000 <span style="font-size: 16px; font-weight: normal; color: #fff;">CLP</span></h2>
+                                </div>
+                                <span class="xb-item--popular-item">
+                                    <img src="assets/img/icon/star-icon.svg" alt="icon">
+                                    Recomendado
+                                </span>
+                                <ul class="xb-item--list list-unstyled">
+                                    <li> ⚡ Todos los beneficios del Pase General</li>
+                                    <li> ⚡ 1 carrera en Karting Extremo</li>
+                                    <li> ⚡ 1 partida en Paintball Táctico</li>
+                                    <li> ⚡ Acceso preferente a las filas</li>
+                                    <li> ⚡ Kit de Bienvenida oficial (Póster + Stickers)</li>
+                                </ul>
+                                <div class="pricing-btn mt-55">
+                                    <a href="#pricing-section" class="thm-btn design-btn">
+                                        Obtener Pase VIP
+                                        <img src="assets/img/icon/white-icon.svg" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-8 mt-30" style="display: none;">
+                            <div class="xb-pricing-item">
+                                <div class="xb-item--holder">
+                                    <div class="xb-item--icon">
+                                        <img src="assets/img/icon/pricing-icon01.svg" alt="icon">
+                                    </div>
+                                    <span class="xb-item--title">Expositores / Tiendas</span>
+                                    <p class="xb-item--content">Espacio para ilustradores, artesanos, comunidades y marcas</p>
+                                    <span class="xb-item--line"></span>
+                                    <h2 class="xb-item--dollar">Feria</h2>
+                                </div>
+                                <ul class="xb-item--list list-unstyled">
+                                    <li>👾 Espacio ferial curado por la organización</li>
+                                    <li>👾 Stand básico o mesa asignada</li>
+                                    <li>👾 Credencial de expositor oficial</li>
+                                    <li>👾 Difusión de tu marca o comunidad</li>
+                                    <li>👾 Revisión previa de portafolio</li>
+                                </ul>
+                                <div class="pricing-btn mt-55">
+                                    <a href="#pricing-section" class="thm-btn design-btn">
+                                        Postular como Tienda/Artista
+                                        <img src="assets/img/icon/white-icon.svg" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+        <!-- pricing end -->
+
+        <!-- faq start -->
+        <section id="faq-section" class="faq pt-125 pb-130" data-bg-color="#fff2fe">
+            <div class="container">
+                <div class="sec-title sec-title--two text-center mb-35">
+                    <span class="sub-title color-heading wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms">
+                        <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                        faq
+                        <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
+                    </span>
+                    <h2 class="title color-heading wow fadeInUp" data-wow-delay="150ms" data-wow-duration="600ms">Preguntas Frecuentes</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="xb-faq-item wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms">
+                            <span class="xb-icon">
+                                <img src="assets/img/icon/question-icon.svg" alt=""> ¿Qué incluye cada tipo de pase?
+                            </span>
+                            <p class="xb-content">
+                                El Pase General incluye acceso al Galpón Principal (gaming, arcades, torneos, charlas, callejón de artistas) y al Main Stage. El Pase VIP / Extremo suma 1 carrera en Karting, 1 partida de Paintball (con fila preferente) y un Kit de Bienvenida.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="xb-faq-item wow fadeInUp" data-wow-delay="100ms" data-wow-duration="600ms">
+                            <span class="xb-icon">
+                                <img src="assets/img/icon/question-icon.svg" alt=""> ¿Cómo postular para ser expositor o tienda?
+                            </span>
+                            <p class="xb-content">
+                                Las postulaciones están abiertas para ilustradores, cosmakers, comunidades y tiendas comerciales a través de nuestra web oficial. Se realiza una revisión de portafolio previa asignación de stands.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="xb-faq-item wow fadeInUp" data-wow-delay="200ms" data-wow-duration="600ms">
+                            <span class="xb-icon">
+                                <img src="assets/img/icon/question-icon.svg" alt=""> ¿Cuáles son los horarios y lugar del evento?
+                            </span>
+                            <p class="xb-content">
+                                Se realizará el Domingo 16 de Agosto de 2026, abriendo puertas a las 11:00 AM en el Recinto SOFO (Sociedad de Fomento Agrícola), Temuco, Chile.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="xb-faq-item wow fadeInUp" data-wow-delay="300ms" data-wow-duration="600ms">
+                            <span class="xb-icon">
+                                <img src="assets/img/icon/question-icon.svg" alt=""> ¿Qué es la Zona TEA (Inclusión)?
+                            </span>
+                            <p class="xb-content">
+                                Es un espacio adaptado sensorialmente con niveles de ruido reducidos y zona de relax, diseñado para la inclusión y comodidad de personas dentro del espectro autista y sus familias.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="xb-faq-item wow fadeInUp" data-wow-delay="400ms" data-wow-duration="600ms">
+                            <span class="xb-icon">
+                                <img src="assets/img/icon/question-icon.svg" alt=""> ¿Qué es el Monopoly "Gran Temuco"?
+                            </span>
+                            <p class="xb-content">
+                                Es una edición especial y personalizada del clásico Monopoly que incluye calles, avenidas y locaciones emblemáticas de Temuco, disponible para juego libre en nuestra Zona Lofi.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="xb-faq-item wow fadeInUp" data-wow-delay="500ms" data-wow-duration="600ms">
+                            <span class="xb-icon">
+                                <img src="assets/img/icon/question-icon.svg" alt=""> ¿Cómo llegar al Recinto SOFO?
+                            </span>
+                            <p class="xb-content">
+                                El recinto se ubica en el acceso norte de Temuco (coordenadas 38.7397° S, 72.5901° W). Cuenta con locomoción colectiva a la puerta y amplio espacio de estacionamientos habilitados.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- faq end -->
+
+    </main>
+    <!-- main area end -->
+
+    <!-- footer strt -->
+    <footer class="footer footer-style-two pt-140 bg_img" data-background="assets/img/bg/footer-bg.jpg">
+        <div class="container">
+            <div class="xb-footer-wrap ul_li_between align-items-start">
+                <div class="xb-footer_widget mt-30">
+                    <h3 class="xb-widget-title">Enlaces Rápidos</h3>
+                    <ul class="xb-list list-unstyled">
+                        <li><a href="#schedule-section">Cronograma</a></li>
+                        <li><a href="#schedule-section">Actividades</a></li>
+                        <li><a href="#home-section">TemuGeek Expo</a></li>
+                        <li><a href="#faq-section">Preguntas Frecuentes</a></li>
+                        <li><a href="#home-section">Inicio</a></li>
+                    </ul>
+                </div>
+                <div class="xb-newsletter mt-30">
+                    <div class="xb-item--logo">
+                        <img src="assets/img/logo/logo-principal-blanco.png" alt="TemuGeek" style="max-height: 90px; margin-bottom: 15px;">
+                    </div>
+                    <p class="xb-item--title">Suscríbete al boletín oficial</p>
+                    <form class="xb-item--newsletter_form" action="#">
+                        <input type="email" name="email" placeholder="Ingresa tu correo">
+                        <button class="submit_btn" type="submit">Suscribir</button>
+                    </form>
+                </div>
+                <div class="xb-footer_info mt-30">
+                    <h3 class="xb-widget-title">Contacto</h3>
+                    <ul class="xb-contact list-unstyled">
+                        <li><img src="assets/img/icon/location-icon03.svg" alt=""> Recinto SOFO, Temuco, <br> Araucanía, Chile</li>
+                        <li>
+                            <img src="assets/img/icon/call-icon03.svg" alt="">
+                            <a href="tel:+56452551234">+56 45 255 1234</a>
+                        </li>
+                        <li>
+                            <img src="assets/img/icon/sms-icon02.svg" alt="">
+                            <a href="mailto:contacto@temugeek.cl">contacto@temugeek.cl</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="xb-footer_bottom">
+            <div class="container">
+                <div class="xb-footer-bottom-inner ul_li_between">
+                    <P>Copyright © 2026 <a href="index.html">TemuGeek (TMK_2026).</a> Todos los derechos reservados.</P>
+                    <div class="xb-social_media">
+                        <ul class="social-link list-unstyled ul_li">
+                            <li>Síguenos :</li>
+                            <li><a href="#!"><i class="fa-brands fa-facebook-f"></i></a></li>
+                            <li><a href="#!"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                            <li><a href="#!"><i class="fa-brands fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end -->
+</div>
+
+<!-- jquery include -->
+<script src="assets/js/jquery-3.7.1.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/swiper.min.js"></script>
+<script src="assets/js/wow.min.js"></script>
+<script src="assets/js/appear.js"></script>
+<script src="assets/js/imagesloaded.pkgd.min.js"></script>
+<script src="assets/js/parallaxie.js"></script>
+<script src="assets/js/parallax.min.js"></script>
+<script src="assets/js/parallax-scroll.js"></script>
+<script src="assets/js/odometer.min.js"></script>
+<script src="assets/js/touchspin.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/jquery.nice-select.min.js"></script>
+<script src="assets/js/jquery.marquee.min.js"></script>
+<script src="assets/js/jquery.magnific-popup.min.js"></script>
+<script src="assets/js/jqueryui.js"></script>
+<script src="assets/js/easing.min.js"></script>
+<script src="assets/js/scrollspy.js"></script>
+<script src="assets/js/gsap.js"></script>
+<script src="assets/js/magiccursor.js"></script>
+<script src="assets/js/ScrollTrigger.min.js"></script>
+<script src="assets/js/jquery.countdown.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const container = document.getElementById("mascot-container");
+    const mascot = document.getElementById("mascot-char");
+    const bubble = document.getElementById("mascot-bubble");
+    const projectileLayer = document.getElementById("mascot-projectiles");
+    
+    if (!container || !mascot || !bubble || !projectileLayer) return;
+
+    // Sprite paths
+    const sprites = {
+        idle: 'assets/img/game-sprites/base-idle01.png',
+        walkLeft: 'assets/img/game-sprites/walk-left01.png',
+        walkRight: 'assets/img/game-sprites/walk-right01.png',
+        dash: 'assets/img/game-sprites/fast-dash-forward01.png',
+        jump: 'assets/img/game-sprites/jump-up01.png',
+        shoot: 'assets/img/game-sprites/action-shoot01.png',
+        dizzy: 'assets/img/game-sprites/dizzy.png',
+        victory: 'assets/img/game-sprites/victory01.png',
+        defeat: 'assets/img/game-sprites/defeat01.png',
+        hurt: 'assets/img/game-sprites/hurt01.png',
+        fall: 'assets/img/game-sprites/fall-down01.png',
+        speak1: 'assets/img/game-sprites/speaking01.png',
+        speak2: 'assets/img/game-sprites/speaking02.png'
+    };
+
+    // Preload sprites
+    Object.values(sprites).forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+
+    let currentX = 50; // percentage
+    let currentY = 25; // px from bottom
+    let isBusy = false;
+
+    // Speeches
+    const messages = [
+        "¡TemuGeek 2026!",
+        "¡A jugar!",
+        "¡16 de Agosto!",
+        "¡Recinto SOFO!",
+        "🎮 ¡Esports!",
+        "✨ ¡Hola, Geek!",
+        "🕹️ ¡Retro Time!",
+        "🎨 Callejón de Artistas",
+        "⚡ ¡Pase VIP!",
+        "¡Cosplay!"
+    ];
+
+    function showBubble(text, duration = 2000) {
+        bubble.textContent = text;
+        bubble.style.opacity = "1";
+        bubble.style.transform = "translateX(-50%) translateY(0)";
+        
+        setTimeout(() => {
+            if (bubble.textContent === text) {
+                bubble.style.opacity = "0";
+                bubble.style.transform = "translateX(-50%) translateY(5px)";
+            }
+        }, duration);
+    }
+
+    function setSprite(key) {
+        mascot.style.backgroundImage = `url('${sprites[key]}')`;
+        if (key === 'idle') {
+            mascot.classList.add('mascot-bobbing');
+        } else {
+            mascot.classList.remove('mascot-bobbing');
+        }
+    }
+
+    // Set initial state
+    setSprite('idle');
+
+    function animateTo(targetX, targetY, durationMs, spriteKeyBefore, spriteKeyAfter) {
+        return new Promise(resolve => {
+            isBusy = true;
+            if (spriteKeyBefore) setSprite(spriteKeyBefore);
+            
+            mascot.style.transition = `left ${durationMs}ms ease-in-out, bottom ${durationMs}ms ease-out`;
+            mascot.style.left = `${targetX}%`;
+            mascot.style.bottom = `${targetY}px`;
+            currentX = targetX;
+            currentY = targetY;
+
+            setTimeout(() => {
+                if (spriteKeyAfter) setSprite(spriteKeyAfter);
+                isBusy = false;
+                resolve();
+            }, durationMs);
+        });
+    }
+
+    function spawnProjectile(fromXPercent, fromYPx, direction) {
+        const proj = document.createElement("div");
+        proj.className = "mascot-projectile";
+        proj.style.bottom = `${fromYPx + 25}px`;
+        proj.style.left = `${fromXPercent}%`;
+        projectileLayer.appendChild(proj);
+
+        const containerWidth = container.clientWidth || 301;
+        const startX = (containerWidth * fromXPercent) / 100;
+        let currentProjX = startX;
+        const speed = direction === 'left' ? -8 : 8;
+        const targetLimit = direction === 'left' ? 15 : (containerWidth - 30);
+
+        const animInterval = setInterval(() => {
+            currentProjX += speed;
+            proj.style.left = `${currentProjX}px`;
+
+            if ((speed < 0 && currentProjX <= targetLimit) || (speed > 0 && currentProjX >= targetLimit)) {
+                clearInterval(animInterval);
+                // Impact explosion
+                const impact = document.createElement("div");
+                impact.className = "mascot-impact";
+                impact.style.left = `${currentProjX}px`;
+                impact.style.bottom = proj.style.bottom;
+                projectileLayer.appendChild(impact);
+                proj.remove();
+
+                setTimeout(() => impact.remove(), 250);
+            }
+        }, 16);
+    }
+
+    async function randomBehavior() {
+        if (isBusy) return;
+
+        const rand = Math.random();
+        
+        if (rand < 0.35) {
+            // Walk to a new position
+            const newX = Math.floor(Math.random() * 60) + 20; // 20% to 80%
+            const walkSprite = newX < currentX ? 'walkLeft' : 'walkRight';
+            const distance = Math.abs(newX - currentX);
+            const time = distance * 25; // 25ms per percentage
+            
+            await animateTo(newX, 25, time, walkSprite, 'idle');
+        } 
+        else if (rand < 0.55) {
+            // Jump
+            isBusy = true;
+            setSprite('jump');
+            mascot.style.transition = "bottom 0.25s ease-out";
+            mascot.style.bottom = "80px";
+            
+            setTimeout(() => {
+                mascot.style.transition = "bottom 0.2s ease-in";
+                mascot.style.bottom = "25px";
+                setTimeout(() => {
+                    setSprite('idle');
+                    isBusy = false;
+                }, 200);
+            }, 250);
+        }
+        else if (rand < 0.70) {
+            // Shoot
+            isBusy = true;
+            const direction = currentX > 50 ? 'left' : 'right';
+            setSprite('shoot');
+            mascot.style.transform = direction === 'left' ? 'translateX(-50%) scaleX(-1)' : 'translateX(-50%) scaleX(1)';
+            
+            setTimeout(() => {
+                spawnProjectile(currentX, 25, direction);
+                setTimeout(() => {
+                    mascot.style.transform = 'translateX(-50%) scaleX(1)';
+                    setSprite('idle');
+                    isBusy = false;
+                }, 300);
+            }, 150);
+        }
+        else if (rand < 0.85) {
+            // Victory & speak
+            isBusy = true;
+            setSprite('victory');
+            showBubble(messages[Math.floor(Math.random() * messages.length)]);
+            
+            mascot.style.transition = "bottom 0.15s ease-out";
+            mascot.style.bottom = "45px";
+            setTimeout(() => {
+                mascot.style.transition = "bottom 0.15s ease-in";
+                mascot.style.bottom = "25px";
+                setTimeout(() => {
+                    setSprite('idle');
+                    isBusy = false;
+                }, 150);
+            }, 150);
+        }
+        else {
+            // Idle talk
+            isBusy = true;
+            setSprite('speak1');
+            showBubble(messages[Math.floor(Math.random() * messages.length)]);
+            setTimeout(() => {
+                setSprite('speak2');
+                setTimeout(() => {
+                    setSprite('idle');
+                    isBusy = false;
+                }, 400);
+            }, 400);
+        }
+    }
+
+    // Start state machine
+    setInterval(randomBehavior, 3000);
+
+    // Interactive Hover
+    container.addEventListener("mouseenter", () => {
+        if (isBusy) return;
+        isBusy = true;
+        setSprite('speak1');
+        showBubble("¡Hola, Amigo!");
+        setTimeout(() => {
+            setSprite('idle');
+            isBusy = false;
+        }, 1200);
+    });
+
+    // Interactive Click
+    container.addEventListener("click", async () => {
+        isBusy = false;
+        mascot.style.transition = "all 0.1s ease";
+        isBusy = true;
+        setSprite('hurt');
+        showBubble("¡YAY!");
+        
+        setTimeout(async () => {
+            setSprite('jump');
+            mascot.style.transition = "bottom 0.3s ease-out, left 0.3s ease-in-out";
+            mascot.style.bottom = "95px";
+            
+            setTimeout(() => {
+                setSprite('shoot');
+                spawnProjectile(currentX, 95, 'left');
+                spawnProjectile(currentX, 95, 'right');
+                
+                setTimeout(() => {
+                    setSprite('fall');
+                    mascot.style.transition = "bottom 0.25s ease-in";
+                    mascot.style.bottom = "25px";
+                    
+                    setTimeout(() => {
+                        setSprite('dizzy');
+                        showBubble("💫 ¡Wooo!");
+                        
+                        setTimeout(() => {
+                            setSprite('idle');
+                            isBusy = false;
+                        }, 1500);
+                    }, 250);
+                }, 200);
+            }, 300);
+        }, 150);
+    });
+});
+</script>
+</body>
+
+</html>
+

@@ -1,0 +1,1017 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Administración & Leads - TemuGeek Expo 2026</title>
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- CSS Includes -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/custom-fonts.css">
+    
+    <!-- Supabase JS Client & Global Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #0f1015;
+            --bg-card: #161822;
+            --bg-card-hover: #1e202e;
+            --border-color: #2a2d3d;
+            --color-primary: #e92652;
+            --color-secondary: #ffe62e;
+            --color-success: #00d264;
+            --color-warning: #ff9800;
+            --color-info: #00b0ff;
+            --text-main: #e2e8f0;
+            --text-muted: #8e95a5;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* Login Screen Gate */
+        #login-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #0b0c10;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-card {
+            background: #161822;
+            border: 2px solid var(--color-primary);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 50px rgba(233, 38, 82, 0.2);
+            text-align: center;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background-color: #141519;
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .dashboard-container {
+            padding: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* KPI Cards */
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px;
+            height: 100%;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+        }
+        .kpi-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--accent-color, var(--color-primary));
+        }
+        .kpi-title {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .kpi-value {
+            font-size: 30px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 8px 0;
+            font-family: 'Righteous', sans-serif;
+        }
+        .kpi-icon {
+            font-size: 32px;
+            opacity: 0.25;
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            color: #ffffff;
+        }
+
+        /* Filter Toolbar */
+        .toolbar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-control-dash {
+            background-color: var(--bg-dark) !important;
+            border: 1px solid var(--border-color) !important;
+            color: #ffffff !important;
+            border-radius: 8px !important;
+            padding: 10px 14px !important;
+            font-size: 14px !important;
+        }
+        .form-control-dash:focus {
+            border-color: var(--color-primary) !important;
+            box-shadow: 0 0 0 2px rgba(233, 38, 82, 0.25) !important;
+        }
+
+        /* Custom Table */
+        .table-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        .table-custom {
+            width: 100%;
+            color: var(--text-main);
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0;
+        }
+        .table-custom th {
+            background-color: #111218;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+        .table-custom td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+            font-size: 14px;
+        }
+        .table-custom tbody tr {
+            transition: background 0.15s ease;
+        }
+        .table-custom tbody tr:hover {
+            background-color: var(--bg-card-hover);
+        }
+
+        /* Status Badges */
+        .badge-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge-pendiente { background: rgba(255, 152, 0, 0.15); color: #ffb74d; border: 1px solid rgba(255, 152, 0, 0.3); }
+        .badge-aprobado { background: rgba(0, 210, 100, 0.15); color: #00e676; border: 1px solid rgba(0, 210, 100, 0.3); }
+        .badge-rechazado { background: rgba(233, 38, 82, 0.15); color: #ff4a75; border: 1px solid rgba(233, 38, 82, 0.3); }
+        .badge-contactado { background: rgba(0, 176, 255, 0.15); color: #40c4ff; border: 1px solid rgba(0, 176, 255, 0.3); }
+
+        .btn-action {
+            background: #222533;
+            color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+        .btn-action:hover {
+            background: var(--color-primary);
+            color: #ffffff;
+            border-color: var(--color-primary);
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: #ffffff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .btn-whatsapp:hover {
+            background: #1eb956;
+            color: #ffffff;
+        }
+
+        /* Modal Customization */
+        .modal-dash-content {
+            background-color: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-main) !important;
+            border-radius: 16px !important;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-dot.online { background: #00d264; box-shadow: 0 0 8px #00d264; }
+        .status-dot.offline { background: #ff9800; box-shadow: 0 0 8px #ff9800; }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. LOGIN AUTHENTICATION GATE SCREEN -->
+    <div id="login-screen">
+        <div class="login-card">
+            <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 45px; margin-bottom: 20px;">
+            <h3 style="font-family: 'Righteous', sans-serif; color: #ffffff; font-size: 22px; margin-bottom: 5px;">
+                Panel de Administración
+            </h3>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 25px;">
+                Acceso restringido para el equipo de producción.
+            </p>
+
+            <form onsubmit="handleLoginSubmit(event)">
+                <div class="mb-3 text-start">
+                    <label class="form-label text-white" style="font-size: 13px; font-weight: 600;">Usuario / Email de Administración</label>
+                    <input type="text" id="login-user" class="form-control form-control-dash" placeholder="admin@temugeek.cl" required>
+                </div>
+                <div class="mb-3 text-start">
+                    <label class="form-label text-white" style="font-size: 13px; font-weight: 600;">Contraseña de Acceso</label>
+                    <input type="password" id="login-password" class="form-control form-control-dash" placeholder="••••••••••••" required>
+                </div>
+
+                <div id="login-error-msg" class="alert alert-danger p-2 font-size-12 d-none" style="font-size: 13px;">
+                    Credenciales incorrectas. Verifica tus datos de acceso.
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 font-weight-bold" style="background-color: var(--color-primary); border: none; border-radius: 8px;">
+                    <i class="far fa-lock-open me-2"></i> Iniciar Sesión Segura
+                </button>
+            </form>
+
+            <div class="mt-4 pt-3 border-top border-secondary text-muted" style="font-size: 12px;">
+                TemuGeek Expo 2026 • Sistema de Gestión Protegido
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. PROTECTED DASHBOARD APP -->
+    <div id="dashboard-app" class="d-none">
+
+        <!-- Top Navigation Header -->
+        <nav class="top-navbar d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <a href="../index.html">
+                    <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 36px;">
+                </a>
+                <span class="badge bg-danger text-uppercase" style="letter-spacing: 1px; font-size: 11px;"><i class="far fa-shield-alt"></i> Lead Center Admin</span>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <span class="d-flex align-items-center gap-2" style="font-size: 13px; color: var(--text-muted);" id="connection-status-container">
+                    <span class="status-dot offline" id="status-dot"></span>
+                    <span id="status-text">Conectando...</span>
+                </span>
+                
+                <button class="btn btn-outline-warning btn-sm" onclick="openSqlModal()">
+                    <i class="far fa-database"></i> Script SQL Tabla
+                </button>
+                <a href="../postulacion/index.html" target="_blank" class="btn btn-outline-light btn-sm">
+                    <i class="far fa-external-link"></i> Ver Formulario
+                </a>
+                <button class="btn btn-outline-danger btn-sm" onclick="logoutAdmin()">
+                    <i class="far fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Dashboard Content -->
+        <div class="dashboard-container">
+
+            <!-- Page Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 style="font-family: 'Righteous', sans-serif; font-size: 28px; margin: 0; color: #ffffff;">
+                        Gestión de Postulaciones (Leads)
+                    </h1>
+                    <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px; margin-bottom: 0;">
+                        Panel de administración para evaluar, filtrar y contactar expositores.
+                    </p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="exportToCSV()">
+                        <i class="far fa-file-excel"></i> Exportar a CSV
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="exportToJSON()">
+                        <i class="far fa-download"></i> Backup JSON
+                    </button>
+                    <button class="btn btn-outline-info btn-sm" onclick="loadDemoData()">
+                        <i class="far fa-vial"></i> Cargar Datos Demo
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Cards Grid -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-6 col-xl-3">
+                    <div class="kpi-card" style="--accent-color: #3b82f6;">
+                        <div class="kpi-title">Total Postulaciones</div>
+                        <div class="kpi-value" id="kpi-total">0</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Leads recibidos en total</div>
+                        <i class="far fa-clipboard-list kpi-icon"></i>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="kpi-card" style="--accent-color: #ff9800;">
+                        <div class="kpi-title">Pendientes de Revisión</div>
+                        <div class="kpi-value" id="kpi-pendientes" style="color: #ffb74d;">0</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Por evaluar por la producción</div>
+                        <i class="far fa-clock kpi-icon"></i>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="kpi-card" style="--accent-color: #00d264;">
+                        <div class="kpi-title">Stands Aprobados</div>
+                        <div class="kpi-value" id="kpi-aprobados" style="color: #00e676;">0</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Expositores confirmados</div>
+                        <i class="far fa-check-circle kpi-icon"></i>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="kpi-card" style="--accent-color: #ffe62e;">
+                        <div class="kpi-title">Recaudación Estimada</div>
+                        <div class="kpi-value" id="kpi-recaudacion" style="color: #ffe62e;">$0</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Valor acumulado de stands aprobados</div>
+                        <i class="far fa-coins kpi-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter & Search Toolbar -->
+            <div class="toolbar-card">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-secondary"><i class="far fa-search"></i></span>
+                            <input type="text" id="search-input" class="form-control form-control-dash" placeholder="Buscar por expositor, marca, email, ciudad..." oninput="applyFilters()">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <select id="filter-estado" class="form-select form-control-dash" onchange="applyFilters()">
+                            <option value="">Estado: Todos</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="contactado">Contactado</option>
+                            <option value="aprobado">Aprobado</option>
+                            <option value="rechazado">Rechazado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select id="filter-espacio" class="form-select form-control-dash" onchange="applyFilters()">
+                            <option value="">Espacio: Todos</option>
+                            <option value="2x2m">Espacio 2x2m ($20.000)</option>
+                            <option value="3x3m">Espacio 3x3m ($40.000)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select id="filter-formalizado" class="form-select form-control-dash" onchange="applyFilters()">
+                            <option value="">Empresa: Todos</option>
+                            <option value="si">Formalizado (Con RUT)</option>
+                            <option value="no">Independiente (Sin RUT)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 text-end">
+                        <button class="btn btn-outline-secondary w-100" onclick="resetFilters()">
+                            <i class="far fa-sync"></i> Limpiar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Expositor & Marca</th>
+                                <th>Contacto</th>
+                                <th>Ciudad</th>
+                                <th>Categoría(s)</th>
+                                <th>Espacio</th>
+                                <th>SII</th>
+                                <th>Estado</th>
+                                <th class="text-end">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leads-table-body">
+                            <!-- Rendered dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="text-center p-5 d-none">
+                    <i class="far fa-inbox" style="font-size: 48px; color: var(--text-muted); opacity: 0.5;"></i>
+                    <h4 class="mt-3" style="color: #ffffff;">No se encontraron postulaciones</h4>
+                    <p style="color: var(--text-muted); font-size: 14px;">Intenta cambiar los filtros o carga postulaciones de prueba.</p>
+                    <button class="btn btn-outline-info btn-sm mt-2" onclick="loadDemoData()">
+                        <i class="far fa-magic"></i> Cargar 3 Leads de Prueba
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Modal Detalle del Lead -->
+    <div class="modal fade" id="leadModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content modal-dash-content">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" style="font-family: 'Righteous', sans-serif; color: #ffffff;" id="modal-lead-title">Detalle del Lead</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-lead-body">
+                    <!-- Dynamic details -->
+                </div>
+                <div class="modal-footer border-secondary justify-content-between">
+                    <div>
+                        <span style="font-size: 13px; color: var(--text-muted);">Cambiar Estado:</span>
+                        <select id="modal-change-status" class="form-select form-control-dash d-inline-block w-auto ms-2" onchange="updateCurrentLeadStatus(this.value)">
+                            <option value="pendiente">Pendiente</option>
+                            <option value="contactado">Contactado</option>
+                            <option value="aprobado">Aprobado</option>
+                            <option value="rechazado">Rechazado</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Script SQL -->
+    <div class="modal fade" id="sqlModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content modal-dash-content">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" style="font-family: 'Righteous', sans-serif; color: #ffffff;">Script SQL para Supabase</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size: 13px; color: var(--text-muted);">
+                        Ejecuta este código en el SQL Editor de tu consola Supabase para crear la tabla de postulaciones:
+                    </p>
+                    <pre style="background: #0d0e12; border: 1px solid var(--border-color); color: #00e676; padding: 18px; border-radius: 10px; font-size: 13px; max-height: 350px; overflow-y: auto;">
+CREATE TABLE IF NOT EXISTS postulaciones (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+  nombre_expositor TEXT NOT NULL,
+  nombre_marca TEXT NOT NULL,
+  redes_sociales TEXT NOT NULL,
+  telefono TEXT NOT NULL,
+  email TEXT NOT NULL,
+  ciudad TEXT NOT NULL,
+  categorias TEXT NOT NULL,
+  espacio_tipo TEXT NOT NULL,
+  is_formalizado BOOLEAN DEFAULT false,
+  rut_empresa TEXT,
+  razon_social TEXT,
+  giro_empresa TEXT,
+  descripcion_productos TEXT NOT NULL,
+  estado TEXT DEFAULT 'pendiente',
+  notas_internas TEXT
+);
+
+ALTER TABLE postulaciones ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Permitir inserciones públicas" ON postulaciones FOR INSERT WITH CHECK (true);
+CREATE POLICY "Permitir lectura pública" ON postulaciones FOR SELECT USING (true);
+CREATE POLICY "Permitir actualización pública" ON postulaciones FOR UPDATE USING (true);
+</pre>
+                    <hr class="border-secondary my-3">
+                    <h6 class="text-warning font-weight-bold">📧 Configuración de Notificaciones por Correo vía Supabase Webhook (Sin CORS)</h6>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                        Los navegadores bloquean llamadas AJAX directas a la API de Resend por seguridad (CORS). Para que Supabase envíe el correo automáticamente en el servidor al registrarse una postulación:
+                    </p>
+                    <ol style="font-size: 13px; color: #d1d1d6; padding-left: 20px;">
+                        <li>Ve a tu consola de Supabase &rarr; <strong>Database</strong> &rarr; <strong>Webhooks</strong>.</li>
+                        <li>Haz clic en <strong>Create a new webhook</strong>.</li>
+                        <li><strong>Name:</strong> <code>notificar_resend</code></li>
+                        <li><strong>Table:</strong> <code>postulaciones</code> (Event: <code>INSERT</code>)</li>
+                        <li><strong>Webhook Type:</strong> HTTP Request</li>
+                        <li><strong>Method:</strong> <code>POST</code> &rarr; <strong>URL:</strong> <code>https://api.resend.com/emails</code></li>
+                        <li><strong>HTTP Headers:</strong>
+                            <br><code>Authorization: Bearer re_eYonikZe_3xNwYMurZLXdWdnMqZJjNCbf</code>
+                            <br><code>Content-Type: application/json</code>
+                        </li>
+                    </ol>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" onclick="copySqlScript()"><i class="far fa-copy"></i> Copiar Código SQL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Includes -->
+    <script src="../assets/js/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let supabaseClient = null;
+        let allLeads = [];
+        let filteredLeads = [];
+        let selectedLeadId = null;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            checkAuthSession();
+        });
+
+        // AUTHENTICATION LOGIC
+        async function checkAuthSession() {
+            const isAuth = sessionStorage.getItem("TG_ADMIN_AUTH") === "true";
+            if (isAuth) {
+                document.getElementById("login-screen").classList.add("d-none");
+                document.getElementById("dashboard-app").classList.remove("d-none");
+                await initSupabase();
+                loadLeads();
+            } else {
+                document.getElementById("login-screen").classList.remove("d-none");
+                document.getElementById("dashboard-app").classList.add("d-none");
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+            const user = document.getElementById("login-user").value.trim();
+            const pass = document.getElementById("login-password").value.trim();
+            const errorMsg = document.getElementById("login-error-msg");
+
+            errorMsg.classList.add("d-none");
+            await loadEnvConfig();
+
+            // Check Supabase Auth if client is configured
+            let loginSuccess = false;
+
+            const sb = await getSupabaseClient();
+            if (sb) {
+                try {
+                    const { data, error } = await sb.auth.signInWithPassword({ email: user, password: pass });
+                    if (!error && data.user) {
+                        loginSuccess = true;
+                    }
+                } catch (err) {
+                    console.warn("Supabase Auth error:", err);
+                }
+            }
+
+            // Fallback Check using Master Config Pass from .env
+            if (!loginSuccess) {
+                if (pass === SUPABASE_CONFIG.ADMIN_MASTER_PASS || (user === "admin@temugeek.cl" && pass === "temugeek2026")) {
+                    loginSuccess = true;
+                }
+            }
+
+            if (loginSuccess) {
+                sessionStorage.setItem("TG_ADMIN_AUTH", "true");
+                await checkAuthSession();
+            } else {
+                errorMsg.classList.remove("d-none");
+            }
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem("TG_ADMIN_AUTH");
+            if (supabaseClient) {
+                try { supabaseClient.auth.signOut(); } catch(e){}
+            }
+            checkAuthSession();
+        }
+
+        // SUPABASE CLIENT INIT
+        async function initSupabase() {
+            supabaseClient = await getSupabaseClient();
+            const statusDot = document.getElementById("status-dot");
+            const statusText = document.getElementById("status-text");
+
+            if (supabaseClient) {
+                statusDot.className = "status-dot online";
+                statusText.textContent = "Supabase Conectado (.env)";
+            } else {
+                statusDot.className = "status-dot offline";
+                statusText.textContent = "Modo Resiliencia (Local)";
+            }
+        }
+
+        // LOAD LEADS DATA
+        async function loadLeads() {
+            if (supabaseClient) {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('postulaciones')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (error) throw error;
+                    allLeads = data || [];
+                } catch (err) {
+                    console.warn("Supabase fetch failed, falling back to LocalStorage:", err);
+                    loadLocalLeads();
+                }
+            } else {
+                loadLocalLeads();
+            }
+
+            applyFilters();
+        }
+
+        function loadLocalLeads() {
+            const localData = localStorage.getItem("TG_POSTULACIONES_LOCAL");
+            allLeads = localData ? JSON.parse(localData) : [];
+        }
+
+        function saveLocalLeads() {
+            localStorage.setItem("TG_POSTULACIONES_LOCAL", JSON.stringify(allLeads));
+        }
+
+        // RENDER DASHBOARD
+        function renderDashboard() {
+            const tbody = document.getElementById("leads-table-body");
+            const emptyState = document.getElementById("empty-state");
+
+            tbody.innerHTML = "";
+
+            if (filteredLeads.length === 0) {
+                emptyState.classList.remove("d-none");
+            } else {
+                emptyState.classList.add("d-none");
+
+                filteredLeads.forEach(lead => {
+                    const tr = document.createElement("tr");
+
+                    const createdDate = new Date(lead.created_at || Date.now()).toLocaleDateString('es-CL', {
+                        day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                    });
+
+                    const statusClass = `badge-${lead.estado || 'pendiente'}`;
+
+                    tr.innerHTML = `
+                        <td style="white-space: nowrap; font-size: 13px; color: var(--text-muted);">${createdDate}</td>
+                        <td>
+                            <div style="font-weight: bold; color: #ffffff;">${escapeHtml(lead.nombre_marca)}</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">${escapeHtml(lead.nombre_expositor)}</div>
+                            <div style="font-size: 12px; color: var(--color-primary);">${escapeHtml(lead.redes_sociales)}</div>
+                        </td>
+                        <td>
+                            <div style="font-size: 13px; color: #ffffff;">${escapeHtml(lead.email)}</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">${escapeHtml(lead.telefono)}</div>
+                        </td>
+                        <td><span class="badge bg-dark border border-secondary">${escapeHtml(lead.ciudad)}</span></td>
+                        <td>
+                            <div style="max-width: 220px; font-size: 12px; color: #d1d1d6; word-wrap: break-word;">
+                                ${escapeHtml(lead.categorias)}
+                            </div>
+                        </td>
+                        <td><strong style="color: ${lead.espacio_tipo.includes('3x3') ? '#ffe62e' : '#ffffff'};">${escapeHtml(lead.espacio_tipo)}</strong></td>
+                        <td>
+                            ${lead.is_formalizado ? '<span class="badge bg-success" style="font-size: 10px;">SÍ (RUT)</span>' : '<span class="badge bg-secondary" style="font-size: 10px;">NO</span>'}
+                        </td>
+                        <td>
+                            <span class="badge-status ${statusClass}">${(lead.estado || 'pendiente').toUpperCase()}</span>
+                        </td>
+                        <td class="text-end" style="white-space: nowrap;">
+                            <button class="btn-whatsapp me-1" onclick="openWhatsApp('${escapeHtml(lead.telefono)}', '${escapeHtml(lead.nombre_expositor)}', '${escapeHtml(lead.nombre_marca)}')">
+                                <i class="fab fa-whatsapp"></i> WSP
+                            </button>
+                            <button class="btn-action" onclick="viewLeadDetail('${lead.id}')">
+                                <i class="far fa-eye"></i> Ver
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            updateKPIs();
+        }
+
+        function updateKPIs() {
+            document.getElementById("kpi-total").textContent = allLeads.length;
+
+            const pendientes = allLeads.filter(l => (l.estado || 'pendiente') === 'pendiente').length;
+            document.getElementById("kpi-pendientes").textContent = pendientes;
+
+            const aprobados = allLeads.filter(l => l.estado === 'aprobado');
+            document.getElementById("kpi-aprobados").textContent = aprobados.length;
+
+            let recaudacion = 0;
+            aprobados.forEach(l => {
+                if (l.espacio_tipo && l.espacio_tipo.includes('3x3')) recaudacion += 40000;
+                else recaudacion += 20000;
+            });
+
+            document.getElementById("kpi-recaudacion").textContent = '$' + recaudacion.toLocaleString('es-CL');
+        }
+
+        function applyFilters() {
+            const search = document.getElementById("search-input").value.toLowerCase().trim();
+            const estado = document.getElementById("filter-estado").value;
+            const espacio = document.getElementById("filter-espacio").value;
+            const formalizado = document.getElementById("filter-formalizado").value;
+
+            filteredLeads = allLeads.filter(l => {
+                const matchSearch = !search ||
+                    (l.nombre_expositor && l.nombre_expositor.toLowerCase().includes(search)) ||
+                    (l.nombre_marca && l.nombre_marca.toLowerCase().includes(search)) ||
+                    (l.email && l.email.toLowerCase().includes(search)) ||
+                    (l.ciudad && l.ciudad.toLowerCase().includes(search)) ||
+                    (l.categorias && l.categorias.toLowerCase().includes(search));
+
+                const matchEstado = !estado || (l.estado || 'pendiente') === estado;
+                const matchEspacio = !espacio || (l.espacio_tipo && l.espacio_tipo.includes(espacio));
+                const matchFormalizado = !formalizado || (formalizado === 'si' ? l.is_formalizado : !l.is_formalizado);
+
+                return matchSearch && matchEstado && matchEspacio && matchFormalizado;
+            });
+
+            renderDashboard();
+        }
+
+        function resetFilters() {
+            document.getElementById("search-input").value = "";
+            document.getElementById("filter-estado").value = "";
+            document.getElementById("filter-espacio").value = "";
+            document.getElementById("filter-formalizado").value = "";
+            applyFilters();
+        }
+
+        function viewLeadDetail(id) {
+            const lead = allLeads.find(l => l.id == id);
+            if (!lead) return;
+
+            selectedLeadId = id;
+            document.getElementById("modal-lead-title").textContent = `${lead.nombre_marca} — Detalle de Postulación`;
+
+            const modalBody = document.getElementById("modal-lead-body");
+            modalBody.innerHTML = `
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-dark rounded border border-secondary">
+                            <h6 style="color: var(--color-primary); font-weight: bold;">Información Personal & Marca</h6>
+                            <div><strong>Responsable:</strong> ${escapeHtml(lead.nombre_expositor)}</div>
+                            <div><strong>Marca / Proyecto:</strong> ${escapeHtml(lead.nombre_marca)}</div>
+                            <div><strong>Redes Sociales:</strong> <a href="${escapeHtml(lead.redes_sociales)}" target="_blank" style="color: #ffe62e;">${escapeHtml(lead.redes_sociales)}</a></div>
+                            <div><strong>Ciudad:</strong> ${escapeHtml(lead.ciudad)}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-dark rounded border border-secondary">
+                            <h6 style="color: var(--color-primary); font-weight: bold;">Contacto & Espacio Solicitado</h6>
+                            <div><strong>Correo:</strong> <a href="mailto:${escapeHtml(lead.email)}" style="color: #ffffff;">${escapeHtml(lead.email)}</a></div>
+                            <div><strong>WhatsApp:</strong> ${escapeHtml(lead.telefono)}</div>
+                            <div><strong>Tipo de Espacio:</strong> <span class="badge bg-danger">${escapeHtml(lead.espacio_tipo)}</span></div>
+                            <div><strong>Categorías:</strong> ${escapeHtml(lead.categorias)}</div>
+                        </div>
+                    </div>
+
+                    ${lead.is_formalizado ? `
+                    <div class="col-md-12">
+                        <div class="p-3 bg-dark rounded border border-warning">
+                            <h6 style="color: #ffe62e; font-weight: bold;"><i class="far fa-building"></i> Datos de Empresa (SII)</h6>
+                            <div class="row">
+                                <div class="col-md-4"><strong>RUT Empresa:</strong> ${escapeHtml(lead.rut_empresa || '-')}</div>
+                                <div class="col-md-4"><strong>Razón Social:</strong> ${escapeHtml(lead.razon_social || '-')}</div>
+                                <div class="col-md-4"><strong>Giro:</strong> ${escapeHtml(lead.giro_empresa || '-')}</div>
+                            </div>
+                        </div>
+                    </div>` : ''}
+
+                    <div class="col-md-12">
+                        <div class="p-3 bg-dark rounded border border-secondary">
+                            <h6 style="color: #ffffff; font-weight: bold;">Descripción de Productos a Exhibir</h6>
+                            <p style="color: #d1d1d6; font-size: 14px; margin: 0;">${escapeHtml(lead.descripcion_productos)}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label text-white font-weight-bold">Notas Internas de la Producción</label>
+                        <textarea id="modal-internal-notes" class="form-control form-control-dash" rows="2" placeholder="Añadir observaciones internas..." onchange="saveInternalNotes(this.value)">${escapeHtml(lead.notas_internas || '')}</textarea>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById("modal-change-status").value = lead.estado || 'pendiente';
+
+            const modal = new bootstrap.Modal(document.getElementById("leadModal"));
+            modal.show();
+        }
+
+        async function updateCurrentLeadStatus(newStatus) {
+            if (!selectedLeadId) return;
+
+            const lead = allLeads.find(l => l.id == selectedLeadId);
+            if (lead) {
+                lead.estado = newStatus;
+
+                if (supabaseClient) {
+                    try {
+                        await supabaseClient
+                            .from('postulaciones')
+                            .update({ estado: newStatus })
+                            .eq('id', selectedLeadId);
+                    } catch (e) {
+                        console.error("Error actualizando Supabase:", e);
+                    }
+                } else {
+                    saveLocalLeads();
+                }
+
+                applyFilters();
+            }
+        }
+
+        async function saveInternalNotes(notes) {
+            if (!selectedLeadId) return;
+            const lead = allLeads.find(l => l.id == selectedLeadId);
+            if (lead) {
+                lead.notas_internas = notes;
+                if (supabaseClient) {
+                    await supabaseClient.from('postulaciones').update({ notas_internas: notes }).eq('id', selectedLeadId);
+                } else {
+                    saveLocalLeads();
+                }
+            }
+        }
+
+        function openWhatsApp(phone, name, brand) {
+            let cleanPhone = phone.replace(/[^0-9]/g, '');
+            if (!cleanPhone.startsWith('56')) cleanPhone = '56' + cleanPhone;
+
+            const text = encodeURIComponent(`Hola ${name}! Te contactamos desde la Producción de TemuGeek Expo 2026 respecto a tu postulación para el stand de ${brand}.`);
+            window.open(`https://wa.me/${cleanPhone}?text=${text}`, '_blank');
+        }
+
+        function loadDemoData() {
+            const demoLeads = [
+                {
+                    id: "demo-1",
+                    created_at: new Date(Date.now() - 3600000 * 2).toISOString(),
+                    nombre_expositor: "Camila Morales",
+                    nombre_marca: "Sakura Art Studio",
+                    redes_sociales: "@sakura.art.cl",
+                    telefono: "+56987654321",
+                    email: "camila@sakuraart.cl",
+                    ciudad: "Temuco",
+                    categorias: "Ilustración & Fanart, Arte Original & Cómics/Manga",
+                    espacio_tipo: "Espacio 2x2m ($20.000 CLP)",
+                    is_formalizado: false,
+                    descripcion_productos: "Ilustraciones originales, prints fanart de anime, fanzines y stickers laminados de producción propia.",
+                    estado: "pendiente",
+                    notas_internas: ""
+                },
+                {
+                    id: "demo-2",
+                    created_at: new Date(Date.now() - 3600000 * 8).toISOString(),
+                    nombre_expositor: "Rodrigo Fuentes",
+                    nombre_marca: "Akihabara Store Chile",
+                    redes_sociales: "@akihabarastore",
+                    telefono: "+56912345678",
+                    email: "ventas@akihabarastore.cl",
+                    ciudad: "Concepción",
+                    categorias: "Tienda Anime & K-Pop, Figuras & Coleccionables",
+                    espacio_tipo: "Espacio 3x3m (Módulos) ($40.000 CLP)",
+                    is_formalizado: true,
+                    rut_empresa: "77.987.654-K",
+                    razon_social: "Comercializadora Akihabara SpA",
+                    giro_empresa: "Venta de artículos de colección e importaciones",
+                    descripcion_productos: "Figuras originales Banpresto y Nendoroid, merchandising oficial de anime y K-Pop importado directamente de Japón.",
+                    estado: "aprobado",
+                    notas_internas: "Pago 100% confirmado. Asignar módulo central."
+                },
+                {
+                    id: "demo-3",
+                    created_at: new Date(Date.now() - 3600000 * 24).toISOString(),
+                    nombre_expositor: "Valentina Reyes",
+                    nombre_marca: "PixelForge 3D",
+                    redes_sociales: "@pixelforge_3d",
+                    telefono: "+56955544332",
+                    email: "contacto@pixelforge.cl",
+                    ciudad: "Valdivia",
+                    categorias: "Impresión 3D & Grabado Láser, Cosplay Props & Accesorios",
+                    espacio_tipo: "Espacio 2x2m ($20.000 CLP)",
+                    is_formalizado: true,
+                    rut_empresa: "76.456.123-4",
+                    razon_social: "PixelForge Soluciones 3D EIRL",
+                    giro_empresa: "Manufactura aditiva y diseño 3D",
+                    descripcion_productos: "Props impresos en resina y PLA, llaveros articulados, lámparas LED personalizadas y llaveros láser.",
+                    estado: "contactado",
+                    notas_internas: "Enviado correo con requerimientos de electricidad."
+                }
+            ];
+
+            allLeads = [...demoLeads, ...allLeads];
+            saveLocalLeads();
+            applyFilters();
+            alert("Se han cargado 3 postulaciones de prueba en el panel.");
+        }
+
+        function exportToCSV() {
+            if (allLeads.length === 0) return alert("No hay postulaciones para exportar.");
+
+            const headers = ["ID", "Fecha", "Nombre Expositor", "Nombre Marca", "Redes Sociales", "Telefono", "Email", "Ciudad", "Categorias", "Espacio", "Formalizado", "RUT Empresa", "Razon Social", "Estado", "Descripcion"];
+            const rows = allLeads.map(l => [
+                l.id,
+                l.created_at,
+                `"${l.nombre_expositor || ''}"`,
+                `"${l.nombre_marca || ''}"`,
+                `"${l.redes_sociales || ''}"`,
+                `"${l.telefono || ''}"`,
+                `"${l.email || ''}"`,
+                `"${l.ciudad || ''}"`,
+                `"${l.categorias || ''}"`,
+                `"${l.espacio_tipo || ''}"`,
+                l.is_formalizado ? "SI" : "NO",
+                `"${l.rut_empresa || ''}"`,
+                `"${l.razon_social || ''}"`,
+                l.estado || "pendiente",
+                `"${(l.descripcion_productos || '').replace(/"/g, '""')}"`
+            ]);
+
+            const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `postulaciones_temugeek_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportToJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allLeads, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `backup_leads_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function openSqlModal() {
+            const modal = new bootstrap.Modal(document.getElementById("sqlModal"));
+            modal.show();
+        }
+
+        function copySqlScript() {
+            const sqlText = document.querySelector("#sqlModal pre").innerText;
+            navigator.clipboard.writeText(sqlText);
+            alert("¡Código SQL copiado al portapapeles!");
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+
+</html>

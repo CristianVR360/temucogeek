@@ -1,0 +1,1265 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <!--========= Required meta tags =========-->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="Formulario de Postulación de Expositores, Tiendas y Artistas para TemuGeek Expo 2026 en el Recinto SOFO, Temuco.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Postulación de Expositores - TemuGeek Expo 2026</title>
+
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- css include -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/swiper.min.css">
+    <link rel="stylesheet" href="../assets/css/odometer.css">
+    <link rel="stylesheet" href="../assets/css/mousecursor.css">
+    <link rel="stylesheet" href="../assets/css/nice-select.css">
+    <link rel="stylesheet" href="../assets/css/custom-fonts.css">
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/jquery-ui.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+
+    <!-- Supabase JS Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- TemuGeek Custom Styles Overrides & Form Styling -->
+    <style>
+        .design-conference {
+            --color-primary: #e92652 !important;     /* Fucsia */
+            --color-secondary: #e92652 !important;   /* Magenta / Fucsia */
+            --color-heading: #e92652 !important;     /* Magenta / Fucsia headings */
+            --color-body: #141519 !important;        /* Negro body bg */
+            --color-default: #d1d1d6 !important;     /* Light gray default text */
+        }
+        body.design-conference {
+            background-color: #141519 !important;
+            color: #d1d1d6 !important;
+        }
+        .design-conference .bg_img {
+            background-color: #141519 !important;
+            background-blend-mode: multiply !important;
+        }
+        .design-conference .sec-title .sub-title {
+            color: #e92652 !important;
+        }
+        .design-conference .sec-title .title {
+            color: #e92652 !important;
+        }
+        .design-conference .thm-btn.design-btn {
+            background-color: #e92652 !important;
+            color: #141519 !important;
+            border-color: #e92652 !important;
+        }
+        .design-conference .thm-btn.design-btn:hover {
+            background-color: #ff4a75 !important;
+            color: #141519 !important;
+            border-color: #ff4a75 !important;
+        }
+
+        /* Form Custom Design System */
+        .postulacion-card {
+            background-color: #1c1d24 !important;
+            border: 1px solid #323541 !important;
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: border-color 0.3s ease;
+        }
+        .postulacion-card:hover {
+            border-color: #e92652 !important;
+        }
+        .info-card-header {
+            border-bottom: 1px solid #323541;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .info-card-title {
+            color: #e92652 !important;
+            font-family: 'Righteous', sans-serif;
+            font-size: 22px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-restriction {
+            background: rgba(233, 38, 82, 0.12);
+            border: 2px solid #e92652;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .alert-restriction-title {
+            color: #ffe62e !important;
+            font-family: 'Righteous', sans-serif;
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .space-item {
+            background: #141519;
+            border: 1px solid #323541;
+            border-radius: 12px;
+            padding: 20px;
+            height: 100%;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .space-item:hover {
+            border-color: #ffe62e;
+            transform: translateY(-3px);
+        }
+        .space-title {
+            color: #ffffff;
+            font-family: 'Righteous', sans-serif;
+            font-size: 20px;
+        }
+        .space-price {
+            color: #e92652;
+            font-size: 26px;
+            font-weight: bold;
+        }
+        .space-badge {
+            background: #ffe62e;
+            color: #141519;
+            font-weight: bold;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        /* Custom Form Inputs */
+        .form-label-custom {
+            color: #ffffff !important;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 15px;
+            display: block;
+        }
+        .form-control-custom {
+            background-color: #141519 !important;
+            border: 1px solid #323541 !important;
+            color: #ffffff !important;
+            border-radius: 8px !important;
+            padding: 12px 16px !important;
+            font-size: 15px !important;
+            width: 100%;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control-custom:focus {
+            outline: none !important;
+            border-color: #e92652 !important;
+            box-shadow: 0 0 10px rgba(233, 38, 82, 0.3) !important;
+        }
+        .form-control-custom::placeholder {
+            color: #6e7282 !important;
+        }
+
+        /* Checkbox & Radio styling */
+        .custom-check-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .checkbox-tile {
+            background-color: #141519;
+            border: 1px solid #323541;
+            border-radius: 8px;
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: border-color 0.2s ease, background 0.2s ease;
+            user-select: none;
+            color: #d1d1d6;
+            font-size: 14px;
+        }
+        .checkbox-tile:hover {
+            border-color: #e92652;
+        }
+        .checkbox-tile input[type="checkbox"],
+        .checkbox-tile input[type="radio"] {
+            accent-color: #e92652;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .checkbox-tile.selected {
+            border-color: #e92652;
+            background-color: rgba(233, 38, 82, 0.1);
+            color: #ffffff;
+        }
+
+        /* Dynamic Company Section */
+        #empresa-extra-fields {
+            background: rgba(255, 230, 46, 0.05);
+            border: 1px dashed #ffe62e;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* Data Privacy Box */
+        .privacy-box {
+            background-color: #141519;
+            border: 1px solid #323541;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 13px;
+            color: #9da1b0;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Submission Modal */
+        .modal-custom-content {
+            background-color: #1c1d24 !important;
+            border: 2px solid #e92652 !important;
+            color: #ffffff !important;
+            border-radius: 16px !important;
+        }
+
+        /* RUT Validation */
+        .rut-error {
+            color: #ff4a75;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+        .rut-valid {
+            border-color: #00e676 !important;
+            box-shadow: 0 0 0 2px rgba(0, 230, 118, 0.15) !important;
+        }
+        .rut-invalid {
+            border-color: #ff4a75 !important;
+            box-shadow: 0 0 0 2px rgba(255, 74, 117, 0.15) !important;
+        }
+
+        /* Full-Screen Success Overlay */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f1015 0%, #1a1b25 40%, #141519 100%);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        .success-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .success-card {
+            background: #1c1d24;
+            border: 1px solid #2a2d3d;
+            border-radius: 24px;
+            padding: 50px 40px;
+            max-width: 560px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 80px rgba(233, 38, 82, 0.08);
+            animation: successSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(40px);
+            opacity: 0;
+        }
+        @keyframes successSlideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .success-icon-ring {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(233,38,82,0.15), rgba(255,230,46,0.1));
+            border: 2px solid #e92652;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            animation: successPulse 2s ease-in-out infinite;
+        }
+        @keyframes successPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(233,38,82,0.3); }
+            50% { box-shadow: 0 0 0 15px rgba(233,38,82,0); }
+        }
+        .success-icon-ring i {
+            font-size: 44px;
+            color: #ffe62e;
+        }
+        .success-title {
+            color: #ffffff;
+            font-family: 'Righteous', sans-serif;
+            font-size: 28px;
+            margin: 0 0 12px;
+        }
+        .success-subtitle {
+            color: #e92652;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .success-text {
+            color: #d1d1d6;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        .success-info-bar {
+            background: #141519;
+            border: 1px solid #2a2d3d;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .success-info-item {
+            text-align: center;
+        }
+        .success-info-item .label {
+            font-size: 11px;
+            color: #8e95a5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .success-info-item .value {
+            font-size: 15px;
+            color: #ffe62e;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        .success-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .success-btn-primary {
+            background: linear-gradient(135deg, #e92652, #ff4a75);
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .success-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(233,38,82,0.4);
+            color: #fff;
+        }
+        .success-btn-secondary {
+            background: transparent;
+            color: #d1d1d6;
+            border: 1px solid #323541;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .success-btn-secondary:hover {
+            border-color: #e92652;
+            color: #e92652;
+        }
+        .success-confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            animation: confettiFall 3s ease-in-out forwards;
+            opacity: 0;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+
+<body class="design-conference">
+
+<!-- backtotop-start -->
+<div class="xb-backtotop style-two">
+    <a href="#" class="scroll">
+        <i class="far fa-arrow-up"></i>
+    </a>
+</div>
+<!-- backtotop-end -->
+
+<div class="body_wrap o-clip">
+
+    <!-- header start -->
+    <header id="xb-header-area" class="header-area header-style header-style--two header-transparent">
+        <div class="xb-header stricky">
+            <div class="container">
+                <div class="header__wrap ul_li_between">
+                    <div class="xb-header-logo">
+                        <a href="../index.html" class="logo1">
+                            <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 40px;">
+                        </a>
+                    </div>
+                    <div class="main-menu__wrap navbar navbar-expand-lg p-0">
+                        <nav class="main-menu collapse navbar-collapse">
+                            <ul>
+                                <li><a href="../index.html#home-section"><span>Inicio</span></a></li>
+                                <li><a href="../index.html#about-section"><span>El Evento</span></a></li>
+                                <li><a href="../index.html#pricing-section"><span>Entradas</span></a></li>
+                                <li class="active"><a href="index.html"><span>Postulación Expositores</span></a></li>
+                                <li><a href="../index.html#faq-section"><span>FAQ</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="header-bar-mobile side-menu d-lg-none">
+                        <a class="xb-nav-mobile" href="javascript:void(0);">
+                            <i class="far fa-bars"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <main>
+        <!-- Compact Page Header Banner -->
+        <section class="page-header-section pos-rel bg_img" data-background="../assets/img/bg/geek.jpg" style="padding-top: 130px; padding-bottom: 40px; min-height: auto !important; height: auto !important; border-bottom: 1px solid #323541;">
+            <div class="container">
+                <div class="page-header-content text-center">
+                    <span class="sub-title wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms" style="color: #ffe62e; font-family: 'Righteous', sans-serif; letter-spacing: 2px; font-size: 14px; text-transform: uppercase;">
+                        <i class="far fa-store"></i> Convocatoria Oficial de Expositores
+                    </span>
+                    <h1 class="title wow fadeInUp" data-wow-delay="100ms" data-wow-duration="600ms" style="color: #ffffff; font-family: 'Righteous', sans-serif; font-size: 34px; margin-top: 10px; margin-bottom: 12px;">
+                        Postulación de Expositores & Reglamento
+                    </h1>
+                    <p class="wow fadeInUp" data-wow-delay="200ms" data-wow-duration="600ms" style="max-width: 700px; margin: 0 auto; color: #d1d1d6; font-size: 15px; line-height: 1.5;">
+                        Únete como tienda, ilustrador, artesano o marca en TemuGeek Expo 2026. Revisa las bases, tipos de espacio y completa tu formulario a continuación.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Section -->
+        <section class="pt-50 pb-120 dark-bg">
+            <div class="container">
+
+                <!-- 0. Datos Básicos del Evento -->
+                <div class="postulacion-card wow fadeInUp" data-wow-delay="0ms">
+                    <div class="info-card-header">
+                        <h2 class="info-card-title"><i class="far fa-calendar-star"></i> Datos Básicos del Evento</h2>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center gap-3">
+                                <div style="width: 50px; height: 50px; background: rgba(233, 38, 82, 0.15); border: 1px solid #e92652; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #e92652;">
+                                    <i class="far fa-calendar-alt"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Fecha</div>
+                                    <div style="color: #fff; font-weight: bold; font-size: 16px;">Domingo, 16 de Agosto de 2026</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center gap-3">
+                                <div style="width: 50px; height: 50px; background: rgba(255, 230, 46, 0.15); border: 1px solid #ffe62e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #ffe62e;">
+                                    <i class="far fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Lugar</div>
+                                    <div style="color: #fff; font-weight: bold; font-size: 16px;">Recinto SOFO, Temuco</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center gap-3">
+                                <div style="width: 50px; height: 50px; background: rgba(0, 210, 100, 0.15); border: 1px solid #00d264; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #00d264;">
+                                    <i class="far fa-clock"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Horarios</div>
+                                    <div style="color: #fff; font-weight: bold; font-size: 15px;">Montaje: 08:00 – 10:30 hrs</div>
+                                    <div style="color: #d1d1d6; font-size: 13px;">Cierre del Evento: 20:00 hrs</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1. Perfil del Expositor & Restricción -->
+                <div class="postulacion-card wow fadeInUp" data-wow-delay="100ms">
+                    <div class="info-card-header">
+                        <h2 class="info-card-title"><i class="far fa-users-crown"></i> 1. Perfil del Expositor</h2>
+                    </div>
+                    <p style="color: #d1d1d6; font-size: 16px; margin-bottom: 20px;">
+                        Este evento está diseñado para potenciar y visibilizar el talento y comercio local y nacional. Los perfiles autorizados a participar son:
+                    </p>
+                    <div class="row g-3">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="space-item">
+                                <div style="color: #ffe62e; font-size: 20px; margin-bottom: 8px;"><i class="far fa-paint-brush"></i> Ilustradores y Artistas</div>
+                                <p style="font-size: 14px; color: #b5b5c0; margin: 0;">Creadores de fanart, arte original, cómics, fanzines y manga.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="space-item">
+                                <div style="color: #e92652; font-size: 20px; margin-bottom: 8px;"><i class="far fa-store-alt"></i> Emprendedores y Tiendas</div>
+                                <p style="font-size: 14px; color: #b5b5c0; margin: 0;">Venta de figuras, coleccionables, accesorios, vestuario y merchandising de anime, K-pop y videojuegos.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="space-item">
+                                <div style="color: #00d264; font-size: 20px; margin-bottom: 8px;"><i class="far fa-cut"></i> Artesanos y Cosmakers</div>
+                                <p style="font-size: 14px; color: #b5b5c0; margin: 0;">Creadores de props, accesorios hechos a mano, amigurumis, joyería geek y manufactura artesanal.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <div class="space-item">
+                                <div style="color: #38ef7d; font-size: 20px; margin-bottom: 8px;"><i class="far fa-cube"></i> Tecnología y Manufactura</div>
+                                <p style="font-size: 14px; color: #b5b5c0; margin: 0;">Impresión 3D, grabado láser, papelería personalizada y stickers de producción propia.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="space-item">
+                                <div style="color: #ffe62e; font-size: 20px; margin-bottom: 8px;"><i class="far fa-cards-blank"></i> Juegos de Mesa y TCG</div>
+                                <p style="font-size: 14px; color: #b5b5c0; margin: 0;">Tiendas especializadas en cartas coleccionables (Mitos y Leyendas, Pokémon, Yu-Gi-Oh!, Magic), rol y juegos de tablero.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Callout Restricción Crítica -->
+                    <div class="alert-restriction">
+                        <div class="alert-restriction-title">
+                            <i class="far fa-exclamation-triangle"></i> RESTRICCIÓN CRÍTICA DE ESPACIOS
+                        </div>
+                        <p style="color: #ffffff; font-size: 15px; margin: 0; line-height: 1.6;">
+                            Solo se permitirá la compra de <strong>un (1) espacio por expositor o marca</strong>. No está permitida la reventa de espacios ni la fusión de stands de marcas distintas en un mismo espacio sin autorización previa por escrito de la producción.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2. Tipos de Espacio y Valores -->
+                <div class="postulacion-card wow fadeInUp" data-wow-delay="200ms">
+                    <div class="info-card-header">
+                        <h2 class="info-card-title"><i class="far fa-layer-group"></i> 2. Tipos de Espacio y Valores</h2>
+                    </div>
+                    <p style="color: #d1d1d6; font-size: 16px; margin-bottom: 25px;">
+                        Cada expositor tendrá derecho a entradas al evento de acuerdo a la magnitud de su stand y nivel de exhibición. Podrá elegir entre tres formatos de espacio según sus requerimientos de tamaño:
+                    </p>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="space-item" style="border: 2px solid #323541; background: #181920;">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <div class="space-title">Espacio 2x2 metros</div>
+                                        <div style="color: #888; font-size: 13px;">Formato Estándar</div>
+                                    </div>
+                                    <span class="space-badge" style="background: rgba(233, 38, 82, 0.2); color: #e92652; border: 1px solid #e92652;">4 Entradas</span>
+                                </div>
+                                <div class="space-price mb-3">$20.000 <span style="font-size: 14px; color: #888; font-weight: normal;">CLP</span></div>
+                                <p style="color: #d1d1d6; font-size: 14px;"><strong>Uso Recomendado:</strong> Pequeños emprendedores, ilustradores y artistas independientes.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="space-item" style="border: 2px solid #e92652; background: #1c1722;">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <div class="space-title" style="color: #ffe62e;">Espacio 3x3 metros (Módulos)</div>
+                                        <div style="color: #888; font-size: 13px;">Formato Gran Tamaño</div>
+                                    </div>
+                                    <span class="space-badge">6 Entradas</span>
+                                </div>
+                                <div class="space-price mb-3">$40.000 <span style="font-size: 14px; color: #888; font-weight: normal;">CLP</span></div>
+                                <p style="color: #d1d1d6; font-size: 14px;"><strong>Uso Recomendado:</strong> Tiendas medianas, vestuario o exhibición de coleccionables.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="color: #888; font-size: 13px; margin-top: 20px; font-style: italic;">
+                        * Las entradas incluidas están destinadas exclusivamente al staff de apoyo de la marca y sus acompañantes para el ingreso al evento.
+                    </p>
+                </div>
+
+                <!-- 3. Mobiliario y Montaje -->
+                <div class="postulacion-card wow fadeInUp" data-wow-delay="300ms">
+                    <div class="info-card-header">
+                        <h2 class="info-card-title"><i class="far fa-couch"></i> 3. Mobiliario y Montaje</h2>
+                    </div>
+                    <div class="alert alert-dark" style="background: #141519; border: 1px solid #323541; color: #ffe62e; border-radius: 10px; margin-bottom: 20px;">
+                        <i class="far fa-info-circle"></i> <strong>Importante:</strong> Ninguno de los espacios incluye mesas, manteles ni sillas. Es responsabilidad de cada expositor llevar su propio mobiliario respetando los lineamientos de su espacio.
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div style="background: #141519; border-left: 4px solid #e92652; padding: 20px; border-radius: 0 10px 10px 0;">
+                                <h4 style="color: #ffffff; font-size: 18px; font-family: 'Righteous', sans-serif; margin-bottom: 12px;">Reglas para Espacio 2x2 metros:</h4>
+                                <ul style="color: #b5b5c0; font-size: 14px; padding-left: 20px; line-height: 1.8; margin: 0;">
+                                    <li>Debe llevar una mesa plegable estándar.</li>
+                                    <li><strong>Uso obligatorio de un mantel negro</strong> que cubra la mesa de manera prolija (idealmente que llegue al suelo en la parte frontal para ocultar cajas o mercadería guardada).</li>
+                                    <li>No se permiten estructuras gigantes que sobrepasen el límite de los 2x2 metros.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="background: #141519; border-left: 4px solid #ffe62e; padding: 20px; border-radius: 0 10px 10px 0;">
+                                <h4 style="color: #ffffff; font-size: 18px; font-family: 'Righteous', sans-serif; margin-bottom: 12px;">Reglas para Espacios 3x3 metros:</h4>
+                                <ul style="color: #b5b5c0; font-size: 14px; padding-left: 20px; line-height: 1.8; margin: 0;">
+                                    <li>Mayor libertad de formato además de incluir un módulo cerrado.</li>
+                                    <li>Se permiten percheros, módulos, estanterías o mesas de mayor tamaño.</li>
+                                    <li>Toda estructura debe ser segura, autosoportante y no interferir con pasillos ni stands vecinos.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Normas Generales y Prohibiciones -->
+                <div class="postulacion-card wow fadeInUp" data-wow-delay="400ms">
+                    <div class="info-card-header">
+                        <h2 class="info-card-title"><i class="far fa-gavel"></i> 4. Normas Generales y Prohibiciones</h2>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <h5 style="color: #e92652;"><i class="far fa-credit-card"></i> Pagos y Participación</h5>
+                                <p style="color: #b5b5c0; font-size: 14px;">Para participar oficialmente, el postulante seleccionado debe realizar el pago del 100% del valor del espacio asignado en un plazo máximo de 48 horas desde la confirmación por parte de la producción.</p>
+                            </div>
+                            <div class="mb-4">
+                                <h5 style="color: #ffe62e;"><i class="far fa-clock"></i> Cumplimiento de Horarios</h5>
+                                <p style="color: #b5b5c0; font-size: 14px;">El montaje se realizará el mismo día 16 de agosto desde las 08:00 hrs hasta las 10:30 hrs. Ningún expositor podrá desarmar o retirarse antes del horario de cierre del evento (20:00 hrs) para no afectar la experiencia del público.</p>
+                            </div>
+                            <div>
+                                <h5 style="color: #00d264;"><i class="far fa-broom"></i> Aseo y Limpieza</h5>
+                                <p style="color: #b5b5c0; font-size: 14px;">Cada expositor debe dejar su área perfectamente limpia y llevarse toda su basura al finalizar el evento.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <h5 style="color: #ff4a4a;"><i class="far fa-ban"></i> Prohibiciones Estrictas de Venta</h5>
+                                <ul style="color: #b5b5c0; font-size: 14px; padding-left: 20px; line-height: 1.6;">
+                                    <li>Alimentos y bebidas que no cuenten con resolución sanitaria (exceptuando Patio de Comidas autorizado).</li>
+                                    <li>Armas blancas con filo real, de fuego o material pirotécnico.</li>
+                                    <li>Contenido explícito para adultos (+18) a la vista del público general (debe conservarse en carpetas cerradas).</li>
+                                </ul>
+                            </div>
+                            <div class="mb-4">
+                                <h5 style="color: #e92652;"><i class="far fa-undo-alt"></i> Cancelación y Devoluciones</h5>
+                                <p style="color: #b5b5c0; font-size: 14px;">Si el expositor decide cancelar su participación, podrá solicitar la devolución del 50% del valor pagado hasta 1 semana (7 días) antes del evento. Durante los últimos 7 días previos no se realizarán reembolsos debido al cierre logístico.</p>
+                            </div>
+                            <div>
+                                <h5 style="color: #ffe62e;"><i class="far fa-shield-check"></i> Garantía de la Productora</h5>
+                                <p style="color: #b5b5c0; font-size: 14px;">En caso fortuito de postergación o suspensión por emergencias graves o fuerza mayor extrema, la productora se compromete a reagendar a la brevedad o reembolsar el 100% del dinero pagado.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORMULARIO DE POSTULACIÓN -->
+                <div id="formulario-section" class="postulacion-card wow fadeInUp" data-wow-delay="500ms" style="border: 2px solid #e92652;">
+                    <div class="info-card-header text-center">
+                        <span style="color: #ffe62e; font-family: 'Righteous', sans-serif; letter-spacing: 2px; text-transform: uppercase; font-size: 14px;">TemuGeek Expo 2026</span>
+                        <h2 class="info-card-title justify-content-center" style="font-size: 28px; margin-top: 5px;">
+                            Formulario Oficial de Postulación
+                        </h2>
+                        <p style="color: #b5b5c0; font-size: 15px; margin-top: 10px; margin-bottom: 0;">
+                            Completa los campos a continuación para evaluar tu participación. Te responderemos vía correo o WhatsApp.
+                        </p>
+                    </div>
+
+                    <form id="form-postulacion" onsubmit="handleFormSubmit(event)">
+                        
+                        <!-- Sección 1: Datos de Contacto y Marca -->
+                        <h4 style="color: #e92652; font-family: 'Righteous', sans-serif; font-size: 20px; margin-bottom: 20px; border-left: 4px solid #e92652; padding-left: 10px;">
+                            1. Datos Principales del Expositor
+                        </h4>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label-custom" for="nombre_expositor">Nombre Completo del Responsable <span style="color: #e92652;">*</span></label>
+                                <input type="text" id="nombre_expositor" class="form-control-custom" placeholder="Ej. Juan Pérez Soto" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom" for="nombre_marca">Nombre del Emprendimiento / Marca / Proyecto <span style="color: #e92652;">*</span></label>
+                                <input type="text" id="nombre_marca" class="form-control-custom" placeholder="Ej. GeekStore Temuco / MangaArt Studio" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom" for="redes_sociales">Instagram / Portafolio / Redes Sociales <span style="color: #e92652;">*</span></label>
+                                <input type="text" id="redes_sociales" class="form-control-custom" placeholder="Ej. @mi_tienda_geek / instagram.com/mi_marca" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom" for="telefono">Teléfono de Contacto (WhatsApp) <span style="color: #e92652;">*</span></label>
+                                <input type="tel" id="telefono" class="form-control-custom" placeholder="+56 9 1234 5678" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom" for="email">Correo Electrónico <span style="color: #e92652;">*</span></label>
+                                <input type="email" id="email" class="form-control-custom" placeholder="contacto@mitienda.cl" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom" for="ciudad">Ciudad de Origen <span style="color: #e92652;">*</span></label>
+                                <input type="text" id="ciudad" class="form-control-custom" placeholder="Ej. Temuco, Padre Las Casas, Valdivia, Concepción, etc." required>
+                            </div>
+                        </div>
+
+                        <!-- Categorías de Selección Múltiple -->
+                        <div class="mb-4">
+                            <label class="form-label-custom">Categoría(s) de tu Stand (Selección Múltiple) <span style="color: #e92652;">*</span></label>
+                            <p style="color: #888; font-size: 13px; margin-bottom: 12px;">Selecciona todas las categorías que correspondan a los productos que venderás o exhibirás.</p>
+                            
+                            <div class="custom-check-grid">
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Ilustración & Fanart" onchange="toggleTileClass(this)">
+                                    🎨 Ilustración & Fanart
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Arte Original & Cómics/Manga" onchange="toggleTileClass(this)">
+                                    📖 Arte Original & Cómics / Manga
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Artesanía & Amigurumis" onchange="toggleTileClass(this)">
+                                    🧶 Artesanía & Amigurumis
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Cosplay Props & Accesorios" onchange="toggleTileClass(this)">
+                                    ⚔️ Cosplay Props & Accesorios
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Tienda Anime & K-Pop" onchange="toggleTileClass(this)">
+                                    🏮 Tienda Anime & K-Pop
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Figuras & Coleccionables" onchange="toggleTileClass(this)">
+                                    🎎 Figuras & Coleccionables
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Vestuario & Moda Geek" onchange="toggleTileClass(this)">
+                                    👕 Vestuario & Moda Geek
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Impresión 3D & Láser" onchange="toggleTileClass(this)">
+                                    🖨️ Impresión 3D & Grabado Láser
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Stickers & Papelería Propia" onchange="toggleTileClass(this)">
+                                    🏷️ Stickers & Papelería Propia
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="TCG (Pokémon, Mitos, YuGiOh, Magic)" onchange="toggleTileClass(this)">
+                                    🃏 TCG / Cartas Coleccionables
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Juegos de Mesa & Rol" onchange="toggleTileClass(this)">
+                                    🎲 Juegos de Mesa & Rol
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Videojuegos & Retro" onchange="toggleTileClass(this)">
+                                    🕹️ Videojuegos & Retro Gaming
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Snacks & Repostería Geek" onchange="toggleTileClass(this)">
+                                    🍰 Snacks Empacados / Repostería Geek
+                                </label>
+                                <label class="checkbox-tile">
+                                    <input type="checkbox" name="categoria" value="Otro" onchange="toggleTileClass(this)">
+                                    ✨ Otro rubro
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Selección de Espacio -->
+                        <div class="mb-4">
+                            <label class="form-label-custom">Tipo de Espacio Requerido <span style="color: #e92652;">*</span></label>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="checkbox-tile" style="padding: 16px;">
+                                        <input type="radio" name="espacio_tipo" value="2x2m ($20.000 CLP)" required onchange="updateRadioTiles(this)">
+                                        <div>
+                                            <strong style="color: #fff; display: block;">Espacio 2x2 metros — $20.000 CLP</strong>
+                                            <span style="font-size: 12px; color: #888;">Incluye 4 Entradas Staff | Llevar mesa plegable y mantel negro</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="checkbox-tile" style="padding: 16px;">
+                                        <input type="radio" name="espacio_tipo" value="3x3m ($40.000 CLP)" required onchange="updateRadioTiles(this)">
+                                        <div>
+                                            <strong style="color: #ffe62e; display: block;">Espacio 3x3 metros (Módulos) — $40.000 CLP</strong>
+                                            <span style="font-size: 12px; color: #888;">Incluye 6 Entradas Staff | Módulo cerrado y mayor formato</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pregunta de Empresa Formalizada (SI / NO) -->
+                        <div class="mb-4">
+                            <label class="form-label-custom">¿Tu emprendimiento o marca se encuentra formalizado ante el SII (Empresa constituida con RUT)? <span style="color: #e92652;">*</span></label>
+                            <div class="d-flex gap-4 mt-2">
+                                <label class="checkbox-tile" style="padding: 12px 25px;">
+                                    <input type="radio" name="is_formalizado" value="si" onchange="handleFormalizadoChange(true)" required>
+                                    <span><strong>Sí</strong>, está formalizado</span>
+                                </label>
+                                <label class="checkbox-tile" style="padding: 12px 25px;">
+                                    <input type="radio" name="is_formalizado" value="no" onchange="handleFormalizadoChange(false)" required>
+                                    <span><strong>No</strong>, soy independiente / no formalizado</span>
+                                </label>
+                            </div>
+
+                            <!-- Campos Dinámicos de Empresa -->
+                            <div id="empresa-extra-fields">
+                                <h5 style="color: #ffe62e; font-size: 16px; font-family: 'Righteous', sans-serif; margin-bottom: 15px;">
+                                    <i class="far fa-building"></i> Datos Comerciales de la Empresa
+                                </h5>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label-custom" for="rut_empresa">RUT Empresa <span style="color: #e92652;">*</span></label>
+                                        <input type="text" id="rut_empresa" class="form-control-custom" placeholder="Ej. 77.123.456-7" maxlength="12" oninput="formatRutInput(this)" onblur="validateRutField(this)">
+                                        <div class="rut-error" id="rut-error-msg">RUT inválido. Verifica el número y dígito verificador.</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label-custom" for="razon_social">Razón Social <span style="color: #e92652;">*</span></label>
+                                        <input type="text" id="razon_social" class="form-control-custom" placeholder="Ej. Comercializadora Geek SpA">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label-custom" for="giro_empresa">Giro / Actividad Económica</label>
+                                        <input type="text" id="giro_empresa" class="form-control-custom" placeholder="Ej. Venta de artículos de librería / ropa">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Descripción de Productos -->
+                        <div class="mb-4">
+                            <label class="form-label-custom" for="descripcion_productos">Descripción Detallada de los Productos o Servicios a Exhibir <span style="color: #e92652;">*</span></label>
+                            <textarea id="descripcion_productos" class="form-control-custom" rows="4" placeholder="Describe brevemente qué productos llevarás, si son de confección propia o importados, y cualquier detalle relevante para la organización..." required></textarea>
+                        </div>
+
+                        <!-- Protección de Datos Personales (Ley 19.628) y Términos -->
+                        <div class="mb-4">
+                            <label class="form-label-custom"><i class="far fa-user-shield"></i> Protección de Datos Personales & Términos</label>
+                            
+                            <div class="privacy-box mb-3">
+                                <strong>Política de Protección de Datos Personales:</strong> En conformidad con la Ley N° 19.628 sobre Protección de la Vida Privada y Tratamiento de Datos de Carácter Personal en Chile, los datos recopilados en este formulario serán utilizados de manera estrictamente confidencial por la producción de TemuGeek Expo 2026. Sus datos solo se emplearán para la selección, facturación, acreditación y coordinación logística de su espacio en el evento, y en ningún caso serán cedidos ni vendidos a terceros sin su previo consentimiento explícito.
+                            </div>
+
+                            <div class="d-flex flex-column gap-2">
+                                <label class="checkbox-tile" style="align-items: flex-start;">
+                                    <input type="checkbox" id="check_terminos" required style="margin-top: 3px;">
+                                    <span>He leído, entiendo y acepto las <strong>Normas Generales, Reglamentos de Mobiliario y Políticas de Cancelación</strong> de TemuGeek Expo 2026. <span style="color: #e92652;">*</span></span>
+                                </label>
+
+                                <label class="checkbox-tile" style="align-items: flex-start;">
+                                    <input type="checkbox" id="check_datos" required style="margin-top: 3px;">
+                                    <span>Autorizo el tratamiento de mis datos personales exclusivamente para la postulación y gestión de TemuGeek Expo 2026 de acuerdo a la Ley N° 19.628 de Protección de Datos Personales. <span style="color: #e92652;">*</span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center mt-4">
+                            <button type="submit" class="thm-btn design-btn" style="padding: 18px 45px; font-size: 18px; font-weight: bold; width: 100%; max-width: 450px;">
+                                Enviar Postulación de Expositor <i class="far fa-paper-plane ms-2"></i>
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- footer start -->
+    <footer class="footer-area footer-style-two">
+        <div class="container">
+            <div class="xb-footer_top pt-80 pb-60">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="footer-widget mb-30">
+                            <div class="footer-logo mb-20">
+                                <a href="../index.html"><img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 45px;"></a>
+                            </div>
+                            <p style="color: #b5b5c0; max-width: 450px;">
+                                El evento geek más grande de la Región de La Araucanía. Cultura pop, esports, cosplay, juegos de mesa y emprendimiento local.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="footer-widget mb-30 text-lg-end">
+                            <h4 style="color: #ffffff; font-family: 'Righteous', sans-serif; margin-bottom: 15px;">¿Consultas sobre Stands?</h4>
+                            <p style="color: #b5b5c0;">Escríbenos a nuestro equipo de producción:</p>
+                            <a href="mailto:contacto@temugeek.cl" style="color: #e92652; font-size: 18px; font-weight: bold; text-decoration: underline;">contacto@temugeek.cl</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="xb-footer_bottom" style="border-top: 1px solid #323541; padding: 20px 0;">
+                <div class="container">
+                    <div class="xb-footer-bottom-inner ul_li_between">
+                        <p style="margin: 0; color: #888;">Copyright © 2026 <a href="../index.html" style="color: #e92652;">TemuGeek</a>. Todos los derechos reservados.</p>
+                        <div class="xb-social_media">
+                            <ul class="social-link list-unstyled ul_li">
+                                <li>Síguenos:</li>
+                                <li><a href="#!"><i class="fa-brands fa-facebook-f"></i></a></li>
+                                <li><a href="#!"><i class="fa-brands fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end -->
+
+</div>
+
+<!-- Pantalla de Éxito Full-Screen -->
+<div class="success-overlay" id="successOverlay">
+    <div class="success-card">
+        <div class="success-icon-ring">
+            <i class="far fa-check-circle"></i>
+        </div>
+        <div class="success-subtitle">TemuGeek Expo 2026</div>
+        <h2 class="success-title">¡Postulación Enviada!</h2>
+        <p class="success-text">
+            Hemos recibido exitosamente tu propuesta. Nuestro equipo de producción evaluará tu emprendimiento y te contactará vía <strong style="color:#ffe62e;">correo electrónico</strong> o <strong style="color:#00e676;">WhatsApp</strong> en un plazo de <strong>48 a 72 horas hábiles</strong>.
+        </p>
+        <div class="success-info-bar">
+            <div class="success-info-item">
+                <div class="label">Fecha Evento</div>
+                <div class="value">16 Agosto 2026</div>
+            </div>
+            <div class="success-info-item">
+                <div class="label">Lugar</div>
+                <div class="value">Recinto SOFO, Temuco</div>
+            </div>
+            <div class="success-info-item">
+                <div class="label">Estado</div>
+                <div class="value" style="color: #00e676;">✓ Recibida</div>
+            </div>
+        </div>
+        <div class="success-actions">
+            <a href="../index.html" class="success-btn-primary">Volver al Sitio Principal</a>
+            <button type="button" class="success-btn-secondary" onclick="closeSuccessOverlay()">Enviar Otra Postulación</button>
+        </div>
+    </div>
+</div>
+
+<!-- jquery include -->
+<script src="../assets/js/jquery-3.7.1.min.js"></script>
+<script src="../assets/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/swiper.min.js"></script>
+<script src="../assets/js/wow.min.js"></script>
+<script src="../assets/js/appear.js"></script>
+<script src="../assets/js/imagesloaded.pkgd.min.js"></script>
+<script src="../assets/js/parallaxie.js"></script>
+<script src="../assets/js/parallax.min.js"></script>
+<script src="../assets/js/parallax-scroll.js"></script>
+<script src="../assets/js/odometer.min.js"></script>
+<script src="../assets/js/touchspin.js"></script>
+<script src="../assets/js/isotope.pkgd.min.js"></script>
+<script src="../assets/js/jquery.nice-select.min.js"></script>
+<script src="../assets/js/jquery.marquee.min.js"></script>
+<script src="../assets/js/jquery.magnific-popup.min.js"></script>
+<script src="../assets/js/jqueryui.js"></script>
+<script src="../assets/js/easing.min.js"></script>
+<script src="../assets/js/scrollspy.js"></script>
+<script src="../assets/js/gsap.js"></script>
+<script src="../assets/js/magiccursor.js"></script>
+<script src="../assets/js/ScrollTrigger.min.js"></script>
+<script src="../assets/js/jquery.countdown.min.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/supabase-config.js"></script>
+<script src="../assets/js/email-service.js"></script>
+
+<script>
+// Visual toggle for Checkbox Tile highlight
+function toggleTileClass(inputElem) {
+    const parentLabel = inputElem.closest('.checkbox-tile');
+    if (inputElem.checked) {
+        parentLabel.classList.add('selected');
+    } else {
+        parentLabel.classList.remove('selected');
+    }
+}
+
+function updateRadioTiles(inputElem) {
+    const name = inputElem.name;
+    document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+        const parent = radio.closest('.checkbox-tile');
+        if (radio.checked) {
+            parent.classList.add('selected');
+        } else {
+            parent.classList.remove('selected');
+        }
+    });
+}
+
+// Show/Hide Company Extra Fields dynamically
+function handleFormalizadoChange(isFormal) {
+    const extraFields = document.getElementById('empresa-extra-fields');
+    const rutInput = document.getElementById('rut_empresa');
+    const razonInput = document.getElementById('razon_social');
+
+    // Update styling on radio tiles
+    const radios = document.querySelectorAll('input[name="is_formalizado"]');
+    radios.forEach(radio => {
+        const tile = radio.closest('.checkbox-tile');
+        if (radio.checked) tile.classList.add('selected');
+        else tile.classList.remove('selected');
+    });
+
+    if (isFormal) {
+        extraFields.style.display = 'block';
+        rutInput.setAttribute('required', 'required');
+        razonInput.setAttribute('required', 'required');
+    } else {
+        extraFields.style.display = 'none';
+        rutInput.removeAttribute('required');
+        razonInput.removeAttribute('required');
+    }
+}
+
+// ═══════════════════════════════════════════
+// RUT Chileno: Validación y Formateo
+// ═══════════════════════════════════════════
+function cleanRut(rut) {
+    return rut.replace(/[^0-9kK]/g, '').toUpperCase();
+}
+
+function formatRut(rut) {
+    const clean = cleanRut(rut);
+    if (clean.length < 2) return clean;
+    const body = clean.slice(0, -1);
+    const dv = clean.slice(-1);
+    let formatted = '';
+    let count = 0;
+    for (let i = body.length - 1; i >= 0; i--) {
+        formatted = body[i] + formatted;
+        count++;
+        if (count % 3 === 0 && i > 0) formatted = '.' + formatted;
+    }
+    return formatted + '-' + dv;
+}
+
+function formatRutInput(input) {
+    const pos = input.selectionStart;
+    const before = input.value.length;
+    input.value = formatRut(input.value);
+    const after = input.value.length;
+    const newPos = pos + (after - before);
+    input.setSelectionRange(newPos, newPos);
+}
+
+function validateRut(rut) {
+    const clean = cleanRut(rut);
+    if (clean.length < 7 || clean.length > 9) return false;
+    const body = clean.slice(0, -1);
+    const dvProvided = clean.slice(-1);
+    let sum = 0;
+    let multiplier = 2;
+    for (let i = body.length - 1; i >= 0; i--) {
+        sum += parseInt(body[i]) * multiplier;
+        multiplier = multiplier === 7 ? 2 : multiplier + 1;
+    }
+    const remainder = 11 - (sum % 11);
+    let dvExpected;
+    if (remainder === 11) dvExpected = '0';
+    else if (remainder === 10) dvExpected = 'K';
+    else dvExpected = String(remainder);
+    return dvProvided === dvExpected;
+}
+
+function validateRutField(input) {
+    const errorMsg = document.getElementById('rut-error-msg');
+    const value = input.value.trim();
+    if (!value) {
+        input.classList.remove('rut-valid', 'rut-invalid');
+        errorMsg.style.display = 'none';
+        return true;
+    }
+    if (validateRut(value)) {
+        input.classList.remove('rut-invalid');
+        input.classList.add('rut-valid');
+        errorMsg.style.display = 'none';
+        return true;
+    } else {
+        input.classList.remove('rut-valid');
+        input.classList.add('rut-invalid');
+        errorMsg.style.display = 'block';
+        return false;
+    }
+}
+
+// ═══════════════════════════════════════════
+// Success Overlay con Confetti
+// ═══════════════════════════════════════════
+function showSuccessOverlay() {
+    const overlay = document.getElementById('successOverlay');
+    overlay.style.display = 'flex';
+    // Confetti
+    const colors = ['#e92652', '#ffe62e', '#40c4ff', '#00e676', '#ff4a75', '#ffffff'];
+    for (let i = 0; i < 40; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'success-confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = '-10px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = (Math.random() * 1.5) + 's';
+        confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+        confetti.style.width = (5 + Math.random() * 8) + 'px';
+        confetti.style.height = (5 + Math.random() * 8) + 'px';
+        overlay.appendChild(confetti);
+    }
+    requestAnimationFrame(() => { overlay.classList.add('active'); });
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSuccessOverlay() {
+    const overlay = document.getElementById('successOverlay');
+    overlay.classList.remove('active');
+    overlay.style.display = 'none';
+    overlay.querySelectorAll('.success-confetti').forEach(c => c.remove());
+    document.body.style.overflow = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════════
+// Handle Form Submit
+// ═══════════════════════════════════════════
+async function handleFormSubmit(e) {
+    e.preventDefault();
+
+    // Check if at least 1 category selected
+    const checkedCategories = document.querySelectorAll('input[name="categoria"]:checked');
+    if (checkedCategories.length === 0) {
+        alert('Por favor selecciona al menos una categoría para tu stand.');
+        return;
+    }
+
+    // Validate RUT if empresa is formalizada
+    const isFormalRadio = document.querySelector('input[name="is_formalizado"]:checked');
+    const isFormal = isFormalRadio && isFormalRadio.value === 'si';
+
+    if (isFormal) {
+        const rutInput = document.getElementById('rut_empresa');
+        if (!validateRutField(rutInput)) {
+            rutInput.focus();
+            return;
+        }
+    }
+
+    const categoriasStr = Array.from(checkedCategories).map(c => c.value).join(', ');
+    const espacioTipo = document.querySelector('input[name="espacio_tipo"]:checked').value;
+
+    // Generate valid UUID for Supabase compatibility
+    const leadId = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : undefined;
+
+    const payload = {
+        created_at: new Date().toISOString(),
+        nombre_expositor: document.getElementById('nombre_expositor').value.trim(),
+        nombre_marca: document.getElementById('nombre_marca').value.trim(),
+        redes_sociales: document.getElementById('redes_sociales').value.trim(),
+        telefono: document.getElementById('telefono').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        ciudad: document.getElementById('ciudad').value.trim(),
+        categorias: categoriasStr,
+        espacio_tipo: espacioTipo,
+        is_formalizado: isFormal,
+        rut_empresa: isFormal ? document.getElementById('rut_empresa').value.trim() : '',
+        razon_social: isFormal ? document.getElementById('razon_social').value.trim() : '',
+        giro_empresa: isFormal ? document.getElementById('giro_empresa').value.trim() : '',
+        descripcion_productos: document.getElementById('descripcion_productos').value.trim(),
+        estado: 'pendiente',
+        notas_internas: ''
+    };
+
+    if (leadId) {
+        payload.id = leadId;
+    }
+
+    // Save 100% to Supabase
+    let supabaseSuccess = false;
+    try {
+        const sb = await getSupabaseClient();
+        if (sb && typeof sb.from === 'function') {
+            const { data, error } = await sb
+                .from('postulaciones')
+                .insert([payload])
+                .select();
+            if (error) {
+                console.error("Error al enviar a Supabase:", error.message || JSON.stringify(error));
+            } else {
+                console.log("Postulación guardada exitosamente en Supabase:", data);
+                supabaseSuccess = true;
+            }
+        } else {
+            console.error("No se pudo obtener el cliente de Supabase.");
+        }
+    } catch (err) {
+        console.error("Excepción Supabase:", err);
+    }
+
+    // LocalStorage Resilience Backup
+    try {
+        const localLeads = JSON.parse(localStorage.getItem("TG_POSTULACIONES_LOCAL") || "[]");
+        localLeads.unshift(payload);
+        localStorage.setItem("TG_POSTULACIONES_LOCAL", JSON.stringify(localLeads));
+    } catch (err) {
+        console.error("Error al guardar localmente:", err);
+    }
+
+    // Send Branded Emails via Resend (delegado a Supabase Trigger)
+    try {
+        if (typeof sendPostulacionEmails === 'function') {
+            await sendPostulacionEmails(payload);
+        }
+    } catch (err) {
+        console.error("Error al enviar notificaciones por correo:", err);
+    }
+
+    // Show full-screen success overlay
+    showSuccessOverlay();
+
+    // Reset form
+    document.getElementById('form-postulacion').reset();
+    document.querySelectorAll('.checkbox-tile').forEach(tile => tile.classList.remove('selected'));
+    document.getElementById('empresa-extra-fields').style.display = 'none';
+    document.getElementById('rut_empresa').classList.remove('rut-valid', 'rut-invalid');
+    document.getElementById('rut-error-msg').style.display = 'none';
+}
+</script>
+
+</body>
+
+</html>
