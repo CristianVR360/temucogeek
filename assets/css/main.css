@@ -11351,13 +11351,18 @@ body .mfp-wrap .mfp-container .mfp-content .mfp-close:hover::before, body .mfp-w
   .xb-newsletter .xb-item--newsletter_form .submit_btn {
     top: 4px;
     right: 4px;
+    bottom: 4px;
+    height: calc(100% - 8px);
     z-index: 1;
     line-height: 1;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     border-radius: 6px;
     position: absolute;
-    padding: 17px 20px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     color: var(--color-white);
     background-color: var(--color-primary); }
 

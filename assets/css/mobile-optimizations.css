@@ -1,0 +1,357 @@
+/* ==========================================================================
+   TemuGeek Expo 2026 - Mobile Responsiveness & Optimization Override Stylesheet
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  /* 1. Logos sizing & scaling */
+  .xb-header-logo img, 
+  .logo1 img,
+  .xb-logo-mobile img {
+    max-height: 28px !important;
+  }
+  
+  .logo-hero img {
+    max-height: 120px !important;
+  }
+  
+  .xb-footer-logo img,
+  .footer-logo img,
+  .footer-style-three .xb-footer-logo img {
+    max-height: 30px !important;
+  }
+
+  /* 2. Buttons optimization (more subtle, less chunky) */
+  .thm-btn {
+    padding: 12px 24px !important;
+    font-size: 13px !important;
+    min-height: auto !important;
+    border-radius: 50px !important;
+    line-height: 1.2 !important;
+  }
+  .thm-btn span {
+    margin-left: 8px !important;
+  }
+  .thm-btn img {
+    width: 12px !important;
+    height: 12px !important;
+  }
+  
+  /* Hero button alignment & spacing */
+  .hero-btn {
+    margin-top: 15px !important;
+    gap: 10px !important;
+  }
+
+  /* 3. Paddings & Margins scaling (reduces massive whitespace) */
+  .pt-125 {
+    padding-top: 50px !important;
+  }
+  .pb-120 {
+    padding-bottom: 45px !important;
+  }
+  .pt-130 {
+    padding-top: 50px !important;
+  }
+  .pb-130 {
+    padding-bottom: 50px !important;
+  }
+  .pb-115 {
+    padding-bottom: 45px !important;
+  }
+  .pt-50 {
+    padding-top: 25px !important;
+  }
+  .pb-50 {
+    padding-bottom: 25px !important;
+  }
+  .pt-60 {
+    padding-top: 30px !important;
+  }
+  .pb-60 {
+    padding-bottom: 30px !important;
+  }
+  .pt-100 {
+    padding-top: 40px !important;
+  }
+  .pb-100 {
+    padding-bottom: 40px !important;
+  }
+  .mb-60 {
+    margin-bottom: 25px !important;
+  }
+  
+  /* Compact page header banner in postulacion */
+  .page-header-section {
+    padding-top: 90px !important;
+    padding-bottom: 25px !important;
+  }
+  .page-header-section .title {
+    font-size: 22px !important;
+  }
+  .page-header-section p {
+    font-size: 13px !important;
+  }
+
+  /* 4. Section headings text resizing */
+  .sec-title .title {
+    font-size: 22px !important;
+    line-height: 32px !important;
+  }
+  .sec-title .sub-title {
+    font-size: 13px !important;
+    margin-bottom: 10px !important;
+    padding: 0 15px !important;
+  }
+  .hero-badge span {
+    font-size: 10px !important;
+    padding: 4px 12px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .hero-subtitle {
+    font-size: 15px !important;
+    margin-bottom: 20px !important;
+    letter-spacing: 1px !important;
+  }
+
+  /* 5. Countdown optimization (prevent row wrapping and giant boxes) */
+  .offer-item .countdown {
+    gap: 6px !important;
+    justify-content: center !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+  }
+  .offer-item .countdown .single {
+    min-height: 52px !important;
+    min-width: 60px !important;
+    border-radius: 6px !important;
+    padding: 4px !important;
+    flex: 1 1 0px !important;
+  }
+  .offer-item .countdown .single h1 {
+    font-size: 18px !important;
+    margin-bottom: 0 !important;
+    line-height: 1.1 !important;
+  }
+  .offer-item .countdown .single p {
+    font-size: 8px !important;
+    margin-bottom: 0 !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.2px !important;
+  }
+  
+  /* Venue details below countdown */
+  .offer-wrap {
+    padding: 25px 15px !important;
+    gap: 15px !important;
+  }
+  .offer-wrapper .offer-item .xb-inner {
+    gap: 8px !important;
+    padding: 6px 12px !important;
+    justify-content: center !important;
+  }
+  .offer-wrapper .offer-item .xb-vanue {
+    font-size: 11px !important;
+    margin-bottom: 0 !important;
+  }
+  .offer-wrapper .offer-item .xb-location img {
+    width: 12px !important;
+  }
+
+  /* 6. About Gallery Section image height scale down */
+  .xb-about-top {
+    margin-bottom: 15px !important;
+  }
+  .dc-about-img-item .img {
+    height: 180px !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* 7. Schedule Section Table / Tabs */
+  .xb-schedule-table tr th,
+  .xb-schedule-table tr td {
+    padding: 12px 14px !important;
+  }
+  .xb-schedule-content-wrap .xb-schedule-content tbody tr td {
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+  }
+  .xb-schedule-content-wrap .xb-schedule-content tbody tr td span {
+    gap: 6px !important;
+  }
+  .xb-schedule-content-wrap .xb-schedule-content tbody tr td span:not(:last-child) {
+    margin-bottom: 10px !important;
+  }
+  .xb-schedule-content-wrap .xb-schedule-content thead tr th {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+  }
+  .xb-schedule-nav .nav-link {
+    padding: 10px 15px !important;
+    font-size: 13px !important;
+  }
+
+  /* 8. Pricing Section cards */
+  .xb-pricing-item {
+    min-height: auto !important;
+    padding: 20px 15px 40px !important;
+  }
+  .xb-pricing-item .xb-item--dollar {
+    font-size: 32px !important;
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+  }
+  .xb-pricing-item .xb-item--title {
+    font-size: 20px !important;
+    margin-top: 15px !important;
+  }
+  .xb-pricing-item .xb-item--list li {
+    font-size: 13px !important;
+  }
+  .pricing-btn {
+    margin-top: 25px !important;
+  }
+
+  /* 9. FAQ Section */
+  .xb-faq-item {
+    padding: 14px 14px 12px !important;
+    margin-top: 15px !important;
+  }
+  .xb-faq-item .xb-icon {
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+    padding-bottom: 6px !important;
+    gap: 8px !important;
+  }
+  .xb-faq-item .xb-content {
+    font-size: 13px !important;
+    line-height: 20px !important;
+    padding-right: 0 !important;
+  }
+
+  /* 10. Postulación Form & Base elements */
+  .postulacion-card {
+    padding: 15px 12px !important;
+    border-radius: 10px !important;
+    margin-bottom: 15px !important;
+  }
+  .info-card-title {
+    font-size: 16px !important;
+    gap: 6px !important;
+  }
+  .info-card-header {
+    margin-bottom: 12px !important;
+    padding-bottom: 6px !important;
+  }
+  .alert-restriction {
+    padding: 12px !important;
+    margin: 15px 0 !important;
+    border-width: 1px !important;
+    border-radius: 8px !important;
+  }
+  .alert-restriction-title {
+    font-size: 13px !important;
+    margin-bottom: 4px !important;
+  }
+  .alert-restriction ul li {
+    font-size: 11px !important;
+    margin-bottom: 4px !important;
+  }
+  
+  /* Form components text fields and labels */
+  .form-group {
+    margin-bottom: 10px !important;
+  }
+  label {
+    font-size: 11px !important;
+    margin-bottom: 3px !important;
+  }
+  .postulacion-card .form-control, 
+  .postulacion-card .form-select,
+  .postulacion-card select,
+  .postulacion-card input[type="text"], 
+  .postulacion-card input[type="email"], 
+  .postulacion-card input[type="tel"], 
+  .postulacion-card textarea {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+    height: auto !important;
+  }
+  textarea {
+    height: 90px !important;
+  }
+  .nice-select {
+    font-size: 12px !important;
+    height: 34px !important;
+    line-height: 32px !important;
+    padding-left: 10px !important;
+  }
+
+  /* Newsletter form mobile responsive alignment */
+  .xb-newsletter .xb-item--newsletter_form {
+    position: relative !important;
+    width: 100% !important;
+  }
+  .xb-newsletter .xb-item--newsletter_form input {
+    height: 48px !important;
+    padding: 0 110px 0 14px !important;
+    font-size: 13px !important;
+    border-radius: 6px !important;
+    background: #edf6ff !important;
+  }
+  .xb-newsletter .xb-item--newsletter_form .submit_btn {
+    position: absolute !important;
+    top: 4px !important;
+    right: 4px !important;
+    bottom: 4px !important;
+    height: calc(100% - 8px) !important;
+    padding: 0 16px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    border-radius: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    background-color: #e92652 !important;
+    color: #ffffff !important;
+    border: none !important;
+  }
+
+  /* 11. Mascot Widget resize */
+  .mascot-animation-container {
+    width: 55px !important;
+    height: 55px !important;
+    bottom: 12px !important;
+    right: 12px !important;
+  }
+  .mascot-character {
+    width: 44px !important;
+    height: 44px !important;
+    bottom: 4px !important;
+  }
+  .mascot-speech {
+    font-size: 9px !important;
+    padding: 4px 6px !important;
+    bottom: 58px !important;
+    right: 0px !important;
+  }
+  .mascot-speech::after {
+    right: 15px !important;
+    bottom: -4px !important;
+    border-width: 4px 3px 0 !important;
+  }
+  .mascot-chat-box {
+    bottom: 60px !important;
+    width: 200px !important;
+    padding: 6px !important;
+    border-radius: 8px !important;
+  }
+  .mascot-chat-box input {
+    font-size: 10px !important;
+    padding: 4px 6px !important;
+  }
+  .mascot-chat-box button {
+    font-size: 9px !important;
+    padding: 4px !important;
+  }
+}

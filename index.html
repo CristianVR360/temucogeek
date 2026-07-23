@@ -203,9 +203,11 @@
             font-weight: 900 !important;
         }
         .xb-about-right {
-            width: 301px !important;
-            height: 161px !important;
-            max-width: 100% !important;
+            width: 301px;
+            max-width: 100%;
+        }
+        .xb-about-right:empty {
+            display: none !important;
         }
         /* Mascot Sprite Animation Styles */
         /* Mascot Sprite Animation Styles - Global Floating Widget */
@@ -359,6 +361,8 @@
             background: #ffe62e;
         }
     </style>
+    <!-- Custom Mobile Optimizations Override -->
+    <link rel="stylesheet" href="assets/css/mobile-optimizations.css">
 </head>
 
 <body class="design-conference">
@@ -554,7 +558,7 @@
                                         <h2 class="title color-heading">El punto de encuentro definitivo para amantes de la cultura pop, la tecnología, el anime, el cosplay y los videojuegos en el sur de Chile.</h2>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 mt-30">
+                                <div class="col-lg-4 mt-30 d-none d-lg-block">
                                     <div class="xb-about-right">
                                         <!-- Espacio vacío o información adicional de diseño -->
                                     </div>
@@ -563,19 +567,19 @@
                         </div>
                         <div class="dc-about-img-item ul_li_between">
                             <div class="img xb-mouseenter wow xb-animetion-left" data-wow-delay="0ms" data-wow-duration="700ms">
-                                <a href="#!"><img src="assets/img/bg/geek.jpg" alt=""></a>
+                                <a href="#!"><img src="assets/img/gallery/slide-01.png" alt="TemuGeek Slide 01" style="object-fit: cover; border-radius: 8px;"></a>
                             </div>
                             <div class="img xb-mouseenter wow xb-animetion-left" data-wow-delay="150ms" data-wow-duration="700ms"> 
-                                <a href="#!"><img src="assets/img/video/cine.jpg" alt=""></a>
+                                <a href="#!"><img src="assets/img/gallery/slide-02.png" alt="TemuGeek Slide 02" style="object-fit: cover; border-radius: 8px;"></a>
                             </div>
                             <div class="img xb-mouseenter active wow xb-animetion-left" data-wow-delay="300ms" data-wow-duration="700ms">
-                                <a href="#!"><img src="assets/img/about/cosplay.jpg" alt="Cosplay TemuGeek" style="object-fit: cover; border: 2px solid #ffe62e; border-radius: 8px;"></a>
+                                <a href="#!"><img src="assets/img/gallery/slide-03.png" alt="TemuGeek Slide 03" style="object-fit: cover; border: 2px solid #ffe62e; border-radius: 8px;"></a>
                             </div>
                             <div class="img xb-mouseenter wow xb-animetion-left" data-wow-delay="450ms" data-wow-duration="700ms">
-                                <a href="#!"><img src="assets/img/logo/foto-perfil.png" alt=""></a>
+                                <a href="#!"><img src="assets/img/about/cosplay.jpg" alt="Cosplay TemuGeek" style="object-fit: cover; border-radius: 8px;"></a>
                             </div>
                             <div class="img xb-mouseenter wow xb-animetion-left" data-wow-delay="600ms" data-wow-duration="700ms">
-                                <a href="#!"><img src="assets/img/bg/geek.jpg" alt=""></a>
+                                <a href="#!"><img src="assets/img/video/cine.jpg" alt="Cine y Contenido TemuGeek" style="object-fit: cover; border-radius: 8px;"></a>
                             </div>
                         </div>
                     </div>
