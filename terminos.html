@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condiciones del Servicio - ExpoGeek</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/mobile-optimizations.css">
+
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --card-bg: rgba(18, 24, 40, 0.85);
+            --border-glow: rgba(124, 58, 237, 0.3);
+            --primary-violet: #8b5cf6;
+            --primary-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .legal-header {
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        .legal-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .legal-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .legal-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            margin-bottom: 50px;
+        }
+
+        .legal-card h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #38bdf8;
+            font-size: 1.5rem;
+            margin-top: 1.8rem;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .legal-card h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .legal-card p, .legal-card ul {
+            color: #d1d5db;
+            line-height: 1.7;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .legal-card ul {
+            padding-left: 1.5rem;
+        }
+
+        .legal-card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-card strong {
+            color: #fff;
+        }
+
+        .badge-google {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            color: #a78bfa;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-nav a {
+            color: var(--primary-cyan);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .back-nav a:hover {
+            color: #a78bfa;
+        }
+
+        .alert-terms {
+            background: rgba(236, 72, 153, 0.1);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="container" style="max-width: 960px;">
+        <div class="legal-header">
+            <div class="back-nav">
+                <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Volver a ExpoGeek</a>
+            </div>
+            <h1>Condiciones del Servicio</h1>
+            <p>Términos de Uso y Reglamento de la Plataforma ExpoGeek</p>
+            <span class="badge-google"><i class="fa-solid fa-scale-balanced"></i> Normativa Legal Aplicable - Chile</span>
+            <p><small style="color: #9ca3af;">Última actualización: 24 de julio de 2026</small></p>
+        </div>
+
+        <div class="legal-card">
+            <h2>1. Aceptación de las Condiciones</h2>
+            <p>
+                Al ingresar, registrarse o interactuar con el sitio web de <strong>ExpoGeek / TemucoGeek</strong> (incluyendo la sección de minijuegos, postulaciones y contenidos), el usuario declara haber leído, comprendido y aceptado en su totalidad las presentes Condiciones del Servicio y nuestra <a href="privacidad.html" style="color: #38bdf8;">Política de Privacidad</a>.
+            </p>
+            <p>
+                Si el usuario no está de acuerdo con alguno de los términos expresados en este documento, deberá abstenerse de utilizar los servicios interactivos de la plataforma.
+            </p>
+
+            <h2>2. Descripción del Servicio y Plataforma</h2>
+            <p>
+                ExpoGeek proporciona un espacio digital interactivo destinado a brindar información sobre el evento presencial ExpoGeek/TemucoGeek, gestionar postulación de participantes (cosplayers, exhibidores, artistas, torneos) y ofrecer una <strong>Arena de Minijuegos en línea</strong> con tabla de clasificación (*Leaderboard*) en tiempo real.
+            </p>
+
+            <h2>3. Autenticación mediante Google Sign-In y Cuentas de Usuario</h2>
+            <p>
+                Para participar en la tabla de clasificación de la Arena de Minijuegos, el usuario debe autenticarse utilizando su cuenta de Google a través de Google OAuth.
+            </p>
+            <ul>
+                <li>El usuario garantiza que la cuenta de Google utilizada le pertenece legítimamente.</li>
+                <li>El usuario es responsable de mantener la confidencialidad de su sesión y de las acciones realizadas desde la misma.</li>
+                <li>ExpoGeek se reserva el derecho de rechazar el acceso o eliminar registros si se detecta un uso ilegítimo, impersonación de identidad o infracción de normas.</li>
+            </ul>
+
+            <h2>4. Reglas de Juego Limpio y Conducta de Usuario</h2>
+            <p>ExpoGeek promueve un ambiente competitivo justo y respetuoso. Queda estrictamente prohibido:</p>
+            <ul>
+                <li>El uso de bots, scripts de automatización, exploits de software o manipulación de peticiones HTTP/API para alterar artificialmente los puntajes.</li>
+                <li>Introducir contenido injurioso, ofensivo, discriminatorio o inapropiado en nombres de usuario.</li>
+                <li>Intentar vulnerar la seguridad, interferir con el funcionamiento de los servidores o realizar ataques de denegación de servicio.</li>
+            </ul>
+            <div class="alert-terms">
+                <p style="margin-bottom: 0;">
+                    <strong>Sanciones:</strong> La organización se reserva el derecho de anular puntuaciones, remover de la tabla de posiciones y descalificar de cualquier torneo o sorteo a los usuarios que contravengan estas reglas.
+                </p>
+            </div>
+
+            <h2>5. Propiedad Intelectual</h2>
+            <p>
+                Todos los contenidos, marcas comerciales, logotipos, diseños, código fuente, minijuegos y gráficos de ExpoGeek son propiedad exclusiva de los organizadores del evento o cuentan con la licencia correspondiente para su uso. Queda prohibida la reproducción parcial o total no autorizada.
+            </p>
+
+            <h2>6. Limitación de Responsabilidad</h2>
+            <p>
+                ExpoGeek realiza los mayores esfuerzos para asegurar la disponibilidad continua de la plataforma. Sin embargo, no garantiza que el sitio funcione de manera ininterrumpida o libre de errores. ExpoGeek no será responsable por pérdidas de datos, interrupciones de red o fallos técnicos ajenos a su control directo.
+            </p>
+
+            <h2>7. Modificaciones a los Términos</h2>
+            <p>
+                La organización se reserva el derecho de modificar o actualizar estos Términos y Condiciones en cualquier momento. Las modificaciones entrarán en vigencia inmediatamente tras su publicación en este sitio web.
+            </p>
+
+            <h2>8. Ley Aplicable y Jurisdicción</h2>
+            <p>
+                Las presentes Condiciones del Servicio se rigen por la legislación vigente de la <strong>República de Chile</strong>. Cualquier controversia derivada del uso del sitio web será sometida a la jurisdicción de los Tribunales Ordinarios de Justicia de la ciudad de Temuco, Chile.
+            </p>
+
+            <h2>9. Contacto</h2>
+            <p>Para resolver cualquier duda o consulta referente a estos Términos del Servicio, puedes comunicarte con el equipo organizador a través de:</p>
+            <ul>
+                <li><strong>Correo de Contacto:</strong> <a href="mailto:contacto@temugeek.cl" style="color:#38bdf8;">contacto@temugeek.cl</a></li>
+                <li><strong>Evento:</strong> ExpoGeek / TemucoGeek (Recinto SOFO, Temuco, Chile)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="xb-footer_bottom" style="border-top: 1px solid rgba(255,255,255,0.1); padding: 20px 0; background: rgba(9, 13, 22, 0.9); margin-top: auto;">
+        <div class="container" style="max-width: 960px;">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <p style="margin: 0; color: #9ca3af; font-size: 0.9rem;">© 2026 TemuGeek / ExpoGeek. Todos los derechos reservados.</p>
+                <div>
+                    <a href="privacidad.html" style="color: #9ca3af; text-decoration: none; font-size: 0.9rem; margin-right: 15px;">Política de Privacidad</a>
+                    <a href="terminos.html" style="color: #38bdf8; text-decoration: none; font-size: 0.9rem;">Términos del Servicio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

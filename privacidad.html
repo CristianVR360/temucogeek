@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad - ExpoGeek</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/mobile-optimizations.css">
+
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --card-bg: rgba(18, 24, 40, 0.85);
+            --border-glow: rgba(124, 58, 237, 0.3);
+            --primary-violet: #8b5cf6;
+            --primary-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .legal-header {
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        .legal-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .legal-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .legal-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            margin-bottom: 50px;
+        }
+
+        .legal-card h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #38bdf8;
+            font-size: 1.5rem;
+            margin-top: 1.8rem;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .legal-card h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .legal-card p, .legal-card ul {
+            color: #d1d5db;
+            line-height: 1.7;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .legal-card ul {
+            padding-left: 1.5rem;
+        }
+
+        .legal-card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-card strong {
+            color: #fff;
+        }
+
+        .badge-google {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #38bdf8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-nav a {
+            color: var(--primary-cyan);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .back-nav a:hover {
+            color: #a78bfa;
+        }
+
+        .contact-box {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-box a {
+            color: #38bdf8;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="container" style="max-width: 960px;">
+        <div class="legal-header">
+            <div class="back-nav">
+                <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Volver a ExpoGeek</a>
+            </div>
+            <h1>Política de Privacidad</h1>
+            <p>ExpoGeek - Arena de Minijuegos & Plataforma Oficial</p>
+            <span class="badge-google"><i class="fa-brands fa-google"></i> Conforme a las Políticas de Google OAuth y Ley 19.628 de Chile</span>
+            <p><small style="color: #9ca3af;">Última actualización: 24 de julio de 2026</small></p>
+        </div>
+
+        <div class="legal-card">
+            <h2>1. Identificación del Responsable del Tratamiento</h2>
+            <p>
+                La presente Política de Privacidad regula el tratamiento de datos personales realizado por <strong>ExpoGeek / TemucoGeek</strong> (organizado por Meetco Event), con domicilio para efectos de este sitio web en Recinto SOFO, Temuco, Región de La Araucanía, Chile.
+            </p>
+            <p>
+                Correo electrónico de contacto: <a href="mailto:contacto@temugeek.cl" style="color: #38bdf8;">contacto@temugeek.cl</a>
+            </p>
+
+            <h2>2. Datos Personales Recopilados</h2>
+            <p>Para la participación en la Arena de Minijuegos y Tabla de Clasificación (Leaderboard) de ExpoGeek, los usuarios pueden autenticarse mediante el servicio <strong>Google Sign-In (OAuth 2.0)</strong>. Al iniciar sesión, recopilamos únicamente la siguiente información procedente de su cuenta de Google:</p>
+            <ul>
+                <li><strong>Nombre completo o nombre público de usuario:</strong> Utilizado para identificar al jugador en la tabla de clasificación pública.</li>
+                <li><strong>Dirección de correo electrónico:</strong> Utilizada para verificar la autenticidad de la cuenta, prevenir registros duplicados/fraudulentos y contactar a los ganadores de las competencias.</li>
+                <li><strong>Fotografía de perfil (avatar):</strong> Utilizada exclusivamente para mostrar la imagen de usuario en la interfaz del juego y el ranking.</li>
+                <li><strong>Datos de juego:</strong> Puntajes, tiempos de juego e historial de partidas guardadas en nuestra base de datos.</li>
+            </ul>
+
+            <h2>3. Finalidad del Tratamiento de los Datos</h2>
+            <p>Los datos recopilados son procesados estrictamente para las siguientes finalidades:</p>
+            <ul>
+                <li>Autenticar y gestionar la sesión del usuario en la plataforma de minijuegos.</li>
+                <li>Publicar el nombre y puntaje del jugador en el ránking público (*Leaderboard*) del evento.</li>
+                <li>Notificar a los participantes ganadores de torneos o premios del evento ExpoGeek.</li>
+                <li>Garantizar el juego limpio y prevenir actividades automatizadas o tramposas (bots/cheating).</li>
+            </ul>
+
+            <h2>4. Cumplimiento de las Políticas de Datos de Usuario de Google (Google API Services User Data Policy)</h2>
+            <p>
+                El uso e información recibida de las APIs de Google por parte de ExpoGeek se adhiere estrictamente a la 
+                <strong><a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener" style="color:#38bdf8;">Google API Services User Data Policy</a></strong>, incluyendo los requisitos de <strong>Uso Limitado (Limited Use)</strong>:
+            </p>
+            <ul>
+                <li><strong>No Venta de Datos:</strong> No vendemos, alquilamos ni comercializamos los datos personales ni los datos de Google con ningún tercero.</li>
+                <li><strong>No Uso Publicitario:</strong> Los datos obtenidos mediante Google OAuth no se utilizan para crear perfiles publicitarios ni para dirigir anuncios personalizados.</li>
+                <li><strong>Acceso Restringido:</strong> Solo el personal autorizado del evento tiene acceso a los sistemas de administración para la validación de ganadores.</li>
+            </ul>
+
+            <h2>5. Almacenamiento y Seguridad de la Información</h2>
+            <p>
+                Sus datos son almacenados en servidores seguros con cifrado de transmisión (HTTPS / TLS 1.3) y controles de acceso restringidos utilizando infraestructura cloud de nivel empresarial (Supabase / Postgres). Implementamos medidas técnicas y organizativas para proteger su información contra accesos no autorizados, pérdida o alteración.
+            </p>
+
+            <h2>6. Conservación y Eliminación de Datos (Derechos ARCO)</h2>
+            <p>
+                De acuerdo con la <strong>Ley N° 19.628 sobre Protección de la Vida Privada de Chile</strong>, los usuarios tienen derecho a acceder, rectificar, cancelar u oponerse al tratamiento de sus datos personales en cualquier momento.
+            </p>
+            <div class="contact-box">
+                <p style="margin-bottom: 0.5rem;"><strong>¿Cómo solicitar la eliminación de tus datos?</strong></p>
+                <p style="margin-bottom: 0;">
+                    Puedes solicitar la eliminación permanente de tu cuenta y registros de puntaje enviando un correo electrónico a <a href="mailto:contacto@temugeek.cl">contacto@temugeek.cl</a> indicando tu correo de registro de Google y el asunto <em>"Solicitud de Eliminación de Datos"</em>. Responderemos a tu solicitud en un plazo máximo de 48 horas hábiles.
+                </p>
+            </div>
+            <p style="margin-top: 1rem;">
+                Adicionalmente, puedes revocar el permiso de acceso de la aplicación ExpoGeek en cualquier momento a través de la configuración de tu cuenta de Google en: <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener" style="color:#38bdf8;">https://myaccount.google.com/permissions</a>.
+            </p>
+
+            <h2>7. Modificaciones a la Política de Privacidad</h2>
+            <p>
+                ExpoGeek se reserva el derecho de actualizar o modificar esta Política de Privacidad en cualquier momento para adaptarla a cambios legislativos o mejoras operativas. Cualquier actualización será publicada en esta misma página web.
+            </p>
+
+            <h2>8. Contacto</h2>
+            <p>Si tienes preguntas, sugerencias o inquietudes sobre esta Política de Privacidad, puedes escribirnos a:</p>
+            <ul>
+                <li><strong>Organización:</strong> ExpoGeek / Meetco Event</li>
+                <li><strong>Correo de Contacto:</strong> <a href="mailto:contacto@temugeek.cl" style="color:#38bdf8;">contacto@temugeek.cl</a></li>
+                <li><strong>Ubicación:</strong> Temuco, Región de La Araucanía, Chile</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="xb-footer_bottom" style="border-top: 1px solid rgba(255,255,255,0.1); padding: 20px 0; background: rgba(9, 13, 22, 0.9); margin-top: auto;">
+        <div class="container" style="max-width: 960px;">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <p style="margin: 0; color: #9ca3af; font-size: 0.9rem;">© 2026 TemuGeek / ExpoGeek. Todos los derechos reservados.</p>
+                <div>
+                    <a href="privacidad.html" style="color: #38bdf8; text-decoration: none; font-size: 0.9rem; margin-right: 15px;">Política de Privacidad</a>
+                    <a href="terminos.html" style="color: #9ca3af; text-decoration: none; font-size: 0.9rem;">Términos del Servicio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
