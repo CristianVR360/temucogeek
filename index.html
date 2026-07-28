@@ -412,18 +412,21 @@
                     <div class="xb-header-logo">
                         <a href="#home-section" class="logo1"><img src="assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 40px;"></a>
                     </div>
-                    <div class="main-menu__wrap  navbar navbar-expand-lg p-0">
+                    <div class="main-menu__wrap navbar navbar-expand-lg p-0">
                         <nav class="main-menu collapse navbar-collapse">
                             <ul>
                                 <li class="active"><a href="#home-section"><span>Inicio</span></a></li>
                                 <li><a href="#about-section"><span>El Evento</span></a></li>
-                                <li><a href="#schedule-section"><span>Cronograma</span></a></li>
-                                <li><a href="#pricing-section"><span>Entradas</span></a></li>
-                                <li><a href="minijuegos.html"><span>🎮 Minijuegos</span></a></li>
-                                <li><a href="postulacion/"><span>Postulación Expositores</span></a></li>
+                                <li><a href="cosplay/"><span>🎭 Cosplay</span></a></li>
+                                <li><a href="postulacion/"><span>Postula</span></a></li>
                                 <li><a href="#faq-section"><span>Preguntas Frecuentes</span></a></li>
                             </ul>
                         </nav>
+                    </div>
+                    <div class="d-none d-lg-flex align-items-center me-3">
+                        <a href="https://www.instagram.com/temu.geek/" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3" style="font-weight: bold; border-color: #e92652; color: #ffffff;">
+                            <i class="fab fa-instagram me-1" style="color: #e1306c;"></i> @temu.geek
+                        </a>
                     </div>
                     <div class="header-bar-mobile side-menu d-lg-none">
                         <a class="xb-nav-mobile" href="javascript:void(0);">
@@ -447,11 +450,10 @@
                                 <ul class="xb-menu-primary clearfix">
                                     <li class="menu-item"><a href="#home-section"><span>Inicio</span></a></li>
                                     <li class="menu-item"><a href="#about-section"><span>El Evento</span></a></li>
-                                    <li class="menu-item"><a href="#schedule-section"><span>Cronograma</span></a></li>
-                                    <li class="menu-item"><a href="#pricing-section"><span>Entradas</span></a></li>
-                                    <li class="menu-item"><a href="minijuegos.html"><span>🎮 Minijuegos</span></a></li>
-                                    <li class="menu-item"><a href="postulacion/"><span>Postulación Expositores</span></a></li>
+                                    <li class="menu-item"><a href="cosplay/"><span>🎭 Concurso Cosplay</span></a></li>
+                                    <li class="menu-item"><a href="postulacion/"><span>Postula</span></a></li>
                                     <li class="menu-item"><a href="#faq-section"><span>Preguntas Frecuentes</span></a></li>
+                                    <li class="menu-item"><a href="https://www.instagram.com/temu.geek/" target="_blank" style="color: #e92652; font-weight: bold;"><i class="fab fa-instagram me-1"></i> Instagram @temu.geek</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -751,7 +753,7 @@
 
         <div class="dark-bg">
             <!-- funfact start -->
-            <section class="funfact pt-130 pb-125" style="display: none;">
+            <section class="funfact pt-130 pb-125">
                 <div class="container">
                     <div class="dc-funfact-wrap bg_img" data-background="assets/img/bg/funfact-bg.jpg">
                         <div class="row mt-none-50">
@@ -760,16 +762,16 @@
                                     <div class="sec-title sec-title--two">
                                         <span class="sub-title wow fadeInUp" data-wow-delay="0ms" data-wow-duration="600ms">
                                             <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
-                                            Cifras TemuGeek
+                                            Arena de Minijuegos TemuGeek
                                             <img src="assets/img/icon/sub-icon.svg" alt="icon-image">
                                         </span>
-                                        <h2 class="title wow fadeInUp" data-wow-delay="150ms" data-wow-duration="600ms">¡Todo lo que te espera!</h2>
-                                        <p class="content wow fadeInUp" data-wow-delay="300ms" data-wow-duration="600ms">Desde la emoción de los videojuegos de última generación hasta la nostalgia retro y el talento del callejón de artistas. ¡Prepárate para un día lleno de cultura geek!</p>
+                                        <h2 class="title wow fadeInUp" data-wow-delay="150ms" data-wow-duration="600ms">¡Juega, Compite y Gana Entradas!</h2>
+                                        <p class="content wow fadeInUp" data-wow-delay="300ms" data-wow-duration="600ms">Demuestra tus habilidades en la Arena de Minijuegos. Regístrate, acumula tu mejor puntuación y lidera el Leaderboard en vivo. ¡Quienes encabecen la tabla o participen podrán ganar entradas exclusivas para TemuGeek 2026, pases VIP y sorpresas increíbles!</p>
                                     </div>
                                     <div class="hero-btn mt-55 wow fadeInUp" data-wow-delay="450ms" data-wow-duration="600ms">
-                                        <a href="#pricing-section" class="thm-btn design-btn">
-                                            Registra tu Entrada
-                                            <img src="assets/img/icon/right-arrow.svg" alt="">
+                                        <a href="minijuegos.html" class="thm-btn design-btn" style="background-color: #ffe62e !important; color: #141519 !important; border-color: #ffe62e !important; font-weight: bold;">
+                                            🎮 Ir a la Arena de Minijuegos
+                                            <img src="assets/img/icon/right-arrow.svg" alt="" style="filter: invert(1);">
                                         </a>
                                     </div>
                                 </div>
@@ -782,26 +784,26 @@
                         </div>
                         <div class="dc-funfact-inner mt-80">
                             <div class="dc-funfact-item">
-                                <h3 class="xb-item--number xb-odm"><span class="xbo" data-count="3">00</span><span class="suffix"></span></h3>
-                                <span class="xb-item--text">Zonas del Evento</span>
+                                <h3 class="xb-item--number xb-odm"><span class="xbo" data-count="100">00</span><span class="suffix">+</span></h3>
+                                <span class="xb-item--text">Entradas & Premios en Juego</span>
                             </div>
                             <div class="dc-funfact-item">
                                 <h3 class="xb-item--number xb-odm">
-                                    <span class="xbo" data-count="5">00</span><span class="suffix">k+</span>
+                                    <span class="xbo" data-count="24">00</span><span class="suffix">/7</span>
                                 </h3>
-                                <span class="xb-item--text">Asistentes Estimados</span>
+                                <span class="xb-item--text">Leaderboard en Vivo</span>
                             </div>
                             <div class="dc-funfact-item">
                                 <h3 class="xb-item--number xb-odm">
-                                    <span class="xbo" data-count="15">00</span><span class="suffix">+</span>
+                                    <span class="xbo" data-count="1">00</span><span class="suffix">er</span>
                                 </h3>
-                                <span class="xb-item--text">Torneos & Shows</span>
+                                <span class="xb-item--text">Lugar: Pase VIP + Kit</span>
                             </div>
                             <div class="dc-funfact-item">
                                 <h3 class="xb-item--number xb-odm">
-                                    <span class="xbo" data-count="50">00</span><span class="suffix">+</span>
+                                    <span class="xbo" data-count="100">00</span><span class="suffix">%</span>
                                 </h3>
-                                <span class="xb-item--text">Expositores & Tiendas</span>
+                                <span class="xb-item--text">Participación Gratuita</span>
                             </div>
                         </div>
                     </div>
@@ -1567,9 +1569,7 @@
                     <div class="xb-social_media">
                         <ul class="social-link list-unstyled ul_li">
                             <li>Síguenos :</li>
-                            <li><a href="#!"><i class="fa-brands fa-facebook-f"></i></a></li>
-                            <li><a href="#!"><i class="fa-brands fa-linkedin-in"></i></a></li>
-                            <li><a href="#!"><i class="fa-brands fa-instagram"></i></a></li>
+                            <li><a href="https://www.instagram.com/temu.geek/" target="_blank" title="Instagram Oficial @temu.geek" style="color: #e1306c;"><i class="fa-brands fa-instagram"></i></a></li>
                         </ul>
                     </div>
                 </div>

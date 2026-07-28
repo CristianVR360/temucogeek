@@ -90,37 +90,222 @@
             border-color: rgba(139, 92, 246, 0.4);
         }
 
-        /* Login State */
+        /* Login State & Hero Banner */
         #auth-section {
             text-align: center;
-            padding: 3rem 1.5rem;
         }
 
-        .btn-google {
-            background: #ffffff;
-            color: #1f2937;
+        .auth-hero-banner {
+            position: relative;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.1) 50%, rgba(236, 72, 153, 0.15) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 24px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .auth-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(233, 38, 82, 0.2);
+            border: 1px solid #e92652;
+            color: #ffe62e;
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 1.1rem;
-            padding: 0.85rem 2rem;
-            border: none;
-            border-radius: 12px;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 0 15px rgba(233, 38, 82, 0.3);
+        }
+
+        .auth-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.3rem;
+            font-weight: 900;
+            line-height: 1.25;
+            background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .auth-subtitle {
+            font-size: 1.05rem;
+            color: #d1d5db;
+            max-width: 680px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
+        }
+
+        .promo-games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .promo-game-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .promo-game-card:hover {
+            border-color: var(--primary-violet);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.25);
+        }
+
+        .promo-game-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .promo-game-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+        }
+
+        .promo-game-desc {
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .rewards-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 1.25rem;
+        }
+
+        @media (max-width: 640px) {
+            .rewards-row {
+                grid-template-columns: 1fr;
+            }
+            .auth-title {
+                font-size: 1.75rem;
+            }
+        }
+
+        .reward-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .reward-item .icon {
+            font-size: 1.8rem;
+        }
+
+        .reward-item .title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #ffe62e;
+        }
+
+        .reward-item .desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .btn-google-epic {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+            color: #111827;
+            font-weight: 800;
+            font-size: 1.15rem;
+            padding: 1rem 2.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-            transition: all 0.2s ease;
+            gap: 14px;
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.4), 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: pulseGlow 3s infinite;
         }
 
-        .btn-google:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
-            background: #f9fafb;
+        .btn-google-epic:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 35px rgba(6, 182, 212, 0.6), 0 12px 25px rgba(0, 0, 0, 0.5);
+            background: #ffffff;
         }
 
-        .btn-google svg {
-            width: 22px;
-            height: 22px;
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(236, 72, 153, 0.6); }
+            100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
+        }
+
+        .rank-badge {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 900;
+            font-size: 0.9rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 42px;
+        }
+
+        .rank-1 {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+            border: 1px solid #fef3c7;
+        }
+
+        .rank-2 {
+            background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(148, 163, 184, 0.5);
+        }
+
+        .rank-3 {
+            background: linear-gradient(135deg, #b45309 0%, #78350f 100%);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(180, 83, 9, 0.4);
+        }
+
+        .rank-default {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .top-1-row {
+            background: rgba(245, 158, 11, 0.08) !important;
+            border-color: rgba(245, 158, 11, 0.3) !important;
+        }
+
+        .top-2-row {
+            background: rgba(148, 163, 184, 0.05) !important;
+            border-color: rgba(148, 163, 184, 0.25) !important;
+        }
+
+        .top-3-row {
+            background: rgba(180, 83, 9, 0.05) !important;
+            border-color: rgba(180, 83, 9, 0.25) !important;
         }
 
         /* User Profile & Dashboard */
@@ -216,16 +401,163 @@
             border-color: var(--primary-violet);
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-violet), var(--primary-cyan));
-            color: #ffffff;
+        /* Stats Bar & Catalog Grid */
+        .stats-bar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats-bar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-item-box {
+            text-align: center;
+        }
+
+        .stat-item-box h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary-cyan);
+        }
+
+        .stat-item-box p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .game-card:hover {
+            border-color: var(--primary-violet);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+        }
+
+        .game-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
             font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .status-online {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-coming {
+            background: rgba(234, 179, 8, 0.15);
+            color: #facc15;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        /* Game Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 7, 12, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-container {
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            max-height: 680px;
+            background: #000000;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-header {
+            background: #090d16;
+            padding: 0.85rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .btn-close-modal {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            font-weight: 700;
+            transition: background 0.2s ease;
+        }
+
+        .btn-close-modal:hover {
+            background: rgba(239, 68, 68, 0.8);
+        }
+
+        .modal-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            flex: 1;
         }
 
         .btn-primary:hover {
@@ -334,23 +666,84 @@
             <p>Sistema de Registro de Puntajes en Tiempo Real</p>
         </header>
 
-        <!-- SECCIÓN 1: Autenticación OAuth Google (Estado Desconectado) -->
-        <div id="auth-section" class="glass-card">
-            <h2 style="margin-bottom: 1rem; font-weight: 700;">Únete a la Competencia</h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;">Inicia sesión con tu cuenta de Google en 1-Click para participar y registrar tus puntajes.</p>
-            
-            <button id="btn-login-google" class="btn-google">
-                <svg viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                </svg>
-                Ingresar con Google
-            </button>
+        <!-- SECCIÓN 1: Autenticación OAuth Google (Estado Desconectado - Hero Promocional) -->
+        <div id="auth-section" class="auth-hero-banner">
+            <div class="auth-badge">
+                🔥 ARENA DE MINIJUEGOS & RANKING EXPO GEEK
+            </div>
+
+            <h2 class="auth-title">
+                ¡Compite en Vivo, Conquista el Leaderboard y Gana Entradas VIP!
+            </h2>
+
+            <p class="auth-subtitle">
+                Accede a nuestro catálogo de minijuegos arcade. Registra tus récords en tiempo real y demuestra tus habilidades. Quienes lideren la tabla de posiciones o participen ganarán <strong>Entradas Gratuitas, Pases VIP y Premios Exclusivos</strong> para TemuGeek Expo 2026.
+            </p>
+
+            <!-- Grid Promocional de Minijuegos -->
+            <div class="promo-games-grid">
+                <div class="promo-game-card">
+                    <div class="promo-game-icon">🕹️</div>
+                    <div class="promo-game-title">Flappy Geek</div>
+                    <div class="promo-game-desc">Minijuego Tap-to-Fly neón. Esquiva obstáculos, supera tus marcas y escala en la clasificación.</div>
+                </div>
+
+                <div class="promo-game-card">
+                    <div class="promo-game-icon">🚀</div>
+                    <div class="promo-game-title">Space Invaders Geek</div>
+                    <div class="promo-game-desc">Arcade clásico de naves. Oleadas extraterrestres y multiplicadores de puntuación.</div>
+                </div>
+
+                <div class="promo-game-card">
+                    <div class="promo-game-icon">⚡</div>
+                    <div class="promo-game-title">Pixel Rush Challenge</div>
+                    <div class="promo-game-desc">Desafío retro de velocidad y reflejos extremos para verdaderos apasionados.</div>
+                </div>
+            </div>
+
+            <!-- Fila de Premios & Incentivos -->
+            <div class="rewards-row">
+                <div class="reward-item">
+                    <span class="icon">🏆</span>
+                    <div>
+                        <div class="title">1º Lugar Leaderboard</div>
+                        <div class="desc">2 Pases VIP Full + Kit Oficial Gamer + Trofeo</div>
+                    </div>
+                </div>
+                <div class="reward-item">
+                    <span class="icon">🎟️</span>
+                    <div>
+                        <div class="title">Top 10 Récords</div>
+                        <div class="desc">Entradas Generales Gratuitas para la Expo</div>
+                    </div>
+                </div>
+                <div class="reward-item">
+                    <span class="icon">🎁</span>
+                    <div>
+                        <div class="title">Premios para Todos</div>
+                        <div class="desc">Sorteos semanales solo por participar</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón Épico de Google Login -->
+            <div style="margin-top: 1.5rem;">
+                <button id="btn-login-google" class="btn-google-epic">
+                    <svg viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    ⚡ Ingresar con Google y Empezar a Jugar
+                </button>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+                * Autenticación segura de 1-Click. Tu progreso y récords se guardan automáticamente.
+            </p>
         </div>
 
-        <!-- SECCIÓN 2: Panel del Jugador & Registro de Puntajes (Estado Conectado) -->
+        <!-- SECCIÓN 2: Catálogo de Minijuegos Protegido & Estadísticas del Usuario (Estado Conectado) -->
         <div id="game-section" class="glass-card hidden">
             <!-- Info del Usuario -->
             <div class="profile-bar">
@@ -361,26 +754,112 @@
                         <p id="user-email">email@ejemplo.com</p>
                     </div>
                 </div>
-                <button id="btn-logout" class="btn-logout">Cerrar Sesión</button>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <a href="perfil.html" class="btn-primary" style="text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem;">⚙️ Mi Perfil</a>
+                    <button id="btn-logout" class="btn-logout">Cerrar Sesión</button>
+                </div>
             </div>
 
-            <!-- Formulario para Registrar Puntaje -->
-            <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">Simulador de Envío de Puntaje</h3>
-            <form id="score-form" class="game-controls">
-                <div class="form-group">
-                    <label for="juego-select">Selecciona Minijuego</label>
-                    <select id="juego-select" class="form-control" required>
-                        <option value="arcade-runner">Cyber Runner 2077</option>
-                        <option value="retro-invaders">Space Invaders Geek</option>
-                        <option value="pixel-puzzle">Pixel Rush Challenge</option>
-                    </select>
+            <!-- Panel de Estadísticas del Usuario -->
+            <div class="stats-bar-grid">
+                <div class="stat-item-box">
+                    <h4 id="user-stat-matches">0</h4>
+                    <p>Partidas Jugadas</p>
                 </div>
-                <div class="form-group">
-                    <label for="score-input">Puntaje Obtenido</label>
-                    <input type="number" id="score-input" class="form-control" placeholder="Ej: 15500" min="1" max="999999" required>
+                <div class="stat-item-box">
+                    <h4 id="user-stat-max">0</h4>
+                    <p>Máximo Récord</p>
                 </div>
-                <button type="submit" id="btn-submit-score" class="btn-primary">Guardar Puntaje</button>
-            </form>
+                <div class="stat-item-box">
+                    <h4 id="user-stat-avg">0</h4>
+                    <p>Promedio Puntaje</p>
+                </div>
+                <div class="stat-item-box">
+                    <h4 id="user-stat-last">0</h4>
+                    <p>Último Puntaje</p>
+                </div>
+            </div>
+
+            <!-- Título del Catálogo Protegido -->
+            <h3 style="margin-bottom: 1.25rem; font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem;">Arcade & Catálogo de Minijuegos (Exclusivo Auth)</h3>
+
+            <!-- Grid del Catálogo de Juegos -->
+            <div class="catalog-grid">
+                
+                <!-- Tarjeta 1: Flappy Geek -->
+                <div class="game-card">
+                    <div>
+                        <div class="game-card-header">
+                            <span class="status-badge status-online">🟢 DISPONIBLE</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">HTML5 Canvas</span>
+                        </div>
+                        <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem;">Flappy Geek</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">Minijuego Tap-to-Fly infinito. Esquiva pilares neón, acumula puntos y registra tu marca en vivo.</p>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" class="btn-primary btn-play-modal" style="flex: 1; text-align: center; padding: 0.65rem;" data-game-url="juegos/cyber-runner/index.html" data-game-title="Flappy Geek">🕹️ Jugar Ahora</button>
+                        <a href="juegos/cyber-runner/index.html" target="_blank" class="btn-logout" style="text-decoration: none; display: flex; align-items: center; justify-content: center;" title="Abrir en Pantalla Completa">↗️</a>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Space Invaders Geek -->
+                <div class="game-card">
+                    <div>
+                        <div class="game-card-header">
+                            <span class="status-badge status-coming">🟡 PRÓXIMAMENTE</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">Arcade</span>
+                        </div>
+                        <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem;">Space Invaders Geek</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">Defiende la galaxia geek contra oleadas de naves alienígenas retro.</p>
+                    </div>
+                    <button type="button" class="form-control" disabled style="opacity: 0.5; cursor: not-allowed; text-align: center;">🔒 En Desarrollo</button>
+                </div>
+
+                <!-- Tarjeta 3: Pixel Rush Challenge -->
+                <div class="game-card">
+                    <div>
+                        <div class="game-card-header">
+                            <span class="status-badge status-coming">🟡 PRÓXIMAMENTE</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">Puzzle Action</span>
+                        </div>
+                        <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem;">Pixel Rush Challenge</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">Carrera de obstáculos retro con puzzles de velocidad y reflejos.</p>
+                    </div>
+                    <button type="button" class="form-control" disabled style="opacity: 0.5; cursor: not-allowed; text-align: center;">🔒 En Desarrollo</button>
+                </div>
+
+            </div>
+
+            <!-- Formulario Manual para Registrar Puntaje (Opcional) -->
+            <details style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+                <summary style="color: var(--text-muted); font-size: 0.9rem; cursor: pointer;">Envío manual de puntajes (Modo Desarrollador)</summary>
+                <form id="score-form" class="game-controls" style="margin-top: 1rem;">
+                    <div class="form-group">
+                        <label for="juego-select">Selecciona Minijuego</label>
+                        <select id="juego-select" class="form-control" required>
+                            <option value="flappy-geek">Flappy Geek</option>
+                            <option value="retro-invaders">Space Invaders Geek</option>
+                            <option value="pixel-puzzle">Pixel Rush Challenge</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="score-input">Puntaje Obtenido</label>
+                        <input type="number" id="score-input" class="form-control" placeholder="Ej: 15500" min="1" max="999999" required>
+                    </div>
+                    <button type="submit" id="btn-submit-score" class="btn-primary">Guardar Puntaje</button>
+                </form>
+            </details>
+        </div>
+
+        <!-- MODAL FLOTANTE DE JUEGO (Iframe) -->
+        <div id="game-modal" class="modal-overlay hidden">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <span id="modal-game-title" class="modal-title">🕹️ Flappy Geek</span>
+                    <button id="btn-close-modal" class="btn-close-modal">✕</button>
+                </div>
+                <iframe id="game-iframe" class="modal-iframe" src="about:blank"></iframe>
+            </div>
         </div>
 
         <!-- SECCIÓN 3: Leaderboard en Tiempo Real -->
@@ -508,14 +987,60 @@
                 authSection.classList.add('hidden');
                 gameSection.classList.remove('hidden');
 
-                // Extraer datos del perfil de Google
+                // Extraer datos del perfil de Google y personalizaciones de Supabase
                 const userMetadata = user.user_metadata || {};
-                userName.textContent = userMetadata.full_name || userMetadata.name || user.email;
-                userEmail.textContent = user.email;
-                userAvatar.src = userMetadata.avatar_url || userMetadata.picture || 'https://via.placeholder.com/150';
+                const displayName = userMetadata.gamer_tag || userMetadata.full_name || userMetadata.name || user.email.split('@')[0];
+                const avatar = userMetadata.avatar_url || userMetadata.picture || 'https://api.dicebear.com/7.x/bottts/svg?seed=' + user.email;
+
+                userName.textContent = displayName;
+                userEmail.textContent = userMetadata.gamer_tag ? `@${userMetadata.gamer_tag}` : user.email;
+                userAvatar.src = avatar;
+
+                // Cargar Estadísticas Personales del Usuario en tiempo real
+                cargarEstadisticasPersonales(user.id);
             } else {
                 authSection.classList.remove('hidden');
                 gameSection.classList.add('hidden');
+            }
+        }
+
+        /**
+         * Carga y calcula las estadísticas en tiempo real del usuario autenticado
+         */
+        async function cargarEstadisticasPersonales(userId) {
+            const { data, error } = await supabaseClient
+                .from('puntajes')
+                .select('score, created_at')
+                .eq('user_id', userId)
+                .order('created_at', { ascending: true });
+
+            if (error) {
+                console.error("Error al cargar estadísticas del usuario:", error.message);
+                return;
+            }
+
+            const matchesEl = document.getElementById('user-stat-matches');
+            const maxEl = document.getElementById('user-stat-max');
+            const avgEl = document.getElementById('user-stat-avg');
+            const lastEl = document.getElementById('user-stat-last');
+
+            if (data && data.length > 0) {
+                const totalMatches = data.length;
+                const scores = data.map(d => d.score);
+                const maxScore = Math.max(...scores);
+                const sumScore = scores.reduce((a, b) => a + b, 0);
+                const avgScore = Math.round(sumScore / totalMatches);
+                const lastScore = scores[scores.length - 1];
+
+                matchesEl.textContent = totalMatches;
+                maxEl.textContent = maxScore.toLocaleString();
+                avgEl.textContent = avgScore.toLocaleString();
+                lastEl.textContent = lastScore.toLocaleString();
+            } else {
+                matchesEl.textContent = '0';
+                maxEl.textContent = '0';
+                avgEl.textContent = '0';
+                lastEl.textContent = '0';
             }
         }
 
@@ -529,7 +1054,7 @@
          * @param {number} score - Puntaje obtenido (entero).
          */
         async function guardarPuntaje(juego_id, score) {
-            // 1. Obtener la sesión activa para extraer el user_id
+            // 1. Obtener la sesión activa para extraer el user_id, gamer_tag y avatar_url
             const { data: { session }, error: sessionErr } = await supabaseClient.auth.getSession();
             
             if (sessionErr || !session) {
@@ -537,24 +1062,43 @@
                 return null;
             }
 
-            const user_id = session.user.id;
+            const user = session.user;
+            const meta = user.user_metadata || {};
+            const gamerTag = meta.gamer_tag || meta.full_name || meta.name || user.email.split('@')[0];
+            const avatarUrl = meta.avatar_url || meta.picture || ('https://api.dicebear.com/7.x/bottts/svg?seed=' + user.email);
 
-            // 2. Insertar registro en la tabla 'puntajes'
+            // 2. Insertar registro en la tabla 'puntajes' con soporte para gamer_tag y avatar_url
+            const insertPayload = {
+                user_id: user.id,
+                juego_id: juego_id,
+                score: parseInt(score, 10),
+                gamer_tag: gamerTag,
+                avatar_url: avatarUrl
+            };
+
             const { data, error } = await supabaseClient
                 .from('puntajes')
-                .insert([
-                    {
-                        user_id: user_id,
-                        juego_id: juego_id,
-                        score: parseInt(score, 10)
-                    }
-                ])
+                .insert([insertPayload])
                 .select();
 
             if (error) {
-                console.error("Error guardando el puntaje:", error.message);
-                alert("Error al guardar puntaje: " + error.message);
-                return null;
+                // Fallback si la tabla no tiene las columnas adicionales en Supabase aún
+                const fallbackPayload = {
+                    user_id: user.id,
+                    juego_id: juego_id,
+                    score: parseInt(score, 10)
+                };
+                const { data: retryData, error: retryErr } = await supabaseClient
+                    .from('puntajes')
+                    .insert([fallbackPayload])
+                    .select();
+
+                if (retryErr) {
+                    console.error("Error guardando el puntaje:", retryErr.message);
+                    alert("Error al guardar puntaje: " + retryErr.message);
+                    return null;
+                }
+                return retryData;
             }
 
             console.log("Puntaje guardado con éxito:", data);
@@ -562,18 +1106,18 @@
         }
 
         // =========================================================================
-        // 3. LEADERBOARD EN TIEMPO REAL (WebSockets con Supabase Channels)
+        // 3. LEADERBOARD EN TIEMPO REAL (Filtro de Usuarios Únicos y Mejor Récord)
         // =========================================================================
 
         /**
-         * Carga los 10 puntajes más altos iniciales de la base de datos
+         * Carga los mejores puntajes ÚNICOS por usuario de la base de datos
          */
         async function cargarPuntajesIniciales() {
             const { data, error } = await supabaseClient
                 .from('puntajes')
                 .select('*')
                 .order('score', { ascending: false })
-                .limit(10);
+                .limit(200);
 
             if (error) {
                 console.error("Error cargando puntajes iniciales:", error.message);
@@ -581,12 +1125,32 @@
                 return;
             }
 
-            leaderboardList.innerHTML = '';
-            if (data && data.length > 0) {
-                data.forEach(item => agregarPuntajeAlDOM(item, false));
-            } else {
+            if (!data || data.length === 0) {
                 leaderboardList.innerHTML = `<li class="empty-state">Aún no hay puntajes registrados. ¡Sé el primero!</li>`;
+                return;
             }
+
+            // Filtrar para mantener SOLO 1 entrada por usuario (su MÁXIMO puntaje)
+            const mapUsuariosUnicos = new Map();
+
+            for (const item of data) {
+                const uid = item.user_id;
+                if (!mapUsuariosUnicos.has(uid)) {
+                    mapUsuariosUnicos.set(uid, item);
+                } else {
+                    const existente = mapUsuariosUnicos.get(uid);
+                    if (item.score > existente.score) {
+                        mapUsuariosUnicos.set(uid, item);
+                    }
+                }
+            }
+
+            // Ordenar de mayor a menor puntaje máximo y tomar el Top 10
+            const topJugadores = Array.from(mapUsuariosUnicos.values())
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 10);
+
+            await renderizarLeaderboard(topJugadores);
         }
 
         /**
@@ -599,13 +1163,9 @@
                     'postgres_changes',
                     { event: 'INSERT', schema: 'public', table: 'puntajes' },
                     (payload) => {
-                        console.log('⚡ Nuevo evento INSERT en tiempo real:', payload.new);
-                        // Remover mensaje de "vacío" si existe
-                        const emptyState = leaderboardList.querySelector('.empty-state');
-                        if (emptyState) emptyState.remove();
-
-                        // Renderizar nuevo puntaje destacándolo
-                        agregarPuntajeAlDOM(payload.new, true);
+                        console.log('⚡ Nuevo puntaje registrado en tiempo real:', payload.new);
+                        // Recargar y filtrar la lista de mejores puntajes únicos
+                        cargarPuntajesIniciales();
                     }
                 )
                 .subscribe((status) => {
@@ -614,25 +1174,62 @@
         }
 
         /**
-         * Renderiza un elemento de puntaje en el DOM
+         * Renderiza la tabla completa del Leaderboard con posiciones (Ranks 1, 2, 3, etc.)
          */
-        function agregarPuntajeAlDOM(item, esNuevo = false) {
-            const li = document.createElement('li');
-            li.className = `score-item ${esNuevo ? 'new-entry' : ''}`;
+        async function renderizarLeaderboard(jugadores) {
+            leaderboardList.innerHTML = '';
             
-            const fecha = new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            
-            li.innerHTML = `
-                <div>
-                    <strong>Usuario ID: ${item.user_id.substring(0, 8)}...</strong>
-                    <span class="score-game-badge">${item.juego_id}</span>
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">${fecha}</div>
-                </div>
-                <div class="score-value">${item.score.toLocaleString()} pts</div>
-            `;
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            const currentUserId = session ? session.user.id : null;
+            const currentMeta = (session && session.user) ? (session.user.user_metadata || {}) : {};
 
-            // Insertar al inicio de la lista
-            leaderboardList.prepend(li);
+            jugadores.forEach((item, index) => {
+                const rank = index + 1;
+                let rankBadgeHTML = `<span class="rank-badge rank-default">#${rank}</span>`;
+                let rankRowClass = "";
+
+                if (rank === 1) {
+                    rankBadgeHTML = `<span class="rank-badge rank-1">🏆 #1</span>`;
+                    rankRowClass = "top-1-row";
+                } else if (rank === 2) {
+                    rankBadgeHTML = `<span class="rank-badge rank-2">🥈 #2</span>`;
+                    rankRowClass = "top-2-row";
+                } else if (rank === 3) {
+                    rankBadgeHTML = `<span class="rank-badge rank-3">🥉 #3</span>`;
+                    rankRowClass = "top-3-row";
+                }
+
+                let displayName = item.gamer_tag || item.user_name || null;
+                let avatarUrl = item.avatar_url || null;
+
+                if (currentUserId && item.user_id === currentUserId) {
+                    displayName = currentMeta.gamer_tag || currentMeta.full_name || currentMeta.name || displayName || session.user.email.split('@')[0];
+                    avatarUrl = currentMeta.avatar_url || currentMeta.picture || avatarUrl || ('https://api.dicebear.com/7.x/bottts/svg?seed=' + session.user.email);
+                }
+
+                if (!displayName) displayName = `Jugador_${item.user_id.substring(0, 6)}`;
+                if (!avatarUrl) avatarUrl = `https://api.dicebear.com/7.x/bottts/svg?seed=${item.user_id}`;
+
+                const li = document.createElement('li');
+                li.className = `score-item ${rankRowClass}`;
+                li.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 14px;">
+                        ${rankBadgeHTML}
+                        <img src="${avatarUrl}" alt="Avatar" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--primary-violet); object-fit: cover; background: #090d16;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <strong style="font-size: 1.05rem; color: #ffffff;">${displayName}</strong>
+                                <span class="score-game-badge">${item.juego_id}</span>
+                            </div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Mejor Récord Personal</div>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="score-value">${item.score.toLocaleString()} <span style="font-size: 0.75rem; color: var(--text-muted);">pts</span></div>
+                    </div>
+                `;
+                leaderboardList.appendChild(li);
+            });
         }
 
         // =========================================================================
@@ -659,6 +1256,46 @@
             btn.disabled = false;
             btn.textContent = "Guardar Puntaje";
         });
+
+        // =========================================================================
+        // 4. GESTIÓN DEL MODAL FLOTANTE DE JUEGO
+        // =========================================================================
+
+        const gameModal = document.getElementById('game-modal');
+        const gameIframe = document.getElementById('game-iframe');
+        const modalGameTitle = document.getElementById('modal-game-title');
+        const btnCloseModal = document.getElementById('btn-close-modal');
+
+        document.querySelectorAll('.btn-play-modal').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const gameUrl = btn.getAttribute('data-game-url');
+                const gameTitle = btn.getAttribute('data-game-title');
+                
+                modalGameTitle.textContent = `🕹️ ${gameTitle}`;
+                gameIframe.src = gameUrl;
+                gameModal.classList.remove('hidden');
+            });
+        });
+
+        function cerrarModalJuego() {
+            gameModal.classList.add('hidden');
+            gameIframe.src = 'about:blank';
+            
+            // Recargar estadísticas y leaderboard al salir del juego
+            supabaseClient.auth.getSession().then(({ data: { session } }) => {
+                if (session && session.user) {
+                    cargarEstadisticasPersonales(session.user.id);
+                }
+            });
+            cargarPuntajesIniciales();
+        }
+
+        if (btnCloseModal) btnCloseModal.addEventListener('click', cerrarModalJuego);
+        if (gameModal) {
+            gameModal.addEventListener('click', (e) => {
+                if (e.target === gameModal) cerrarModalJuego();
+            });
+        }
 
         // Inicialización al cargar el DOM
         document.addEventListener('DOMContentLoaded', () => {

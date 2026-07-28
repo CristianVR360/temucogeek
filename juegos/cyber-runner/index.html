@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flappy Geek — ExpoGeek Minijuegos</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Supabase SDK v2 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-wrapper">
+        <!-- Canvas de Renderizado 2D -->
+        <canvas id="game-canvas" width="480" height="640"></canvas>
+
+        <!-- Overlay de Controles y Notificación de Supabase -->
+        <div id="game-ui-overlay" class="ui-overlay">
+            <div class="top-nav-bar">
+                <a href="../../minijuegos.html" class="btn-back">← Volver a Arena</a>
+                <div id="user-badge" class="user-badge">Cargando...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Puerta de Enlace a Supabase -->
+    <script>
+        const SUPABASE_URL = "https://ffhjyzdsfemmfcbdsxuc.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmaGp5emRzZmVtbWZjYmRzeHVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2Mzg0MTUsImV4cCI6MjA5OTIxNDQxNX0.nhbLWs9dfSGWQ7eWoY0K2TxrPE_XcE0IP56oGZvj6LM";
+
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        /**
+         * Función Externa de Guardado de Puntaje en Supabase
+         * @param {string} juego_id - Identificador único del juego ('cyber-runner')
+         * @param {number} score - Puntaje acumulado
+         */
+        async function guardarPuntaje(juego_id, score) {
+            console.log(`[Supabase Bridge] Intentando guardar puntaje: ${score} para ${juego_id}`);
+            
+            const { data: { session }, error: sessionErr } = await supabaseClient.auth.getSession();
+
+            if (sessionErr || !session) {
+                console.warn("[Supabase Bridge] Usuario no autenticado. El puntaje no se guardará en la base de datos.");
+                return { success: false, error: "Usuario no autenticado" };
+            }
+
+            const user = session.user;
+            const meta = user.user_metadata || {};
+            const gamerTag = meta.gamer_tag || meta.full_name || meta.name || user.email.split('@')[0];
+            const avatarUrl = meta.avatar_url || meta.picture || ('https://api.dicebear.com/7.x/bottts/svg?seed=' + user.email);
+
+            const insertPayload = {
+                user_id: user.id,
+                juego_id: juego_id,
+                score: parseInt(score, 10),
+                gamer_tag: gamerTag,
+                avatar_url: avatarUrl
+            };
+
+            const { data, error } = await supabaseClient
+                .from('puntajes')
+                .insert([insertPayload])
+                .select();
+
+            if (error) {
+                // Fallback por si la tabla no tiene las columnas adicionadas
+                const fallbackPayload = { user_id: user.id, juego_id: juego_id, score: parseInt(score, 10) };
+                const { data: retryData, error: retryErr } = await supabaseClient.from('puntajes').insert([fallbackPayload]).select();
+
+                if (retryErr) {
+                    console.error("[Supabase Bridge] Error al guardar puntaje:", retryErr.message);
+                    return { success: false, error: retryErr.message };
+                }
+                return { success: true, data: retryData };
+            }
+
+            console.log("[Supabase Bridge] Puntaje guardado con éxito:", data);
+            return { success: true, data };
+        }
+
+        // Cargar datos de la sesión para mostrar badge del usuario
+        async function initUserBadge() {
+            const userBadge = document.getElementById('user-badge');
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session && session.user) {
+                const meta = session.user.user_metadata || {};
+                const name = meta.gamer_tag || meta.full_name || session.user.email.split('@')[0];
+                userBadge.textContent = `🎮 ${name}`;
+            } else {
+                userBadge.textContent = "🎮 Visitante (Sin Auth)";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initUserBadge);
+    </script>
+
+    <!-- Script Principal del Juego -->
+    <script src="game.js"></script>
+</body>
+</html>

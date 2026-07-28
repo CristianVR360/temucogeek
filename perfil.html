@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpoGeek — Dashboard de Perfil Gamer</title>
+    
+    <!-- Google Fonts & Clash Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap" rel="stylesheet">
+    
+    <!-- Supabase Client SDK v2 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        :root {
+            /* Palette: OLED Black + Ambient Mesh Orbs + Doppelrand Hairlines */
+            --bg-oled: #050505;
+            --surface-shell: rgba(255, 255, 255, 0.03);
+            --surface-core: rgba(12, 12, 18, 0.8);
+            --hairline: rgba(255, 255, 255, 0.08);
+            --hairline-hover: rgba(255, 255, 255, 0.2);
+
+            --accent-purple: #a855f7;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+
+            --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-oled);
+            color: var(--text-secondary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1.5rem 6rem;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ambient Glow Mesh Orbs Layer */
+        .ambient-mesh {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.15;
+            animation: orbFloat 22s infinite alternate var(--ease-fluid);
+        }
+
+        .orb-1 {
+            width: 650px;
+            height: 650px;
+            background: var(--accent-purple);
+            top: -120px;
+            left: -120px;
+        }
+
+        .orb-2 {
+            width: 550px;
+            height: 550px;
+            background: var(--accent-cyan);
+            bottom: -120px;
+            right: -120px;
+            animation-delay: -11s;
+        }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(80px, 60px) scale(1.15); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1140px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Floating Island Navbar Branded with Official Logo */
+        .island-nav {
+            margin: 0 auto 3.5rem;
+            width: max-content;
+            max-width: calc(100vw - 3rem);
+            background: rgba(18, 18, 26, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--hairline);
+            border-radius: 9999px;
+            padding: 0.6rem 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 700;
+            color: #FFFFFF;
+            font-size: 1.15rem;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-brand-img {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-item {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.3s var(--ease-fluid);
+        }
+
+        .nav-item:hover {
+            color: #FFFFFF;
+        }
+
+        .btn-exit-pill {
+            background: rgba(239, 68, 68, 0.12);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            padding: 0.4rem 1.1rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s var(--ease-fluid);
+        }
+
+        .btn-exit-pill:hover {
+            background: rgba(239, 68, 68, 0.25);
+            color: #FFFFFF;
+        }
+
+        /* Hero Header Branded */
+        .hero-section {
+            margin-bottom: 3.5rem;
+            animation: heroCascade 0.8s var(--ease-fluid);
+        }
+
+        .brand-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            color: #d8b4fe;
+            border-radius: 9999px;
+            padding: 0.35rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+
+        .brand-eyebrow img {
+            height: 16px;
+            width: auto;
+        }
+
+        .hero-heading {
+            font-family: 'Clash Display', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .hero-heading span {
+            background: linear-gradient(135deg, #FFFFFF 30%, var(--accent-purple) 70%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-lead {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 620px;
+            line-height: 1.6;
+        }
+
+        /* Asymmetrical Bento Grid with Doppelrand Architecture */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Doppelrand Outer Shell */
+        .bezel-shell {
+            background: var(--surface-shell);
+            border: 1px solid var(--hairline);
+            border-radius: 2rem;
+            padding: 0.5rem;
+            transition: border-color 0.4s var(--ease-fluid);
+        }
+
+        .bezel-shell:hover {
+            border-color: var(--hairline-hover);
+        }
+
+        /* Doppelrand Inner Core */
+        .bezel-core {
+            background: var(--surface-core);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: calc(2rem - 0.5rem);
+            padding: 2.25rem;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Player Passport Card */
+        .passport-card {
+            text-align: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ExpoGeek Watermark Brand Badge */
+        .passport-watermark {
+            position: absolute;
+            top: 1rem;
+            right: 1.25rem;
+            opacity: 0.15;
+            height: 36px;
+            pointer-events: none;
+        }
+
+        .avatar-bezel-outer {
+            width: 140px;
+            height: 140px;
+            border-radius: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .avatar-bezel-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: calc(2rem - 6px);
+            background: #09090e;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .verified-badge-icon {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: #FFFFFF;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #050505;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+        }
+
+        .player-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.2rem;
+        }
+
+        .player-handle {
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        .quote-bubble {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--hairline);
+            border-radius: 1rem;
+            padding: 1rem 1.25rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 1.75rem;
+            line-height: 1.5;
+            width: 100%;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--hairline);
+            border-radius: 1.25rem;
+            padding: 1rem 0.5rem;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .stat-lbl {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 2px;
+        }
+
+        /* Avatar Character Studio Section */
+        .section-header {
+            margin-bottom: 1.25rem;
+        }
+
+        .section-title-text {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.3rem;
+        }
+
+        .section-subtitle-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Avatar Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .cat-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--hairline);
+            color: var(--text-secondary);
+            padding: 0.45rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s var(--ease-fluid);
+        }
+
+        .cat-btn:hover, .cat-btn.active {
+            background: rgba(168, 85, 247, 0.15);
+            border-color: var(--accent-purple);
+            color: #FFFFFF;
+        }
+
+        /* Character Grid Selector */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+            gap: 0.85rem;
+            margin-bottom: 1.75rem;
+            max-height: 320px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .char-card-shell {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--hairline);
+            border-radius: 1.25rem;
+            padding: 4px;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-fluid);
+        }
+
+        .char-card-shell:hover, .char-card-shell.active {
+            border-color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.12);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(6, 182, 212, 0.2);
+        }
+
+        .char-card-core {
+            background: rgba(5, 5, 8, 0.6);
+            border-radius: calc(1.25rem - 4px);
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+        }
+
+        .char-card-core img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            border-radius: 0.85rem;
+            margin-bottom: 6px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .char-card-core span {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Randomizer & Google Bar */
+        .avatar-tools-bar {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Form Controls */
+        .form-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .input-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 600px) {
+            .input-grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .field-box {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .field-lbl {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .field-lbl-sub {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .input-island {
+            width: 100%;
+            background: rgba(9, 9, 14, 0.85);
+            border: 1px solid var(--hairline);
+            border-radius: 1rem;
+            padding: 0.85rem 1.25rem;
+            color: #FFFFFF;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s var(--ease-fluid);
+        }
+
+        .input-island:focus {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+        }
+
+        select.input-island {
+            cursor: pointer;
+        }
+
+        /* Nested CTA Button Architecture */
+        .cta-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-nested-cta {
+            background: linear-gradient(135deg, #FFFFFF, #e2e8f0);
+            color: #050505;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 0.5rem 0.5rem 0.5rem 1.75rem;
+            border-radius: 9999px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.4s var(--ease-fluid);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-nested-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-nested-cta:active {
+            transform: scale(0.98);
+        }
+
+        .btn-trailing-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #050505;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s var(--ease-fluid);
+        }
+
+        .btn-nested-cta:hover .btn-trailing-circle {
+            transform: translate(2px, -2px) scale(1.05);
+        }
+
+        .btn-secondary-pill {
+            background: rgba(255, 255, 255, 0.05);
+            color: #FFFFFF;
+            border: 1px solid var(--hairline);
+            padding: 0.85rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s var(--ease-fluid);
+        }
+
+        .btn-secondary-pill:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--hairline-hover);
+        }
+
+        /* Toast Island */
+        .toast-island {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(18, 18, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 9999px;
+            padding: 0.85rem 1.75rem;
+            color: #FFFFFF;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            transform: translateY(100px) scale(0.9);
+            opacity: 0;
+            transition: all 0.5s var(--ease-fluid);
+            z-index: 1000;
+        }
+
+        .toast-island.show {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Footer Branded */
+        .branded-footer {
+            margin-top: 5rem;
+            width: 100%;
+            border-top: 1px solid var(--hairline);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand img {
+            height: 24px;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Mesh Glow -->
+    <div class="ambient-mesh">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <div class="container">
+        
+        <!-- Floating Island Navbar (Branded with Logo Horizontal Blanco) -->
+        <nav class="island-nav">
+            <a href="index.html" class="nav-brand">
+                <img src="assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek Expo" class="nav-brand-img">
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-item">Inicio</a>
+                <a href="#" id="btn-logout" class="btn-exit-pill">Cerrar Sesión</a>
+            </div>
+        </nav>
+
+        <!-- Unauthenticated Card -->
+        <div id="unauth-view" class="bezel-shell hidden" style="max-width: 540px; margin: 3rem auto;">
+            <div class="bezel-core" style="text-align: center; padding: 4rem 2rem;">
+                <div class="brand-eyebrow" style="margin: 0 auto 1.5rem;">
+                    <img src="assets/img/logo/favicon-color.png" alt="Favicon"> Auth Required
+                </div>
+                <h2 style="font-family: 'Clash Display', sans-serif; font-size: 2.2rem; color: #fff; margin-bottom: 0.5rem;">Acceso Restringido</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem;">Inicia sesión con tu cuenta oficial para configurar tu pasaporte de jugador en ExpoGeek.</p>
+                <a href="minijuegos.html" class="btn-secondary-pill">Ir al Login de Google</a>
+            </div>
+        </div>
+
+        <!-- Authenticated Dashboard View -->
+        <div id="dashboard-view" class="hidden">
+            
+            <!-- Hero Header Branded -->
+            <div class="hero-section">
+                <div class="brand-eyebrow">
+                    <img src="assets/img/logo/favicon-color.png" alt="Favicon"> TemuGeek Expo 2026
+                </div>
+                <h1 class="hero-heading">Perfil & <span>Personaje Gamer.</span></h1>
+                <p class="hero-lead">Selecciona tu avatar de personaje preferido, personaliza tu Gamer Tag y guarda tu perfil para destacar en los Leaderboards oficiales de ExpoGeek.</p>
+            </div>
+
+            <!-- Bento Grid Layout -->
+            <div class="bento-grid">
+                
+                <!-- Left Column: Player Passport Doppelrand Card -->
+                <div class="bezel-shell">
+                    <div class="bezel-core passport-card">
+                        
+                        <!-- ExpoGeek Watermark Branding -->
+                        <img src="assets/img/logo/logo-principal-blanco.png" alt="ExpoGeek" class="passport-watermark">
+
+                        <!-- Avatar Bezel Outer -->
+                        <div class="avatar-bezel-outer">
+                            <div class="avatar-bezel-inner">
+                                <img id="card-avatar-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=Cyber-X" alt="Avatar" class="avatar-img">
+                            </div>
+                            <div class="verified-badge-icon" title="Jugador ExpoGeek Verificado">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <h2 id="card-display-name" class="player-title">Jugador</h2>
+                        <div id="card-gamer-handle" class="player-handle">@GamerTag</div>
+
+                        <div id="card-bio-quote" class="quote-bubble">
+                            "¡Listo para competir en los minijuegos oficiales de ExpoGeek!"
+                        </div>
+
+                        <!-- Stats Grid -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div id="stat-matches" class="stat-val">0</div>
+                                <div class="stat-lbl">Partidas</div>
+                            </div>
+                            <div class="stat-card">
+                                <div id="stat-max-score" class="stat-val">0</div>
+                                <div class="stat-lbl">Máx Récord</div>
+                            </div>
+                            <div class="stat-card">
+                                <div id="stat-fav-game" class="stat-val" style="color: var(--accent-cyan); font-size: 0.95rem;">Cyber</div>
+                                <div class="stat-lbl">Favorito</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right Column: Character Studio & Customization Controls -->
+                <div class="bezel-shell">
+                    <div class="bezel-core">
+                        
+                        <div class="section-header">
+                            <h3 class="section-title-text">Estudio de Personajes & Avatar</h3>
+                            <p class="section-subtitle-text">Selecciona tu avatar de personaje preferido entre múltiples categorías o usa tu foto de Google:</p>
+                        </div>
+
+                        <!-- Category Selector Tabs -->
+                        <div class="category-tabs">
+                            <button type="button" class="cat-btn active" data-cat="bottts">🤖 Cyber Robots</button>
+                            <button type="button" class="cat-btn" data-cat="pixel-art">👾 8-Bit Retro</button>
+                            <button type="button" class="cat-btn" data-cat="adventurer">⚔️ Héroes RPG</button>
+                            <button type="button" class="cat-btn" data-cat="lorelei">🌸 Anime & Cyber</button>
+                            <button type="button" class="cat-btn" data-cat="big-smile">😃 Comic Smile</button>
+                        </div>
+
+                        <!-- Character Matrix Grid -->
+                        <div id="character-matrix" class="character-grid">
+                            <!-- Inyectado dinámicamente según la categoría activa -->
+                        </div>
+
+                        <!-- Tools Bar -->
+                        <div class="avatar-tools-bar">
+                            <button type="button" id="btn-random-seed" class="btn-secondary-pill">🎲 Generar Personaje Único</button>
+                            <button type="button" id="btn-google-avatar" class="btn-secondary-pill">📷 Usar Foto de Google</button>
+                        </div>
+
+                        <!-- Profile Form -->
+                        <div class="section-header">
+                            <h3 class="section-title-text">Datos del Jugador</h3>
+                        </div>
+
+                        <form id="profile-edit-form" class="form-layout">
+                            <div class="input-grid-2">
+                                <div class="field-box">
+                                    <label for="input-gamertag" class="field-lbl">
+                                        <span>Gamer Tag (Nick)</span>
+                                        <span class="field-lbl-sub">Público</span>
+                                    </label>
+                                    <input type="text" id="input-gamertag" class="input-island" placeholder="Ej. CyberGeek99" required maxlength="25">
+                                </div>
+
+                                <div class="field-box">
+                                    <label for="select-fav-game" class="field-lbl">
+                                        <span>Minijuego Favorito</span>
+                                    </label>
+                                    <select id="select-fav-game" class="input-island">
+                                        <option value="Flappy Geek">Flappy Geek</option>
+                                        <option value="Space Invaders">Space Invaders Geek</option>
+                                        <option value="Pixel Rush">Pixel Rush Challenge</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="field-box">
+                                <label for="input-bio" class="field-lbl">
+                                    <span>Frase / Biografía</span>
+                                    <span class="field-lbl-sub">Máx 120 caracteres</span>
+                                </label>
+                                <input type="text" id="input-bio" class="input-island" placeholder="Escribe tu frase para el leaderboard..." maxlength="120">
+                            </div>
+
+                            <div class="field-box">
+                                <label for="input-discord" class="field-lbl">
+                                    <span>Discord / Instagram</span>
+                                </label>
+                                <input type="text" id="input-discord" class="input-island" placeholder="Ej. @gamer_handle#1234">
+                            </div>
+
+                            <!-- Nested CTA Button Architecture -->
+                            <div class="cta-container">
+                                <button type="submit" id="btn-save" class="btn-nested-cta">
+                                    <span>Guardar Perfil Gamer</span>
+                                    <div class="btn-trailing-circle">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </button>
+                                <a href="minijuegos.html" class="btn-secondary-pill">Volver a Minijuegos</a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Branded Footer -->
+        <footer class="branded-footer">
+            <div class="footer-brand">
+                <img src="assets/img/logo/logo-horizontal-blanco.png" alt="ExpoGeek Logo">
+                <span>© 2026 TemucoGeek Promo Event</span>
+            </div>
+            <div style="display: flex; gap: 1.25rem;">
+                <a href="minijuegos.html" style="color: var(--text-muted); text-decoration: none;">Minijuegos</a>
+                <a href="privacidad.html" style="color: var(--text-muted); text-decoration: none;">Privacidad</a>
+                <a href="terminos.html" style="color: var(--text-muted); text-decoration: none;">Términos</a>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Notification Island Toast -->
+    <div id="toast" class="toast-island">✨ Perfil gamer actualizado con éxito</div>
+
+    <!-- Script Logic -->
+    <script>
+        const SUPABASE_URL = "https://ffhjyzdsfemmfcbdsxuc.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmaGp5emRzZmVtbWZjYmRzeHVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2Mzg0MTUsImV4cCI6MjA5OTIxNDQxNX0.nhbLWs9dfSGWQ7eWoY0K2TxrPE_XcE0IP56oGZvj6LM";
+
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Catálogo de Personajes por Categorías
+        const CHARACTER_PRESETS = {
+            'bottts': [
+                { id: 'bot-1', seed: 'Cyber-X', name: 'Cyber-X' },
+                { id: 'bot-2', seed: 'Mecha-01', name: 'Mecha-01' },
+                { id: 'bot-3', seed: 'GlitchBot', name: 'Glitch' },
+                { id: 'bot-4', seed: 'ByteCore', name: 'Byte' },
+                { id: 'bot-5', seed: 'NeoBot', name: 'Neo-Bot' },
+                { id: 'bot-6', seed: 'VoxelPrime', name: 'Voxel' }
+            ],
+            'pixel-art': [
+                { id: 'pix-1', seed: 'Arcade84', name: 'Arcade84' },
+                { id: 'pix-2', seed: 'PixelHero', name: 'PixelHero' },
+                { id: 'pix-3', seed: 'RetroGamer', name: 'Retro8Bit' },
+                { id: 'pix-4', seed: 'BitMaster', name: 'BitMaster' },
+                { id: 'pix-5', seed: 'Speedrun', name: 'Speedrun' },
+                { id: 'pix-6', seed: 'Boss99', name: 'FinalBoss' }
+            ],
+            'adventurer': [
+                { id: 'adv-1', seed: 'CyberKnight', name: 'Knight' },
+                { id: 'adv-2', seed: 'MageAlpha', name: 'Mage' },
+                { id: 'adv-3', seed: 'RogueShadow', name: 'Rogue' },
+                { id: 'adv-4', seed: 'PaladinX', name: 'Paladin' },
+                { id: 'adv-5', seed: 'CyberHunter', name: 'Hunter' },
+                { id: 'adv-6', seed: 'Valkyrie', name: 'Valkyrie' }
+            ],
+            'lorelei': [
+                { id: 'lor-1', seed: 'ShinobiCyber', name: 'Shinobi' },
+                { id: 'lor-2', seed: 'MechaGirl', name: 'MechaGirl' },
+                { id: 'lor-3', seed: 'KitsuneGeek', name: 'Kitsune' },
+                { id: 'lor-4', seed: 'Vaporwave', name: 'Vapor' },
+                { id: 'lor-5', seed: 'GhostShell', name: 'Ghost' },
+                { id: 'lor-6', seed: 'CyberPulse', name: 'Pulse' }
+            ],
+            'big-smile': [
+                { id: 'sml-1', seed: 'HappyGeek', name: 'HappyGeek' },
+                { id: 'sml-2', seed: 'ComicHero', name: 'ComicPro' },
+                { id: 'sml-3', seed: 'SuperFan', name: 'SuperFan' },
+                { id: 'sml-4', seed: 'ArcadeKing', name: 'King' },
+                { id: 'sml-5', seed: 'ChibiGamer', name: 'Chibi' },
+                { id: 'sml-6', seed: 'PixelQueen', name: 'Queen' }
+            ]
+        };
+
+        // State Variables
+        let currentCategory = 'bottts';
+        let selectedAvatarUrl = "https://api.dicebear.com/7.x/bottts/svg?seed=Cyber-X";
+        let googlePhotoUrl = null;
+        let activeUser = null;
+
+        // DOM Cache
+        const unauthView = document.getElementById('unauth-view');
+        const dashboardView = document.getElementById('dashboard-view');
+        const cardAvatarImg = document.getElementById('card-avatar-img');
+        const cardDisplayName = document.getElementById('card-display-name');
+        const cardGamerHandle = document.getElementById('card-gamer-handle');
+        const cardBioQuote = document.getElementById('card-bio-quote');
+        const statMatches = document.getElementById('stat-matches');
+        const statMaxScore = document.getElementById('stat-max-score');
+        const statFavGame = document.getElementById('stat-fav-game');
+        const characterMatrix = document.getElementById('character-matrix');
+
+        const inputGamertag = document.getElementById('input-gamertag');
+        const selectFavGame = document.getElementById('select-fav-game');
+        const inputBio = document.getElementById('input-bio');
+        const inputDiscord = document.getElementById('input-discord');
+        const profileForm = document.getElementById('profile-edit-form');
+        const btnLogout = document.getElementById('btn-logout');
+        const btnRandomSeed = document.getElementById('btn-random-seed');
+        const btnGoogleAvatar = document.getElementById('btn-google-avatar');
+        const toast = document.getElementById('toast');
+
+        // Render Character Cards Grid based on selected Category
+        function renderCharacterMatrix(category) {
+            currentCategory = category;
+            characterMatrix.innerHTML = '';
+            const items = CHARACTER_PRESETS[category] || CHARACTER_PRESETS['bottts'];
+
+            items.forEach((char, idx) => {
+                const url = `https://api.dicebear.com/7.x/${category}/svg?seed=${char.seed}`;
+                const isSelected = selectedAvatarUrl === url;
+
+                const shell = document.createElement('div');
+                shell.className = `char-card-shell ${isSelected || idx === 0 ? 'active' : ''}`;
+                shell.innerHTML = `
+                    <div class="char-card-core">
+                        <img src="${url}" alt="${char.name}">
+                        <span>${char.name}</span>
+                    </div>
+                `;
+
+                shell.addEventListener('click', () => {
+                    document.querySelectorAll('.char-card-shell').forEach(s => s.classList.remove('active'));
+                    shell.classList.add('active');
+                    selectedAvatarUrl = url;
+                    cardAvatarImg.src = selectedAvatarUrl;
+                });
+
+                characterMatrix.appendChild(shell);
+            });
+        }
+
+        // Category Tab Handler
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const cat = btn.getAttribute('data-cat');
+                renderCharacterMatrix(cat);
+            });
+        });
+
+        // Random Character Seed Generator
+        btnRandomSeed.addEventListener('click', () => {
+            const randomSeed = 'Expo_' + Math.random().toString(36).substring(2, 9);
+            selectedAvatarUrl = `https://api.dicebear.com/7.x/${currentCategory}/svg?seed=${randomSeed}`;
+            cardAvatarImg.src = selectedAvatarUrl;
+            document.querySelectorAll('.char-card-shell').forEach(s => s.classList.remove('active'));
+            showToast("🎲 Personaje único generado");
+        });
+
+        // Use Google Avatar Button
+        btnGoogleAvatar.addEventListener('click', () => {
+            if (googlePhotoUrl) {
+                selectedAvatarUrl = googlePhotoUrl;
+                cardAvatarImg.src = selectedAvatarUrl;
+                document.querySelectorAll('.char-card-shell').forEach(s => s.classList.remove('active'));
+                showToast("📷 Usando foto original de Google");
+            } else {
+                alert("No se encontró una foto de perfil en tu cuenta de Google.");
+            }
+        });
+
+        // Live Inputs Binding
+        inputGamertag.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            cardGamerHandle.textContent = val ? `@${val}` : '@GamerTag';
+            cardDisplayName.textContent = val || (activeUser ? activeUser.email.split('@')[0] : 'Jugador');
+        });
+
+        inputBio.addEventListener('input', (e) => {
+            cardBioQuote.textContent = e.target.value ? `"${e.target.value}"` : '"¡Listo para competir en ExpoGeek!"';
+        });
+
+        selectFavGame.addEventListener('change', (e) => {
+            statFavGame.textContent = e.target.value.split(' ')[0];
+        });
+
+        // Session Initialization
+        async function initSession() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+
+            if (!session) {
+                unauthView.classList.remove('hidden');
+                dashboardView.classList.add('hidden');
+                return;
+            }
+
+            activeUser = session.user;
+            unauthView.classList.add('hidden');
+            dashboardView.classList.remove('hidden');
+
+            const meta = activeUser.user_metadata || {};
+            googlePhotoUrl = meta.picture || meta.avatar_url || null;
+
+            const name = meta.full_name || meta.name || activeUser.email.split('@')[0];
+            const gamerTag = meta.gamer_tag || name;
+            const bio = meta.bio || "¡Listo para competir en los minijuegos oficiales de ExpoGeek!";
+            const favGame = meta.favorite_game || "Flappy Geek";
+            const discord = meta.discord_tag || "";
+
+            selectedAvatarUrl = meta.avatar_url || "https://api.dicebear.com/7.x/bottts/svg?seed=Cyber-X";
+
+            inputGamertag.value = gamerTag;
+            inputBio.value = bio;
+            selectFavGame.value = favGame;
+            inputDiscord.value = discord;
+
+            cardDisplayName.textContent = name;
+            cardGamerHandle.textContent = `@${gamerTag}`;
+            cardBioQuote.textContent = `"${bio}"`;
+            statFavGame.textContent = favGame.split(' ')[0];
+            cardAvatarImg.src = selectedAvatarUrl;
+
+            // Renderizar la matriz inicial de personajes
+            renderCharacterMatrix('bottts');
+
+            cargarEstadisticas(activeUser.id);
+        }
+
+        async function cargarEstadisticas(userId) {
+            const { data, error } = await supabaseClient
+                .from('puntajes')
+                .select('score')
+                .eq('user_id', userId);
+
+            if (!error && data) {
+                statMatches.textContent = data.length;
+                if (data.length > 0) {
+                    const max = Math.max(...data.map(d => d.score));
+                    statMaxScore.textContent = max.toLocaleString();
+                }
+            }
+        }
+
+        // Form Submit
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-save');
+            btn.disabled = true;
+
+            const updatedMetadata = {
+                gamer_tag: inputGamertag.value.trim(),
+                bio: inputBio.value.trim(),
+                favorite_game: selectFavGame.value,
+                discord_tag: inputDiscord.value.trim(),
+                avatar_url: selectedAvatarUrl
+            };
+
+            const { data, error } = await supabaseClient.auth.updateUser({
+                data: updatedMetadata
+            });
+
+            btn.disabled = false;
+
+            if (error) {
+                alert("Error al actualizar perfil: " + error.message);
+            } else {
+                showToast("✨ Perfil gamer guardado con éxito");
+            }
+        });
+
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        btnLogout.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await supabaseClient.auth.signOut();
+            window.location.href = "minijuegos.html";
+        });
+
+        document.addEventListener('DOMContentLoaded', initSession);
+    </script>
+</body>
+</html>

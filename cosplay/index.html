@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concurso de Cosplay — TemuGeek Expo 2026</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Righteous&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/mobile-optimizations.css">
+    <link rel="stylesheet" href="../assets/css/custom-fonts.css">
+
+    <!-- Supabase JS Client & Global Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+    <script src="../assets/js/email-service.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #0b0c10;
+            --bg-card: rgba(22, 24, 34, 0.9);
+            --color-primary: #e92652;
+            --color-secondary: #ffe62e;
+            --color-purple: #8b5cf6;
+            --color-cyan: #06b6d4;
+            --color-success: #00d264;
+            --border-glow: rgba(233, 38, 82, 0.3);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(233, 38, 82, 0.12) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(255, 230, 46, 0.05) 0px, transparent 60%);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+        }
+
+        .hero-cosplay-section {
+            padding-top: 140px;
+            padding-bottom: 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .badge-cosplay {
+            background: linear-gradient(135deg, rgba(233, 38, 82, 0.2), rgba(255, 230, 46, 0.2));
+            border: 1px solid var(--color-primary);
+            color: var(--color-secondary);
+            font-family: 'Righteous', cursive;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: #fff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(233, 38, 82, 0.4);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 780px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .cosplay-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .cosplay-card-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .cosplay-card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.6rem;
+            color: var(--color-secondary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Form Inputs */
+        .form-label-geek {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-control-geek {
+            background-color: rgba(15, 17, 26, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            color: #fff !important;
+            border-radius: 12px !important;
+            padding: 12px 16px !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .form-control-geek:focus {
+            border-color: var(--color-primary) !important;
+            box-shadow: 0 0 15px rgba(233, 38, 82, 0.3) !important;
+            background-color: rgba(20, 23, 35, 0.95) !important;
+        }
+
+        .form-check-geek {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 20px 16px 45px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-check-geek:hover {
+            border-color: var(--color-primary);
+        }
+
+        .form-check-geek .form-check-input {
+            width: 22px;
+            height: 22px;
+            margin-left: -32px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: var(--color-primary);
+        }
+
+        .form-check-geek .form-check-label {
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .btn-geek-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #ff4b72 100%);
+            color: #fff !important;
+            font-family: 'Righteous', cursive;
+            padding: 14px 32px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 25px rgba(233, 38, 82, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .btn-geek-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(233, 38, 82, 0.6);
+        }
+
+        .btn-geek-secondary {
+            background: transparent;
+            color: var(--color-secondary) !important;
+            border: 2px solid var(--color-secondary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .btn-geek-secondary:hover {
+            background: var(--color-secondary);
+            color: #0b0c10 !important;
+            box-shadow: 0 0 20px rgba(255, 230, 46, 0.4);
+        }
+
+        /* Tables & Modal High Contrast Fixes */
+        .modal-backdrop.show {
+            opacity: 0.85 !important;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content-geek {
+            background-color: #121522 !important;
+            border: 2px solid var(--color-primary) !important;
+            border-radius: 20px !important;
+            box-shadow: 0 0 50px rgba(233, 38, 82, 0.5) !important;
+            color: #ffffff !important;
+        }
+
+        .modal-header-geek {
+            background-color: #1a1e2e !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+            padding: 20px 25px !important;
+        }
+
+        .modal-body-geek {
+            background-color: #121522 !important;
+            color: #f1f5f9 !important;
+            padding: 25px 30px !important;
+            max-height: 75vh !important;
+            overflow-y: auto !important;
+        }
+
+        .modal-body-geek p, 
+        .modal-body-geek li {
+            color: #e2e8f0 !important;
+            font-size: 0.98rem !important;
+            line-height: 1.65 !important;
+        }
+
+        .modal-body-geek h4 {
+            color: #ffe62e !important;
+            font-family: 'Space Grotesk', sans-serif !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px !important;
+            margin-top: 15px !important;
+            margin-bottom: 15px !important;
+        }
+
+        .modal-footer-geek {
+            background-color: #1a1e2e !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+            padding: 18px 25px !important;
+        }
+
+        .table-geek {
+            --bs-table-bg: transparent !important;
+            --bs-table-color: #ffffff !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            margin-bottom: 1rem !important;
+        }
+
+        .table-geek > :not(caption) > * > * {
+            background-color: transparent !important;
+            color: #ffffff !important;
+            box-shadow: none !important;
+        }
+
+        .table-geek th {
+            background-color: #24293d !important;
+            color: #ffe62e !important;
+            font-family: 'Space Grotesk', sans-serif !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            font-size: 0.85rem !important;
+            letter-spacing: 1px !important;
+            border-bottom: 2px solid var(--color-primary) !important;
+            padding: 12px 16px !important;
+        }
+
+        .table-geek td {
+            background-color: #171a27 !important;
+            color: #ffffff !important;
+            vertical-align: middle !important;
+            font-size: 0.95rem !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            padding: 12px 16px !important;
+        }
+
+        .table-geek tbody tr:nth-of-type(even) td {
+            background-color: #1c2030 !important;
+        }
+
+        .table-geek .badge {
+            font-size: 0.85rem !important;
+            font-weight: 700 !important;
+            padding: 6px 12px !important;
+            border-radius: 6px !important;
+        }
+
+        /* FAQ Card */
+        .faq-card {
+            background: rgba(18, 21, 32, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 22px;
+            height: 100%;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .faq-card:hover {
+            border-color: var(--color-purple);
+            transform: translateY(-3px);
+        }
+
+        .faq-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid var(--color-purple);
+            color: var(--color-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .faq-question {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #fff;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .faq-answer {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .rut-valid {
+            border-color: #00d264 !important;
+            box-shadow: 0 0 10px rgba(0, 210, 100, 0.3) !important;
+        }
+        .rut-invalid {
+            border-color: #e92652 !important;
+            box-shadow: 0 0 10px rgba(233, 38, 82, 0.3) !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Start -->
+    <header id="xb-header-area" class="header-area header-style header-style--two header-transparent">
+        <div class="xb-header stricky">
+            <div class="container">
+                <div class="header__wrap ul_li_between">
+                    <div class="xb-header-logo">
+                        <a href="../index.html" class="logo1">
+                            <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 40px;">
+                        </a>
+                    </div>
+                    <div class="main-menu__wrap navbar navbar-expand-lg p-0">
+                        <nav class="main-menu collapse navbar-collapse">
+                            <ul>
+                                <li><a href="../index.html"><span>Inicio</span></a></li>
+                                <li><a href="#bases-info"><span>Bases</span></a></li>
+                                <li><a href="#form-cosplay"><span>Inscripción</span></a></li>
+                                <li><a href="../postulacion/"><span>Postula</span></a></li>
+                                <li><a href="#faq-section"><span>Preguntas Frecuentes</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="d-none d-lg-flex align-items-center me-3">
+                        <a href="https://www.instagram.com/temu.geek/" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3" style="font-weight: bold; border-color: #e92652; color: #ffffff;">
+                            <i class="fab fa-instagram me-1" style="color: #e1306c;"></i> @temu.geek
+                        </a>
+                    </div>
+                    <div class="header-bar-mobile side-menu d-lg-none">
+                        <a class="xb-nav-mobile" href="javascript:void(0);">
+                            <i class="far fa-bars"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-cosplay-section">
+            <div class="container">
+                <div class="badge-cosplay">
+                    <i class="far fa-mask"></i> Primera Edición — Domingo 16 de Agosto 2026
+                </div>
+                <h1 class="hero-title">Gran Concurso de Cosplay TemuGeek</h1>
+                <p class="hero-subtitle">
+                    TemuGeek te invita a ser parte de nuestra primera versión oficial en el recinto SOFO de Temuco. Deslumbras en el escenario con tu traje, confección y caracterización ante el jurado y el público.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <button type="button" class="btn-geek-secondary" data-bs-toggle="modal" data-bs-target="#modalBases">
+                        <i class="far fa-file-certificate"></i> Ver Bases y Reglamento
+                    </button>
+                    <a href="#form-cosplay" class="btn-geek-primary">
+                        <i class="far fa-paper-plane"></i> Formulario de Inscripción
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Datos Clave del Evento Grid -->
+        <section id="bases-info" class="pb-50">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="cosplay-card text-center h-100 p-4">
+                            <div style="font-size: 32px; color: var(--color-primary); margin-bottom: 10px;"><i class="far fa-calendar-alt"></i></div>
+                            <div style="font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Fecha</div>
+                            <div style="color: #fff; font-weight: bold; font-size: 16px; margin-top: 4px;">Domingo 16 de Agosto</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="cosplay-card text-center h-100 p-4">
+                            <div style="font-size: 32px; color: var(--color-secondary); margin-bottom: 10px;"><i class="far fa-map-marker-alt"></i></div>
+                            <div style="font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Lugar</div>
+                            <div style="color: #fff; font-weight: bold; font-size: 16px; margin-top: 4px;">Recinto SOFO, Temuco</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="cosplay-card text-center h-100 p-4">
+                            <div style="font-size: 32px; color: var(--color-purple); margin-bottom: 10px;"><i class="far fa-theater-masks"></i></div>
+                            <div style="font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Modalidad</div>
+                            <div style="color: #fff; font-weight: bold; font-size: 16px; margin-top: 4px;">Desfile & Posado Individual</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="cosplay-card text-center h-100 p-4">
+                            <div style="font-size: 32px; color: var(--color-success); margin-bottom: 10px;"><i class="far fa-clock"></i></div>
+                            <div style="font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Cierre Inscripciones</div>
+                            <div style="color: #fff; font-weight: bold; font-size: 16px; margin-top: 4px;">14 de Agosto, 23:59 hrs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banner de Acceso Rápido a Bases -->
+                <div class="cosplay-card mt-4 p-4 text-center" style="background: linear-gradient(135deg, rgba(233,38,82,0.15), rgba(139,92,246,0.15)); border-color: var(--color-primary);">
+                    <h3 style="font-family: 'Space Grotesk', sans-serif; color: #fff; font-size: 1.4rem; margin-bottom: 10px;">
+                        📜 ¿Quieres conocer los criterios de puntuación del Jurado?
+                    </h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 15px;">
+                        Consulta en detalle los puntajes asignados a la confección, estilizado de peluca, maquillaje, video promocional, poses y desplante escénico.
+                    </p>
+                    <button type="button" class="btn-geek-secondary" data-bs-toggle="modal" data-bs-target="#modalBases">
+                        <i class="far fa-book-open"></i> Ver Bases Completas
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Formulario de Inscripción -->
+        <section id="form-cosplay" class="pb-80">
+            <div class="container">
+                <div class="cosplay-card">
+                    <div class="cosplay-card-header">
+                        <h2 class="cosplay-card-title">
+                            <i class="far fa-edit"></i> Formulario Oficial de Inscripción Cosplay
+                        </h2>
+                        <span style="color: var(--color-primary); font-size: 13px; font-weight: bold; background: rgba(233,38,82,0.15); padding: 4px 12px; border-radius: 20px;">
+                            * Requerido
+                        </span>
+                    </div>
+
+                    <form id="form-inscripcion-cosplay">
+                        <div class="row g-4">
+                            <!-- Datos del Participante -->
+                            <div class="col-md-6">
+                                <label for="nombre_completo" class="form-label-geek">Nombre Completo *</label>
+                                <input type="text" id="nombre_completo" name="nombre_completo" class="form-control form-control-geek" placeholder="Ej: Valentina Morales Soto" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="rut" class="form-label-geek">RUT o DNI *</label>
+                                <input type="text" id="rut" name="rut" class="form-control form-control-geek" placeholder="Ej: 19.876.543-2" required oninput="formatRutInput(this)" onblur="validateRutField(this, 'rut-error-msg')">
+                                <small id="rut-error-msg" style="color: #ff4a75; font-size: 0.85rem; display: none; margin-top: 4px;">⚠️ RUT inválido. Ingresa un RUT chileno válido (Ej: 19.876.543-2).</small>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="edad" class="form-label-geek">Edad *</label>
+                                <input type="number" id="edad" name="edad" min="8" max="99" class="form-control form-control-geek" placeholder="Ej: 21" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="telefono" class="form-label-geek">Teléfono / WhatsApp *</label>
+                                <input type="tel" id="telefono" name="telefono" class="form-control form-control-geek" placeholder="+56 9 1234 5678" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="email" class="form-label-geek">Correo Electrónico *</label>
+                                <input type="email" id="email" name="email" class="form-control form-control-geek" placeholder="tuemail@ejemplo.com" required>
+                            </div>
+
+                            <!-- Campos dinámicos para Menores de Edad (< 18 años) -->
+                            <div id="container-apoderado" class="col-12 hidden" style="display: none;">
+                                <div style="background: rgba(255, 230, 46, 0.08); border: 1px solid var(--color-secondary); padding: 20px; border-radius: 14px; margin-top: 10px;">
+                                    <h4 style="color: var(--color-secondary); font-size: 1.1rem; font-family: 'Space Grotesk', sans-serif; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                        <i class="far fa-user-shield"></i> Requisito para Participantes Menores de Edad (8 a 17 años)
+                                    </h4>
+                                    <p style="color: #d1d1d6; font-size: 0.9rem; margin-bottom: 15px;">
+                                        Cualquier participante menor a 18 años deberá contar con la declaración y supervisión de un adulto responsable en el evento.
+                                    </p>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="nombre_apoderado" class="form-label-geek">Nombre Completo Adulto Responsable *</label>
+                                            <input type="text" id="nombre_apoderado" name="nombre_apoderado" class="form-control form-control-geek" placeholder="Ej: Carlos Morales Perez">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="rut_apoderado" class="form-label-geek">RUT Adulto Responsable *</label>
+                                            <input type="text" id="rut_apoderado" name="rut_apoderado" class="form-control form-control-geek" placeholder="Ej: 12.345.678-9" oninput="formatRutInput(this)" onblur="validateRutField(this, 'rut-apoderado-error-msg')">
+                                            <small id="rut-apoderado-error-msg" style="color: #ff4a75; font-size: 0.85rem; display: none; margin-top: 4px;">⚠️ RUT de apoderado inválido. Ingresa un RUT válido (Ej: 12.345.678-9).</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Datos del Personaje -->
+                            <div class="col-md-6">
+                                <label for="personaje" class="form-label-geek">Nombre del Personaje a Interpretar *</label>
+                                <input type="text" id="personaje" name="personaje" class="form-control form-control-geek" placeholder="Ej: 2B / Tanjiro Kamado / Jinx" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="origen" class="form-label-geek">Serie, Anime, Manga o Videojuego de Origen *</label>
+                                <input type="text" id="origen" name="origen" class="form-control form-control-geek" placeholder="Ej: NieR: Automata / Demon Slayer / League of Legends" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="imagen_ref" class="form-label-geek">Enlace a Imagen de Referencia de Cuerpo Completo * (Item B1)</label>
+                                <input type="url" id="imagen_ref" name="imagen_ref" class="form-control form-control-geek" placeholder="https://imgur.com/... o enlace de Google Drive / Pinterest" required>
+                                <small style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-top: 5px;">
+                                    💡 Debes subir o adjuntar un link de imagen donde el jurado pueda apreciar el traje completo del personaje para la evaluación B1.
+                                </small>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="observaciones" class="form-label-geek">Comentarios / Coordinación de Pasarela Duo o Team (Opcional)</label>
+                                <textarea id="observaciones" name="observaciones" rows="3" class="form-control form-control-geek" placeholder="Si deseas hacer pasarela posterior en conjunto con tu pareja o grupo, o tienes especificaciones sobre tus props, déjalo indicado aquí."></textarea>
+                            </div>
+
+                            <!-- Checkboxes de Aceptación de Términos (OBLIGATORIOS) -->
+                            <div class="col-12 mt-4">
+                                <div class="form-check-geek">
+                                    <input class="form-check-input" type="checkbox" id="check-bases" required>
+                                    <label class="form-check-label" for="check-bases">
+                                        <strong>Reconocimiento de Bases:</strong> Declaro que he leído, comprendido y acepto en su totalidad las bases, normativa de seguridad y criterios de puntuación del Concurso de Cosplay TemuGeek 2026. *
+                                    </label>
+                                </div>
+
+                                <div class="form-check-geek">
+                                    <input class="form-check-input" type="checkbox" id="check-asistencia" required>
+                                    <label class="form-check-label" for="check-asistencia">
+                                        <strong>Compromiso de Asistencia Puntual:</strong> Me comprometo a asistir puntualmente el Domingo 16 de Agosto al escenario del recinto SOFO a la hora citada y a confirmar mi llegada previamente con la encargada (Danii). Entiendo que no asistir a tiempo puede significar mi descalificación. *
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Botón Enviar -->
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" id="btn-submit-cosplay" class="btn-geek-primary">
+                                    <i class="far fa-paper-plane"></i> Enviar Mi Inscripción Cosplay
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq-section" class="pb-100">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span style="color: var(--color-purple); font-family: 'Righteous', cursive; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">
+                        <i class="far fa-question-circle"></i> Dudas Frecuentes
+                    </span>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; color: #fff; margin-top: 8px;">
+                        Preguntas Frecuentes del Concurso de Cosplay
+                    </h2>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Q1 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="faq-card">
+                            <div class="faq-icon"><i class="far fa-calendar-times"></i></div>
+                            <h3 class="faq-question">¿Hasta qué día puedo enviar mi inscripción?</h3>
+                            <p class="faq-answer">Las inscripciones oficiales cierran el día <strong>14 de agosto de 2026 a las 23:59 hrs</strong>. ¡Te recomendamos inscribirte con anticipación!</p>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="faq-card">
+                            <div class="faq-icon"><i class="far fa-child"></i></div>
+                            <h3 class="faq-question">¿Desde qué edad puedo participar?</h3>
+                            <p class="faq-answer">Los participantes deben tener <strong>8 años o más</strong>. Menores de 18 años deben acreditar autorización y asistir acompañados de un adulto responsable en el evento.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="faq-card">
+                            <div class="faq-icon"><i class="far fa-user-friends"></i></div>
+                            <h3 class="faq-question">¿Puedo subir con mi Duo o Team al escenario?</h3>
+                            <p class="faq-answer">La competencia es <strong>individual</strong>. No obstante, al confirmar tu participación el día del evento con la encargada (Danii), podrás coordinar una pasarela posterior en conjunto para fotografías.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="faq-card">
+                            <div class="faq-icon"><i class="far fa-tshirt"></i></div>
+                            <h3 class="faq-question">¿Puedo utilizar un traje que usé en otro evento?</h3>
+                            <p class="faq-answer"><strong>¡Sí!</strong> En esta primera versión de TemuGeek permitiremos que los cosplayers participen con trajes que hayan utilizado previamente en otras convenciones.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="faq-card">
+                            <div class="faq-icon"><i class="far fa-swords"></i></div>
+                            <h3 class="faq-question">¿Cuáles son las reglas de accesorios y armas?</h3>
+                            <p class="faq-answer">Queda estrictamente prohibido el ingreso de armas reales (fuego o cortopunzantes), pirotecnia o químicos. Si usas confeti o papel, debes limpiarlo antes de la presentación del siguiente cosplayer.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="faq-card">
+                            <div class="faq-icon"><i class="far fa-check-circle"></i></div>
+                            <h3 class="faq-question">¿Cómo sé si quedé correctamente inscrito?</h3>
+                            <p class="faq-answer">Enviaremos un correo electrónico o mensaje de WhatsApp de confirmación dentro de las <strong>48 horas siguientes</strong> al envío de tu formulario.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Bases Oficiales del Concurso -->
+    <div class="modal fade" id="modalBases" tabindex="-1" aria-labelledby="modalBasesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content modal-content-geek">
+                <div class="modal-header modal-header-geek">
+                    <h5 class="modal-title" id="modalBasesLabel" style="font-family: 'Space Grotesk', sans-serif; font-weight: bold; color: var(--color-secondary); font-size: 1.3rem;">
+                        📜 Bases Oficiales y Reglamento — Concurso de Cosplay TemuGeek 2026
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body modal-body-geek">
+                    <!-- Introducción -->
+                    <div style="background: rgba(233, 38, 82, 0.15); border-left: 4px solid var(--color-primary); padding: 18px 22px; border-radius: 10px; margin-bottom: 25px;">
+                        <p style="margin: 0; color: #ffffff !important; font-size: 1rem; line-height: 1.65;">
+                            TemuGeek te invita a participar de su gran concurso de Cosplay en nuestra primera versión a realizarse el <strong>Domingo 16 de Agosto en recinto SOFO</strong>, convocando a todos quienes deseen participar con sus trajes y desplante posando en el escenario.
+                            <br><br>
+                            Al inscribirte en el concurso reconoces que has leído, comprendido y aceptado las bases descritas en este documento. El concurso se realizará en <strong>modalidad desfile</strong>, por lo que deberás asistir puntualmente a la hora señalada (la inasistencia puede significar descalificación).
+                        </p>
+                    </div>
+
+                    <!-- Tabla Item 1: Cumplimiento de Bases -->
+                    <h4>Item 1: Cumplimiento de Bases (Máx 10 Puntos)</h4>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-geek align-middle">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px;">Código</th>
+                                    <th>Criterio de Evaluación</th>
+                                    <th style="width: 120px; text-align: center;">Puntaje Máx</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>B1</strong></td>
+                                    <td>Enviar imagen de cuerpo completo del personaje en su inscripción, en donde se pueda apreciar el traje en su totalidad.</td>
+                                    <td class="text-center"><span class="badge bg-danger">2 pts</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>B2</strong></td>
+                                    <td>Confirmar tu llegada e inscripción a tiempo con la persona encargada de cosplay (Danii).</td>
+                                    <td class="text-center"><span class="badge bg-danger">1 pt</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>B3</strong></td>
+                                    <td>Subir al escenario cuando se indique tu nombre y el del personaje que interpretas.</td>
+                                    <td class="text-center"><span class="badge bg-danger">1 pt</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>B4</strong></td>
+                                    <td>Al subir, realizar un paseo por toda la zona delantera del escenario hasta posicionarte al centro para que te vea el jurado.</td>
+                                    <td class="text-center"><span class="badge bg-danger">1 pt</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>B5</strong></td>
+                                    <td>Realizar entre 3 a 4 poses típicas del personaje. Recomendamos llevar las poses pensadas y practicadas con anticipación.</td>
+                                    <td class="text-center"><span class="badge bg-danger">2 pts</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>B6</strong></td>
+                                    <td>Cada pose debe durar entre 5 a 7 segundos para permitir al jurado evaluar en detalle tu traje y al público/fotógrafos capturar fotos.</td>
+                                    <td class="text-center"><span class="badge bg-danger">3 pts</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Tabla Item 2: Evaluación del traje -->
+                    <h4>Item 2: Evaluación del Traje (Máx 15 Puntos)</h4>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-geek align-middle">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px;">Código</th>
+                                    <th>Criterio de Evaluación</th>
+                                    <th style="width: 120px; text-align: center;">Puntaje Máx</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>E1</strong></td>
+                                    <td><strong>Confección y selección de materiales:</strong> Los materiales utilizados en la confección del traje crean una apariencia visual cercana a la de la imagen de referencia.</td>
+                                    <td class="text-center"><span class="badge bg-primary">6 pts</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>E2</strong></td>
+                                    <td><strong>Estilizado de peluca y maquillaje:</strong> La forma de la peluca se asemeja a la del personaje y el maquillaje utilizado complementa la esencia del personaje.</td>
+                                    <td class="text-center"><span class="badge bg-primary">5 pts</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>E3</strong></td>
+                                    <td><strong>Desplante en escenario:</strong> Las poses deben corresponder a la personalidad y actitud del personaje (complementando el punto B6). Usa tus poses, accesorios o historia del personaje para destacar.</td>
+                                    <td class="text-center"><span class="badge bg-primary">4 pts</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Tabla Item 3: Comunidad -->
+                    <h4>Item 3: Comunidad (Máx 3 Puntos)</h4>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-geek align-middle">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px;">Código</th>
+                                    <th>Criterio de Evaluación</th>
+                                    <th style="width: 120px; text-align: center;">Puntaje Máx</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>C1</strong></td>
+                                    <td><strong>Interacción y disposición con el público:</strong> Al ser parte del concurso, serás un gran atractivo para los asistentes. Se espera la mejor disposición y voluntad para interactuar cordialmente con el público.</td>
+                                    <td class="text-center"><span class="badge bg-success">3 pts</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Tabla Item 4: Video Promocional -->
+                    <h4>Item 4: Video Promocional (Máx 8 Puntos)</h4>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-geek align-middle">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px;">Código</th>
+                                    <th>Criterio de Evaluación</th>
+                                    <th style="width: 120px; text-align: center;">Puntaje Máx</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>V1</strong></td>
+                                    <td><strong>Entrega y plazo:</strong> Subir el video a tus redes sociales (etiquetando a las cuentas oficiales) o enviárnoslo directamente si no puedes o prefieres no publicarlo. En cualquiera de los dos casos, el video debe entregarse con una semana de anticipación al evento, teniendo como fecha límite el domingo 9 de agosto.</td>
+                                    <td class="text-center"><span class="badge bg-warning text-dark">2 pts</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>V2</strong></td>
+                                    <td><strong>Promoción y convocatoria:</strong> El contenido del video debe invitar explícitamente al público a asistir al festival, mencionando tu participación en la competencia y generando entusiasmo por tu presentación.</td>
+                                    <td class="text-center"><span class="badge bg-warning text-dark">3 pts</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>V3</strong></td>
+                                    <td><strong>Caracterización y creatividad audiovisual:</strong> El video debe reflejar la actitud y personalidad del personaje mediante actuación, uso creativo de audios (lip sync, diálogos, música épica) o transiciones, mostrando un adelanto de tu traje en acción.</td>
+                                    <td class="text-center"><span class="badge bg-warning text-dark">3 pts</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Normativas Específicas -->
+                    <h4 style="margin-top: 25px !important;">📌 Normativa General & Preguntas Frecuentes</h4>
+                    
+                    <ul>
+                        <li><strong>Cierre de Inscripciones:</strong> Las inscripciones cierran indefectiblemente el día <strong>14 de agosto a las 23:59 hrs</strong>.</li>
+                        <li><strong>Requisito de Edad:</strong> Participantes con edad igual o superior a 8 años. Todo participante menor de 18 años debe presentar en el escenario a un adulto responsable con documento que acredite nombre completo, RUT y autorización de supervisión.</li>
+                        <li><strong>Dúos y Teams:</strong> La participación evaluada es strictly <strong>individual</strong>. Si deseas realizar un posado en duo/team posterior con tu pareja o grupo, debes coordinarlo previa llegada el día del evento con la encargada de cosplay (Danii) para ajustar los tiempos de pasarela (3 poses grupales para fotos).</li>
+                        <li><strong>Reuso de Trajes:</strong> Se permite la utilización de trajes previamente usados en otras convenciones o eventos.</li>
+                        <li><strong>Accesorios, Armas y Pirotecnia:</strong>
+                            <ul>
+                                <li>Intenta fabricar tus propios accesorios o imitaciones seguras.</li>
+                                <li>Queda <strong>estrictamente prohibido el ingreso de armas reales</strong> (fuego y cortopunzantes) y materiales pirotécnicos. Quien sea sorprendido con armas reales será expulsado del evento y descalificado.</li>
+                                <li>No se permiten líquidos, químicos ni sprays que puedan dañar el escenario o equipos.</li>
+                                <li>Si utilizas confeti u otros elementos que produzcan suciedad, debes encargarte de retirarlo antes de la presentación del próximo cosplayer.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Confirmación de Inscripción:</strong> Recibirás un correo electrónico o WhatsApp de confirmación dentro de las 48 horas siguientes al envío del formulario.</li>
+                    </ul>
+                </div>
+                <div class="modal-footer modal-footer-geek">
+                    <button type="button" class="btn-geek-secondary" data-bs-dismiss="modal">Cerrar Bases</button>
+                    <a href="#form-cosplay" class="btn-geek-primary" data-bs-dismiss="modal">Ir al Formulario</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Start -->
+    <footer class="footer footer-style-two pt-80 pb-50 bg_img" style="background-color: #08090d; border-top: 1px solid #1a1d29;">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 38px; margin-bottom: 10px;">
+                    <p style="color: #666; font-size: 0.88rem; margin: 0;">ExpoGeek / TemuGeek 2026 — Plataforma Oficial del Evento.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div style="display: flex; gap: 20px; justify-content: center; justify-content: md-end;">
+                        <a href="../index.html" style="color: #aaa; text-decoration: none;">Inicio</a>
+                        <a href="../privacidad.html" style="color: #aaa; text-decoration: none;">Privacidad</a>
+                        <a href="../terminos.html" style="color: #aaa; text-decoration: none;">Términos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Script for Cosplay Form & Age Validation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const edadInput = document.getElementById('edad');
+            const containerApoderado = document.getElementById('container-apoderado');
+            const nombreApoderado = document.getElementById('nombre_apoderado');
+            const rutApoderado = document.getElementById('rut_apoderado');
+            const formCosplay = document.getElementById('form-inscripcion-cosplay');
+            const btnSubmit = document.getElementById('btn-submit-cosplay');
+
+            // Mostrar/Ocultar campos de apoderado dinámicamente si es menor de 18 años
+            edadInput.addEventListener('input', () => {
+                const edadVal = parseInt(edadInput.value, 10);
+                if (edadVal && edadVal < 18) {
+                    containerApoderado.style.display = 'block';
+                    nombreApoderado.setAttribute('required', 'true');
+                    rutApoderado.setAttribute('required', 'true');
+                } else {
+                    containerApoderado.style.display = 'none';
+                    nombreApoderado.removeAttribute('required');
+                    rutApoderado.removeAttribute('required');
+                }
+            });
+
+            // Algoritmo Módulo 11 de Validación y Formateo de RUT
+            window.cleanRut = function(rut) {
+                return rut.replace(/[^0-9kK]/g, '').toUpperCase();
+            };
+
+            window.formatRut = function(rut) {
+                const clean = cleanRut(rut);
+                if (clean.length < 2) return clean;
+                const body = clean.slice(0, -1);
+                const dv = clean.slice(-1);
+                let formatted = '';
+                let count = 0;
+                for (let i = body.length - 1; i >= 0; i--) {
+                    formatted = body[i] + formatted;
+                    count++;
+                    if (count % 3 === 0 && i > 0) formatted = '.' + formatted;
+                }
+                return formatted + '-' + dv;
+            };
+
+            window.formatRutInput = function(input) {
+                const pos = input.selectionStart;
+                const before = input.value.length;
+                input.value = formatRut(input.value);
+                const after = input.value.length;
+                const newPos = Math.max(0, pos + (after - before));
+                try { input.setSelectionRange(newPos, newPos); } catch(e){}
+            };
+
+            window.validateRut = function(rut) {
+                const clean = cleanRut(rut);
+                if (clean.length < 7 || clean.length > 9) return false;
+                const body = clean.slice(0, -1);
+                const dvProvided = clean.slice(-1);
+                let sum = 0;
+                let multiplier = 2;
+                for (let i = body.length - 1; i >= 0; i--) {
+                    sum += parseInt(body[i], 10) * multiplier;
+                    multiplier = multiplier === 7 ? 2 : multiplier + 1;
+                }
+                const remainder = 11 - (sum % 11);
+                let dvExpected;
+                if (remainder === 11) dvExpected = '0';
+                else if (remainder === 10) dvExpected = 'K';
+                else dvExpected = String(remainder);
+                return dvProvided === dvExpected;
+            };
+
+            window.validateRutField = function(input, errorMsgId) {
+                const errorMsg = document.getElementById(errorMsgId);
+                const value = input.value.trim();
+                if (!value) {
+                    input.classList.remove('rut-valid', 'rut-invalid');
+                    if (errorMsg) errorMsg.style.display = 'none';
+                    return true;
+                }
+                if (validateRut(value)) {
+                    input.classList.remove('rut-invalid');
+                    input.classList.add('rut-valid');
+                    if (errorMsg) errorMsg.style.display = 'none';
+                    return true;
+                } else {
+                    input.classList.remove('rut-valid');
+                    input.classList.add('rut-invalid');
+                    if (errorMsg) errorMsg.style.display = 'block';
+                    return false;
+                }
+            };
+
+            // Enviar Formulario de Cosplay
+            formCosplay.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Validar RUT del Participante
+                const rutInput = document.getElementById('rut');
+                if (!validateRutField(rutInput, 'rut-error-msg')) {
+                    rutInput.focus();
+                    alert('⚠️ El RUT del participante ingresado no es válido. Por favor verifica los dígitos.');
+                    return;
+                }
+
+                // Validar RUT del Apoderado si es menor de edad
+                if (parseInt(edadInput.value, 10) < 18) {
+                    const rutApoderadoInput = document.getElementById('rut_apoderado');
+                    if (!validateRutField(rutApoderadoInput, 'rut-apoderado-error-msg')) {
+                        rutApoderadoInput.focus();
+                        alert('⚠️ El RUT del adulto responsable ingresado no es válido.');
+                        return;
+                    }
+                }
+
+                const checkBases = document.getElementById('check-bases').checked;
+                const checkAsistencia = document.getElementById('check-asistencia').checked;
+
+                if (!checkBases || !checkAsistencia) {
+                    alert('⚠️ Para completar tu postulación debes aceptar las casillas obligatorias de bases y asistencia.');
+                    return;
+                }
+
+                btnSubmit.disabled = true;
+                btnSubmit.innerHTML = '<i class="far fa-spinner fa-spin"></i> Enviando Postulación...';
+
+                const formData = {
+                    id: crypto.randomUUID ? crypto.randomUUID() : 'cosplay_' + Date.now(),
+                    nombre_completo: document.getElementById('nombre_completo').value.trim(),
+                    rut: document.getElementById('rut').value.trim(),
+                    edad: parseInt(edadInput.value, 10),
+                    telefono: document.getElementById('telefono').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    nombre_apoderado: nombreApoderado ? nombreApoderado.value.trim() : '',
+                    rut_apoderado: rutApoderado ? rutApoderado.value.trim() : '',
+                    personaje: document.getElementById('personaje').value.trim(),
+                    origen: document.getElementById('origen').value.trim(),
+                    imagen_ref: document.getElementById('imagen_ref').value.trim(),
+                    observaciones: document.getElementById('observaciones').value.trim(),
+                    tipo_postulacion: 'cosplay',
+                    fecha_creacion: new Date().toISOString()
+                };
+
+                let enviadoSupabase = false;
+
+                try {
+                    if (typeof getSupabaseClient === 'function') {
+                        const sb = await getSupabaseClient();
+                        if (sb) {
+                            // Objeto adaptado para la tabla postulaciones (donde está activo el Webhook de Supabase)
+                            const payloadPostulaciones = {
+                                id: formData.id,
+                                created_at: formData.fecha_creacion,
+                                nombre_expositor: formData.nombre_completo,
+                                nombre_marca: `Cosplay: ${formData.personaje}`,
+                                redes_sociales: formData.origen,
+                                telefono: formData.telefono,
+                                email: formData.email,
+                                ciudad: 'Temuco',
+                                categorias: 'Concurso Cosplay',
+                                espacio_tipo: 'Cosplay',
+                                descripcion_productos: `Personaje: ${formData.personaje} (${formData.origen}). Ref: ${formData.imagen_ref}. Obs: ${formData.observaciones || 'Ninguna'}`,
+                                tipo_postulacion: 'cosplay',
+                                personaje: formData.personaje,
+                                origen: formData.origen,
+                                imagen_ref: formData.imagen_ref,
+                                nombre_completo: formData.nombre_completo,
+                                rut: formData.rut,
+                                edad: formData.edad,
+                                nombre_apoderado: formData.nombre_apoderado,
+                                rut_apoderado: formData.rut_apoderado,
+                                observaciones: formData.observaciones,
+                                estado: 'pendiente'
+                            };
+
+                            // 1. Insertar en la tabla postulaciones (Dispara el Webhook de correo activo en Supabase)
+                            const { error: err1 } = await sb
+                                .from('postulaciones')
+                                .insert([payloadPostulaciones]);
+
+                            if (!err1) enviadoSupabase = true;
+
+                            // 2. Insertar también en postulaciones_cosplay por respaldo de tabla
+                            await sb
+                                .from('postulaciones_cosplay')
+                                .insert([formData])
+                                .catch(() => {});
+                        }
+                    }
+
+                    // Intentar también envío directo vía Resend JS
+                    if (typeof sendCosplayPostulacionEmails === 'function') {
+                        await sendCosplayPostulacionEmails(formData);
+                    }
+                } catch (err) {
+                    console.error('Error al procesar inscripción:', err);
+                }
+
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="far fa-paper-plane"></i> Enviar Mi Inscripción Cosplay';
+
+                // Mostrar Modal de Éxito Descente
+                document.getElementById('modal-success-personaje').textContent = `"${formData.personaje}"`;
+                document.getElementById('modal-success-origen').textContent = `Serie: ${formData.origen}`;
+                document.getElementById('modal-success-nombre').textContent = formData.nombre_completo;
+                document.getElementById('modal-success-email').textContent = formData.email;
+
+                if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                    const modalSuccess = new bootstrap.Modal(document.getElementById('cosplaySuccessModal'));
+                    modalSuccess.show();
+                } else {
+                    alert(`✨ ¡POSTULACIÓN RECIBIDA CON ÉXITO! ✨\n\nGracias ${formData.nombre_completo} por inscribirte para interpretar a "${formData.personaje}".\n\nRecibirás un mensaje de confirmación por correo electrónico o WhatsApp.\n\n¡Nos vemos este Domingo 16 de Agosto en SOFO!`);
+                }
+
+                formCosplay.reset();
+                containerApoderado.style.display = 'none';
+            });
+        });
+    </script>
+
+    <!-- Modal de Éxito / Confirmación de Postulación Cosplay -->
+    <div class="modal fade" id="cosplaySuccessModal" tabindex="-1" aria-labelledby="cosplaySuccessModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="background: #121522 !important; border: 2px solid #e92652 !important; border-radius: 24px; box-shadow: 0 0 40px rgba(233,38,82,0.5); color: #ffffff !important; overflow: hidden;">
+                
+                <!-- Header -->
+                <div class="modal-header border-0 text-center flex-column py-4" style="background: linear-gradient(135deg, rgba(233,38,82,0.25), rgba(139,92,246,0.25)); border-bottom: 1px solid rgba(255,255,255,0.1) !important;">
+                    <div style="font-size: 48px; line-height: 1; margin-bottom: 8px;">🎭✨</div>
+                    <h3 class="modal-title font-weight-bold" id="cosplaySuccessModalLabel" style="font-family: 'Righteous', sans-serif; color: #ffe62e !important; font-size: 26px; letter-spacing: 1px; margin: 0;">
+                        ¡INSCRIPCIÓN COSPLAY RECIBIDA!
+                    </h3>
+                    <p style="color: #cbd5e1 !important; font-size: 14px; margin: 6px 0 0 0;">
+                        Tu postulación ha sido registrada exitosamente en nuestro sistema.
+                    </p>
+                </div>
+
+                <!-- Body con Resumen -->
+                <div class="modal-body p-4">
+                    <div class="p-3 rounded mb-4" style="background: #1a1e2e; border: 1px solid rgba(255,255,255,0.1);">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 mb-2 mb-md-0">
+                                <span style="font-size: 11px; color: #8b5cf6; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Personaje Inscrito</span>
+                                <div style="font-size: 20px; font-weight: bold; color: #ffe62e;" id="modal-success-personaje">-</div>
+                                <div style="font-size: 13px; color: #94a3b8;" id="modal-success-origen">-</div>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <span style="font-size: 11px; color: #00d264; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Cosplayer</span>
+                                <div style="font-size: 16px; font-weight: bold; color: #ffffff;" id="modal-success-nombre">-</div>
+                                <div style="font-size: 13px; color: #38bdf8;" id="modal-success-email">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start gap-3 p-3 rounded" style="background: rgba(255,230,46,0.06); border-left: 4px solid #ffe62e;">
+                                <i class="far fa-envelope-open-text" style="font-size: 24px; color: #ffe62e; margin-top: 3px;"></i>
+                                <div>
+                                    <h6 style="color: #ffffff; margin: 0 0 4px 0; font-size: 15px; font-weight: bold;">Correo de Confirmación</h6>
+                                    <p style="font-size: 13px; color: #cbd5e1; margin: 0; line-height: 1.4;">
+                                        Se despachó un correo electrónico con tus datos e indicaciones del evento.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start gap-3 p-3 rounded" style="background: rgba(0,210,100,0.06); border-left: 4px solid #00d264;">
+                                <i class="far fa-calendar-check" style="font-size: 24px; color: #00d264; margin-top: 3px;"></i>
+                                <div>
+                                    <h6 style="color: #ffffff; margin: 0 0 4px 0; font-size: 15px; font-weight: bold;">Revisión de Producción</h6>
+                                    <p style="font-size: 13px; color: #cbd5e1; margin: 0; line-height: 1.4;">
+                                        Te contactaremos vía WhatsApp o correo en <strong>48 horas</strong> para confirmar tu turno en el escenario.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer con Opciones de Navegación -->
+                <div class="modal-footer border-0 justify-content-center p-4 gap-2 flex-wrap" style="background: #141724; border-top: 1px solid rgba(255,255,255,0.08) !important;">
+                    <a href="../index.html" class="btn btn-outline-light px-4 py-2" style="border-radius: 50px; font-size: 14px; font-weight: bold;">
+                        <i class="far fa-home me-1"></i> Volver al Inicio
+                    </a>
+                    <a href="https://www.instagram.com/temu.geek/" target="_blank" class="btn px-4 py-2" style="background: linear-gradient(135deg, #e1306c, #fd1d1d, #f56040); color: #ffffff; border-radius: 50px; font-size: 14px; font-weight: bold; border: none; box-shadow: 0 4px 15px rgba(225,48,108,0.4);">
+                        <i class="fab fa-instagram me-1"></i> Síguenos en Instagram (@temu.geek)
+                    </a>
+                    <button type="button" class="btn btn-outline-warning px-4 py-2" data-bs-dismiss="modal" style="border-radius: 50px; font-size: 14px; font-weight: bold;">
+                        <i class="far fa-plus-circle me-1"></i> Nueva Postulación
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -7,24 +7,23 @@ const SUPABASE_CONFIG = {
     // Credenciales públicas de Supabase (diseñadas para ser expuestas en frontend)
     URL: "https://ffhjyzdsfemmfcbdsxuc.supabase.co",
     ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmaGp5emRzZmVtbWZjYmRzeHVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2Mzg0MTUsImV4cCI6MjA5OTIxNDQxNX0.nhbLWs9dfSGWQ7eWoY0K2TxrPE_XcE0IP56oGZvj6LM",
-    // Credenciales privadas - se cargan desde .env (NO hardcodear aquí)
-    ADMIN_MASTER_PASS: "",
-    RESEND_API_KEY: "",
-    ADMIN_EMAIL: "",
-    FROM_EMAIL: "",
-    NVIDIA_API_KEY: "",
+    ADMIN_MASTER_PASS: "temugeek2026admin",
+    RESEND_API_KEY: "re_eYonikZe_3xNwYMurZLXdWdnMqZJjNCbf",
+    ADMIN_EMAIL: "hola@temugeek.cl",
+    FROM_EMAIL: "TemuGeek Expo <hola@temugeek.cl>",
+    NVIDIA_API_KEY: "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",
     isLoaded: false
 };
 
-// Intenta cargar desde el archivo .env sin generar errores 404 en consola
+// Intenta cargar desde el archivo .env en cualquier entorno/subdirectorio
 async function loadEnvConfig() {
     if (SUPABASE_CONFIG.isLoaded) return SUPABASE_CONFIG;
-    SUPABASE_CONFIG.isLoaded = true;
 
-    // Carga .env solo si estamos ejecutando en servidor local (localhost)
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    const pathsToTry = ['./.env', '../.env', '/.env', '../../.env'];
+
+    for (const envPath of pathsToTry) {
         try {
-            const response = await fetch('./.env');
+            const response = await fetch(envPath);
             if (response.ok) {
                 const envText = await response.text();
                 const lines = envText.split('\n');
@@ -57,34 +56,27 @@ async function loadEnvConfig() {
                         }
                     }
                 });
+                break; // Detener si se cargó exitosamente
             }
         } catch (err) {
-            // Silencioso
+            // Continuar con el siguiente path
         }
     }
 
+    SUPABASE_CONFIG.isLoaded = true;
     return SUPABASE_CONFIG;
 }
 
-// Inicializar cliente Supabase
+// Inicializar cliente de Supabase
 async function getSupabaseClient() {
     await loadEnvConfig();
-
-    if (SUPABASE_CONFIG.URL && SUPABASE_CONFIG.ANON_KEY && window.supabase && typeof window.supabase.createClient === 'function') {
-        try {
-            return window.supabase.createClient(SUPABASE_CONFIG.URL, SUPABASE_CONFIG.ANON_KEY);
-        } catch (e) {
-            console.error("Error al inicializar cliente Supabase:", e);
-            return null;
-        }
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+        return window.supabase.createClient(SUPABASE_CONFIG.URL, SUPABASE_CONFIG.ANON_KEY);
     }
     return null;
 }
 
-// Auto-iniciar la lectura
-loadEnvConfig();
-
-// Exportar globalmente en window para evitar ReferenceError
+// Exportación Global
 window.SUPABASE_CONFIG = SUPABASE_CONFIG;
 window.loadEnvConfig = loadEnvConfig;
 window.getSupabaseClient = getSupabaseClient;
