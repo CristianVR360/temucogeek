@@ -9,7 +9,7 @@ async function sendResendEmail({ to, subject, html }) {
         await loadEnvConfig();
     }
     const config = window.SUPABASE_CONFIG || {};
-    const apiKey = config.RESEND_API_KEY || "re_eYonikZe_3xNwYMurZLXdWdnMqZJjNCbf";
+    const apiKey = config.RESEND_API_KEY;
     const primaryFrom = config.FROM_EMAIL || "TemuGeek Expo <hola@temugeek.cl>";
     const fallbackFrom = "TemuGeek Expo <onboarding@resend.dev>";
     
