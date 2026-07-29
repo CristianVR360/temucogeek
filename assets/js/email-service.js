@@ -5,6 +5,22 @@
 
 // Helper para enviar correos vía Resend API si RESEND_API_KEY está presente
 async function sendResendEmail({ to, subject, html }) {
+    // 1. Intentar envío seguro vía Serverless Function (/api/send-email) en Vercel
+    try {
+        const apiRes = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ to, subject, html })
+        });
+        if (apiRes.ok) {
+            const data = await apiRes.json();
+            console.log("✅ Correo enviado exitosamente vía /api/send-email (Vercel Backend):", data);
+            return { success: true, data };
+        }
+    } catch (e) {
+        // En entorno de desarrollo sin API backend, continuar al fallback
+    }
+
     if (typeof loadEnvConfig === 'function') {
         await loadEnvConfig();
     }
@@ -14,7 +30,7 @@ async function sendResendEmail({ to, subject, html }) {
     const fallbackFrom = "TemuGeek Expo <onboarding@resend.dev>";
     
     if (!apiKey) {
-        console.warn("⚠️ RESEND_API_KEY no encontrada. Notificación delegada a Supabase Webhook.");
+        console.warn("⚠️ RESEND_API_KEY no configurada. Si estás en producción Vercel, agrégala en Environment Variables.");
         return { success: false, mode: 'missing_key' };
     }
 

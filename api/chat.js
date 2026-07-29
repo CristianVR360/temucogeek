@@ -40,7 +40,7 @@ INFORMACIÓN OFICIAL DEL EVENTO:
 - Horarios: Público de 10:00 a 20:00 hrs. Montaje de expositores de 08:00 a 10:30 hrs.
 - Actividades: Torneos Esports, Concurso de Cosplay, Callejón de Artistas, Zona Retro Gamer, Tiendas/Stands Geek, Música en vivo.
 - Entradas: Pase General y Pase VIP (disponibles en la sección Entradas del sitio).
-- Postulación Expositores/Stand: Formulario abierto en la pestaña "Postulación Expositores" del sitio web.
+- Postulación Expositores/Stand/Patio de Comida: Formulario abierto en la pestaña "Postulación Expositores" del sitio web (se prioriza gastronomía temática geek, Japón, Corea, etc.).
 - Contacto oficial: hola@temugeek.cl / contacto@temugeek.cl
 
 Responde siempre en español amigable, entusiasta y muy corto.`;
