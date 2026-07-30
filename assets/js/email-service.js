@@ -4,8 +4,11 @@
  */
 
 // Helper para enviar correos vía Resend API si RESEND_API_KEY está presente
+// IMPORTANTE: Solo se usa UN canal de envío para evitar correos duplicados.
 async function sendResendEmail({ to, subject, html }) {
     // 1. Intentar envío seguro vía Serverless Function (/api/send-email) en Vercel
+    //    Si el backend responde (sea éxito o error), NO caer al fallback del frontend
+    //    para evitar envío doble de correos.
     try {
         const apiRes = await fetch('/api/send-email', {
             method: 'POST',
@@ -16,11 +19,21 @@ async function sendResendEmail({ to, subject, html }) {
             const data = await apiRes.json();
             console.log("✅ Correo enviado exitosamente vía /api/send-email (Vercel Backend):", data);
             return { success: true, data };
+        } else {
+            // El backend respondió pero con error — el correo pudo haberse enviado
+            // parcialmente (ej. sender primario falló pero fallback envió).
+            // NO intentar el fallback del frontend para evitar duplicados.
+            const errData = await apiRes.json().catch(() => ({}));
+            console.error("❌ /api/send-email respondió con error:", apiRes.status, errData);
+            return { success: false, error: errData, via: 'backend' };
         }
     } catch (e) {
-        // En entorno de desarrollo sin API backend, continuar al fallback
+        // Error de red (ej. entorno de desarrollo local sin API backend).
+        // Solo en este caso continuar al fallback del frontend.
+        console.warn("⚠️ /api/send-email no disponible (entorno local). Usando fallback directo.", e.message);
     }
 
+    // 2. Fallback: envío directo vía Resend API (solo cuando el backend NO está disponible)
     if (typeof loadEnvConfig === 'function') {
         await loadEnvConfig();
     }
@@ -51,7 +64,7 @@ async function sendResendEmail({ to, subject, html }) {
     };
 
     try {
-        console.log(`✉️ Intentando enviar correo a ${to} desde [${primaryFrom}]...`);
+        console.log(`✉️ [Fallback] Intentando enviar correo a ${to} desde [${primaryFrom}]...`);
         let res = await sendRequest(primaryFrom);
 
         // Si el remitente principal falla (por dominio aún no verificado en Resend), reintentar con el sender oficial por defecto de Resend
@@ -62,7 +75,7 @@ async function sendResendEmail({ to, subject, html }) {
 
         if (res.ok) {
             const data = await res.json();
-            console.log("✅ Correo enviado exitosamente vía Resend API:", data);
+            console.log("✅ Correo enviado exitosamente vía Resend API (fallback):", data);
             return { success: true, data };
         } else {
             const errData = await res.json().catch(() => ({}));

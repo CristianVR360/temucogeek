@@ -1055,10 +1055,9 @@
                         }
                     }
 
-                    // Intentar también envío directo vía Resend JS
-                    if (typeof sendCosplayPostulacionEmails === 'function') {
-                        await sendCosplayPostulacionEmails(formData);
-                    }
+                    // Los correos se envían automáticamente vía Database Webhook de Supabase
+                    // al insertar en la tabla 'postulaciones'. NO enviar manualmente aquí
+                    // para evitar correos duplicados.
                 } catch (err) {
                     console.error('Error al procesar inscripción:', err);
                 }
