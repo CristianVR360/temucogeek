@@ -491,12 +491,15 @@
                     <!-- Dynamic details -->
                 </div>
                 <div class="modal-footer border-secondary justify-content-between flex-wrap gap-2">
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
                         <button type="button" class="btn btn-success font-weight-bold" onclick="updateCurrentLeadStatusAndEmail('aprobado')">
-                            <i class="far fa-check-circle me-1"></i> Aprobar & Enviar Correo
+                            <i class="far fa-check-circle me-1"></i> Aprobar & Enviar
+                        </button>
+                        <button type="button" class="btn btn-warning font-weight-bold" id="btn-manual-approval-email" onclick="sendManualApprovalEmail()" title="Forzar envío del correo de aprobación con datos bancarios aunque ya esté aprobado">
+                            <i class="far fa-paper-plane me-1"></i> Reenviar Aprobación
                         </button>
                         <button type="button" class="btn btn-danger font-weight-bold" onclick="updateCurrentLeadStatusAndEmail('rechazado')">
-                            <i class="far fa-times-circle me-1"></i> Rechazar & Enviar Correo
+                            <i class="far fa-times-circle me-1"></i> Rechazar & Enviar
                         </button>
                     </div>
                     <div class="d-flex align-items-center gap-2">
@@ -824,6 +827,9 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                             <button class="btn-whatsapp me-1" onclick="openWhatsApp('${escapeHtml(lead.telefono)}', '${escapeHtml(lead.nombre_completo || lead.nombre_expositor)}', '${escapeHtml(lead.personaje || lead.nombre_marca)}', ${isCosplay})">
                                 <i class="fab fa-whatsapp"></i> WSP
                             </button>
+                            <button class="btn btn-sm btn-outline-warning me-1" onclick="sendQuickApprovalEmail('${lead.id}')" title="Reenviar Correo de Aprobación Oficial">
+                                <i class="far fa-paper-plane"></i>
+                            </button>
                             <button class="btn-action me-1" onclick="viewLeadDetail('${lead.id}')">
                                 <i class="far fa-eye"></i> Ver
                             </button>
@@ -1065,6 +1071,17 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
             }
         }
 
+        function extractEmailErrorText(res) {
+            if (!res) return "No se recibió respuesta del servicio de correos.";
+            if (res.error) {
+                if (typeof res.error === 'string') return res.error;
+                if (res.error.error) return String(res.error.error);
+                if (res.error.message) return String(res.error.message);
+                return JSON.stringify(res.error);
+            }
+            return JSON.stringify(res);
+        }
+
         // Actualizar estado Y despachar correo de notificación al postulante
         async function updateCurrentLeadStatusAndEmail(newStatus) {
             if (!selectedLeadId) return;
@@ -1074,19 +1091,78 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
 
             await updateCurrentLeadStatus(newStatus);
 
-            const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
-
-            if (isCosplay && typeof sendCosplayStatusUpdateEmail === 'function') {
-                await sendCosplayStatusUpdateEmail(lead, newStatus);
-            } else if (typeof sendPostulacionEmails === 'function') {
-                await sendPostulacionEmails(lead);
+            let resEmail = null;
+            if (newStatus === 'aprobado' && typeof sendApprovalEmail === 'function') {
+                resEmail = await sendApprovalEmail(lead);
+            } else {
+                const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
+                if (isCosplay && typeof sendCosplayStatusUpdateEmail === 'function') {
+                    resEmail = await sendCosplayStatusUpdateEmail(lead, newStatus);
+                } else if (typeof sendPostulacionEmails === 'function') {
+                    resEmail = await sendPostulacionEmails(lead);
+                }
             }
 
-            alert(`✅ Estado actualizado a "${newStatus.toUpperCase()}" y correo enviado a ${lead.email}`);
+            if (resEmail && resEmail.success) {
+                alert(`✅ Estado actualizado a "${newStatus.toUpperCase()}" y correo enviado exitosamente a ${lead.email}`);
+            } else {
+                const errDetail = extractEmailErrorText(resEmail);
+                alert(`⚠️ Estado cambiado a "${newStatus.toUpperCase()}", PERO el correo a ${lead.email} NO se pudo enviar.\n\nRespuesta de Resend API:\n${errDetail}\n\nNota: Si estás usando hola@temugeek.cl, asegúrate de haber verificado el dominio en Resend (resend.com/domains).`);
+            }
 
             const modalEl = document.getElementById("leadModal");
             const modalInstance = bootstrap.Modal.getInstance(modalEl);
             if (modalInstance) modalInstance.hide();
+        }
+
+        // Enviar correo de aprobación MANUAL (independiente de si ya está aprobado)
+        async function sendManualApprovalEmail(targetLeadId) {
+            const leadId = targetLeadId || selectedLeadId;
+            if (!leadId) return;
+
+            const lead = allLeads.find(l => l.id == leadId);
+            if (!lead) return;
+
+            const nombreTarget = lead.nombre_marca || lead.personaje || lead.nombre_completo || 'Postulante';
+            if (!confirm(`¿Deseas enviar el correo oficial de APROBACIÓN con datos de transferencia VINTAGE SPA y manual de marca a "${nombreTarget}" (${lead.email})?`)) {
+                return;
+            }
+
+            const btn = document.getElementById("btn-manual-approval-email");
+            const originalHTML = btn ? btn.innerHTML : "";
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="far fa-spinner fa-spin me-1"></i> Enviando...';
+            }
+
+            try {
+                // Actualizar estado a aprobado en base de datos si no lo estaba
+                await updateCurrentLeadStatus('aprobado');
+
+                if (typeof sendApprovalEmail === 'function') {
+                    const res = await sendApprovalEmail(lead);
+                    if (res && res.success) {
+                        alert(`✅ Correo de Aprobación enviado exitosamente a ${lead.email}`);
+                    } else {
+                        const errDetail = extractEmailErrorText(res);
+                        alert(`⚠️ Resend API rechazo el envío a ${lead.email}.\n\nCausa del error:\n${errDetail}\n\nVerifica que el dominio temugeek.cl esté verificado en tu cuenta de Resend.`);
+                    }
+                } else {
+                    alert("❌ Error: La función sendApprovalEmail no está disponible.");
+                }
+            } catch (e) {
+                console.error("Error al enviar correo de aprobación manual:", e);
+                alert(`❌ Error al enviar correo: ${e.message}`);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalHTML;
+                }
+            }
+        }
+
+        async function sendQuickApprovalEmail(leadId) {
+            await sendManualApprovalEmail(leadId);
         }
 
         async function saveInternalNotes(notes) {

@@ -403,6 +403,31 @@
             0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
             100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
         }
+        .btn-geek-secondary {
+            background: #ffe62e !important;
+            color: #141519 !important;
+            border: 2px solid #ffe62e;
+            font-family: 'Righteous', cursive;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 230, 46, 0.35);
+        }
+        .btn-geek-secondary i, .btn-geek-secondary span {
+            color: #141519 !important;
+        }
+        .btn-geek-secondary:hover {
+            background: #ffffff !important;
+            color: #141519 !important;
+            border-color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+        }
     </style>
     <!-- Custom Mobile Optimizations Override -->
     <link rel="stylesheet" href="../assets/css/mobile-optimizations.css">
@@ -435,8 +460,8 @@
                             <ul>
                                 <li><a href="../index.html#home-section"><span>Inicio</span></a></li>
                                 <li><a href="../index.html#about-section"><span>El Evento</span></a></li>
-                                <li><a href="../index.html#pricing-section"><span>Entradas</span></a></li>
                                 <li class="active"><a href="index.html"><span>Postulación Expositores</span></a></li>
+                                <li><a href="../cosplay/"><span>Concurso Cosplay</span></a></li>
                                 <li><a href="../index.html#faq-section"><span>FAQ</span></a></li>
                             </ul>
                         </nav>
@@ -463,9 +488,14 @@
                     <h1 class="title wow fadeInUp" data-wow-delay="100ms" data-wow-duration="600ms" style="color: #ffffff; font-family: 'Righteous', sans-serif; font-size: 34px; margin-top: 10px; margin-bottom: 12px;">
                         Postulación de Expositores & Reglamento
                     </h1>
-                    <p class="wow fadeInUp" data-wow-delay="200ms" data-wow-duration="600ms" style="max-width: 700px; margin: 0 auto; color: #d1d1d6; font-size: 15px; line-height: 1.5;">
+                    <p class="wow fadeInUp" data-wow-delay="200ms" data-wow-duration="600ms" style="max-width: 700px; margin: 0 auto; color: #d1d1d6; font-size: 15px; line-height: 1.5; margin-bottom: 15px;">
                         Únete como tienda, ilustrador, artesano o marca en TemuGeek Expo 2026. Revisa las bases, tipos de espacio y completa tu formulario a continuación.
                     </p>
+                    <div class="wow fadeInUp" data-wow-delay="250ms">
+                        <a href="../bases-participacion/" class="btn-geek-secondary" style="font-size: 14px; padding: 8px 22px;">
+                            <i class="far fa-file-certificate me-1"></i> Ver Página Completa de Bases de Participación
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

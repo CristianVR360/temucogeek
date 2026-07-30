@@ -199,9 +199,9 @@
         }
 
         .btn-geek-secondary {
-            background: transparent;
-            color: var(--color-secondary) !important;
-            border: 2px solid var(--color-secondary);
+            background: #ffe62e !important;
+            color: #141519 !important;
+            border: 2px solid #ffe62e;
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
             padding: 12px 28px;
@@ -212,12 +212,18 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 230, 46, 0.35);
+        }
+
+        .btn-geek-secondary i, .btn-geek-secondary span {
+            color: #141519 !important;
         }
 
         .btn-geek-secondary:hover {
-            background: var(--color-secondary);
-            color: #0b0c10 !important;
-            box-shadow: 0 0 20px rgba(255, 230, 46, 0.4);
+            background: #ffffff !important;
+            color: #141519 !important;
+            border-color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
         }
 
         /* Tables & Modal High Contrast Fixes */
@@ -384,10 +390,9 @@
                         <nav class="main-menu collapse navbar-collapse">
                             <ul>
                                 <li><a href="../index.html"><span>Inicio</span></a></li>
-                                <li><a href="#bases-info"><span>Bases</span></a></li>
                                 <li><a href="#form-cosplay"><span>Inscripción</span></a></li>
-                                <li><a href="../postulacion/"><span>Postula</span></a></li>
-                                <li><a href="#faq-section"><span>Preguntas Frecuentes</span></a></li>
+                                <li><a href="../postulacion/"><span>Postulación Expositores</span></a></li>
+                                <li><a href="../index.html#faq-section"><span>Preguntas Frecuentes</span></a></li>
                             </ul>
                         </nav>
                     </div>
@@ -419,9 +424,9 @@
                     TemuGeek te invita a ser parte de nuestra primera versión oficial en el recinto SOFO de Temuco. Deslumbras en el escenario con tu traje, confección y caracterización ante el jurado y el público.
                 </p>
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <button type="button" class="btn-geek-secondary" data-bs-toggle="modal" data-bs-target="#modalBases">
-                        <i class="far fa-file-certificate"></i> Ver Bases y Reglamento
-                    </button>
+                    <a href="../bases-cosplay/" class="btn-geek-secondary">
+                        <i class="far fa-file-certificate"></i> Ver Bases Oficiales
+                    </a>
                     <a href="#form-cosplay" class="btn-geek-primary">
                         <i class="far fa-paper-plane"></i> Formulario de Inscripción
                     </a>
@@ -471,9 +476,14 @@
                     <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 15px;">
                         Consulta en detalle los puntajes asignados a la confección, estilizado de peluca, maquillaje, video promocional, poses y desplante escénico.
                     </p>
-                    <button type="button" class="btn-geek-secondary" data-bs-toggle="modal" data-bs-target="#modalBases">
-                        <i class="far fa-book-open"></i> Ver Bases Completas
-                    </button>
+                    <div class="d-flex justify-content-center gap-2 flex-wrap">
+                        <a href="../bases-cosplay/" class="btn-geek-primary">
+                            <i class="far fa-book-open me-1"></i> Ver Página Completa de Bases
+                        </a>
+                        <button type="button" class="btn-geek-secondary" data-bs-toggle="modal" data-bs-target="#modalBases">
+                            <i class="far fa-window-maximize me-1"></i> Abrir Modal de Bases
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>

@@ -3,89 +3,54 @@
  * Genera plantillas HTML profesionales con la línea gráfica de TemuGeek Expo 2026.
  */
 
-// Helper para enviar correos vía Resend API si RESEND_API_KEY está presente
-// IMPORTANTE: Solo se usa UN canal de envío para evitar correos duplicados.
+// Helper para enviar correos vía Serverless Function Vercel (/api/send-email)
 async function sendResendEmail({ to, subject, html }) {
-    // 1. Intentar envío seguro vía Serverless Function (/api/send-email) en Vercel
-    //    Si el backend responde (sea éxito o error), NO caer al fallback del frontend
-    //    para evitar envío doble de correos.
-    try {
-        const apiRes = await fetch('/api/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ to, subject, html })
-        });
-        if (apiRes.ok) {
-            const data = await apiRes.json();
-            console.log("✅ Correo enviado exitosamente vía /api/send-email (Vercel Backend):", data);
-            return { success: true, data };
-        } else {
-            // El backend respondió pero con error — el correo pudo haberse enviado
-            // parcialmente (ej. sender primario falló pero fallback envió).
-            // NO intentar el fallback del frontend para evitar duplicados.
-            const errData = await apiRes.json().catch(() => ({}));
-            console.error("❌ /api/send-email respondió con error:", apiRes.status, errData);
-            return { success: false, error: errData, via: 'backend' };
-        }
-    } catch (e) {
-        // Error de red (ej. entorno de desarrollo local sin API backend).
-        // Solo en este caso continuar al fallback del frontend.
-        console.warn("⚠️ /api/send-email no disponible (entorno local). Usando fallback directo.", e.message);
-    }
-
-    // 2. Fallback: envío directo vía Resend API (solo cuando el backend NO está disponible)
     if (typeof loadEnvConfig === 'function') {
         await loadEnvConfig();
     }
-    const config = window.SUPABASE_CONFIG || {};
-    const apiKey = config.RESEND_API_KEY;
-    const primaryFrom = config.FROM_EMAIL || "TemuGeek Expo <hola@temugeek.cl>";
-    const fallbackFrom = "TemuGeek Expo <onboarding@resend.dev>";
-    
-    if (!apiKey) {
-        console.warn("⚠️ RESEND_API_KEY no configurada. Si estás en producción Vercel, agrégala en Environment Variables.");
-        return { success: false, mode: 'missing_key' };
+
+    // Endpoints de backend a intentar (priorizando origen actual y luego la URL canónica de producción con WWW)
+    const currentOrigin = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : '';
+    // 1. Endpoint relativo primario (funciona al 100% dentro del propio dominio en Vercel temugeek.cl/admin)
+    endpointsToTry.push('/api/send-email');
+
+    // 2. URL canónica alternativa con WWW si se prueba desde orígenes externos
+    const canonicalEndpoint = 'https://www.temugeek.cl/api/send-email';
+    if (!endpointsToTry.includes(canonicalEndpoint)) {
+        endpointsToTry.push(canonicalEndpoint);
     }
 
-    const sendRequest = async (fromSender) => {
-        return fetch("https://api.resend.com/emails", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${apiKey}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                from: fromSender,
-                to: Array.isArray(to) ? to : [to],
-                subject: subject,
-                html: html
-            })
-        });
+    let lastError = null;
+
+    for (const endpoint of endpointsToTry) {
+        try {
+            console.log(`✉️ Despachando correo a ${to} vía Backend Serverless [${endpoint}]...`);
+            const apiRes = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ to, subject, html })
+            });
+
+            if (apiRes.ok) {
+                const data = await apiRes.json();
+                console.log(`✅ Correo entregado exitosamente vía Backend [${endpoint}]:`, data);
+                return { success: true, data };
+            } else {
+                const errData = await apiRes.json().catch(() => ({}));
+                console.warn(`⚠️ Endpoint [${endpoint}] respondió status ${apiRes.status}:`, errData);
+                lastError = errData.error || errData.message || `HTTP ${apiRes.status} desde ${endpoint}`;
+            }
+        } catch (e) {
+            console.warn(`⚠️ No se pudo conectar a [${endpoint}]:`, e.message);
+            lastError = e.message;
+        }
+    }
+
+    console.error("❌ Fallaron todos los intentos de envío vía Serverless API:", lastError);
+    return {
+        success: false,
+        error: lastError || "No se pudo conectar con el servidor de correo (/api/send-email)."
     };
-
-    try {
-        console.log(`✉️ [Fallback] Intentando enviar correo a ${to} desde [${primaryFrom}]...`);
-        let res = await sendRequest(primaryFrom);
-
-        // Si el remitente principal falla (por dominio aún no verificado en Resend), reintentar con el sender oficial por defecto de Resend
-        if (!res.ok) {
-            console.warn(`⚠️ Intento con sender [${primaryFrom}] respondió status ${res.status}. Reintentando con sender de pruebas Resend [${fallbackFrom}]...`);
-            res = await sendRequest(fallbackFrom);
-        }
-
-        if (res.ok) {
-            const data = await res.json();
-            console.log("✅ Correo enviado exitosamente vía Resend API (fallback):", data);
-            return { success: true, data };
-        } else {
-            const errData = await res.json().catch(() => ({}));
-            console.error("❌ Resend API devolvió error:", res.status, errData);
-            return { success: false, error: errData };
-        }
-    } catch (err) {
-        console.error("⚠️ Excepción al enviar correo vía Resend API:", err);
-        return { success: false, error: err };
-    }
 }
 
 function escapeEmailHtml(str) {
@@ -408,18 +373,148 @@ function generateCosplayAdminEmailHTML(lead) {
     `;
 }
 
-// Correo de Aprobación / Rechazo enviado desde el Dashboard de Admin
-function generateCosplayStatusEmailHTML(lead, newStatus) {
-    const isApproved = newStatus === 'aprobado';
-    const statusTitle = isApproved ? "¡Postulación Aprobada! 🎉" : "Actualización de Postulación";
-    const accentColor = isApproved ? "#00d264" : "#e92652";
+// Plantilla oficial de Aprobación (Expositores y Cosplay) con datos bancarios y recursos de marca
+function generateApprovalEmailHTML(lead) {
+    const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
+    const nombre = escapeEmailHtml(lead.nombre_expositor || lead.nombre_completo);
+    const itemNombre = isCosplay 
+        ? `personaje <strong style="color:#ffe62e;">"${escapeEmailHtml(lead.personaje)}"</strong>` 
+        : `marca / emprendimiento <strong style="color:#e92652;">"${escapeEmailHtml(lead.nombre_marca)}"</strong>`;
 
     return `
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>${statusTitle} — Concurso Cosplay TemuGeek 2026</title>
+    <title>¡Postulación Aprobada! 🎉 — TemuGeek Expo 2026</title>
+</head>
+<body style="margin:0; padding:0; background-color:#0b0c10; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#e2e8f0;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#0b0c10; padding:30px 10px;">
+        <tr>
+            <td align="center">
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#121522; border:2px solid #00d264; border-radius:20px; overflow:hidden; box-shadow:0 0 35px rgba(0,210,100,0.25);">
+                    <!-- Header -->
+                    <tr>
+                        <td align="center" style="background-color:#1a1e2e; padding:30px; border-bottom:2px solid #00d264;">
+                            <div style="background-color:#00d264; color:#0b0c10; font-size:11px; font-weight:bold; padding:4px 14px; border-radius:20px; display:inline-block; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">CONFIRMACIÓN OFICIAL</div>
+                            <h1 style="color:#ffffff; margin:0; font-size:26px; font-weight:bold; letter-spacing:1px;">🎉 ¡TU POSTULACIÓN HA SIDO APROBADA!</h1>
+                            <div style="color:#ffe62e; font-size:14px; font-weight:bold; margin-top:6px; text-transform:uppercase; letter-spacing:2px;">TemuGeek Expo 2026 • Recinto SOFO</div>
+                        </td>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                        <td style="padding:35px 30px;">
+                            <h2 style="color:#ffffff; font-size:20px; margin-top:0;">¡Hola, ${nombre}! 👋✨</h2>
+                            <p style="font-size:15.5px; line-height:1.65; color:#cbd5e1;">
+                                Nos complace informarte que tu postulación para participar en <strong>TemuGeek Expo 2026</strong> con tu ${itemNombre} ha sido <strong style="color:#00d264;">OFICIALMENTE APROBADA</strong>.
+                            </p>
+
+                            <!-- Datos de Transferencia -->
+                            <div style="background-color:#141724; border:2px dashed #ffe62e; border-radius:14px; padding:22px; margin:25px 0;">
+                                <h3 style="color:#ffe62e; font-size:17px; margin-top:0; margin-bottom:14px; border-bottom:1px solid rgba(255,230,46,0.2); padding-bottom:8px;">
+                                    💳 Datos Oficiales para Transferencia Bancaria
+                                </h3>
+                                <p style="font-size:13.5px; color:#cbd5e1; margin-bottom:14px; line-height:1.5;">
+                                    Para confirmar y asegurar tu cupo / espacio en el evento, por favor realiza la transferencia a la siguiente cuenta oficial:
+                                </p>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="6" style="font-size:14.5px; color:#ffffff;">
+                                    <tr>
+                                        <td width="42%" style="color:#94a3b8;">Razón Social:</td>
+                                        <td style="color:#ffe62e; font-weight:bold;">VINTAGE SPA</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">RUT Empresa:</td>
+                                        <td style="font-weight:bold;">78.345.355-K</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">Banco:</td>
+                                        <td style="font-weight:bold;">Banco Estado</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">Tipo de Cuenta:</td>
+                                        <td style="color:#00d264; font-weight:bold;">Chequera Electrónica</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">N° de Cuenta:</td>
+                                        <td style="color:#38bdf8; font-weight:bold; font-size:16px;">91270041863</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">Correo de Pago:</td>
+                                        <td style="color:#ffffff;">hola@temugeek.cl</td>
+                                    </tr>
+                                </table>
+                                <div style="margin-top:14px; background-color:rgba(255,230,46,0.1); border-radius:8px; padding:10px 14px; font-size:13px; color:#ffe62e; line-height:1.5;">
+                                    📌 <strong>Importante:</strong> Envía el comprobante de transferencia respondiendo a este correo o vía WhatsApp indicando el nombre de tu marca/postulación.
+                                </div>
+                            </div>
+
+                            <!-- Linktree & Manual de Marca -->
+                            <div style="background:linear-gradient(135deg, rgba(233,38,82,0.15), rgba(139,92,246,0.15)); border:1px solid #e92652; border-radius:14px; padding:22px; margin-bottom:25px;">
+                                <h3 style="color:#ffffff; font-size:16px; margin-top:0; margin-bottom:10px;">
+                                    🔗 Bases Oficiales, Redes Sociales y Manual de Marca
+                                </h3>
+                                <p style="font-size:14px; color:#cbd5e1; line-height:1.6; margin-bottom:16px;">
+                                    En nuestro hub oficial de enlaces encontrarás las <strong>Bases de participación</strong>, nuestras redes sociales oficiales y el <strong>Manual de Marca</strong> (con logos editables en alta resolución, paleta de colores y plantillas para creadores de contenido o republicación):
+                                </p>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="4">
+                                    <tr>
+                                        <td align="center">
+                                            <a href="https://temugeek.cl/links" target="_blank" style="background-color:#e92652; color:#ffffff; font-weight:bold; text-decoration:none; padding:12px 20px; border-radius:30px; display:inline-block; font-size:13.5px; margin:4px;">
+                                                🌐 Ver Links Oficiales (Linktree)
+                                            </a>
+                                            <a href="https://temugeek.cl/manual-marca" target="_blank" style="background-color:#ffe62e; color:#0b0c10; font-weight:bold; text-decoration:none; padding:12px 20px; border-radius:30px; display:inline-block; font-size:13.5px; margin:4px;">
+                                                🎨 Descargar Logos y Manual de Marca
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            ${lead.notas_internas ? `
+                            <div style="background-color:#1a1e2e; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:15px; margin-bottom:20px;">
+                                <strong style="color:#ffe62e; font-size:13px;">Nota de la Producción:</strong>
+                                <p style="color:#e2e8f0; font-size:14px; margin:5px 0 0 0;">${escapeEmailHtml(lead.notas_internas)}</p>
+                            </div>
+                            ` : ''}
+
+                            <p style="font-size:14px; line-height:1.6; color:#94a3b8; margin-bottom:0;">
+                                Nos vemos este <strong>Domingo 16 de Agosto de 2026</strong> en el Recinto SOFO de Temuco. Si tienes cualquier consulta, escríbenos a <a href="mailto:hola@temugeek.cl" style="color:#ffe62e; text-decoration:none;">hola@temugeek.cl</a> o a nuestro WhatsApp oficial.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="background-color:#1a1e2e; padding:20px; border-top:1px solid rgba(255,255,255,0.1); font-size:12px; color:#94a3b8;">
+                            TemuGeek Expo 2026 • Recinto SOFO, Temuco<br>
+                            <a href="https://temugeek.cl" style="color:#ffe62e; text-decoration:none;">www.temugeek.cl</a> • <a href="mailto:hola@temugeek.cl" style="color:#e92652; text-decoration:none;">hola@temugeek.cl</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+    `;
+}
+
+// Correo de Aprobación / Rechazo enviado desde el Dashboard de Admin
+function generateCosplayStatusEmailHTML(lead, newStatus) {
+    if (newStatus === 'aprobado') {
+        return generateApprovalEmailHTML(lead);
+    }
+
+    const statusTitle = "Actualización de Postulación";
+    const accentColor = "#e92652";
+
+    return `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>${statusTitle} — TemuGeek Expo 2026</title>
 </head>
 <body style="margin:0; padding:0; background-color:#0b0c10; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#e2e8f0;">
     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#0b0c10; padding:30px 10px;">
@@ -436,25 +531,11 @@ function generateCosplayStatusEmailHTML(lead, newStatus) {
                         <td style="padding:35px 30px;">
                             <h2 style="color:#ffffff; font-size:20px; margin-top:0;">Hola, ${escapeEmailHtml(lead.nombre_completo || lead.nombre_expositor)} 👋</h2>
                             
-                            ${isApproved ? `
-                            <p style="font-size:15.5px; line-height:1.65; color:#e2e8f0;">
-                                Nos complace informarte que tu postulación para interpretar a <strong style="color:#ffe62e;">"${escapeEmailHtml(lead.personaje || lead.nombre_marca)}"</strong> en el Concurso de Cosplay TemuGeek 2026 ha sido <strong style="color:#00d264;">OFICIALMENTE APROBADA</strong>.
-                            </p>
-                            <div style="background-color:rgba(0,210,100,0.1); border-left:4px solid #00d264; padding:18px; border-radius:0 10px 10px 0; margin:20px 0;">
-                                <h4 style="color:#00d264; margin:0 0 8px 0; font-size:16px;">📌 Indicaciones para el día del Evento:</h4>
-                                <div style="font-size:14px; color:#e2e8f0; line-height:1.6;">
-                                    <strong>1. Fecha & Lugar:</strong> Domingo 16 de Agosto de 2026 en Recinto SOFO, Temuco.<br>
-                                    <strong>2. Acreditación:</strong> Acércate al escenario con la encargada de Cosplay (<strong style="color:#ffe62e;">Danii</strong>) a tu llegada para confirmar tu turno de pasarela.<br>
-                                    <strong>3. Poses:</strong> Prepara entre 3 y 4 poses representativas del personaje (duración 5-7 segundos por pose).
-                                </div>
-                            </div>
-                            ` : `
                             <p style="font-size:15px; line-height:1.65; color:#cbd5e1;">
-                                Queremos agradecer tu interés en participar del Concurso de Cosplay TemuGeek 2026 con tu propuesta de <strong style="color:#e92652;">"${escapeEmailHtml(lead.personaje || lead.nombre_marca)}"</strong>.
+                                Queremos agradecer tu interés en participar de TemuGeek Expo 2026 con tu propuesta de <strong style="color:#e92652;">"${escapeEmailHtml(lead.personaje || lead.nombre_marca)}"</strong>.
                                 <br><br>
-                                Lamentablemente, en esta oportunidad el cupo o la categoría ha sido completada. Te invitamos a acompañarnos este Domingo 16 de Agosto en SOFO y disfrutar de todas las actividades del evento.
+                                Lamentablemente, en esta oportunidad el cupo o la categoría ha sido completada. Te invitamos a acompañarnos este Domingo 16 de Agosto en el Recinto SOFO y disfrutar de todas las actividades del evento.
                             </p>
-                            `}
 
                             ${lead.notas_internas ? `
                             <div style="background-color:#1a1e2e; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:15px; margin-top:20px;">
@@ -481,6 +562,23 @@ function generateCosplayStatusEmailHTML(lead, newStatus) {
 // -------------------------------------------------------------
 // 3. FUNCIONES DE ENVÍO DE CORREOS
 // -------------------------------------------------------------
+
+// Enviar correo oficial de aprobación con datos de pago y recursos de marca
+async function sendApprovalEmail(lead) {
+    if (typeof loadEnvConfig === 'function') {
+        await loadEnvConfig();
+    }
+    const html = generateApprovalEmailHTML(lead);
+    const item = lead.nombre_marca || lead.personaje || 'Postulación';
+    const subject = `🎉 ¡Tu postulación a TemuGeek Expo 2026 ha sido APROBADA! — ${item}`;
+
+    console.log("✉️ Despachando correo oficial de aprobación a:", lead.email);
+    return await sendResendEmail({
+        to: lead.email,
+        subject: subject,
+        html: html
+    });
+}
 
 // Enviar correos al registrar nueva postulación de Cosplay
 async function sendCosplayPostulacionEmails(lead) {
@@ -514,15 +612,16 @@ async function sendCosplayPostulacionEmails(lead) {
 
 // Enviar correo cuando el Administrador aprueba o cambia estado desde el Dashboard
 async function sendCosplayStatusUpdateEmail(lead, newStatus) {
+    if (newStatus === 'aprobado') {
+        return await sendApprovalEmail(lead);
+    }
+
     if (typeof loadEnvConfig === 'function') {
         await loadEnvConfig();
     }
 
     const html = generateCosplayStatusEmailHTML(lead, newStatus);
-    const isApproved = newStatus === 'aprobado';
-    const subject = isApproved 
-        ? `🎉 ¡Tu postulación al Concurso de Cosplay TemuGeek 2026 ha sido APROBADA!`
-        : `Información sobre tu postulación al Concurso de Cosplay TemuGeek 2026`;
+    const subject = `Información sobre tu postulación a TemuGeek Expo 2026`;
 
     return await sendResendEmail({
         to: lead.email,
@@ -563,6 +662,9 @@ window.generateAdminEmailHTML = generateAdminEmailHTML;
 window.generateCosplayApplicantEmailHTML = generateCosplayApplicantEmailHTML;
 window.generateCosplayAdminEmailHTML = generateCosplayAdminEmailHTML;
 window.generateCosplayStatusEmailHTML = generateCosplayStatusEmailHTML;
+window.generateApprovalEmailHTML = generateApprovalEmailHTML;
+window.sendApprovalEmail = sendApprovalEmail;
 window.sendPostulacionEmails = sendPostulacionEmails;
 window.sendCosplayPostulacionEmails = sendCosplayPostulacionEmails;
 window.sendCosplayStatusUpdateEmail = sendCosplayStatusUpdateEmail;
+

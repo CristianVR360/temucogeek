@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <!-- Required Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Links Oficiales — TemuGeek Expo 2026</title>
+    <meta name="description" content="Accede a todos los enlaces oficiales de TemuGeek Expo 2026: Instagram, Bases de Cosplay, Convocatoria Expositores, Manual de Marca, Logo Oficial y Sitio Web.">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Styling for Linktree, Custom Trail Cursor & Mascot Animation -->
+    <style>
+        :root {
+            --color-primary: #e92652;
+            --color-secondary: #ffe62e;
+            --color-dark-bg: #0b0c10;
+            --color-card-bg: #141622;
+            --color-card-border: #272a3c;
+            --color-text-main: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Custom Cursor Styling */
+        @media (min-width: 992px) {
+            body {
+                cursor: none !important;
+            }
+            a, button, input, textarea, select {
+                cursor: none !important;
+            }
+        }
+
+        body {
+            background-color: var(--color-dark-bg);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(233, 38, 82, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(255, 230, 46, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(20, 22, 34, 0.9) 0%, #0b0c10 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 60px;
+        }
+
+        /* Cursor Canvas Trail */
+        #cursor-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999999;
+        }
+
+        /* Main Cursor Dot & Ring */
+        .custom-cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background-color: #ffe62e;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000000;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            box-shadow: 0 0 10px #ffe62e;
+        }
+
+        .custom-cursor-ring {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 36px;
+            height: 36px;
+            border: 2px solid #e92652;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999999;
+            transform: translate(-50%, -50%);
+            transition: width 0.25s ease-out, height 0.25s ease-out, border-color 0.25s ease-out, transform 0.1s ease-out;
+            box-shadow: 0 0 15px rgba(233, 38, 82, 0.4);
+        }
+
+        .custom-cursor-hover .custom-cursor-dot {
+            width: 16px;
+            height: 16px;
+            background-color: #e92652;
+            box-shadow: 0 0 15px #e92652;
+        }
+
+        .custom-cursor-hover .custom-cursor-ring {
+            width: 54px;
+            height: 54px;
+            border-color: #ffe62e;
+            box-shadow: 0 0 20px rgba(255, 230, 46, 0.6);
+        }
+
+        /* Container Layout */
+        .linktree-container {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Profile Header */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .profile-avatar-wrap {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 18px;
+        }
+
+        .profile-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e92652;
+            padding: 4px;
+            background: #181920;
+            box-shadow: 0 0 25px rgba(233, 38, 82, 0.5);
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 20px rgba(233, 38, 82, 0.4); border-color: #e92652; }
+            100% { box-shadow: 0 0 35px rgba(255, 230, 46, 0.6); border-color: #ffe62e; }
+        }
+
+        .badge-verified {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: #ffe62e;
+            color: #141519;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border: 2px solid #141519;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-name {
+            font-family: 'Righteous', cursive;
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            letter-spacing: 1px;
+        }
+
+        .profile-tag {
+            color: #ffe62e;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .profile-bio {
+            color: #ffffff;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 480px;
+            margin: 0 auto 20px;
+        }
+
+        .event-pill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(233, 38, 82, 0.2) 0%, rgba(255, 230, 46, 0.2) 100%);
+            border: 1px solid #e92652;
+            color: #ffffff;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Link Cards Styling */
+        .link-card {
+            display: block;
+            background: rgba(20, 22, 34, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--color-card-border);
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+            text-decoration: none;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+            transition: 0.5s;
+        }
+
+        .link-card:hover::before {
+            left: 100%;
+        }
+
+        .link-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: #e92652;
+            box-shadow: 0 12px 30px rgba(233, 38, 82, 0.35);
+            color: #ffffff;
+        }
+
+        .link-card-featured {
+            border: 2px solid #ffe62e;
+            background: linear-gradient(135deg, rgba(255, 230, 46, 0.08) 0%, rgba(233, 38, 82, 0.1) 100%);
+        }
+
+        .link-card-featured:hover {
+            border-color: #ffe62e;
+            box-shadow: 0 12px 30px rgba(255, 230, 46, 0.4);
+        }
+
+        .link-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .link-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(233, 38, 82, 0.15);
+            border: 1px solid rgba(233, 38, 82, 0.4);
+            color: #e92652;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .link-card:hover .link-icon-box {
+            background: #e92652;
+            color: #ffffff;
+            transform: rotate(5deg) scale(1.08);
+        }
+
+        .link-card-featured .link-icon-box {
+            background: rgba(255, 230, 46, 0.2);
+            border-color: #ffe62e;
+            color: #ffe62e;
+        }
+
+        .link-card-featured:hover .link-icon-box {
+            background: #ffe62e;
+            color: #141519;
+        }
+
+        .link-text-group {
+            flex-grow: 1;
+        }
+
+        .link-title {
+            font-family: 'Righteous', cursive;
+            font-size: 1.15rem;
+            color: #ffffff;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .link-desc {
+            font-size: 0.82rem;
+            color: #e2e8f0;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .link-arrow {
+            font-size: 16px;
+            color: #ffe62e;
+            transition: transform 0.3s ease;
+        }
+
+        .link-card:hover .link-arrow {
+            transform: translateX(6px);
+            color: #ffffff;
+        }
+
+        /* Sub-Link Buttons Grid inside Featured Bases Card */
+        .sublinks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed rgba(255, 230, 46, 0.4);
+        }
+
+        .sublink-btn {
+            background: #181926;
+            border: 1px solid #363a52;
+            color: #ffffff !important;
+            padding: 10px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            text-align: center;
+        }
+
+        .sublink-btn:hover {
+            background: #e92652;
+            border-color: #e92652;
+            color: #ffffff !important;
+            transform: translateY(-2px);
+        }
+
+        /* Mascot Patrol Floating Character */
+        #mascot-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 9999;
+            pointer-events: auto;
+            user-select: none;
+            transition: left 0.1s linear, transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mascot-speech-bubble {
+            background: #ffe62e;
+            color: #141519;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 8px 14px;
+            border-radius: 16px;
+            border-bottom-left-radius: 2px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 8px;
+            position: relative;
+            white-space: nowrap;
+            animation: bounceBubble 2s infinite ease-in-out;
+            border: 2px solid #141519;
+        }
+
+        @keyframes bounceBubble {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .mascot-img {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6));
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .mascot-img:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        /* Share Bar & Footer */
+        .share-bar {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid var(--color-card-border);
+        }
+
+        .btn-share {
+            background: #ffe62e;
+            color: #141519 !important;
+            font-family: 'Righteous', cursive;
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(255, 230, 46, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-share:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+        }
+
+        .toast-copied {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #00d264;
+            color: #ffffff;
+            font-family: 'Righteous', cursive;
+            padding: 10px 24px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 210, 100, 0.4);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-copied.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Modal Custom Styling */
+        .modal-linktree .modal-content {
+            background: #141622;
+            border: 2px solid #e92652;
+            border-radius: 20px;
+            color: #ffffff;
+            box-shadow: 0 0 40px rgba(233, 38, 82, 0.4);
+        }
+        .modal-linktree .modal-header {
+            border-bottom: 1px solid #272a3c;
+        }
+        .modal-linktree .modal-footer {
+            border-top: 1px solid #272a3c;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 575px) {
+            .sublinks-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-name {
+                font-size: 1.6rem;
+            }
+            .mascot-img {
+                width: 70px;
+                height: 70px;
+            }
+            .mascot-speech-bubble {
+                font-size: 11px;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Canvas for Cursor Sparkle Particle Trail -->
+    <canvas id="cursor-canvas"></canvas>
+
+    <!-- Custom Cursor Ring & Dot -->
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
+    <div class="custom-cursor-ring" id="cursor-ring"></div>
+
+    <!-- Animated Mascot Component (TemuGeek dando vueltas) -->
+    <div id="mascot-container" title="¡Haz click en TemuGeek!">
+        <div class="mascot-speech-bubble" id="mascot-bubble">
+            ¡Hola! Bienvenid@ a TemuGeek ✨
+        </div>
+        <img src="../assets/img/game-sprites/speaking01.png" alt="Mascota TemuGeek" class="mascot-img" id="mascot-sprite" onclick="interactMascot()">
+    </div>
+
+    <!-- Main Linktree Container -->
+    <main class="linktree-container">
+
+        <!-- Profile Header -->
+        <header class="profile-header wow fadeInDown" data-wow-delay="100ms">
+            <div class="profile-avatar-wrap">
+                <img src="../assets/img/logo/favicon-color.png" alt="TemuGeek Expo" class="profile-avatar">
+                <div class="badge-verified" title="Cuenta Oficial Verificada">
+                    <i class="fas fa-check"></i>
+                </div>
+            </div>
+            <span class="profile-tag">
+                <i class="far fa-bolt me-1"></i> @temu.geek
+            </span>
+            <h1 class="profile-name">
+                TemuGeek Expo 2026
+            </h1>
+            <p class="profile-bio">
+                El evento geek, cosplay, videojuegos y cultura pop más grande de La Araucanía. 🎮✨
+            </p>
+            <div class="event-pill-badge">
+                <i class="far fa-calendar-alt"></i> Domingo 16 de Agosto 2026 — Recinto SOFO
+            </div>
+        </header>
+
+        <!-- Links List Section -->
+        <section class="links-list">
+
+            <!-- 1. Instagram Oficial -->
+            <a href="https://www.instagram.com/temu.geek/" target="_blank" class="link-card wow fadeInUp" data-wow-delay="150ms">
+                <div class="link-content">
+                    <div class="link-icon-box" style="background: linear-gradient(135deg, rgba(225,48,108,0.2), rgba(245,96,64,0.2)); color: #e1306c; border-color: #e1306c;">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="link-text-group">
+                        <div class="link-title">
+                            Instagram Oficial
+                        </div>
+                        <p class="link-desc">Síguenos para noticias, anuncios de invitados, sorpresas y sorteos.</p>
+                    </div>
+                    <i class="far fa-chevron-right link-arrow"></i>
+                </div>
+            </a>
+
+            <!-- 2. Bases Oficiales (Concurso & Expositores - Featured Card with Direct Sub-links) -->
+            <div class="link-card link-card-featured wow fadeInUp" data-wow-delay="200ms">
+                <div class="link-content mb-2">
+                    <div class="link-icon-box">
+                        <i class="far fa-file-certificate"></i>
+                    </div>
+                    <div class="link-text-group">
+                        <div class="link-title" style="color: #ffe62e;">
+                            Bases Oficiales & Convocatorias
+                        </div>
+                        <p class="link-desc">Consulta los reglamentos, rúbricas de evaluación y requisitos del evento.</p>
+                    </div>
+                </div>
+                <div class="sublinks-grid">
+                    <a href="../bases-cosplay/" class="sublink-btn">
+                        <i class="far fa-mask text-danger"></i> Bases Concurso Cosplay
+                    </a>
+                    <a href="../bases-participacion/" class="sublink-btn">
+                        <i class="far fa-store-alt text-warning"></i> Bases Expositores
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Manual de Marca -->
+            <a href="../manual-marca/" class="link-card wow fadeInUp" data-wow-delay="250ms">
+                <div class="link-content">
+                    <div class="link-icon-box">
+                        <i class="far fa-palette"></i>
+                    </div>
+                    <div class="link-text-group">
+                        <div class="link-title">
+                            Manual de Marca Oficial
+                        </div>
+                        <p class="link-desc">Guía de identidad visual, paleta de colores, tipografía y usos de la marca.</p>
+                    </div>
+                    <i class="far fa-chevron-right link-arrow"></i>
+                </div>
+            </a>
+
+            <!-- 4. Logo Oficial (Modal / Descarga Directa) -->
+            <div class="link-card wow fadeInUp" data-wow-delay="300ms" onclick="openLogoModal()" style="cursor: pointer;">
+                <div class="link-content">
+                    <div class="link-icon-box" style="color: #00d264; border-color: #00d264; background: rgba(0,210,100,0.15);">
+                        <i class="far fa-image"></i>
+                    </div>
+                    <div class="link-text-group">
+                        <div class="link-title">
+                            Logo Oficial TemuGeek
+                        </div>
+                        <p class="link-desc">Descarga los logotipos oficiales en alta resolución (Versión Color y Blanco).</p>
+                    </div>
+                    <i class="far fa-download link-arrow"></i>
+                </div>
+            </div>
+
+            <!-- 5. Afiche Oficial (Recursos) -->
+            <div class="link-card wow fadeInUp" data-wow-delay="350ms" onclick="openAficheModal()" style="cursor: pointer;">
+                <div class="link-content">
+                    <div class="link-icon-box" style="color: #ff9900; border-color: #ff9900; background: rgba(255,153,0,0.15);">
+                        <i class="far fa-bullhorn"></i>
+                    </div>
+                    <div class="link-text-group">
+                        <div class="link-title">
+                            Afiche Oficial & Recursos Promocionales
+                        </div>
+                        <p class="link-desc">Descarga el afiche oficial y gráfica promocional para redes sociales y prensa.</p>
+                    </div>
+                    <i class="far fa-arrow-down-to-bracket link-arrow"></i>
+                </div>
+            </div>
+
+            <!-- 6. Sitio Web Oficial -->
+            <a href="../index.html" class="link-card wow fadeInUp" data-wow-delay="400ms">
+                <div class="link-content">
+                    <div class="link-icon-box" style="color: #38bdf8; border-color: #38bdf8; background: rgba(56,189,248,0.15);">
+                        <i class="far fa-globe"></i>
+                    </div>
+                    <div class="link-text-group">
+                        <div class="link-title">
+                            Sitio Web Oficial
+                        </div>
+                        <p class="link-desc">Explora el sitio oficial del evento, venta de entradas, mapa y cronograma.</p>
+                    </div>
+                    <i class="far fa-chevron-right link-arrow"></i>
+                </div>
+            </a>
+
+        </section>
+
+        <!-- Share & Copy Link Footer Bar -->
+        <footer class="share-bar wow fadeInUp" data-wow-delay="450ms">
+            <button class="btn-share" onclick="copyLinktreeURL()">
+                <i class="far fa-share-alt me-1"></i> Compartir Links de TemuGeek
+            </button>
+            <p style="color: #ffffff; font-size: 0.8rem; margin-top: 15px;">
+                © 2026 TemuGeek Expo — Recinto SOFO, Temuco.
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div class="toast-copied" id="toast-copied">
+        <i class="far fa-check-circle me-1"></i> ¡Enlace copiado al portapapeles!
+    </div>
+
+    <!-- Modal 1: Logo Oficial -->
+    <div class="modal fade modal-linktree" id="modalLogo" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-family: 'Righteous', cursive; color: #ffe62e;">
+                        🖼️ Logotipo Oficial TemuGeek 2026
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <div class="p-3 mb-3" style="background: #0b0c10; border-radius: 12px; border: 1px solid #272a3c;">
+                        <img src="../assets/img/logo/logo-principal-color.png" alt="Logo TemuGeek Color" style="max-height: 120px; width: auto;" class="img-fluid mb-2">
+                        <div style="font-size: 12px; color: #ffe62e; font-weight: bold;">Logotipo Principal Versión Color</div>
+                    </div>
+                    <div class="p-3 mb-3" style="background: #181920; border-radius: 12px; border: 1px solid #272a3c;">
+                        <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="Logo TemuGeek Blanco" style="max-height: 50px; width: auto;" class="img-fluid mb-2">
+                        <div style="font-size: 12px; color: #ffffff; font-weight: bold;">Logotipo Horizontal Blanco (Versión Fondos Oscuros)</div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="../assets/img/logo/logo-principal-color.png" download="Logo_TemuGeek_Color.png" class="btn-geek-primary text-center">
+                            <i class="far fa-download me-1"></i> Descargar Logo Color (PNG HD)
+                        </a>
+                        <a href="../assets/img/logo/logo-horizontal-blanco.png" download="Logo_TemuGeek_Blanco.png" class="btn-geek-secondary text-center">
+                            <i class="far fa-download me-1"></i> Descargar Logo Blanco (PNG HD)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Afiche Oficial -->
+    <div class="modal fade modal-linktree" id="modalAfiche" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-family: 'Righteous', cursive; color: #ffe62e;">
+                        📌 Afiche Oficial & Recursos Promocionales
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <div class="p-2 mb-3" style="background: #0b0c10; border-radius: 12px; border: 1px solid #272a3c;">
+                        <img src="../assets/img/sliders 1a1-01.png" alt="Afiche Oficial TemuGeek Expo 2026" class="img-fluid rounded" style="max-height: 420px;">
+                    </div>
+                    <p style="font-size: 0.9rem; color: #ffffff;" class="mb-3">
+                        Afiche Oficial TemuGeek Expo 2026 — Domingo 16 de Agosto en Recinto SOFO, Temuco.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="../assets/img/sliders 1a1-01.png" download="Afiche_Oficial_TemuGeek_2026.png" class="btn-geek-primary">
+                            <i class="far fa-download me-1"></i> Descargar Afiche Oficial (1:1 HD)
+                        </a>
+                        <button type="button" class="btn-geek-secondary" data-bs-dismiss="modal">
+                            Cerrar Vista Previa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Particle Trail Cursor & Mascot Patrol Scripts -->
+    <script>
+        /* =======================================================
+           1. Custom Pointer Cursor & Sparkle Particle Trail Canvas
+           ======================================================= */
+        const canvas = document.getElementById('cursor-canvas');
+        const ctx = canvas.getContext('2d');
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+
+        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        let ringPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+
+            cursorDot.style.left = `${mouse.x}px`;
+            cursorDot.style.top = `${mouse.y}px`;
+
+            // Spawn Sparkle Particle in Trail
+            if (Math.random() < 0.6) {
+                particles.push(new Particle(mouse.x, mouse.y));
+            }
+        });
+
+        // Touch support for mobile particle trail
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+                particles.push(new Particle(mouse.x, mouse.y));
+            }
+        });
+
+        // Particle Constructor
+        function Particle(x, y) {
+            this.x = x + (Math.random() - 0.5) * 8;
+            this.y = y + (Math.random() - 0.5) * 8;
+            this.size = Math.random() * 4 + 2;
+            this.speedX = (Math.random() - 0.5) * 1.5;
+            this.speedY = (Math.random() - 0.5) * 1.5;
+            this.color = Math.random() > 0.5 ? '#ffe62e' : '#e92652';
+            this.alpha = 1;
+            this.decay = Math.random() * 0.03 + 0.02;
+        }
+
+        Particle.prototype.update = function() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.alpha -= this.decay;
+        };
+
+        Particle.prototype.draw = function() {
+            ctx.save();
+            ctx.globalAlpha = Math.max(this.alpha, 0);
+            ctx.fillStyle = this.color;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        };
+
+        function animateTrail() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Smooth ring tracking
+            ringPos.x += (mouse.x - ringPos.x) * 0.18;
+            ringPos.y += (mouse.y - ringPos.y) * 0.18;
+            cursorRing.style.left = `${ringPos.x}px`;
+            cursorRing.style.top = `${ringPos.y}px`;
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].alpha <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animateTrail);
+        }
+        animateTrail();
+
+        // Hover Effect on Links/Buttons for Cursor
+        document.querySelectorAll('a, button, .link-card').forEach(item => {
+            item.addEventListener('mouseenter', () => document.body.classList.add('custom-cursor-hover'));
+            item.addEventListener('mouseleave', () => document.body.classList.remove('custom-cursor-hover'));
+        });
+
+
+        /* =======================================================
+           2. Mascot Patrol & Animation (TemuGeek dando vueltas)
+           ======================================================= */
+        const mascotContainer = document.getElementById('mascot-container');
+        const mascotSprite = document.getElementById('mascot-sprite');
+        const mascotBubble = document.getElementById('mascot-bubble');
+
+        const mascotSprites = [
+            '../assets/img/game-sprites/speaking01.png',
+            '../assets/img/game-sprites/speaking02.png',
+            '../assets/img/game-sprites/walk-right01.png',
+            '../assets/img/game-sprites/walk-left01.png',
+            '../assets/img/game-sprites/victory01.png',
+            '../assets/img/game-sprites/base-idle01.png'
+        ];
+
+        const mascotPhrases = [
+            "¡Hola! Bienvenid@ a TemuGeek ✨",
+            "¡Nos vemos el 16 de Agosto! 🗓️",
+            "¡Recinto SOFO nos espera! 📍",
+            "¡Inscríbete en el Cosplay! 🎭",
+            "¡Revisa las bases de stand! 🏬",
+            "¡TemuGeek Expo 2026! 🔥"
+        ];
+
+        let posX = 20;
+        let direction = 1; // 1 = right, -1 = left
+        let speed = 1.2;
+        let isInteracting = false;
+
+        function updateMascotPatrol() {
+            if (isInteracting) return;
+
+            const maxWidth = window.innerWidth - 110;
+            posX += speed * direction;
+
+            if (posX >= maxWidth) {
+                posX = maxWidth;
+                direction = -1;
+                mascotSprite.src = '../assets/img/game-sprites/walk-left01.png';
+            } else if (posX <= 10) {
+                posX = 10;
+                direction = 1;
+                mascotSprite.src = '../assets/img/game-sprites/walk-right01.png';
+            }
+
+            mascotContainer.style.left = `${posX}px`;
+        }
+
+        setInterval(updateMascotPatrol, 30);
+
+        // Periodic speech phrase update
+        setInterval(() => {
+            if (!isInteracting) {
+                const randomPhrase = mascotPhrases[Math.floor(Math.random() * mascotPhrases.length)];
+                mascotBubble.textContent = randomPhrase;
+            }
+        }, 5000);
+
+        // Mascot Click Interaction Function
+        window.interactMascot = function() {
+            isInteracting = true;
+            mascotSprite.src = '../assets/img/game-sprites/victory01.png';
+            mascotBubble.textContent = '🎉 ¡Gracias por visitar TemuGeek! 💖';
+            mascotContainer.style.transform = 'scale(1.2) translateY(-15px)';
+
+            // Spawn particle celebration explosion around mascot
+            const rect = mascotContainer.getBoundingClientRect();
+            for (let i = 0; i < 25; i++) {
+                particles.push(new Particle(rect.left + rect.width/2, rect.top + rect.height/2));
+            }
+
+            setTimeout(() => {
+                mascotContainer.style.transform = 'scale(1) translateY(0)';
+                mascotSprite.src = direction === 1 ? '../assets/img/game-sprites/walk-right01.png' : '../assets/img/game-sprites/walk-left01.png';
+                isInteracting = false;
+            }, 2500);
+        };
+
+
+        /* =======================================================
+           3. Modal Helpers & Copy URL Toast Functionality
+           ======================================================= */
+        window.openLogoModal = function() {
+            const modal = new bootstrap.Modal(document.getElementById('modalLogo'));
+            modal.show();
+        };
+
+        window.openAficheModal = function() {
+            const modal = new bootstrap.Modal(document.getElementById('modalAfiche'));
+            modal.show();
+        };
+
+        window.copyLinktreeURL = function() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const toast = document.getElementById('toast-copied');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }).catch(err => {
+                alert('Enlace del sitio: ' + url);
+            });
+        };
+    </script>
+
+</body>
+
+</html>

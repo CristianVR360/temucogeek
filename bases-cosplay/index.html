@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="Bases Oficiales y Reglamento del Concurso de Cosplay TemuGeek Expo 2026 en Recinto SOFO, Temuco. Criterios de evaluación, puntos y normas de seguridad.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Bases Oficiales Concurso Cosplay — TemuGeek Expo 2026</title>
+
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- CSS Include -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/swiper.min.css">
+    <link rel="stylesheet" href="../assets/css/custom-fonts.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/mobile-optimizations.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- TemuGeek Custom Styling Overrides for Maximum High-Contrast White Text -->
+    <style>
+        :root {
+            --color-primary: #e92652;
+            --color-secondary: #ffe62e;
+            --color-dark-bg: #141519;
+            --color-card-bg: #181920;
+            --color-card-border: #323541;
+            --color-text-main: #ffffff;
+            --color-text-muted: #ffffff;
+        }
+
+        body.design-conference {
+            background-color: var(--color-dark-bg) !important;
+            color: #ffffff !important;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        p, li, span, td, th, div {
+            color: #ffffff;
+        }
+
+        /* Buttons */
+        .btn-geek-primary {
+            background: linear-gradient(135deg, #e92652 0%, #ff4a75 100%);
+            color: #ffffff !important;
+            font-family: 'Righteous', cursive;
+            letter-spacing: 1px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(233, 38, 82, 0.35);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-geek-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 38, 82, 0.5);
+            color: #ffffff !important;
+        }
+
+        /* Solid High-Contrast Yellow Secondary Button */
+        .btn-geek-secondary {
+            background: #ffe62e !important;
+            color: #141519 !important;
+            font-family: 'Righteous', cursive;
+            font-weight: bold;
+            letter-spacing: 1px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: 2px solid #ffe62e;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 230, 46, 0.35);
+        }
+        .btn-geek-secondary i, .btn-geek-secondary span {
+            color: #141519 !important;
+        }
+        .btn-geek-secondary:hover {
+            background: #ffffff !important;
+            color: #141519 !important;
+            border-color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Cards & Section Containers */
+        .geek-card {
+            background: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: border-color 0.3s ease;
+        }
+        .geek-card:hover {
+            border-color: rgba(233, 38, 82, 0.5);
+        }
+
+        .geek-card-header {
+            border-bottom: 1px solid var(--color-card-border);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .geek-card-title {
+            font-family: 'Righteous', cursive;
+            color: #ffffff !important;
+            font-size: 1.5rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .geek-card-title i {
+            color: var(--color-primary);
+        }
+
+        /* High-Contrast Tables */
+        .table-geek {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            color: #ffffff !important;
+            margin-bottom: 0;
+        }
+        .table-geek th {
+            background-color: #252834;
+            color: #ffe62e !important;
+            font-family: 'Righteous', cursive;
+            letter-spacing: 0.5px;
+            padding: 14px 18px;
+            border-top: none;
+            border-bottom: 2px solid var(--color-primary);
+            font-weight: 500;
+        }
+        .table-geek th:first-child { border-top-left-radius: 10px; }
+        .table-geek th:last-child { border-top-right-radius: 10px; }
+
+        .table-geek td {
+            background-color: #1a1b24;
+            color: #ffffff !important;
+            padding: 14px 18px;
+            border-bottom: 1px solid #2d303f;
+            vertical-align: middle;
+            font-size: 0.98rem;
+            line-height: 1.6;
+        }
+        .table-geek tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+        .table-geek tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+        .table-geek tbody tr:hover td {
+            background-color: #222431;
+        }
+
+        /* Badges */
+        .badge-pts {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: #ffffff !important;
+        }
+
+        /* Callouts - Fixed Dark High-Contrast Background */
+        .callout-intro {
+            background: #1f1826;
+            border: 2px solid #e92652;
+            border-left: 6px solid #e92652;
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+        .callout-intro p {
+            color: #ffffff !important;
+            font-size: 1.05rem !important;
+            line-height: 1.75 !important;
+        }
+
+        .callout-warning {
+            background: #251618;
+            border: 2px solid #ff4a4a;
+            border-left: 6px solid #ff4a4a;
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        /* Quick Info Bar */
+        .info-pill {
+            background: #1e202b;
+            border: 1px solid #34384a;
+            border-radius: 14px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            height: 100%;
+        }
+        .info-pill-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        /* Total Points Summary Pill */
+        .total-points-pill {
+            background: #242217;
+            border: 2px dashed #ffe62e;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Text Contrast Overrides */
+        .text-white-50 {
+            color: #ffffff !important;
+            opacity: 1 !important;
+        }
+
+        /* Mobile Menu Override */
+        @media (max-width: 991px) {
+            .main-menu.collapse:not(.show) {
+                display: none !important;
+            }
+            .main-menu.collapse.show {
+                display: block !important;
+                background: #141519;
+                padding: 20px;
+                border-bottom: 1px solid #2a2d39;
+            }
+        }
+    </style>
+</head>
+
+<body class="design-conference">
+
+    <!-- backtotop-start -->
+    <div class="xb-backtotop style-two">
+        <a href="#" class="scroll">
+            <i class="far fa-arrow-up"></i>
+        </a>
+    </div>
+    <!-- backtotop-end -->
+
+    <div class="body_wrap o-clip">
+
+        <!-- Header Start -->
+        <header id="xb-header-area" class="header-area header-style header-style--two header-transparent">
+            <div class="xb-header stricky">
+                <div class="container">
+                    <div class="header__wrap ul_li_between">
+                        <div class="xb-header-logo">
+                            <a href="../index.html" class="logo1">
+                                <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 40px;">
+                            </a>
+                        </div>
+                        <div class="main-menu__wrap navbar navbar-expand-lg p-0">
+                            <nav class="main-menu collapse navbar-collapse" id="mobileMenuNav">
+                                <ul>
+                                    <li><a href="../index.html"><span style="color: #ffffff;">Inicio</span></a></li>
+                                    <li><a href="../cosplay/"><span style="color: #ffffff;">Concurso Cosplay</span></a></li>
+                                    <li><a href="../postulacion/"><span style="color: #ffffff;">Postulación Expositores</span></a></li>
+                                    <li><a href="../index.html#faq-section"><span style="color: #ffffff;">FAQ</span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="d-none d-lg-flex align-items-center me-3">
+                            <a href="https://www.instagram.com/temu.geek/" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3" style="font-weight: bold; border-color: #e92652; color: #ffffff;">
+                                <i class="fab fa-instagram me-1" style="color: #e1306c;"></i> @temu.geek
+                            </a>
+                        </div>
+                        <div class="header-bar-mobile side-menu d-lg-none">
+                            <a class="xb-nav-mobile" href="javascript:void(0);" id="mobileMenuBtn">
+                                <i class="far fa-bars" style="color: #ffffff;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Header End -->
+
+        <main>
+            <!-- Hero Banner -->
+            <section class="page-header-section pos-rel bg_img" data-background="../assets/img/bg/geek.jpg" style="padding-top: 130px; padding-bottom: 45px; border-bottom: 1px solid #323541;">
+                <div class="container">
+                    <div class="page-header-content text-center">
+                        <span class="sub-title wow fadeInUp" data-wow-delay="0ms" style="color: #ffe62e !important; font-family: 'Righteous', cursive; letter-spacing: 2px; font-size: 15px; text-transform: uppercase;">
+                            <i class="far fa-mask me-2"></i> Reglamento Oficial 2026
+                        </span>
+                        <h1 class="title wow fadeInUp" data-wow-delay="100ms" style="color: #ffffff !important; font-family: 'Righteous', cursive; font-size: 36px; margin-top: 10px; margin-bottom: 12px;">
+                            Bases Oficiales — Concurso de Cosplay
+                        </h1>
+                        <p class="wow fadeInUp" data-wow-delay="200ms" style="max-width: 760px; margin: 0 auto; color: #ffffff !important; font-size: 16px; line-height: 1.65;">
+                            Revisa en detalle los criterios de evaluación, sistema de puntuación, normativas de seguridad e indicaciones para participar en la primera edición del Concurso de Cosplay TemuGeek Expo 2026.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Body Content -->
+            <section class="pt-50 pb-100 dark-bg">
+                <div class="container">
+
+                    <!-- Quick Info Bar -->
+                    <div class="row g-3 mb-5 wow fadeInUp" data-wow-delay="100ms">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="info-pill">
+                                <div class="info-pill-icon" style="background: rgba(233, 38, 82, 0.2); color: #e92652; border: 1px solid #e92652;">
+                                    <i class="far fa-calendar-alt"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 12px; color: #ffe62e; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Fecha Evento</div>
+                                    <div style="color: #ffffff; font-weight: bold; font-size: 15px;">Dom 16 de Agosto 2026</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="info-pill">
+                                <div class="info-pill-icon" style="background: rgba(255, 230, 46, 0.2); color: #ffe62e; border: 1px solid #ffe62e;">
+                                    <i class="far fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 12px; color: #ffe62e; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Lugar</div>
+                                    <div style="color: #ffffff; font-weight: bold; font-size: 15px;">Recinto SOFO, Temuco</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="info-pill">
+                                <div class="info-pill-icon" style="background: rgba(0, 210, 100, 0.2); color: #00d264; border: 1px solid #00d264;">
+                                    <i class="far fa-walking"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 12px; color: #00d264; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Modalidad</div>
+                                    <div style="color: #ffffff; font-weight: bold; font-size: 15px;">Desfile / Pasarela</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="info-pill">
+                                <div class="info-pill-icon" style="background: rgba(255, 153, 0, 0.2); color: #ff9900; border: 1px solid #ff9900;">
+                                    <i class="far fa-clock"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 12px; color: #ff9900; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Cierre Inscripción</div>
+                                    <div style="color: #ffffff; font-weight: bold; font-size: 15px;">14 de Agosto (23:59 hrs)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Intro Box - Fixed Dark High Contrast Box -->
+                    <div class="callout-intro wow fadeInUp" data-wow-delay="150ms">
+                        <p style="margin: 0; color: #ffffff !important; font-size: 1.05rem; line-height: 1.75;">
+                            ✨ <strong>TemuGeek</strong> te invita a participar de su gran concurso de Cosplay en nuestra primera versión a realizarse el <strong>Domingo 16 de Agosto en recinto SOFO</strong>, convocando a todos los fanáticos y cosplayers que deseen presentar sus trajes y desplante posando en el escenario principal.
+                            <br><br>
+                            Al inscribirte en el concurso reconoces que has leído, comprendido y aceptado las bases descritas en este documento. El concurso se realizará en <strong>modalidad desfile (pasarela individual)</strong>, por lo que deberás asistir puntualmente a la hora señalada (la inasistencia puede significar descalificación).
+                        </p>
+                    </div>
+
+                    <!-- Item 1: Cumplimiento de Bases -->
+                    <div class="geek-card wow fadeInUp" data-wow-delay="200ms">
+                        <div class="geek-card-header">
+                            <h2 class="geek-card-title">
+                                <i class="far fa-clipboard-check"></i> Item 1: Cumplimiento de Bases
+                            </h2>
+                            <span class="badge bg-danger fs-6 px-3 py-2 rounded-pill">Máx 10 Puntos</span>
+                        </div>
+                        <p style="color: #ffffff !important; font-size: 0.98rem; margin-bottom: 16px;">
+                            Evalúa el cumplimiento puntual de la inscripción, acreditación en el evento y los pasos a seguir durante la presentación en pasarela.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-geek align-middle">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 90px;">Código</th>
+                                        <th>Criterio de Evaluación</th>
+                                        <th style="width: 140px; text-align: center;">Puntaje Máx</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">B1</strong></td>
+                                        <td style="color: #ffffff !important;">Enviar imagen de cuerpo completo del personaje en su inscripción, en donde se pueda apreciar el traje en su totalidad.</td>
+                                        <td class="text-center"><span class="badge bg-danger badge-pts">2 pts</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">B2</strong></td>
+                                        <td style="color: #ffffff !important;">Confirmar tu llegada e inscripción a tiempo con la persona encargada de cosplay (Danii) el día del evento.</td>
+                                        <td class="text-center"><span class="badge bg-danger badge-pts">1 pt</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">B3</strong></td>
+                                        <td style="color: #ffffff !important;">Subir al escenario de forma ordenada cuando se indique tu nombre y el del personaje que interpretas.</td>
+                                        <td class="text-center"><span class="badge bg-danger badge-pts">1 pt</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">B4</strong></td>
+                                        <td style="color: #ffffff !important;">Al subir, realizar un paseo por toda la zona delantera del escenario hasta posicionarte al centro para la vista del jurado.</td>
+                                        <td class="text-center"><span class="badge bg-danger badge-pts">1 pt</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">B5</strong></td>
+                                        <td style="color: #ffffff !important;">Realizar entre 3 a 4 poses típicas del personaje. Recomendamos llevar las poses pensadas y practicadas con anticipación.</td>
+                                        <td class="text-center"><span class="badge bg-danger badge-pts">2 pts</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">B6</strong></td>
+                                        <td style="color: #ffffff !important;">Cada pose debe durar entre 5 a 7 segundos para permitir al jurado evaluar en detalle tu traje y al público/fotógrafos capturar fotos.</td>
+                                        <td class="text-center"><span class="badge bg-danger badge-pts">3 pts</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: Evaluación del Traje -->
+                    <div class="geek-card wow fadeInUp" data-wow-delay="250ms">
+                        <div class="geek-card-header">
+                            <h2 class="geek-card-title">
+                                <i class="far fa-tshirt"></i> Item 2: Evaluación del Traje
+                            </h2>
+                            <span class="badge bg-primary fs-6 px-3 py-2 rounded-pill">Máx 15 Puntos</span>
+                        </div>
+                        <p style="color: #ffffff !important; font-size: 0.98rem; margin-bottom: 16px;">
+                            Criterio técnico que mide la fidelidad visual, calidad de confección, estilizado y desplante actoral del personaje.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-geek align-middle">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 90px;">Código</th>
+                                        <th>Criterio de Evaluación</th>
+                                        <th style="width: 140px; text-align: center;">Puntaje Máx</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">E1</strong></td>
+                                        <td style="color: #ffffff !important;"><strong style="color: #ffe62e;">Confección y selección de materiales:</strong> Los materiales utilizados en la confección del traje crean una apariencia visual cercana a la de la imagen de referencia enviada.</td>
+                                        <td class="text-center"><span class="badge bg-primary badge-pts">6 pts</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">E2</strong></td>
+                                        <td style="color: #ffffff !important;"><strong style="color: #ffe62e;">Estilizado de peluca y maquillaje:</strong> La forma de la peluca se asemeja a la del personaje y el maquillaje utilizado complementa la esencia del personaje.</td>
+                                        <td class="text-center"><span class="badge bg-primary badge-pts">5 pts</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">E3</strong></td>
+                                        <td style="color: #ffffff !important;"><strong style="color: #ffe62e;">Desplante en escenario:</strong> Las poses corresponden a la personalidad y actitud del personaje. Usa tus poses, accesorios o historia para destacar en la pasarela.</td>
+                                        <td class="text-center"><span class="badge bg-primary badge-pts">4 pts</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Item 3: Comunidad -->
+                    <div class="geek-card wow fadeInUp" data-wow-delay="300ms">
+                        <div class="geek-card-header">
+                            <h2 class="geek-card-title">
+                                <i class="far fa-users"></i> Item 3: Comunidad
+                            </h2>
+                            <span class="badge bg-success fs-6 px-3 py-2 rounded-pill">Máx 3 Puntos</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-geek align-middle">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 90px;">Código</th>
+                                        <th>Criterio de Evaluación</th>
+                                        <th style="width: 140px; text-align: center;">Puntaje Máx</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">C1</strong></td>
+                                        <td style="color: #ffffff !important;"><strong style="color: #ffe62e;">Interacción y disposición con el público:</strong> Al ser parte del concurso, serás un gran atractivo para los asistentes. Se espera la mejor disposición y voluntad para interactuar cordialmente con el público.</td>
+                                        <td class="text-center"><span class="badge bg-success badge-pts">3 pts</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: Video Promocional -->
+                    <div class="geek-card wow fadeInUp" data-wow-delay="350ms">
+                        <div class="geek-card-header">
+                            <h2 class="geek-card-title">
+                                <i class="far fa-video"></i> Item 4: Video Promocional
+                            </h2>
+                            <span class="badge bg-warning text-dark fs-6 px-3 py-2 rounded-pill">Máx 8 Puntos</span>
+                        </div>
+                        <p style="color: #ffffff !important; font-size: 0.98rem; margin-bottom: 16px;">
+                            Puntaje adicional evaluado antes del evento a través de la creación y publicación de un video corto promocional de tu participación.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-geek align-middle">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 90px;">Código</th>
+                                        <th>Criterio de Evaluación</th>
+                                        <th style="width: 140px; text-align: center;">Puntaje Máx</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">V1</strong></td>
+                                        <td style="color: #ffffff !important;"><strong style="color: #ffe62e;">Entrega y plazo:</strong> Subir el video a tus redes sociales (etiquetando a las cuentas oficiales de @temu.geek) o enviárnoslo directamente si prefieres no publicarlo. Fecha límite: <strong style="color: #ffe62e;">miércoles 12 de agosto</strong>.</td>
+                                        <td class="text-center"><span class="badge bg-warning text-dark badge-pts">2 pts</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">V2</strong></td>
+                                        <td style="color: #ffffff !important;"><strong style="color: #ffe62e;">Promoción y convocatoria:</strong> El contenido del video debe invitar explícitamente al público a asistir al festival, mencionando tu participación en la competencia y generando entusiasmo.</td>
+                                        <td class="text-center"><span class="badge bg-warning text-dark badge-pts">3 pts</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong style="color: #ffe62e;">V3</strong></td>
+                                        <td style="color: #ffffff !important;"><strong style="color: #ffe62e;">Caracterización y creatividad audiovisual:</strong> Reflejar la actitud del personaje mediante actuación, audios (lip sync, diálogos, música) o transiciones. No es obligatorio mostrar el traje completo (puede ser teaser).</td>
+                                        <td class="text-center"><span class="badge bg-warning text-dark badge-pts">3 pts</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Resumen Total -->
+                        <div class="total-points-pill">
+                            <div style="font-family: 'Righteous', cursive; color: #ffe62e; font-size: 1.25rem;">
+                                🏆 PUNTAJE TOTAL MÁXIMO DEL CONCURSO: <span style="color: #ffffff !important; font-size: 1.45rem; text-decoration: underline;">36 PUNTOS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Normativa General & Preguntas Frecuentes -->
+                    <div class="geek-card wow fadeInUp" data-wow-delay="400ms">
+                        <div class="geek-card-header">
+                            <h2 class="geek-card-title">
+                                <i class="far fa-gavel"></i> Normativa General & Aspectos Importantes
+                            </h2>
+                        </div>
+                        
+                        <ul style="color: #ffffff !important; font-size: 1rem; line-height: 1.85; padding-left: 20px;">
+                            <li class="mb-3">
+                                <strong style="color: #ffe62e;">Cierre de Inscripciones:</strong> Las inscripciones cierran indefectiblemente el día <strong style="color: #ffe62e;">viernes 14 de agosto a las 23:59 hrs</strong>. No se aceptarán inscripciones fuera de plazo.
+                            </li>
+                            <li class="mb-3">
+                                <strong style="color: #ffe62e;">Requisito de Edad:</strong> Participantes con edad igual o superior a 8 años. Todo participante <strong style="color: #ffe62e;">menor de 18 años</strong> debe presentar en el escenario a un adulto responsable con documento que acredite nombre completo, RUT y autorización de supervisión.
+                            </li>
+                            <li class="mb-3">
+                                <strong style="color: #ffe62e;">Dúos y Teams:</strong> La participación evaluada por el jurado es strictly <strong>individual</strong>. Si deseas realizar un posado en dúo/team posterior con tu pareja o grupo, debes coordinarlo previa llegada el día del evento con la encargada de cosplay (Danii) para ajustar los tiempos de pasarela (3 poses grupales para fotos).
+                            </li>
+                            <li class="mb-3">
+                                <strong style="color: #ffe62e;">Reuso de Trajes:</strong> Se permite la utilización de trajes previamente usados en otras convenciones o eventos sin restricciones.
+                            </li>
+                            <li class="mb-3">
+                                <strong style="color: #ffe62e;">Confirmación de Inscripción:</strong> Recibirás un correo electrónico o mensaje de WhatsApp de confirmación por parte del equipo dentro de las 48 horas siguientes al envío de tu formulario.
+                            </li>
+                        </ul>
+
+                        <!-- Callout de Seguridad y Prohibición de Armas -->
+                        <div class="callout-warning">
+                            <h4 style="color: #ff4a4a; font-family: 'Righteous', cursive; font-size: 1.15rem; margin-bottom: 12px;">
+                                <i class="far fa-exclamation-triangle me-2"></i> NORMATIVA CRÍTICA DE ACCESORIOS, ARMAS Y SEGURIDAD
+                            </h4>
+                            <ul style="color: #ffffff !important; font-size: 0.98rem; margin: 0; padding-left: 20px; line-height: 1.75;">
+                                <li>Recomendamos fabricar tus propios accesorios o imitaciones seguras (goma eva, madera liviana, impresión 3D).</li>
+                                <li>Queda <strong>estrictamente prohibido el ingreso de armas reales</strong> (fuego y cortopunzantes) y materiales pirotécnicos. Quien sea sorprendido con armas reales será expulsado del evento y descalificado de inmediato.</li>
+                                <li>No se permiten líquidos, sustancias químicas ni sprays que puedan dañar la tarima o equipos técnicos.</li>
+                                <li>Si utilizas confeti u otros elementos que produzcan residuos en el escenario, debes encargarte de retirarlo inmediatamente al finalizar tu pasarela.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Botonera CTA -->
+                    <div class="text-center pt-3 pb-4 wow fadeInUp" data-wow-delay="450ms">
+                        <h3 style="font-family: 'Righteous', cursive; color: #ffffff !important; margin-bottom: 20px;">
+                            ¿Tienes listo tu traje y tus poses?
+                        </h3>
+                        <div class="d-flex flex-wrap gap-3 justify-content-center">
+                            <a href="../cosplay/" class="btn-geek-primary">
+                                <i class="far fa-paper-plane me-2"></i> Ir al Formulario de Inscripción
+                            </a>
+                            <button onclick="window.print()" class="btn-geek-secondary">
+                                <i class="far fa-print me-2"></i> Imprimir / Guardar Bases
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer Start -->
+        <footer class="footer footer-style-two pt-80 pb-50 bg_img" style="background-color: #08090d; border-top: 1px solid #1a1d29;">
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 38px; margin-bottom: 10px;">
+                        <p style="color: #ffffff !important; font-size: 0.9rem; margin: 0;">ExpoGeek / TemuGeek 2026 — Plataforma Oficial del Evento.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div style="display: flex; gap: 20px; justify-content: center; justify-content: md-end; flex-wrap: wrap;">
+                            <a href="../index.html" style="color: #ffffff; text-decoration: none;">Inicio</a>
+                            <a href="../cosplay/" style="color: #ffffff; text-decoration: none;">Concurso Cosplay</a>
+                            <a href="../postulacion/" style="color: #ffffff; text-decoration: none;">Postular Stand</a>
+                            <a href="../privacidad.html" style="color: #ffffff; text-decoration: none;">Privacidad</a>
+                            <a href="../terminos.html" style="color: #ffffff; text-decoration: none;">Términos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Mobile Menu Toggle Handler -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const menuNav = document.getElementById('mobileMenuNav');
+            if (menuBtn && menuNav) {
+                menuBtn.addEventListener('click', function() {
+                    menuNav.classList.toggle('show');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

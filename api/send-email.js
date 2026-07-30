@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
-  // Headers CORS para permitir llamados desde el sitio web
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  // Headers CORS para permitir llamados desde cualquier origen del sitio web
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Faltan campos requeridos (to, subject, html)' });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = (process.env.RESEND_API_KEY || '').trim();
 
   if (!apiKey) {
     return res.status(500).json({ error: 'RESEND_API_KEY no configurada en Vercel' });
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
     return fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey.trim()}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -50,16 +50,30 @@ export default async function handler(req, res) {
     const fallbackFrom = 'TemuGeek Expo <onboarding@resend.dev>';
 
     let response = await sendRequest(primaryFrom);
+    let data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      console.warn(`Fallback a sender secundario por respuesta ${response.status}`);
-      response = await sendRequest(fallbackFrom);
+      console.warn(`Remitente primario [${primaryFrom}] falló (${response.status}). Reintentando con [${fallbackFrom}]...`, data);
+      const fallbackResponse = await sendRequest(fallbackFrom);
+      const fallbackData = await fallbackResponse.json().catch(() => ({}));
+
+      if (fallbackResponse.ok) {
+        return res.status(200).json(fallbackData);
+      } else {
+        const errorMsg = data.message || fallbackData.message || `Resend API devolvió código ${response.status}`;
+        console.error('Resend API rechazó ambos remitentes:', { primary: data, fallback: fallbackData });
+        return res.status(response.status || 400).json({
+          error: errorMsg,
+          primaryError: data,
+          fallbackError: fallbackData
+        });
+      }
     }
 
-    const data = await response.json();
-    return res.status(response.status).json(data);
+    return res.status(200).json(data);
   } catch (error) {
-    console.error('Error al enviar correo vía Resend:', error);
-    return res.status(500).json({ error: error.message });
+    console.error('Excepción al enviar correo vía Resend:', error);
+    return res.status(500).json({ error: error.message || 'Error interno del servidor al enviar correo' });
   }
 }
+

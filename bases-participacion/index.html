@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="Bases Oficiales de Participación y Convocatoria de Expositores, Tiendas, Artistas y Food Trucks para TemuGeek Expo 2026 en Recinto SOFO, Temuco.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Bases de Participación Expositores — TemuGeek Expo 2026</title>
+
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- CSS Include -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/swiper.min.css">
+    <link rel="stylesheet" href="../assets/css/custom-fonts.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/mobile-optimizations.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- TemuGeek Custom Styling Overrides for High Contrast White Text -->
+    <style>
+        :root {
+            --color-primary: #e92652;
+            --color-secondary: #ffe62e;
+            --color-dark-bg: #141519;
+            --color-card-bg: #181920;
+            --color-card-border: #323541;
+            --color-text-main: #ffffff;
+            --color-text-muted: #ffffff;
+        }
+
+        body.design-conference {
+            background-color: var(--color-dark-bg) !important;
+            color: #ffffff !important;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        p, li, span, td, th, div {
+            color: #ffffff;
+        }
+
+        /* Buttons */
+        .btn-geek-primary {
+            background: linear-gradient(135deg, #e92652 0%, #ff4a75 100%);
+            color: #ffffff !important;
+            font-family: 'Righteous', cursive;
+            letter-spacing: 1px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(233, 38, 82, 0.35);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-geek-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 38, 82, 0.5);
+            color: #ffffff !important;
+        }
+
+        /* Solid High-Contrast Yellow Secondary Button */
+        .btn-geek-secondary {
+            background: #ffe62e !important;
+            color: #141519 !important;
+            font-family: 'Righteous', cursive;
+            font-weight: bold;
+            letter-spacing: 1px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: 2px solid #ffe62e;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 230, 46, 0.35);
+        }
+        .btn-geek-secondary i, .btn-geek-secondary span {
+            color: #141519 !important;
+        }
+        .btn-geek-secondary:hover {
+            background: #ffffff !important;
+            color: #141519 !important;
+            border-color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Cards & Section Containers */
+        .geek-card {
+            background: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: border-color 0.3s ease;
+        }
+        .geek-card:hover {
+            border-color: rgba(233, 38, 82, 0.5);
+        }
+
+        .geek-card-header {
+            border-bottom: 1px solid var(--color-card-border);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .geek-card-title {
+            font-family: 'Righteous', cursive;
+            color: #ffffff !important;
+            font-size: 1.5rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .geek-card-title i {
+            color: var(--color-primary);
+        }
+
+        /* Profile Cards */
+        .profile-box {
+            background: #141519;
+            border: 1px solid #2a2d39;
+            border-radius: 12px;
+            padding: 20px;
+            height: 100%;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .profile-box p {
+            color: #ffffff !important;
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+        .profile-box:hover {
+            transform: translateY(-3px);
+            border-color: var(--color-primary);
+        }
+
+        /* Space Pricing Cards */
+        .space-card {
+            background: #181920;
+            border: 2px solid #3c4052;
+            border-radius: 14px;
+            padding: 25px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        .space-card.featured {
+            border-color: #e92652;
+            background: #1c1722;
+        }
+        .space-card.foodtruck {
+            border-color: #ff9900;
+            background: #221c17;
+        }
+        .space-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+        }
+        .space-price {
+            font-family: 'Righteous', cursive;
+            font-size: 2.2rem;
+            color: #ffffff !important;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .space-badge {
+            background: rgba(233, 38, 82, 0.25);
+            color: #ffffff !important;
+            border: 1px solid #e92652;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Callouts & Alerts - Dark Solid Contrast */
+        .callout-restriction {
+            background: #271619;
+            border: 2px solid #ff4a4a;
+            border-left: 6px solid #ff4a4a;
+            border-radius: 14px;
+            padding: 22px 26px;
+            margin-top: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .info-pill {
+            background: #1e202b;
+            border: 1px solid #34384a;
+            border-radius: 14px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            height: 100%;
+        }
+        .info-pill-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        /* Mobile Menu Override */
+        @media (max-width: 991px) {
+            .main-menu.collapse:not(.show) {
+                display: none !important;
+            }
+            .main-menu.collapse.show {
+                display: block !important;
+                background: #141519;
+                padding: 20px;
+                border-bottom: 1px solid #2a2d39;
+            }
+        }
+    </style>
+</head>
+
+<body class="design-conference">
+
+    <!-- backtotop-start -->
+    <div class="xb-backtotop style-two">
+        <a href="#" class="scroll">
+            <i class="far fa-arrow-up"></i>
+        </a>
+    </div>
+    <!-- backtotop-end -->
+
+    <div class="body_wrap o-clip">
+
+        <!-- Header Start -->
+        <header id="xb-header-area" class="header-area header-style header-style--two header-transparent">
+            <div class="xb-header stricky">
+                <div class="container">
+                    <div class="header__wrap ul_li_between">
+                        <div class="xb-header-logo">
+                            <a href="../index.html" class="logo1">
+                                <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 40px;">
+                            </a>
+                        </div>
+                        <div class="main-menu__wrap navbar navbar-expand-lg p-0">
+                            <nav class="main-menu collapse navbar-collapse" id="mobileMenuNav">
+                                <ul>
+                                    <li><a href="../index.html"><span style="color: #ffffff;">Inicio</span></a></li>
+                                    <li><a href="../postulacion/"><span style="color: #ffffff;">Postulación Expositores</span></a></li>
+                                    <li><a href="../cosplay/"><span style="color: #ffffff;">Concurso Cosplay</span></a></li>
+                                    <li><a href="../index.html#faq-section"><span style="color: #ffffff;">FAQ</span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="d-none d-lg-flex align-items-center me-3">
+                            <a href="https://www.instagram.com/temu.geek/" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3" style="font-weight: bold; border-color: #e92652; color: #ffffff;">
+                                <i class="fab fa-instagram me-1" style="color: #e1306c;"></i> @temu.geek
+                            </a>
+                        </div>
+                        <div class="header-bar-mobile side-menu d-lg-none">
+                            <a class="xb-nav-mobile" href="javascript:void(0);" id="mobileMenuBtn">
+                                <i class="far fa-bars" style="color: #ffffff;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Header End -->
+
+        <main>
+            <!-- Hero Banner -->
+            <section class="page-header-section pos-rel bg_img" data-background="../assets/img/bg/geek.jpg" style="padding-top: 130px; padding-bottom: 45px; border-bottom: 1px solid #323541;">
+                <div class="container">
+                    <div class="page-header-content text-center">
+                        <span class="sub-title wow fadeInUp" data-wow-delay="0ms" style="color: #ffe62e !important; font-family: 'Righteous', cursive; letter-spacing: 2px; font-size: 15px; text-transform: uppercase;">
+                            <i class="far fa-store-alt me-2"></i> Convocatoria Oficial Expositores
+                        </span>
+                        <h1 class="title wow fadeInUp" data-wow-delay="100ms" style="color: #ffffff !important; font-family: 'Righteous', cursive; font-size: 36px; margin-top: 10px; margin-bottom: 12px;">
+                            Bases Oficiales de Participación
+                        </h1>
+                        <p class="wow fadeInUp" data-wow-delay="200ms" style="max-width: 780px; margin: 0 auto; color: #ffffff !important; font-size: 16px; line-height: 1.65;">
+                            Conoce los perfiles autorizados, especificaciones de espacios, tarifas, normas de montaje, requerimientos de imagen y condiciones generales para tiendas, artesanos, ilustradores y marcas en TemuGeek Expo 2026.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Body Content -->
+            <section class="pt-50 pb-100 dark-bg">
+                <div class="container">
+
+                    <!-- Quick Info Bar -->
+                    <div class="row g-3 mb-5 wow fadeInUp" data-wow-delay="100ms">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="info-pill">
+                                <div class="info-pill-icon" style="background: rgba(233, 38, 82, 0.2); color: #e92652; border: 1px solid #e92652;">
+                                    <i class="far fa-calendar-alt"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 12px; color: #ffe62e; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Fecha Evento</div>
+                                    <div style="color: #ffffff; font-weight: bold; font-size: 15px;">Dom 16 de Agosto 2026</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="info-pill">
+                                <div class="info-pill-icon" style="background: rgba(255, 230, 46, 0.2); color: #ffe62e; border: 1px solid #ffe62e;">
+                                    <i class="far fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 12px; color: #ffe62e; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Lugar</div>
+                                    <div style="color: #ffffff; font-weight: bold; font-size: 15px;">Recinto SOFO, Temuco</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="info-pill">
+                                <div class="info-pill-icon" style="background: rgba(0, 210, 100, 0.2); color: #00d264; border: 1px solid #00d264;">
+                                    <i class="far fa-clock"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 12px; color: #00d264; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Horario Montaje</div>
+                                    <div style="color: #ffffff; font-weight: bold; font-size: 15px;">08:00 – 10:30 hrs</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="info-pill">
+                                <div class="info-pill-icon" style="background: rgba(255, 153, 0, 0.2); color: #ff9900; border: 1px solid #ff9900;">
+                                    <i class="far fa-door-open"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 12px; color: #ff9900; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Horario Público</div>
+                                    <div style="color: #ffffff; font-weight: bold; font-size: 15px;">10:30 – 20:00 hrs</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 1. Perfil del Expositor -->
+                    <div class="geek-card wow fadeInUp" data-wow-delay="150ms">
+                        <div class="geek-card-header">
+                            <h2 class="geek-card-title">
+                                <i class="far fa-users-crown"></i> 1. Perfil del Expositor
+                            </h2>
+                        </div>
+                        <p style="color: #ffffff !important; font-size: 1.05rem; margin-bottom: 25px; line-height: 1.7;">
+                            TemuGeek Expo está diseñado para potenciar y visibilizar el talento y comercio geek local y nacional. Se convoca a participar a los siguientes perfiles de expositores:
+                        </p>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="profile-box">
+                                    <div style="color: #ffe62e; font-size: 1.15rem; font-weight: bold; margin-bottom: 8px;">
+                                        <i class="far fa-paint-brush me-2"></i> Ilustradores y Artistas
+                                    </div>
+                                    <p style="font-size: 0.93rem; color: #ffffff !important; margin: 0;">Creadores de fanart, obras originales, cómics, fanzines, manga e ilustración digital o análoga.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="profile-box">
+                                    <div style="color: #e92652; font-size: 1.15rem; font-weight: bold; margin-bottom: 8px;">
+                                        <i class="far fa-store-alt me-2"></i> Emprendedores y Tiendas
+                                    </div>
+                                    <p style="font-size: 0.93rem; color: #ffffff !important; margin: 0;">Venta de figuras, coleccionables, accesorios, vestuario y merchandising oficial o temático de anime, K-pop y videojuegos.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="profile-box">
+                                    <div style="color: #00d264; font-size: 1.15rem; font-weight: bold; margin-bottom: 8px;">
+                                        <i class="far fa-cut me-2"></i> Artesanos y Cosmakers
+                                    </div>
+                                    <p style="font-size: 0.93rem; color: #ffffff !important; margin: 0;">Creadores de props, accesorios hechos a mano, amigurumis, joyería geek y piezas artesanales.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="profile-box">
+                                    <div style="color: #38ef7d; font-size: 1.15rem; font-weight: bold; margin-bottom: 8px;">
+                                        <i class="far fa-cube me-2"></i> Tecnología y Manufactura
+                                    </div>
+                                    <p style="font-size: 0.93rem; color: #ffffff !important; margin: 0;">Impresión 3D, cortado/grabado láser, papelería personalizada y stickers de producción propia.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="profile-box">
+                                    <div style="color: #ffe62e; font-size: 1.15rem; font-weight: bold; margin-bottom: 8px;">
+                                        <i class="far fa-cards-blank me-2"></i> Juegos de Mesa y TCG
+                                    </div>
+                                    <p style="font-size: 0.93rem; color: #ffffff !important; margin: 0;">Tiendas especializadas en cartas coleccionables (TCG), juegos de rol, tableros y accesorios lúdicos.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="profile-box" style="border-color: rgba(255, 153, 0, 0.5);">
+                                    <div style="color: #ff9900; font-size: 1.15rem; font-weight: bold; margin-bottom: 8px;">
+                                        <i class="far fa-utensils me-2"></i> Patio de Comida Geek
+                                    </div>
+                                    <p style="font-size: 0.93rem; color: #ffffff !important; margin: 0;">Gastronomía y preparaciones temáticas inspiradas en la cultura geek, Japón, Corea y Asia.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="profile-box" style="border-color: rgba(255, 153, 0, 0.5);">
+                                    <div style="color: #ff9900; font-size: 1.15rem; font-weight: bold; margin-bottom: 8px;">
+                                        <i class="far fa-burger-soda me-2"></i> Patio Comida Convencional
+                                    </div>
+                                    <p style="font-size: 0.93rem; color: #ffffff !important; margin: 0;">Food trucks, carros de comida, churros, papas fritas, parrillas y preparaciones gastronómicas de alto consumo.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="profile-box" style="border-color: rgba(0, 210, 100, 0.5);">
+                                    <div style="color: #00d264; font-size: 1.15rem; font-weight: bold; margin-bottom: 8px;">
+                                        <i class="far fa-coffee me-2"></i> Cafetería & Pastelería
+                                    </div>
+                                    <p style="font-size: 0.93rem; color: #ffffff !important; margin: 0;">Café de especialidad, bebidas calientes/frías, pasteles, waffles, postres y repostería artesanal.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Callout Restricción Crítica -->
+                        <div class="callout-restriction">
+                            <h4 style="color: #ff4a4a; font-family: 'Righteous', cursive; font-size: 1.15rem; margin-bottom: 8px;">
+                                <i class="far fa-exclamation-triangle me-2"></i> RESTRICCIÓN CRÍTICA DE ESPACIOS
+                            </h4>
+                            <p style="color: #ffffff !important; font-size: 0.98rem; margin: 0; line-height: 1.65;">
+                                Se permitirá la compra de <strong>máximo un (1) espacio por expositor o marca</strong>. Queda strictly prohibida la reventa de espacios ni la fusión de stands de marcas distintas en un mismo módulo sin autorización previa y por escrito de la producción.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 2. Tipos de Espacio y Valores -->
+                    <div class="geek-card wow fadeInUp" data-wow-delay="200ms">
+                        <div class="geek-card-header">
+                            <h2 class="geek-card-title">
+                                <i class="far fa-layer-group"></i> 2. Tipos de Espacio & Tarifas
+                            </h2>
+                        </div>
+                        <p style="color: #ffffff !important; font-size: 1.05rem; margin-bottom: 25px; line-height: 1.7;">
+                            Cada expositor contará con acreditación de entradas al evento según las dimensiones del espacio elegido. Puedes seleccionar entre los siguientes formatos:
+                        </p>
+
+                        <div class="row g-4 mb-3">
+                            <!-- Espacio 2x2m -->
+                            <div class="col-md-4">
+                                <div class="space-card">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <h3 style="font-family: 'Righteous', cursive; color: #ffffff !important; font-size: 1.35rem; margin: 0;">Espacio 2x2m</h3>
+                                                <div style="color: #ffe62e; font-size: 0.88rem; font-weight: 600;">Formato Estándar</div>
+                                            </div>
+                                            <span class="space-badge">4 Entradas Staff</span>
+                                        </div>
+                                        <div class="space-price">$20.000 <span style="font-size: 0.95rem; color: #ffffff !important; font-family: 'Poppins', sans-serif;">CLP</span></div>
+                                    </div>
+                                    <div style="border-top: 1px solid #3c4052; padding-top: 15px; margin-top: 15px;">
+                                        <p style="color: #ffffff !important; font-size: 0.92rem; margin: 0;">
+                                            <strong style="color: #ffe62e;">Uso Recomendado:</strong> Ilustradores, artistas independientes y pequeños emprendedores.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Espacio 3x3m -->
+                            <div class="col-md-4">
+                                <div class="space-card featured">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <h3 style="font-family: 'Righteous', cursive; color: #ffe62e !important; font-size: 1.35rem; margin: 0;">Espacio 3x3m</h3>
+                                                <div style="color: #ffe62e; font-size: 0.88rem; font-weight: 600;">Módulo Gran Tamaño</div>
+                                            </div>
+                                            <span class="space-badge" style="background: rgba(255, 230, 46, 0.25); color: #ffe62e !important; border-color: #ffe62e;">6 Entradas Staff</span>
+                                        </div>
+                                        <div class="space-price" style="color: #ffe62e !important;">$40.000 <span style="font-size: 0.95rem; color: #ffffff !important; font-family: 'Poppins', sans-serif;">CLP</span></div>
+                                    </div>
+                                    <div style="border-top: 1px solid #4a3c58; padding-top: 15px; margin-top: 15px;">
+                                        <p style="color: #ffffff !important; font-size: 0.92rem; margin: 0;">
+                                            <strong style="color: #ffe62e;">Uso Recomendado:</strong> Tiendas medianas, distribuidores, vestuario o coleccionables de mayor volumen.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Food Truck 3x3m -->
+                            <div class="col-md-4">
+                                <div class="space-card foodtruck">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <h3 style="font-family: 'Righteous', cursive; color: #ff9900 !important; font-size: 1.35rem; margin: 0;">Patio Comida / Truck</h3>
+                                                <div style="color: #ff9900; font-size: 0.88rem; font-weight: 600;">Formato Gastronómico</div>
+                                            </div>
+                                            <span class="space-badge" style="background: rgba(255, 153, 0, 0.25); color: #ff9900 !important; border-color: #ff9900;">6 Entradas Staff</span>
+                                        </div>
+                                        <div class="space-price" style="color: #ff9900 !important;">$60.000 <span style="font-size: 0.95rem; color: #ffffff !important; font-family: 'Poppins', sans-serif;">CLP</span></div>
+                                    </div>
+                                    <div style="border-top: 1px solid #543f32; padding-top: 15px; margin-top: 15px;">
+                                        <p style="color: #ffffff !important; font-size: 0.92rem; margin: 0;">
+                                            <strong style="color: #ff9900;">Uso Recomendado:</strong> Food trucks, carros de comida, preparaciones calientes y puestos de gastronomía.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p style="color: #ffffff !important; font-size: 0.9rem; font-style: italic; margin: 0;">
+                            * Las entradas asociadas a cada espacio están destinadas exclusivamente al personal de trabajo, ayudantes y acompañantes de la marca para el acceso al recinto.
+                        </p>
+                    </div>
+
+                    <!-- 3. Mobiliario y Montaje -->
+                    <div class="geek-card wow fadeInUp" data-wow-delay="250ms">
+                        <div class="geek-card-header">
+                            <h2 class="geek-card-title">
+                                <i class="far fa-couch"></i> 3. Mobiliario, Montaje & Lineamientos Visuales
+                            </h2>
+                        </div>
+
+                        <div class="alert alert-dark mb-4" style="background: #141519; border: 1px solid #ffe62e; color: #ffe62e; border-radius: 12px; padding: 18px 22px;">
+                            <i class="far fa-info-circle me-2"></i> <strong style="color: #ffe62e;">Importante:</strong> Ninguno de los espacios incluye mesas, manteles ni sillas. Es responsabilidad de cada expositor llevar su propio mobiliario respetando la estética del evento.
+                        </div>
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div style="background: #141519; border-left: 4px solid #e92652; padding: 22px; border-radius: 0 12px 12px 0; height: 100%;">
+                                    <h4 style="color: #ffffff !important; font-family: 'Righteous', cursive; font-size: 1.2rem; margin-bottom: 12px;">
+                                        Reglas para Espacios 2x2 metros:
+                                    </h4>
+                                    <ul style="color: #ffffff !important; font-size: 0.95rem; padding-left: 20px; line-height: 1.8; margin: 0;">
+                                        <li>El expositor debe llevar su propia mesa plegable estándar y sillas.</li>
+                                        <li><strong style="color: #ffe62e;">Uso obligatorio de un mantel negro</strong> que cubra la mesa de manera prolija (idealmente que llegue al suelo por el frente para ocultar cajas de mercadería).</li>
+                                        <li>No se permiten estructuras que sobrepasen el límite delimitado de 2x2 metros ni obstaculicen los pasillos.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="background: #141519; border-left: 4px solid #ffe62e; padding: 22px; border-radius: 0 12px 12px 0; height: 100%;">
+                                    <h4 style="color: #ffffff !important; font-family: 'Righteous', cursive; font-size: 1.2rem; margin-bottom: 12px;">
+                                        Reglas para Espacios 3x3 metros / Food Trucks:
+                                    </h4>
+                                    <ul style="color: #ffffff !important; font-size: 0.95rem; padding-left: 20px; line-height: 1.8; margin: 0;">
+                                        <li>Mayor libertad de formato, permitiendo la inclusión de módulos cerrados o estacionamiento de Food Truck.</li>
+                                        <li>Se permiten percheros, exhibidores verticales, estanterías, barras o mesas de mayor tamaño.</li>
+                                        <li>Toda estructura debe ser segura, autosoportante y mantenerse dentro del perímetro de 3x3 metros.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Normas Generales y Prohibiciones -->
+                    <div class="geek-card wow fadeInUp" data-wow-delay="300ms">
+                        <div class="geek-card-header">
+                            <h2 class="geek-card-title">
+                                <i class="far fa-gavel"></i> 4. Normas Generales, Pagos & Prohibiciones
+                            </h2>
+                        </div>
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <h5 style="color: #e92652; font-family: 'Righteous', cursive; font-size: 1.15rem;"><i class="far fa-credit-card me-2"></i> Pagos y Confirmación de Stand</h5>
+                                    <p style="color: #ffffff !important; font-size: 0.95rem; line-height: 1.7;">Para asegurar oficialmente el espacio, el expositor seleccionado debe realizar el pago del 100% del valor del espacio asignado en un plazo máximo de <strong style="color: #ffe62e;">48 horas</strong> tras la notificación oficial de producción.</p>
+                                </div>
+                                <div class="mb-4">
+                                    <h5 style="color: #ffe62e; font-family: 'Righteous', cursive; font-size: 1.15rem;"><i class="far fa-clock me-2"></i> Horarios de Montaje y Desarme</h5>
+                                    <p style="color: #ffffff !important; font-size: 0.95rem; line-height: 1.7;">El montaje se realizará el mismo domingo 16 de agosto entre las <strong style="color: #ffe62e;">08:00 hrs y las 10:30 hrs</strong>. Ningún expositor podrá desarmar o retirarse antes del horario de cierre del evento (20:00 hrs) para resguardar la experiencia de los asistentes.</p>
+                                </div>
+                                <div>
+                                    <h5 style="color: #00d264; font-family: 'Righteous', cursive; font-size: 1.15rem;"><i class="far fa-broom me-2"></i> Aseo y Mantención del Lugar</h5>
+                                    <p style="color: #ffffff !important; font-size: 0.95rem; line-height: 1.7;">Cada expositor es responsable de mantener limpio su perímetro y retirar la basura generada al finalizar la jornada.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <h5 style="color: #ff4a4a; font-family: 'Righteous', cursive; font-size: 1.15rem;"><i class="far fa-ban me-2"></i> Prohibiciones Estrictas de Venta</h5>
+                                    <ul style="color: #ffffff !important; font-size: 0.95rem; padding-left: 20px; line-height: 1.75;">
+                                        <li>Alimentos o bebidas que no cuenten con la resolución sanitaria correspondiente (exceptuando puestos del Patio de Comidas autorizados).</li>
+                                        <li>Armas blancas con filo real, armas de fuego, réplicas metálicas punzantes o material pirotécnico.</li>
+                                        <li>Contenido explícito para adultos (+18) a la vista directa del público general (debe conservarse en carpetas o carpetas cerradas).</li>
+                                    </ul>
+                                </div>
+                                <div class="mb-4">
+                                    <h5 style="color: #e92652; font-family: 'Righteous', cursive; font-size: 1.15rem;"><i class="far fa-undo-alt me-2"></i> Cancelación y Políticas de Reembolso</h5>
+                                    <p style="color: #ffffff !important; font-size: 0.95rem; line-height: 1.7;">En caso de cancelar su participación, el expositor podrá solicitar la devolución del <strong style="color: #ffe62e;">50% del valor pagado</strong> notificando hasta 7 días antes del evento. Durante los últimos 7 días previos no habrá devoluciones por compromisos logísticos.</p>
+                                </div>
+                                <div>
+                                    <h5 style="color: #ffe62e; font-family: 'Righteous', cursive; font-size: 1.15rem;"><i class="far fa-shield-check me-2"></i> Garantía de la Productora</h5>
+                                    <p style="color: #ffffff !important; font-size: 0.95rem; line-height: 1.7;">Ante una eventual reprogramación o suspensión por causas de fuerza mayor extrema, la producción reembolsará el 100% del dinero o reagendará respetando el espacio del expositor.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botonera CTA -->
+                    <div class="text-center pt-3 pb-4 wow fadeInUp" data-wow-delay="350ms">
+                        <h3 style="font-family: 'Righteous', cursive; color: #ffffff !important; margin-bottom: 20px;">
+                            ¿Quieres formar parte de los expositores de TemuGeek Expo 2026?
+                        </h3>
+                        <div class="d-flex flex-wrap gap-3 justify-content-center">
+                            <a href="../postulacion/" class="btn-geek-primary">
+                                <i class="far fa-paper-plane me-2"></i> Ir al Formulario de Postulación
+                            </a>
+                            <button onclick="window.print()" class="btn-geek-secondary">
+                                <i class="far fa-print me-2"></i> Imprimir / Guardar Bases
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer Start -->
+        <footer class="footer footer-style-two pt-80 pb-50 bg_img" style="background-color: #08090d; border-top: 1px solid #1a1d29;">
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek" style="max-height: 38px; margin-bottom: 10px;">
+                        <p style="color: #ffffff !important; font-size: 0.9rem; margin: 0;">ExpoGeek / TemuGeek 2026 — Plataforma Oficial del Evento.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div style="display: flex; gap: 20px; justify-content: center; justify-content: md-end; flex-wrap: wrap;">
+                            <a href="../index.html" style="color: #ffffff; text-decoration: none;">Inicio</a>
+                            <a href="../postulacion/" style="color: #ffffff; text-decoration: none;">Postular Stand</a>
+                            <a href="../cosplay/" style="color: #ffffff; text-decoration: none;">Concurso Cosplay</a>
+                            <a href="../privacidad.html" style="color: #ffffff; text-decoration: none;">Privacidad</a>
+                            <a href="../terminos.html" style="color: #ffffff; text-decoration: none;">Términos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Mobile Menu Toggle Handler -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const menuNav = document.getElementById('mobileMenuNav');
+            if (menuBtn && menuNav) {
+                menuBtn.addEventListener('click', function() {
+                    menuNav.classList.toggle('show');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
