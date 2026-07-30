@@ -334,6 +334,92 @@
         }
 
         /* ============================================
+           OFFICIAL POSTER
+        ============================================ */
+        .section-poster {
+            background: var(--black);
+        }
+
+        .poster-showcase {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .poster-frame {
+            position: relative;
+            max-width: 480px;
+            width: 100%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                0 0 60px rgba(233, 38, 82, 0.1),
+                0 0 120px rgba(255, 230, 46, 0.05);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .poster-frame:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow:
+                0 12px 48px rgba(0, 0, 0, 0.5),
+                0 0 80px rgba(233, 38, 82, 0.15),
+                0 0 160px rgba(255, 230, 46, 0.08);
+        }
+
+        .poster-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .poster-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            pointer-events: none;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .poster-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            max-width: 640px;
+            width: 100%;
+        }
+
+        .poster-detail-item {
+            flex: 1;
+            min-width: 180px;
+            background: var(--gray-800);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            text-align: center;
+        }
+
+        .poster-detail-label {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--fucsia);
+            margin-bottom: 6px;
+        }
+
+        .poster-detail-value {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--gray-300);
+            line-height: 1.4;
+        }
+
+        /* ============================================
            COLOR PALETTE
         ============================================ */
         .color-grid {
@@ -1076,6 +1162,7 @@
             </a>
 
             <ul class="nav-links" id="navLinks">
+                <li><a href="#afiche">Afiche</a></li>
                 <li><a href="#colores">Colores</a></li>
                 <li><a href="#tipografia">Tipografía</a></li>
                 <li><a href="#logotipos">Logotipos</a></li>
@@ -1102,6 +1189,10 @@
             <h1>Manual de <span>Marca</span></h1>
             <p>Guía de identidad visual de TemuGeek Expo 2026. Lineamientos para el uso correcto de la marca, sus colores, tipografía y elementos gráficos.</p>
             <div class="hero-nav">
+                <a href="#afiche">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+                    Afiche Oficial
+                </a>
                 <a href="#colores">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
                     Paleta de Color
@@ -1118,6 +1209,38 @@
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     Descargas
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== OFFICIAL POSTER ====== -->
+    <section class="section section-poster" id="afiche">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Pieza Gráfica Principal</span>
+                <h2 class="section-title">Afiche Oficial</h2>
+                <p class="section-desc">El afiche oficial del evento representa la identidad visual de TemuGeek Expo 2026, combinando la estética anime/geek con la paleta cromática de la marca.</p>
+            </div>
+
+            <div class="poster-showcase reveal">
+                <div class="poster-frame">
+                    <img src="fijados-01.png" alt="Afiche Oficial TemuGeek Expo 2026 — SOFO, 16 de Agosto" class="poster-img">
+                    <div class="poster-glow"></div>
+                </div>
+                <div class="poster-details">
+                    <div class="poster-detail-item">
+                        <span class="poster-detail-label">Formato</span>
+                        <span class="poster-detail-value">Afiche / Póster Vertical</span>
+                    </div>
+                    <div class="poster-detail-item">
+                        <span class="poster-detail-label">Evento</span>
+                        <span class="poster-detail-value">TemuGeek Expo — SOFO, 16 de Agosto</span>
+                    </div>
+                    <div class="poster-detail-item">
+                        <span class="poster-detail-label">Uso</span>
+                        <span class="poster-detail-value">Difusión impresa y digital — Redes sociales, impresión en gran formato</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
