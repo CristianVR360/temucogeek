@@ -5,13 +5,28 @@
 
 // Helper para enviar correos vía Serverless Function Vercel (/api/send-email)
 async function sendResendEmail({ to, subject, html }) {
+    const isLocal = typeof window !== 'undefined' && window.location && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:');
+    
+    // Si se prueba localmente en Live Server (donde /api no existe), conectar al backend de producción con WWW
+    const apiUrl = isLocal ? 'https://www.temugeek.cl/api/send-email' : '/api/send-email';
+
     try {
-        console.log(`✉️ Despachando correo a ${to} vía Serverless API (/api/send-email)...`);
-        const apiRes = await fetch('/api/send-email', {
+        console.log(`✉️ Despachando correo a ${to} vía Serverless API (${apiUrl})...`);
+        let apiRes = await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ to, subject, html })
         });
+
+        // Si el endpoint relativo falló en servidor, intentar URL canónica de Vercel
+        if (!apiRes.ok && !isLocal) {
+            console.warn(`⚠️ Endpoint relativo /api/send-email respondió status ${apiRes.status}. Reintentando con https://www.temugeek.cl/api/send-email...`);
+            apiRes = await fetch('https://www.temugeek.cl/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ to, subject, html })
+            });
+        }
 
         if (apiRes.ok) {
             const data = await apiRes.json();
