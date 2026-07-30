@@ -4,6 +4,7 @@
   "framework": null,
   "rewrites": [
     { "source": "/admin", "destination": "/admin/index.html" },
-    { "source": "/postulacion", "destination": "/postulacion/index.html" }
+    { "source": "/postulacion", "destination": "/postulacion/index.html" },
+    { "source": "/manual-marca", "destination": "/manual-marca/index.html" }
   ]
 }

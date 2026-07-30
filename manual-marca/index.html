@@ -1,0 +1,1612 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Manual de Marca — TemuGeek Expo 2026</title>
+    <meta name="description" content="Manual de identidad de marca oficial de TemuGeek Expo 2026. Colores, tipografía, logotipos y recursos descargables.">
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           CSS RESET & BASE
+        ============================================ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --yellow: #ffe62e;
+            --fucsia: #e92652;
+            --black: #141519;
+            --white: #ffffff;
+            --gray-100: #f5f5f7;
+            --gray-200: #e5e5ea;
+            --gray-300: #d1d1d6;
+            --gray-400: #8e8e93;
+            --gray-500: #636366;
+            --gray-700: #2c2c30;
+            --gray-800: #1c1c1e;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--black);
+            color: var(--gray-300);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ============================================
+           UTILITY
+        ============================================ */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section + .section {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--fucsia);
+            margin-bottom: 12px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 20px;
+            height: 2px;
+            background: var(--fucsia);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 0.95rem;
+            color: var(--gray-400);
+            max-width: 600px;
+            margin-bottom: 48px;
+        }
+
+        /* ============================================
+           HEADER / NAV
+        ============================================ */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: var(--transition);
+            background: rgba(20, 21, 25, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-bar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            height: 36px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--gray-400);
+            transition: color var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--white);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--fucsia);
+            border-radius: 2px;
+            transition: width var(--transition);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--gray-400);
+            transition: color var(--transition);
+        }
+
+        .nav-back:hover {
+            color: var(--white);
+        }
+
+        .nav-back svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--white);
+            margin: 5px 0;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* ============================================
+           HERO
+        ============================================ */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 120px;
+            padding-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(233, 38, 82, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 230, 46, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(233, 38, 82, 0.12);
+            border: 1px solid rgba(233, 38, 82, 0.25);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--fucsia);
+            margin-bottom: 28px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--fucsia);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 6vw, 4rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.7s ease;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--fucsia), var(--yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--gray-400);
+            max-width: 520px;
+            margin: 0 auto 36px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            animation: fadeInUp 0.9s ease;
+        }
+
+        .hero-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: var(--gray-800);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--gray-300);
+            transition: all var(--transition);
+        }
+
+        .hero-nav a:hover {
+            background: var(--gray-700);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           COLOR PALETTE
+        ============================================ */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .color-card {
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: transform var(--transition), box-shadow var(--transition);
+            background: var(--gray-800);
+        }
+
+        .color-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .color-swatch {
+            height: 160px;
+            display: flex;
+            align-items: flex-end;
+            padding: 16px;
+        }
+
+        .color-swatch .swatch-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 100px;
+            backdrop-filter: blur(8px);
+        }
+
+        .color-card--yellow .color-swatch {
+            background: var(--yellow);
+        }
+
+        .color-card--yellow .swatch-name {
+            color: var(--black);
+            background: rgba(0, 0, 0, 0.12);
+        }
+
+        .color-card--fucsia .color-swatch {
+            background: var(--fucsia);
+        }
+
+        .color-card--fucsia .swatch-name {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .color-card--negro .color-swatch {
+            background: var(--black);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .color-card--negro .swatch-name {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .color-info {
+            padding: 20px;
+        }
+
+        .color-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .color-values {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .color-value {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--gray-400);
+        }
+
+        .color-value code {
+            font-family: 'Poppins', monospace;
+            font-size: 0.75rem;
+            color: var(--gray-300);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background var(--transition);
+        }
+
+        .color-value code:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Copy tooltip */
+        .copy-tooltip {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: var(--fucsia);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 9999;
+        }
+
+        .copy-tooltip.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+        ============================================ */
+        .typo-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .typo-left {
+            position: sticky;
+            top: 120px;
+        }
+
+        .typo-family-name {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .typo-family-sub {
+            font-size: 0.85rem;
+            color: var(--gray-400);
+            margin-bottom: 32px;
+        }
+
+        .typo-alphabet {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--gray-500);
+            line-height: 2;
+            letter-spacing: 2px;
+        }
+
+        .typo-weights {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .typo-weight-item {
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: baseline;
+            gap: 24px;
+        }
+
+        .typo-weight-item:first-child {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .weight-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            min-width: 80px;
+            flex-shrink: 0;
+        }
+
+        .weight-sample {
+            font-size: 1.6rem;
+            color: var(--white);
+            line-height: 1.3;
+        }
+
+        /* ============================================
+           LOGOS SECTION
+        ============================================ */
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .logo-card {
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .logo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-preview {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            position: relative;
+        }
+
+        .logo-preview.bg-dark {
+            background: var(--black);
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .logo-preview.bg-light {
+            background: var(--gray-100);
+            background-image:
+                linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .logo-preview.bg-fucsia {
+            background: var(--fucsia);
+            background-image:
+                linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .logo-preview.bg-yellow {
+            background: var(--yellow);
+            background-image:
+                linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .logo-preview img {
+            max-height: 120px;
+            max-width: 80%;
+            object-fit: contain;
+        }
+
+        .logo-meta {
+            padding: 20px;
+            background: var(--gray-800);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-meta h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .logo-meta span {
+            font-size: 0.72rem;
+            color: var(--gray-500);
+        }
+
+        /* ============================================
+           USAGE RULES / DOS & DONTS
+        ============================================ */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .rule-card {
+            background: var(--gray-800);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius);
+            padding: 28px;
+            transition: transform var(--transition);
+        }
+
+        .rule-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .rule-card.do {
+            border-top: 3px solid #34c759;
+        }
+
+        .rule-card.dont {
+            border-top: 3px solid var(--fucsia);
+        }
+
+        .rule-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+
+        .rule-card.do .rule-icon {
+            background: rgba(52, 199, 89, 0.12);
+            color: #34c759;
+        }
+
+        .rule-card.dont .rule-icon {
+            background: rgba(233, 38, 82, 0.12);
+            color: var(--fucsia);
+        }
+
+        .rule-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .rule-card p {
+            font-size: 0.82rem;
+            color: var(--gray-400);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           DOWNLOADS / RESOURCES
+        ============================================ */
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .download-card {
+            background: var(--gray-800);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(233, 38, 82, 0.04) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .download-card:hover::before {
+            opacity: 1;
+        }
+
+        .download-card:hover {
+            border-color: rgba(233, 38, 82, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .download-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-icon.png {
+            background: rgba(255, 230, 46, 0.12);
+            color: var(--yellow);
+        }
+
+        .download-icon.ai {
+            background: rgba(233, 38, 82, 0.12);
+            color: var(--fucsia);
+        }
+
+        .download-content {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .download-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .download-content p {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .download-files {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .download-file-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--gray-300);
+            transition: all var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-file-link:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--white);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .download-file-link svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        .download-file-link .file-size {
+            margin-left: auto;
+            font-size: 0.7rem;
+            color: var(--gray-500);
+        }
+
+        /* ============================================
+           SPACING / CLEAR SPACE
+        ============================================ */
+        .clearspace-demo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            background: var(--gray-800);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+        }
+
+        .clearspace-logo {
+            max-width: 200px;
+            position: relative;
+        }
+
+        .clearspace-logo img {
+            position: relative;
+            z-index: 2;
+        }
+
+        .clearspace-border {
+            position: absolute;
+            inset: -30px;
+            border: 2px dashed rgba(233, 38, 82, 0.4);
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .clearspace-label {
+            position: absolute;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--fucsia);
+        }
+
+        .clearspace-label.top {
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .clearspace-label.bottom {
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .clearspace-label.left {
+            left: -60px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+        }
+
+        .clearspace-label.right {
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .clearspace-note {
+            margin-top: 20px;
+            font-size: 0.82rem;
+            color: var(--gray-400);
+            text-align: center;
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        .footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.78rem;
+            color: var(--gray-500);
+        }
+
+        .footer a {
+            color: var(--fucsia);
+            transition: color var(--transition);
+        }
+
+        .footer a:hover {
+            color: var(--yellow);
+        }
+
+        /* ============================================
+           ANIMATIONS
+        ============================================ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 900px) {
+            .color-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .typo-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .typo-left {
+                position: static;
+            }
+
+            .logo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .section {
+                padding: 56px 0;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(20, 21, 25, 0.97);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 28px;
+                z-index: 999;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                font-size: 1.1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+                z-index: 1001;
+            }
+
+            .menu-toggle.open span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .menu-toggle.open span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.open span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            .hero h1 {
+                font-size: clamp(1.8rem, 8vw, 2.6rem);
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .hero-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-nav a {
+                width: 100%;
+                max-width: 260px;
+                justify-content: center;
+            }
+
+            .color-swatch {
+                height: 120px;
+            }
+
+            .typo-weight-item {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .weight-sample {
+                font-size: 1.2rem;
+            }
+
+            .logo-preview {
+                height: 160px;
+            }
+
+            .clearspace-demo {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Copy Tooltip -->
+    <div class="copy-tooltip" id="copyTooltip">¡Copiado al portapapeles!</div>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="container">
+            <a href="../" class="nav-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                Volver al sitio
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#colores">Colores</a></li>
+                <li><a href="#tipografia">Tipografía</a></li>
+                <li><a href="#logotipos">Logotipos</a></li>
+                <li><a href="#espacio">Espacio</a></li>
+                <li><a href="#usos">Usos</a></li>
+                <li><a href="#descargas">Descargas</a></li>
+            </ul>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Documento oficial
+            </div>
+            <h1>Manual de <span>Marca</span></h1>
+            <p>Guía de identidad visual de TemuGeek Expo 2026. Lineamientos para el uso correcto de la marca, sus colores, tipografía y elementos gráficos.</p>
+            <div class="hero-nav">
+                <a href="#colores">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                    Paleta de Color
+                </a>
+                <a href="#tipografia">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+                    Tipografía
+                </a>
+                <a href="#logotipos">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    Logotipos
+                </a>
+                <a href="#descargas">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Descargas
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== COLORS ====== -->
+    <section class="section" id="colores">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Identidad Cromática</span>
+                <h2 class="section-title">Paleta de Color</h2>
+                <p class="section-desc">La paleta de TemuGeek se compone de tres colores primarios que representan la energía, la pasión y la solidez del evento.</p>
+            </div>
+
+            <div class="color-grid reveal">
+                <!-- Yellow -->
+                <div class="color-card color-card--yellow">
+                    <div class="color-swatch">
+                        <span class="swatch-name">Amarillo TemuGeek</span>
+                    </div>
+                    <div class="color-info">
+                        <h4>Amarillo Primario</h4>
+                        <div class="color-values">
+                            <div class="color-value">
+                                <span>HEX</span>
+                                <code onclick="copyColor('#FFE62E')">#FFE62E</code>
+                            </div>
+                            <div class="color-value">
+                                <span>RGB</span>
+                                <code onclick="copyColor('rgb(255, 230, 46)')">255, 230, 46</code>
+                            </div>
+                            <div class="color-value">
+                                <span>HSL</span>
+                                <code onclick="copyColor('hsl(53, 100%, 59%)')">53°, 100%, 59%</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fucsia -->
+                <div class="color-card color-card--fucsia">
+                    <div class="color-swatch">
+                        <span class="swatch-name">Fucsia TemuGeek</span>
+                    </div>
+                    <div class="color-info">
+                        <h4>Fucsia Primario</h4>
+                        <div class="color-values">
+                            <div class="color-value">
+                                <span>HEX</span>
+                                <code onclick="copyColor('#E92652')">#E92652</code>
+                            </div>
+                            <div class="color-value">
+                                <span>RGB</span>
+                                <code onclick="copyColor('rgb(233, 38, 82)')">233, 38, 82</code>
+                            </div>
+                            <div class="color-value">
+                                <span>HSL</span>
+                                <code onclick="copyColor('hsl(346, 82%, 53%)')">346°, 82%, 53%</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Negro -->
+                <div class="color-card color-card--negro">
+                    <div class="color-swatch">
+                        <span class="swatch-name">Negro TemuGeek</span>
+                    </div>
+                    <div class="color-info">
+                        <h4>Negro Primario</h4>
+                        <div class="color-values">
+                            <div class="color-value">
+                                <span>HEX</span>
+                                <code onclick="copyColor('#141519')">#141519</code>
+                            </div>
+                            <div class="color-value">
+                                <span>RGB</span>
+                                <code onclick="copyColor('rgb(20, 21, 25)')">20, 21, 25</code>
+                            </div>
+                            <div class="color-value">
+                                <span>HSL</span>
+                                <code onclick="copyColor('hsl(228, 11%, 9%)')">228°, 11%, 9%</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== TYPOGRAPHY ====== -->
+    <section class="section" id="tipografia">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Sistema Tipográfico</span>
+                <h2 class="section-title">Tipografía</h2>
+                <p class="section-desc">La familia Poppins es la tipografía oficial de TemuGeek. Su carácter geométrico y moderno refleja la identidad tecnológica y juvenil del evento.</p>
+            </div>
+
+            <div class="typo-showcase reveal">
+                <div class="typo-left">
+                    <div class="typo-family-name">Pp</div>
+                    <div class="typo-family-sub">Poppins — Google Fonts — Sans Serif Geométrica</div>
+                    <div class="typo-alphabet">
+                        A B C D E F G H I J K L M<br>
+                        N O P Q R S T U V W X Y Z<br>
+                        a b c d e f g h i j k l m<br>
+                        n o p q r s t u v w x y z<br>
+                        0 1 2 3 4 5 6 7 8 9
+                    </div>
+                </div>
+
+                <div class="typo-weights">
+                    <div class="typo-weight-item">
+                        <span class="weight-label">Light 300</span>
+                        <span class="weight-sample" style="font-weight: 300;">TemuGeek Expo 2026</span>
+                    </div>
+                    <div class="typo-weight-item">
+                        <span class="weight-label">Regular 400</span>
+                        <span class="weight-sample" style="font-weight: 400;">TemuGeek Expo 2026</span>
+                    </div>
+                    <div class="typo-weight-item">
+                        <span class="weight-label">Medium 500</span>
+                        <span class="weight-sample" style="font-weight: 500;">TemuGeek Expo 2026</span>
+                    </div>
+                    <div class="typo-weight-item">
+                        <span class="weight-label">Semibold 600</span>
+                        <span class="weight-sample" style="font-weight: 600;">TemuGeek Expo 2026</span>
+                    </div>
+                    <div class="typo-weight-item">
+                        <span class="weight-label">Bold 700</span>
+                        <span class="weight-sample" style="font-weight: 700;">TemuGeek Expo 2026</span>
+                    </div>
+                    <div class="typo-weight-item">
+                        <span class="weight-label">ExtraBold 800</span>
+                        <span class="weight-sample" style="font-weight: 800;">TemuGeek Expo 2026</span>
+                    </div>
+                    <div class="typo-weight-item">
+                        <span class="weight-label">Black 900</span>
+                        <span class="weight-sample" style="font-weight: 900;">TemuGeek Expo 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== LOGOS ====== -->
+    <section class="section" id="logotipos">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Marca Visual</span>
+                <h2 class="section-title">Logotipos</h2>
+                <p class="section-desc">Versiones oficiales del logotipo de TemuGeek. Cada variante está diseñada para funcionar en distintos contextos y fondos.</p>
+            </div>
+
+            <div class="logo-grid reveal">
+                <!-- Logo principal blanco sobre oscuro -->
+                <div class="logo-card">
+                    <div class="logo-preview bg-dark">
+                        <img src="../assets/img/logo/logo-principal-blanco.png" alt="Logo principal blanco">
+                    </div>
+                    <div class="logo-meta">
+                        <div>
+                            <h4>Logo Principal — Blanco</h4>
+                            <span>Uso sobre fondos oscuros</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logo principal color sobre claro -->
+                <div class="logo-card">
+                    <div class="logo-preview bg-light">
+                        <img src="../assets/img/logo/logo-principal-color.png" alt="Logo principal color">
+                    </div>
+                    <div class="logo-meta">
+                        <div>
+                            <h4>Logo Principal — Color</h4>
+                            <span>Uso sobre fondos claros</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logo horizontal blanco -->
+                <div class="logo-card">
+                    <div class="logo-preview bg-fucsia">
+                        <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="Logo horizontal blanco">
+                    </div>
+                    <div class="logo-meta">
+                        <div>
+                            <h4>Logo Horizontal — Blanco</h4>
+                            <span>Uso en banners y headers</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Favicon / Isotipo -->
+                <div class="logo-card">
+                    <div class="logo-preview bg-yellow">
+                        <img src="../assets/img/logo/favicon-color.png" alt="Favicon / Isotipo" style="max-height: 80px;">
+                    </div>
+                    <div class="logo-meta">
+                        <div>
+                            <h4>Isotipo — Favicon</h4>
+                            <span>Uso en redes y favicon</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Foto Perfil -->
+                <div class="logo-card">
+                    <div class="logo-preview bg-dark">
+                        <img src="../assets/img/logo/foto-perfil.png" alt="Foto de perfil" style="max-height: 140px; border-radius: 50%;">
+                    </div>
+                    <div class="logo-meta">
+                        <div>
+                            <h4>Foto de Perfil</h4>
+                            <span>Uso en redes sociales</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Favicon blanco -->
+                <div class="logo-card">
+                    <div class="logo-preview bg-fucsia">
+                        <img src="../assets/img/logo/favicon.png" alt="Favicon blanco" style="max-height: 80px;">
+                    </div>
+                    <div class="logo-meta">
+                        <div>
+                            <h4>Isotipo — Blanco</h4>
+                            <span>Versión monocromática</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CLEAR SPACE ====== -->
+    <section class="section" id="espacio">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Zona de Protección</span>
+                <h2 class="section-title">Espacio de Respiro</h2>
+                <p class="section-desc">El logotipo debe contar con un área libre alrededor para garantizar su legibilidad y presencia visual en cualquier aplicación.</p>
+            </div>
+
+            <div class="clearspace-demo reveal">
+                <div class="clearspace-logo">
+                    <img src="../assets/img/logo/logo-principal-blanco.png" alt="Logo con espacio de respiro">
+                    <div class="clearspace-border">
+                        <span class="clearspace-label top">mín. 1x</span>
+                        <span class="clearspace-label bottom">mín. 1x</span>
+                        <span class="clearspace-label left">mín. 1x</span>
+                        <span class="clearspace-label right">mín. 1x</span>
+                    </div>
+                </div>
+            </div>
+            <p class="clearspace-note reveal">
+                La unidad <strong>"x"</strong> corresponde a la altura del isotipo del logotipo. Este espacio mínimo debe respetarse en todas las aplicaciones.
+            </p>
+        </div>
+    </section>
+
+    <!-- ====== USAGE RULES ====== -->
+    <section class="section" id="usos">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Lineamientos</span>
+                <h2 class="section-title">Usos Correctos e Incorrectos</h2>
+                <p class="section-desc">Reglas esenciales para mantener la coherencia e integridad de la marca en todas las aplicaciones.</p>
+            </div>
+
+            <div class="rules-grid reveal">
+                <div class="rule-card do">
+                    <div class="rule-icon">✓</div>
+                    <h4>Usar colores oficiales</h4>
+                    <p>Siempre utilizar los colores de la paleta oficial: amarillo (#FFE62E), fucsia (#E92652) y negro (#141519).</p>
+                </div>
+
+                <div class="rule-card dont">
+                    <div class="rule-icon">✕</div>
+                    <h4>No alterar proporciones</h4>
+                    <p>Nunca estirar, comprimir o distorsionar el logotipo. Mantener siempre su proporción original.</p>
+                </div>
+
+                <div class="rule-card do">
+                    <div class="rule-icon">✓</div>
+                    <h4>Usar versiones oficiales</h4>
+                    <p>Utilizar únicamente los archivos de logotipo proporcionados en los recursos oficiales del evento.</p>
+                </div>
+
+                <div class="rule-card dont">
+                    <div class="rule-icon">✕</div>
+                    <h4>No añadir efectos</h4>
+                    <p>Evitar agregar sombras, bordes, brillos u otros efectos visuales no autorizados al logotipo.</p>
+                </div>
+
+                <div class="rule-card do">
+                    <div class="rule-icon">✓</div>
+                    <h4>Respetar zona de protección</h4>
+                    <p>Mantener el área de respiro mínima alrededor del logotipo para asegurar su legibilidad.</p>
+                </div>
+
+                <div class="rule-card dont">
+                    <div class="rule-icon">✕</div>
+                    <h4>No usar sobre fondos complejos</h4>
+                    <p>Evitar colocar el logotipo sobre imágenes o patrones que dificulten su lectura. Usar siempre fondos sólidos o con suficiente contraste.</p>
+                </div>
+
+                <div class="rule-card do">
+                    <div class="rule-icon">✓</div>
+                    <h4>Tipografía Poppins</h4>
+                    <p>Usar exclusivamente la familia tipográfica Poppins en todas las piezas de comunicación del evento.</p>
+                </div>
+
+                <div class="rule-card dont">
+                    <div class="rule-icon">✕</div>
+                    <h4>No rotar el logotipo</h4>
+                    <p>El logotipo debe mantenerse siempre en su orientación horizontal original. No inclinarlo ni rotarlo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== DOWNLOADS ====== -->
+    <section class="section" id="descargas">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Recursos</span>
+                <h2 class="section-title">Descargas</h2>
+                <p class="section-desc">Descarga los logotipos en formato PNG y las plantillas editables en Adobe Illustrator (.ai) para crear material oficial del evento.</p>
+            </div>
+
+            <div class="downloads-grid reveal">
+                <!-- Logos PNG -->
+                <div class="download-card">
+                    <div class="download-icon png">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    </div>
+                    <div class="download-content">
+                        <h4>Logotipos PNG</h4>
+                        <p>Todas las versiones del logo en formato PNG con fondo transparente, listas para usar en cualquier aplicación digital.</p>
+                        <div class="download-files">
+                            <a href="https://astra360.s3.sa-east-1.amazonaws.com/TemuGeek/logo/PNG/Logo+principal+blanco.png" download class="download-file-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Logo Principal Blanco
+                                <span class="file-size">PNG</span>
+                            </a>
+                            <a href="https://astra360.s3.sa-east-1.amazonaws.com/TemuGeek/logo/PNG/Logo+principal+color.png" download class="download-file-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Logo Principal Color
+                                <span class="file-size">PNG</span>
+                            </a>
+                            <a href="https://astra360.s3.sa-east-1.amazonaws.com/TemuGeek/logo/PNG/Logo+horizontal+blanco.png" download class="download-file-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Logo Horizontal Blanco
+                                <span class="file-size">PNG</span>
+                            </a>
+                            <a href="https://astra360.s3.sa-east-1.amazonaws.com/TemuGeek/logo/PNG/favicon+color.png" download class="download-file-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Favicon Color
+                                <span class="file-size">PNG</span>
+                            </a>
+                            <a href="https://astra360.s3.sa-east-1.amazonaws.com/TemuGeek/logo/PNG/favicon.png" download class="download-file-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Favicon Blanco
+                                <span class="file-size">PNG</span>
+                            </a>
+                            <a href="https://astra360.s3.sa-east-1.amazonaws.com/TemuGeek/logo/PNG/foto+perfil.png" download class="download-file-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Foto Perfil
+                                <span class="file-size">PNG</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plantillas Editables AI -->
+                <div class="download-card">
+                    <div class="download-icon ai">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </div>
+                    <div class="download-content">
+                        <h4>Plantillas Editables (AI)</h4>
+                        <p>Plantillas oficiales en formato Adobe Illustrator para crear material gráfico del evento como posts y credenciales de expositores.</p>
+                        <div class="download-files">
+                            <a href="https://astra360.s3.sa-east-1.amazonaws.com/TemuGeek/recursos+editables+AI/plantilla+expositor.ai" download class="download-file-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Plantilla Expositor
+                                <span class="file-size">.ai · 1.2 MB</span>
+                            </a>
+                            <a href="https://astra360.s3.sa-east-1.amazonaws.com/TemuGeek/recursos+editables+AI/plantilla+post.ai" download class="download-file-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Plantilla Post
+                                <span class="file-size">.ai · 1.0 MB</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 TemuGeek Expo — Todos los derechos reservados · <a href="../">Volver al sitio principal</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ============================================
+        // Mobile Menu
+        // ============================================
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('open');
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // ============================================
+        // Active nav link on scroll
+        // ============================================
+        const sections = document.querySelectorAll('.section[id]');
+        const navAnchors = navLinks.querySelectorAll('a');
+
+        function setActiveLink() {
+            const scrollY = window.scrollY + 160;
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+                const id = section.getAttribute('id');
+                if (scrollY >= top && scrollY < top + height) {
+                    navAnchors.forEach(a => a.classList.remove('active'));
+                    const activeLink = navLinks.querySelector(`a[href="#${id}"]`);
+                    if (activeLink) activeLink.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', setActiveLink);
+        setActiveLink();
+
+        // ============================================
+        // Copy color value
+        // ============================================
+        const tooltip = document.getElementById('copyTooltip');
+        let tooltipTimeout;
+
+        function copyColor(value) {
+            navigator.clipboard.writeText(value).then(() => {
+                tooltip.textContent = `¡Copiado: ${value}!`;
+                tooltip.classList.add('show');
+                clearTimeout(tooltipTimeout);
+                tooltipTimeout = setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 1800);
+            });
+        }
+
+        // ============================================
+        // Scroll reveal animation
+        // ============================================
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
