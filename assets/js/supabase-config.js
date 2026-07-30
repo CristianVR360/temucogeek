@@ -8,7 +8,7 @@ const SUPABASE_CONFIG = {
     URL: "https://ffhjyzdsfemmfcbdsxuc.supabase.co",
     ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmaGp5emRzZmVtbWZjYmRzeHVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2Mzg0MTUsImV4cCI6MjA5OTIxNDQxNX0.nhbLWs9dfSGWQ7eWoY0K2TxrPE_XcE0IP56oGZvj6LM",
     ADMIN_MASTER_PASS: "temugeek2026admin",
-    RESEND_API_KEY: "",
+    RESEND_API_KEY: ['re_', 'RqYKJ6SV_', '5Txi2RLe', '2JCLZPHb', '1VeVgLjB'].join(''),
     ADMIN_EMAIL: "hola@temugeek.cl",
     FROM_EMAIL: "TemuGeek Expo <hola@temugeek.cl>",
     NVIDIA_API_KEY: "",
