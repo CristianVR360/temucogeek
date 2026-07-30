@@ -5,52 +5,27 @@
 
 // Helper para enviar correos vía Serverless Function Vercel (/api/send-email)
 async function sendResendEmail({ to, subject, html }) {
-    if (typeof loadEnvConfig === 'function') {
-        await loadEnvConfig();
-    }
+    try {
+        console.log(`✉️ Despachando correo a ${to} vía Serverless API (/api/send-email)...`);
+        const apiRes = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ to, subject, html })
+        });
 
-    // Endpoints de backend a intentar (priorizando origen actual y luego la URL canónica de producción con WWW)
-    const currentOrigin = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : '';
-    // 1. Endpoint relativo primario (funciona al 100% dentro del propio dominio en Vercel temugeek.cl/admin)
-    endpointsToTry.push('/api/send-email');
-
-    // 2. URL canónica alternativa con WWW si se prueba desde orígenes externos
-    const canonicalEndpoint = 'https://www.temugeek.cl/api/send-email';
-    if (!endpointsToTry.includes(canonicalEndpoint)) {
-        endpointsToTry.push(canonicalEndpoint);
-    }
-
-    let lastError = null;
-
-    for (const endpoint of endpointsToTry) {
-        try {
-            console.log(`✉️ Despachando correo a ${to} vía Backend Serverless [${endpoint}]...`);
-            const apiRes = await fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ to, subject, html })
-            });
-
-            if (apiRes.ok) {
-                const data = await apiRes.json();
-                console.log(`✅ Correo entregado exitosamente vía Backend [${endpoint}]:`, data);
-                return { success: true, data };
-            } else {
-                const errData = await apiRes.json().catch(() => ({}));
-                console.warn(`⚠️ Endpoint [${endpoint}] respondió status ${apiRes.status}:`, errData);
-                lastError = errData.error || errData.message || `HTTP ${apiRes.status} desde ${endpoint}`;
-            }
-        } catch (e) {
-            console.warn(`⚠️ No se pudo conectar a [${endpoint}]:`, e.message);
-            lastError = e.message;
+        if (apiRes.ok) {
+            const data = await apiRes.json();
+            console.log("✅ Correo entregado exitosamente vía /api/send-email:", data);
+            return { success: true, data };
+        } else {
+            const errData = await apiRes.json().catch(() => ({}));
+            console.error("❌ /api/send-email respondió con error:", apiRes.status, errData);
+            return { success: false, error: errData };
         }
+    } catch (e) {
+        console.error("❌ Error de conexión al enviar correo vía /api/send-email:", e);
+        return { success: false, error: e.message || String(e) };
     }
-
-    console.error("❌ Fallaron todos los intentos de envío vía Serverless API:", lastError);
-    return {
-        success: false,
-        error: lastError || "No se pudo conectar con el servidor de correo (/api/send-email)."
-    };
 }
 
 function escapeEmailHtml(str) {
