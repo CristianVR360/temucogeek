@@ -466,15 +466,12 @@
                     <table class="table-custom">
                         <thead>
                             <tr>
-                                <th>Fecha</th>
-                                <th>Tipo</th>
-                                <th>Postulante / Proyecto</th>
-                                <th>Contacto</th>
-                                <th>Ciudad</th>
-                                <th>Detalle / Espacio</th>
-                                <th>Modalidad / Pago</th>
-                                <th>Estado</th>
-                                <th class="text-end">Acciones</th>
+                                <th style="width: 120px;">Fecha / Tipo</th>
+                                <th>Postulante, Proyecto & Contacto</th>
+                                <th>Espacio / Stand</th>
+                                <th style="width: 150px;">Modalidad</th>
+                                <th style="width: 210px;">Estado & Pago</th>
+                                <th class="text-end" style="width: 160px;">Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="leads-table-body">
@@ -820,11 +817,12 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                     const tr = document.createElement("tr");
 
                     const createdDate = new Date(lead.created_at || Date.now()).toLocaleDateString('es-CL', {
-                        day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                        day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
                     });
 
                     const isCosplay = String(lead.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(lead.personaje);
-                    const statusClass = `badge-${lead.estado || 'pendiente'}`;
+                    const st = String(lead.estado || 'pendiente').toLowerCase();
+                    const statusClass = `badge-${st}`;
 
                     const isCanje = isLeadCanje(lead);
                     const priceVal = getLeadPrice(lead);
@@ -834,48 +832,51 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                         : '<span class="badge" style="background: rgba(233, 38, 82, 0.2); color: #ff4a75; border: 1px solid #e92652; font-size: 10px;"><i class="far fa-store me-1"></i>EXPOSITOR</span>';
 
                     const titleText = isCosplay ? `Personaje: ${escapeHtml(lead.personaje)}` : escapeHtml(lead.nombre_marca);
-                    const subText = isCosplay ? `Cosplayer: ${escapeHtml(lead.nombre_completo)} (${escapeHtml(lead.origen)})` : escapeHtml(lead.nombre_expositor);
+                    const subText = isCosplay ? `Cosplayer: ${escapeHtml(lead.nombre_completo)}` : escapeHtml(lead.nombre_expositor);
+                    const ciudadBadge = `<span class="badge bg-dark border border-secondary text-muted ms-1" style="font-size:10px;">${escapeHtml(lead.ciudad || 'Temuco')}</span>`;
                     const detailText = isCosplay ? (lead.observaciones ? escapeHtml(lead.observaciones) : 'Sin observaciones') : (lead.espacio_tipo || 'Stand');
 
                     const modalidadBadge = isCosplay
-                        ? '<span class="badge bg-secondary opacity-75" style="font-size: 11px;">Gratuito (Cosplay)</span>'
+                        ? '<span class="badge bg-secondary opacity-75" style="font-size: 11px;">Gratuito</span>'
                         : (isCanje 
                             ? `<button class="btn btn-sm btn-info font-weight-bold text-dark border-0 shadow-sm py-1 px-2" onclick="toggleLeadCanjeDirect('${lead.id}')" title="Haz clic para alternar a Tarifa Estándar"><i class="far fa-handshake me-1"></i>CANJE ($0)</button>`
                             : `<button class="btn btn-sm btn-outline-secondary font-weight-bold py-1 px-2" onclick="toggleLeadCanjeDirect('${lead.id}')" title="Haz clic para alternar a Canje / Costo Cero ($0)"><i class="far fa-credit-card me-1 text-success"></i>Estándar ($${priceVal.toLocaleString('es-CL')})</button>`
                         );
 
+                    const statusCell = st === 'pagado'
+                        ? `<span class="badge-status badge-pagado"><i class="far fa-check-circle me-1"></i>PAGADO</span> <button class="btn btn-sm text-muted p-0 ms-1 border-0" onclick="quickMarkPagado('${lead.id}')" title="Deshacer pago"><i class="far fa-undo small"></i></button>`
+                        : `<div class="d-flex align-items-center gap-1"><span class="badge-status ${statusClass}">${st.toUpperCase()}</span> <button class="btn btn-sm btn-outline-success font-weight-bold py-0 px-2" style="font-size:11px; white-space:nowrap;" onclick="quickMarkPagado('${lead.id}')" title="Marcar como PAGADO en 1 clic"><i class="far fa-receipt me-1"></i>Marcar Pagado</button></div>`;
+
                     tr.innerHTML = `
-                        <td style="white-space: nowrap; font-size: 13px; color: var(--text-muted);">${createdDate}</td>
-                        <td>${tipoBadge}</td>
+                        <td style="white-space: nowrap;">
+                            <div style="font-size: 12px; color: #ffffff; font-weight: bold;">${createdDate}</div>
+                            <div class="mt-1">${tipoBadge}</div>
+                        </td>
                         <td>
-                            <div style="font-weight: bold; color: #ffffff;">${titleText}</div>
+                            <div style="font-weight: bold; color: #ffffff; font-size: 14px;">${titleText} ${ciudadBadge}</div>
                             <div style="font-size: 12px; color: var(--text-muted);">${subText}</div>
-                        </td>
-                        <td>
-                            <div style="font-size: 13px; color: #ffffff;">${escapeHtml(lead.email)}</div>
-                            <div style="font-size: 12px; color: #00d264; font-weight: bold;">${escapeHtml(lead.telefono)}</div>
-                        </td>
-                        <td><span class="badge bg-dark border border-secondary">${escapeHtml(lead.ciudad || 'Temuco')}</span></td>
-                        <td>
-                            <div style="max-width: 200px; font-size: 12px; color: #d1d1d6; word-wrap: break-word;">
-                                ${detailText}
+                            <div style="font-size: 12px; color: #cbd5e1;" class="mt-1">
+                                <i class="far fa-envelope me-1 text-secondary"></i><a href="mailto:${escapeHtml(lead.email)}" style="color:#cbd5e1; text-decoration:none;">${escapeHtml(lead.email)}</a>
+                                <span class="mx-1 text-secondary">•</span>
+                                <i class="fab fa-whatsapp me-1 text-success"></i><a href="https://wa.me/${escapeHtml(lead.telefono).replace(/[^0-9]/g,'')}" target="_blank" style="color:#00d264; text-decoration:none; font-weight:bold;">${escapeHtml(lead.telefono)}</a>
                             </div>
                         </td>
-                        <td>${modalidadBadge}</td>
                         <td>
-                            <span class="badge-status ${statusClass}">${(lead.estado || 'pendiente').toUpperCase()}</span>
+                            <span class="badge bg-dark border border-secondary text-white" style="font-size:12px;">${detailText}</span>
                         </td>
+                        <td>${modalidadBadge}</td>
+                        <td>${statusCell}</td>
                         <td class="text-end" style="white-space: nowrap;">
-                            <button class="btn-whatsapp me-1" onclick="openWhatsApp('${escapeHtml(lead.telefono)}', '${escapeHtml(lead.nombre_completo || lead.nombre_expositor)}', '${escapeHtml(lead.personaje || lead.nombre_marca)}', ${isCosplay})">
+                            <button class="btn-whatsapp me-1" onclick="openWhatsApp('${escapeHtml(lead.telefono)}', '${escapeHtml(lead.nombre_completo || lead.nombre_expositor)}', '${escapeHtml(lead.personaje || lead.nombre_marca)}', ${isCosplay})" title="Contactar por WhatsApp">
                                 <i class="fab fa-whatsapp"></i> WSP
                             </button>
                             <button class="btn btn-sm btn-outline-warning me-1" onclick="sendQuickApprovalEmail('${lead.id}')" title="Reenviar Correo de Aprobación Oficial">
                                 <i class="far fa-paper-plane"></i>
                             </button>
-                            <button class="btn-action me-1" onclick="viewLeadDetail('${lead.id}')">
-                                <i class="far fa-eye"></i> Ver
+                            <button class="btn-action me-1" onclick="viewLeadDetail('${lead.id}')" title="Ver detalle completo">
+                                <i class="far fa-eye"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-danger" onclick="deleteSingleLead('${lead.id}', '${escapeHtml(lead.personaje || lead.nombre_marca)}')" title="Eliminar contacto">
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteSingleLead('${lead.id}', '${escapeHtml(lead.personaje || lead.nombre_marca)}')" title="Eliminar postulación">
                                 <i class="far fa-trash-alt"></i>
                             </button>
                         </td>
@@ -1319,6 +1320,29 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                     await supabaseClient.from(table).update({ es_canje: newCanje }).eq('id', leadId);
                 } catch (e) {
                     console.warn("No se pudo actualizar es_canje en Supabase:", e.message);
+                }
+            } else {
+                saveLocalLeads();
+            }
+        }
+
+        async function quickMarkPagado(leadId) {
+            const lead = allLeads.find(l => l.id == leadId);
+            if (!lead) return;
+
+            const currentStatus = String(lead.estado || '').toLowerCase();
+            const newStatus = (currentStatus === 'pagado') ? 'aprobado' : 'pagado';
+            lead.estado = newStatus;
+
+            renderDashboard();
+
+            const isCosplay = String(lead.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(lead.personaje);
+            if (supabaseClient) {
+                try {
+                    const table = isCosplay ? 'postulaciones_cosplay' : 'postulaciones';
+                    await supabaseClient.from(table).update({ estado: newStatus }).eq('id', leadId);
+                } catch (e) {
+                    console.warn("No se pudo actualizar estado pagado en Supabase:", e.message);
                 }
             } else {
                 saveLocalLeads();
