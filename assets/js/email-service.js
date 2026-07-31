@@ -366,6 +366,7 @@ function generateCosplayAdminEmailHTML(lead) {
 // Plantilla oficial de Aprobación (Expositores y Cosplay) con datos bancarios y recursos de marca
 function generateApprovalEmailHTML(lead) {
     const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
+    const isCanje = Boolean(lead.es_canje) || (lead.espacio_tipo && (lead.espacio_tipo.toLowerCase().includes('canje') || lead.espacio_tipo.toLowerCase().includes('costo cero')));
     const nombre = escapeEmailHtml(lead.nombre_expositor || lead.nombre_completo);
     const itemNombre = isCosplay 
         ? `personaje <strong style="color:#ffe62e;">"${escapeEmailHtml(lead.personaje)}"</strong>` 
@@ -386,7 +387,9 @@ function generateApprovalEmailHTML(lead) {
                     <!-- Header -->
                     <tr>
                         <td align="center" style="background-color:#1a1e2e; padding:30px; border-bottom:2px solid #00d264;">
-                            <div style="background-color:#00d264; color:#0b0c10; font-size:11px; font-weight:bold; padding:4px 14px; border-radius:20px; display:inline-block; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">CONFIRMACIÓN OFICIAL</div>
+                            <div style="background-color:#00d264; color:#0b0c10; font-size:11px; font-weight:bold; padding:4px 14px; border-radius:20px; display:inline-block; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">
+                                ${isCanje ? 'APROBADO POR CANJE / COSTO CERO' : 'CONFIRMACIÓN OFICIAL'}
+                            </div>
                             <h1 style="color:#ffffff; margin:0; font-size:26px; font-weight:bold; letter-spacing:1px;">🎉 ¡TU POSTULACIÓN HA SIDO APROBADA!</h1>
                             <div style="color:#ffe62e; font-size:14px; font-weight:bold; margin-top:6px; text-transform:uppercase; letter-spacing:2px;">TemuGeek Expo 2026 • Recinto SOFO</div>
                         </td>
@@ -400,6 +403,53 @@ function generateApprovalEmailHTML(lead) {
                                 Nos complace informarte que tu postulación para participar en <strong>TemuGeek Expo 2026</strong> con tu ${itemNombre} ha sido <strong style="color:#00d264;">OFICIALMENTE APROBADA</strong>.
                             </p>
 
+                            <!-- Resumen del Espacio / Stand Postulado -->
+                            <div style="background-color:#141724; border:1px solid #2a2d3d; border-radius:12px; padding:18px 20px; margin:20px 0;">
+                                <h3 style="color:#ffe62e; font-size:15px; margin-top:0; margin-bottom:10px; border-bottom:1px solid #2a2d3d; padding-bottom:6px;">
+                                    📋 Detalle del Espacio Aprobado:
+                                </h3>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="5" style="font-size:14px; color:#cbd5e1;">
+                                    <tr>
+                                        <td width="40%" style="color:#94a3b8;">${isCosplay ? 'Cosplayer:' : 'Expositor / Responsable:'}</td>
+                                        <td style="color:#ffffff; font-weight:bold;">${escapeEmailHtml(lead.nombre_expositor || lead.nombre_completo)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">${isCosplay ? 'Personaje:' : 'Marca / Proyecto:'}</td>
+                                        <td style="color:#e92652; font-weight:bold;">${escapeEmailHtml(lead.nombre_marca || lead.personaje)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">Tipo de Espacio / Stand:</td>
+                                        <td style="color:#ffe62e; font-weight:bold;">${escapeEmailHtml(lead.espacio_tipo || (isCosplay ? 'Concurso Cosplay' : 'Stand Expositor'))}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">Costo de Participación:</td>
+                                        <td style="color:${isCanje ? '#00d264' : '#38bdf8'}; font-weight:bold;">
+                                            ${isCanje ? '$0 CLP (Aprobado por Canje / Acuerdo Especial)' : 'Según espacio seleccionado'}
+                                        </td>
+                                    </tr>
+                                    ${lead.categorias ? `
+                                    <tr>
+                                        <td style="color:#94a3b8;">Categoría(s):</td>
+                                        <td style="color:#ffffff;">${escapeEmailHtml(lead.categorias)}</td>
+                                    </tr>
+                                    ` : ''}
+                                </table>
+                            </div>
+
+                            ${isCanje ? `
+                            <!-- Caja Aprobado por Canje / Costo Cero -->
+                            <div style="background-color:#141724; border:2px dashed #00d264; border-radius:14px; padding:22px; margin:25px 0;">
+                                <h3 style="color:#00d264; font-size:17px; margin-top:0; margin-bottom:14px; border-bottom:1px solid rgba(0,210,100,0.2); padding-bottom:8px;">
+                                    🤝 Modalidad Aprobada: Canje / Participación Especial ($0 CLP)
+                                </h3>
+                                <p style="font-size:14px; color:#cbd5e1; margin-bottom:12px; line-height:1.6;">
+                                    Tu participación ha sido <strong style="color:#00d264;">Aprobada a Costo Cero ($0 CLP)</strong> bajo el acuerdo de canje o colaboración especial negociado con la Producción de TemuGeek Expo 2026. No requieres realizar transferencias bancarias.
+                                </p>
+                                <div style="margin-top:14px; background-color:rgba(0,210,100,0.1); border-radius:8px; padding:12px 16px; font-size:13.5px; color:#00d264; line-height:1.6;">
+                                    📌 <strong>Coordinación:</strong> Para cualquier consulta o coordinación de material de canje y difusión, envíanos un correo a <a href="mailto:hola@temugeek.cl" style="color:#ffe62e; font-weight:bold; text-decoration:underline;">hola@temugeek.cl</a> o contáctate directamente con nuestro administrador al WhatsApp <a href="https://wa.me/56984305751" target="_blank" style="color:#ffffff; font-weight:bold; text-decoration:underline;">+56 9 8430 5751</a>.
+                                </div>
+                            </div>
+                            ` : `
                             <!-- Datos de Transferencia -->
                             <div style="background-color:#141724; border:2px dashed #ffe62e; border-radius:14px; padding:22px; margin:25px 0;">
                                 <h3 style="color:#ffe62e; font-size:17px; margin-top:0; margin-bottom:14px; border-bottom:1px solid rgba(255,230,46,0.2); padding-bottom:8px;">
@@ -434,10 +484,11 @@ function generateApprovalEmailHTML(lead) {
                                         <td style="color:#ffffff;">hola@temugeek.cl</td>
                                     </tr>
                                 </table>
-                                <div style="margin-top:14px; background-color:rgba(255,230,46,0.1); border-radius:8px; padding:10px 14px; font-size:13px; color:#ffe62e; line-height:1.5;">
-                                    📌 <strong>Importante:</strong> Envía el comprobante de transferencia respondiendo a este correo o vía WhatsApp indicando el nombre de tu marca/postulación.
+                                <div style="margin-top:14px; background-color:rgba(255,230,46,0.1); border-radius:8px; padding:12px 16px; font-size:13.5px; color:#ffe62e; line-height:1.6;">
+                                    📌 <strong>Importante:</strong> Envía tu comprobante a <a href="mailto:hola@temugeek.cl" style="color:#ffe62e; font-weight:bold; text-decoration:underline;">hola@temugeek.cl</a> o contáctate directamente con nuestro administrador al WhatsApp <a href="https://wa.me/56984305751" target="_blank" style="color:#00d264; font-weight:bold; text-decoration:underline;">+56 9 8430 5751</a> indicando el nombre de tu marca/postulación.
                                 </div>
                             </div>
+                            `}
 
                             <!-- Linktree & Manual de Marca -->
                             <div style="background:linear-gradient(135deg, rgba(233,38,82,0.15), rgba(139,92,246,0.15)); border:1px solid #e92652; border-radius:14px; padding:22px; margin-bottom:25px;">

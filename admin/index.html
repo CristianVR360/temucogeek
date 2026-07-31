@@ -495,7 +495,10 @@
                         <button type="button" class="btn btn-success font-weight-bold" onclick="updateCurrentLeadStatusAndEmail('aprobado')">
                             <i class="far fa-check-circle me-1"></i> Aprobar & Enviar
                         </button>
-                        <button type="button" class="btn btn-warning font-weight-bold" id="btn-manual-approval-email" onclick="sendManualApprovalEmail()" title="Forzar envío del correo de aprobación con datos bancarios aunque ya esté aprobado">
+                        <button type="button" class="btn btn-info font-weight-bold text-dark" onclick="approveWithCanje()" title="Aprobar participación a Costo Cero ($0 CLP) bajo modalidad de Canje y enviar correo de confirmación de Canje">
+                            <i class="far fa-handshake me-1"></i> Aprobar por Canje ($0)
+                        </button>
+                        <button type="button" class="btn btn-warning font-weight-bold" id="btn-manual-approval-email" onclick="sendManualApprovalEmail()" title="Forzar envío del correo de aprobación con datos bancarios o canje aunque ya esté aprobado">
                             <i class="far fa-paper-plane me-1"></i> Reenviar Aprobación
                         </button>
                         <button type="button" class="btn btn-danger font-weight-bold" onclick="updateCurrentLeadStatusAndEmail('rechazado')">
@@ -1009,6 +1012,13 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                                 <div><strong>WhatsApp:</strong> ${escapeHtml(lead.telefono)}</div>
                                 <div><strong>Tipo de Espacio:</strong> <span class="badge bg-danger">${escapeHtml(lead.espacio_tipo || 'Stand')}</span></div>
                                 <div><strong>Categorías:</strong> ${escapeHtml(lead.categorias || '-')}</div>
+                                <div class="mt-2 pt-2 border-top border-secondary d-flex align-items-center justify-content-between">
+                                    <span class="text-white font-weight-bold" style="font-size:13px;"><i class="far fa-handshake me-1 text-info"></i> Modalidad Canje / Costo Cero:</span>
+                                    <div class="form-check form-switch m-0">
+                                        <input class="form-check-input" type="checkbox" id="modal-is-canje-switch" ${lead.es_canje ? 'checked' : ''} onchange="toggleLeadCanjeStatus(this.checked)">
+                                        <label class="form-check-label text-info font-weight-bold small" for="modal-is-canje-switch">${lead.es_canje ? 'Sí ($0 CLP)' : 'No (Estándar)'}</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -1163,6 +1173,42 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
 
         async function sendQuickApprovalEmail(leadId) {
             await sendManualApprovalEmail(leadId);
+        }
+
+        async function toggleLeadCanjeStatus(isCanje) {
+            if (!selectedLeadId) return;
+            const lead = allLeads.find(l => l.id == selectedLeadId);
+            if (!lead) return;
+            lead.es_canje = isCanje;
+
+            const label = document.querySelector('label[for="modal-is-canje-switch"]');
+            if (label) label.textContent = isCanje ? 'Sí ($0 CLP)' : 'No (Estándar)';
+
+            const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
+            if (supabaseClient) {
+                try {
+                    const table = isCosplay ? 'postulaciones_cosplay' : 'postulaciones';
+                    await supabaseClient.from(table).update({ es_canje: isCanje }).eq('id', selectedLeadId);
+                } catch (e) {
+                    console.warn("No se pudo actualizar es_canje en Supabase:", e.message);
+                }
+            } else {
+                saveLocalLeads();
+            }
+        }
+
+        async function approveWithCanje() {
+            if (!selectedLeadId) return;
+            const lead = allLeads.find(l => l.id == selectedLeadId);
+            if (!lead) return;
+
+            const nombreTarget = lead.nombre_marca || lead.personaje || lead.nombre_completo || 'Postulante';
+            if (!confirm(`¿Confirmas APROBAR a "${nombreTarget}" bajo modalidad CANJE / COSTO CERO ($0 CLP) y despachar el correo de confirmación especial?`)) {
+                return;
+            }
+
+            await toggleLeadCanjeStatus(true);
+            await updateCurrentLeadStatusAndEmail('aprobado');
         }
 
         async function saveInternalNotes(notes) {
