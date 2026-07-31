@@ -436,6 +436,14 @@ function generateApprovalEmailHTML(lead) {
                                 </table>
                             </div>
 
+                            ${lead.notas_internas ? `
+                            <!-- Notas de la Producción -->
+                            <div style="background-color:#1a1e2e; border:1px solid #ffe62e; border-radius:12px; padding:18px 20px; margin:20px 0;">
+                                <strong style="color:#ffe62e; font-size:14px; display:block; margin-bottom:6px;">📌 Nota Especial de la Producción:</strong>
+                                <p style="color:#e2e8f0; font-size:14.5px; line-height:1.6; margin:0;">${escapeEmailHtml(lead.notas_internas)}</p>
+                            </div>
+                            ` : ''}
+
                             ${isCanje ? `
                             <!-- Caja Aprobado por Canje / Costo Cero -->
                             <div style="background-color:#141724; border:2px dashed #00d264; border-radius:14px; padding:22px; margin:25px 0;">
@@ -511,13 +519,6 @@ function generateApprovalEmailHTML(lead) {
                                     </tr>
                                 </table>
                             </div>
-
-                            ${lead.notas_internas ? `
-                            <div style="background-color:#1a1e2e; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:15px; margin-bottom:20px;">
-                                <strong style="color:#ffe62e; font-size:13px;">Nota de la Producción:</strong>
-                                <p style="color:#e2e8f0; font-size:14px; margin:5px 0 0 0;">${escapeEmailHtml(lead.notas_internas)}</p>
-                            </div>
-                            ` : ''}
 
                             <p style="font-size:14px; line-height:1.6; color:#94a3b8; margin-bottom:0;">
                                 Nos vemos este <strong>Domingo 16 de Agosto de 2026</strong> en el Recinto SOFO de Temuco. Si tienes cualquier consulta, escríbenos a <a href="mailto:hola@temugeek.cl" style="color:#ffe62e; text-decoration:none;">hola@temugeek.cl</a> o a nuestro WhatsApp oficial.

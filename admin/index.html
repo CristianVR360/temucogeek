@@ -195,9 +195,10 @@
             gap: 6px;
         }
         .badge-pendiente { background: rgba(255, 152, 0, 0.15); color: #ffb74d; border: 1px solid rgba(255, 152, 0, 0.3); }
-        .badge-aprobado { background: rgba(0, 210, 100, 0.15); color: #00e676; border: 1px solid rgba(0, 210, 100, 0.3); }
+        .badge-aprobado { background: rgba(0, 176, 255, 0.15); color: #40c4ff; border: 1px solid rgba(0, 176, 255, 0.3); }
+        .badge-pagado { background: rgba(0, 210, 100, 0.25); color: #00e676; border: 1px solid #00d264; box-shadow: 0 0 10px rgba(0,210,100,0.2); }
         .badge-rechazado { background: rgba(233, 38, 82, 0.15); color: #ff4a75; border: 1px solid rgba(233, 38, 82, 0.3); }
-        .badge-contactado { background: rgba(0, 176, 255, 0.15); color: #40c4ff; border: 1px solid rgba(0, 176, 255, 0.3); }
+        .badge-contactado { background: rgba(156, 39, 176, 0.15); color: #ce93d8; border: 1px solid rgba(156, 39, 176, 0.3); }
 
         .btn-action {
             background: #222533;
@@ -366,36 +367,52 @@
             </div>
 
             <!-- KPI Cards Grid -->
-            <div class="row g-4 mb-4">
-                <div class="col-md-6 col-xl-3">
+            <div class="row g-3 mb-4">
+                <div class="col-md-4 col-xl-2">
                     <div class="kpi-card" style="--accent-color: #3b82f6;">
-                        <div class="kpi-title">Total Postulaciones</div>
+                        <div class="kpi-title">Total Leads</div>
                         <div class="kpi-value" id="kpi-total">0</div>
-                        <div style="font-size: 12px; color: var(--text-muted);">Leads recibidos en total</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Leads recibidos</div>
                         <i class="far fa-clipboard-list kpi-icon"></i>
                     </div>
                 </div>
-                <div class="col-md-6 col-xl-3">
+                <div class="col-md-4 col-xl-2">
                     <div class="kpi-card" style="--accent-color: #ff9800;">
-                        <div class="kpi-title">Pendientes de Revisión</div>
+                        <div class="kpi-title">Pendientes</div>
                         <div class="kpi-value" id="kpi-pendientes" style="color: #ffb74d;">0</div>
-                        <div style="font-size: 12px; color: var(--text-muted);">Por evaluar por la producción</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Por evaluar</div>
                         <i class="far fa-clock kpi-icon"></i>
                     </div>
                 </div>
-                <div class="col-md-6 col-xl-3">
-                    <div class="kpi-card" style="--accent-color: #00d264;">
-                        <div class="kpi-title">Stands Aprobados</div>
-                        <div class="kpi-value" id="kpi-aprobados" style="color: #00e676;">0</div>
-                        <div style="font-size: 12px; color: var(--text-muted);">Expositores confirmados</div>
+                <div class="col-md-4 col-xl-2">
+                    <div class="kpi-card" style="--accent-color: #00b0ff;">
+                        <div class="kpi-title">Aprobados</div>
+                        <div class="kpi-value" id="kpi-aprobados" style="color: #40c4ff;">0</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Pendiente pago</div>
                         <i class="far fa-check-circle kpi-icon"></i>
                     </div>
                 </div>
-                <div class="col-md-6 col-xl-3">
+                <div class="col-md-4 col-xl-2">
+                    <div class="kpi-card" style="--accent-color: #00e676;">
+                        <div class="kpi-title">Pagados</div>
+                        <div class="kpi-value" id="kpi-pagados" style="color: #00e676;">0</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Pago confirmado</div>
+                        <i class="far fa-receipt kpi-icon"></i>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xl-2">
+                    <div class="kpi-card" style="--accent-color: #00e676;">
+                        <div class="kpi-title">Recaudación Real</div>
+                        <div class="kpi-value" id="kpi-recaudacion-real" style="color: #00e676;">$0</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Caja confirmada</div>
+                        <i class="far fa-wallet kpi-icon"></i>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xl-2">
                     <div class="kpi-card" style="--accent-color: #ffe62e;">
-                        <div class="kpi-title">Recaudación Estimada</div>
+                        <div class="kpi-title">Recaudación Est.</div>
                         <div class="kpi-value" id="kpi-recaudacion" style="color: #ffe62e;">$0</div>
-                        <div style="font-size: 12px; color: var(--text-muted);">Valor acumulado de stands aprobados</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Aprobados + Pagados</div>
                         <i class="far fa-coins kpi-icon"></i>
                     </div>
                 </div>
@@ -423,6 +440,7 @@
                             <option value="pendiente">Pendiente</option>
                             <option value="contactado">Contactado</option>
                             <option value="aprobado">Aprobado</option>
+                            <option value="pagado">💳 Pagado</option>
                             <option value="rechazado">Rechazado</option>
                         </select>
                     </div>
@@ -454,6 +472,7 @@
                                 <th>Contacto</th>
                                 <th>Ciudad</th>
                                 <th>Detalle / Espacio</th>
+                                <th>Modalidad / Pago</th>
                                 <th>Estado</th>
                                 <th class="text-end">Acciones</th>
                             </tr>
@@ -495,6 +514,9 @@
                         <button type="button" class="btn btn-success font-weight-bold" onclick="updateCurrentLeadStatusAndEmail('aprobado')">
                             <i class="far fa-check-circle me-1"></i> Aprobar & Enviar
                         </button>
+                        <button type="button" class="btn btn-success font-weight-bold border-white" style="background-color: #00e676; color: #0b0c10;" onclick="updateCurrentLeadStatus('pagado')" title="Marcar esta postulación como PAGADA y confirmada en caja">
+                            <i class="far fa-receipt me-1"></i> Marcar PAGADO
+                        </button>
                         <button type="button" class="btn btn-info font-weight-bold text-dark" onclick="approveWithCanje()" title="Aprobar participación a Costo Cero ($0 CLP) bajo modalidad de Canje y enviar correo de confirmación de Canje">
                             <i class="far fa-handshake me-1"></i> Aprobar por Canje ($0)
                         </button>
@@ -510,7 +532,8 @@
                         <select id="modal-change-status" class="form-select form-control-dash d-inline-block w-auto" onchange="updateCurrentLeadStatus(this.value)">
                             <option value="pendiente">Pendiente</option>
                             <option value="contactado">Contactado</option>
-                            <option value="aprobado">Aprobado</option>
+                            <option value="aprobado">Aprobado (Pend. Pago)</option>
+                            <option value="pagado">💳 Pagado (Confirmado)</option>
                             <option value="rechazado">Rechazado</option>
                         </select>
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -550,8 +573,13 @@ CREATE TABLE IF NOT EXISTS postulaciones (
   giro_empresa TEXT,
   descripcion_productos TEXT NOT NULL,
   estado TEXT DEFAULT 'pendiente',
+  es_canje BOOLEAN DEFAULT false,
   notas_internas TEXT
 );
+
+-- Agregar columna es_canje a tablas existentes si no existe
+ALTER TABLE postulaciones ADD COLUMN IF NOT EXISTS es_canje BOOLEAN DEFAULT false;
+ALTER TABLE postulaciones_cosplay ADD COLUMN IF NOT EXISTS es_canje BOOLEAN DEFAULT false;
 
 ALTER TABLE postulaciones ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Permitir inserciones públicas" ON postulaciones FOR INSERT WITH CHECK (true);
@@ -795,8 +823,11 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                         day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
                     });
 
-                    const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
+                    const isCosplay = String(lead.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(lead.personaje);
                     const statusClass = `badge-${lead.estado || 'pendiente'}`;
+
+                    const isCanje = isLeadCanje(lead);
+                    const priceVal = getLeadPrice(lead);
 
                     const tipoBadge = isCosplay 
                         ? '<span class="badge" style="background: rgba(139, 92, 246, 0.2); color: #a78bfa; border: 1px solid #8b5cf6; font-size: 10px;"><i class="far fa-mask me-1"></i>COSPLAY</span>'
@@ -805,6 +836,13 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                     const titleText = isCosplay ? `Personaje: ${escapeHtml(lead.personaje)}` : escapeHtml(lead.nombre_marca);
                     const subText = isCosplay ? `Cosplayer: ${escapeHtml(lead.nombre_completo)} (${escapeHtml(lead.origen)})` : escapeHtml(lead.nombre_expositor);
                     const detailText = isCosplay ? (lead.observaciones ? escapeHtml(lead.observaciones) : 'Sin observaciones') : (lead.espacio_tipo || 'Stand');
+
+                    const modalidadBadge = isCosplay
+                        ? '<span class="badge bg-secondary opacity-75" style="font-size: 11px;">Gratuito (Cosplay)</span>'
+                        : (isCanje 
+                            ? `<button class="btn btn-sm btn-info font-weight-bold text-dark border-0 shadow-sm py-1 px-2" onclick="toggleLeadCanjeDirect('${lead.id}')" title="Haz clic para alternar a Tarifa Estándar"><i class="far fa-handshake me-1"></i>CANJE ($0)</button>`
+                            : `<button class="btn btn-sm btn-outline-secondary font-weight-bold py-1 px-2" onclick="toggleLeadCanjeDirect('${lead.id}')" title="Haz clic para alternar a Canje / Costo Cero ($0)"><i class="far fa-credit-card me-1 text-success"></i>Estándar ($${priceVal.toLocaleString('es-CL')})</button>`
+                        );
 
                     tr.innerHTML = `
                         <td style="white-space: nowrap; font-size: 13px; color: var(--text-muted);">${createdDate}</td>
@@ -819,10 +857,11 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                         </td>
                         <td><span class="badge bg-dark border border-secondary">${escapeHtml(lead.ciudad || 'Temuco')}</span></td>
                         <td>
-                            <div style="max-width: 220px; font-size: 12px; color: #d1d1d6; word-wrap: break-word;">
+                            <div style="max-width: 200px; font-size: 12px; color: #d1d1d6; word-wrap: break-word;">
                                 ${detailText}
                             </div>
                         </td>
+                        <td>${modalidadBadge}</td>
                         <td>
                             <span class="badge-status ${statusClass}">${(lead.estado || 'pendiente').toUpperCase()}</span>
                         </td>
@@ -848,22 +887,88 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
             updateKPIs();
         }
 
+        function isLeadCanje(lead) {
+            if (!lead) return false;
+            if (lead.es_canje === true || lead.es_canje === 'true' || lead.es_canje === 1) return true;
+            if (lead.espacio_tipo) {
+                const text = String(lead.espacio_tipo).toLowerCase();
+                if (text.includes('canje') || text.includes('costo cero') || text.includes('gratis') || text.includes('$0')) {
+                    return true;
+                }
+            }
+            if (lead.notas_internas) {
+                const notes = String(lead.notas_internas).toLowerCase();
+                if (notes.includes('canje') || notes.includes('costo cero')) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function getLeadPrice(lead) {
+            if (!lead) return 0;
+
+            // 1. Concurso Cosplay -> $0
+            const isCosplay = String(lead.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(lead.personaje);
+            if (isCosplay) return 0;
+
+            // 2. Canje / Costo Cero -> $0
+            if (isLeadCanje(lead)) return 0;
+
+            // 3. Si existe monto/precio numérico explícito asignado
+            if (lead.monto !== undefined && lead.monto !== null && !isNaN(Number(lead.monto)) && Number(lead.monto) >= 0) {
+                return Number(lead.monto);
+            }
+            if (lead.precio !== undefined && lead.precio !== null && !isNaN(Number(lead.precio)) && Number(lead.precio) >= 0) {
+                return Number(lead.precio);
+            }
+
+            // 4. Parsear texto de espacio_tipo para postulaciones antiguas y nuevas
+            if (lead.espacio_tipo) {
+                const text = String(lead.espacio_tipo).toLowerCase();
+                if (text.includes('60.000') || text.includes('60000') || text.includes('food truck') || text.includes('foodtruck')) return 60000;
+                if (text.includes('40.000') || text.includes('40000') || text.includes('3x3')) return 40000;
+                if (text.includes('20.000') || text.includes('20000') || text.includes('2x2') || text.includes('stand')) return 20000;
+
+                const match = text.match(/\$\s*(\d{1,3}(?:\.\d{3})*)/);
+                if (match && match[1]) {
+                    const parsed = parseInt(match[1].replace(/\./g, ''), 10);
+                    if (!isNaN(parsed) && parsed > 0) return parsed;
+                }
+            }
+
+            return 20000;
+        }
+
         function updateKPIs() {
             document.getElementById("kpi-total").textContent = allLeads.length;
 
-            const pendientes = allLeads.filter(l => (l.estado || 'pendiente') === 'pendiente').length;
+            const pendientes = allLeads.filter(l => String(l.estado || 'pendiente').toLowerCase() === 'pendiente').length;
             document.getElementById("kpi-pendientes").textContent = pendientes;
 
-            const aprobados = allLeads.filter(l => l.estado === 'aprobado');
-            document.getElementById("kpi-aprobados").textContent = aprobados.length;
+            const aprobados = allLeads.filter(l => String(l.estado || '').toLowerCase() === 'aprobado').length;
+            document.getElementById("kpi-aprobados").textContent = aprobados;
 
-            let recaudacion = 0;
-            aprobados.forEach(l => {
-                if (l.espacio_tipo && l.espacio_tipo.includes('3x3')) recaudacion += 40000;
-                else if (l.espacio_tipo) recaudacion += 20000;
+            const pagados = allLeads.filter(l => String(l.estado || '').toLowerCase() === 'pagado').length;
+            document.getElementById("kpi-pagados").textContent = pagados;
+
+            let recaudacionReal = 0;
+            let recaudacionEstimada = 0;
+
+            allLeads.forEach(l => {
+                const st = String(l.estado || '').toLowerCase();
+                const price = getLeadPrice(l);
+
+                if (st === 'pagado') {
+                    recaudacionReal += price;
+                    recaudacionEstimada += price;
+                } else if (st === 'aprobado') {
+                    recaudacionEstimada += price;
+                }
             });
 
-            document.getElementById("kpi-recaudacion").textContent = '$' + recaudacion.toLocaleString('es-CL');
+            document.getElementById("kpi-recaudacion-real").textContent = '$' + recaudacionReal.toLocaleString('es-CL');
+            document.getElementById("kpi-recaudacion").textContent = '$' + recaudacionEstimada.toLocaleString('es-CL');
         }
 
         function applyFilters() {
@@ -1184,11 +1289,34 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
             const label = document.querySelector('label[for="modal-is-canje-switch"]');
             if (label) label.textContent = isCanje ? 'Sí ($0 CLP)' : 'No (Estándar)';
 
-            const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
+            renderDashboard();
+
+            const isCosplay = String(lead.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(lead.personaje);
             if (supabaseClient) {
                 try {
                     const table = isCosplay ? 'postulaciones_cosplay' : 'postulaciones';
                     await supabaseClient.from(table).update({ es_canje: isCanje }).eq('id', selectedLeadId);
+                } catch (e) {
+                    console.warn("No se pudo actualizar es_canje en Supabase:", e.message);
+                }
+            } else {
+                saveLocalLeads();
+            }
+        }
+
+        async function toggleLeadCanjeDirect(leadId) {
+            const lead = allLeads.find(l => l.id == leadId);
+            if (!lead) return;
+            const newCanje = !isLeadCanje(lead);
+            lead.es_canje = newCanje;
+
+            renderDashboard();
+
+            const isCosplay = String(lead.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(lead.personaje);
+            if (supabaseClient) {
+                try {
+                    const table = isCosplay ? 'postulaciones_cosplay' : 'postulaciones';
+                    await supabaseClient.from(table).update({ es_canje: newCanje }).eq('id', leadId);
                 } catch (e) {
                     console.warn("No se pudo actualizar es_canje en Supabase:", e.message);
                 }
