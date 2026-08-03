@@ -259,6 +259,223 @@
                 border-bottom: 1px solid #2a2d39;
             }
         }
+
+        /* Hide print header on web screen */
+        .print-only-header {
+            display: none;
+        }
+
+        /* High-Efficiency Print Stylesheet (@media print) */
+        @media print {
+            @page {
+                size: letter portrait;
+                margin: 8mm 10mm 8mm 10mm;
+            }
+
+            /* Hide unnecessary site chrome */
+            #xb-header-area,
+            .xb-backtotop,
+            .page-header-section,
+            .btn-geek-primary,
+            .btn-geek-secondary,
+            .xb-header,
+            footer,
+            .no-print,
+            .text-center.pt-3.pb-4 {
+                display: none !important;
+            }
+
+            body, .body_wrap, main, section, div, body.design-conference {
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+            }
+
+            p, li, span, td, th, h1, h2, h3, h4, div {
+                color: #000000 !important;
+                text-shadow: none !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+            }
+
+            .pt-50 { padding-top: 0 !important; }
+            .pb-100 { padding-bottom: 0 !important; }
+            .mb-5 { margin-bottom: 10px !important; }
+
+            /* Show Compact Print Header */
+            .print-only-header {
+                display: block !important;
+                margin-bottom: 10px !important;
+                padding-bottom: 6px !important;
+                border-bottom: 2px solid #000000 !important;
+            }
+
+            /* Quick Info Bar in Print */
+            .info-pill {
+                background: #f8f8f8 !important;
+                border: 1px solid #cccccc !important;
+                border-radius: 4px !important;
+                padding: 4px 8px !important;
+                gap: 6px !important;
+            }
+            .info-pill-icon {
+                width: 22px !important;
+                height: 22px !important;
+                font-size: 11px !important;
+                border-radius: 4px !important;
+            }
+            .info-pill div {
+                font-size: 8pt !important;
+            }
+
+            /* Compact Cards */
+            .geek-card {
+                background: #ffffff !important;
+                border: 1px solid #777777 !important;
+                border-radius: 6px !important;
+                padding: 8px 12px !important;
+                margin-bottom: 10px !important;
+                box-shadow: none !important;
+                page-break-inside: avoid !important;
+            }
+
+            .geek-card-header {
+                border-bottom: 1.5px solid #000000 !important;
+                padding-bottom: 4px !important;
+                margin-bottom: 6px !important;
+            }
+
+            .geek-card-title {
+                font-size: 11pt !important;
+                color: #000000 !important;
+            }
+
+            .geek-card-title i {
+                color: #000000 !important;
+            }
+
+            .geek-card p {
+                font-size: 8.5pt !important;
+                margin-bottom: 6px !important;
+                line-height: 1.25 !important;
+            }
+
+            /* Ultra-Compact Tables */
+            .table-geek {
+                font-size: 8.5pt !important;
+                margin-bottom: 0 !important;
+            }
+
+            .table-geek th {
+                background-color: #e8e8e8 !important;
+                color: #000000 !important;
+                padding: 4px 6px !important;
+                border-bottom: 1.5px solid #000000 !important;
+                font-size: 8.5pt !important;
+            }
+
+            .table-geek td {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                padding: 3px 6px !important;
+                border-bottom: 1px solid #dddddd !important;
+                font-size: 8.5pt !important;
+                line-height: 1.25 !important;
+            }
+
+            .table-geek tr:last-child td {
+                border-bottom: none !important;
+            }
+
+            .badge-pts {
+                font-size: 7.5pt !important;
+                padding: 1px 5px !important;
+                border: 1px solid #333333 !important;
+                color: #000000 !important;
+                background: #f0f0f0 !important;
+            }
+
+            .badge {
+                font-size: 8pt !important;
+                padding: 2px 6px !important;
+                color: #000000 !important;
+                border: 1px solid #000 !important;
+                background: transparent !important;
+            }
+
+            /* Compact Callout Boxes */
+            .callout-intro, .callout-warning {
+                background: #f9f9f9 !important;
+                border: 1px solid #888888 !important;
+                border-left: 4px solid #000000 !important;
+                border-radius: 4px !important;
+                padding: 6px 10px !important;
+                margin-top: 6px !important;
+                margin-bottom: 8px !important;
+                box-shadow: none !important;
+                page-break-inside: avoid !important;
+            }
+
+            .callout-intro p {
+                font-size: 8.5pt !important;
+                line-height: 1.25 !important;
+                color: #000000 !important;
+            }
+
+            .callout-warning {
+                border-left: 4px solid #cc0000 !important;
+            }
+
+            .callout-warning h4 {
+                font-size: 9.5pt !important;
+                margin-bottom: 4px !important;
+                color: #cc0000 !important;
+            }
+
+            .callout-warning ul, .callout-warning li {
+                font-size: 8pt !important;
+                line-height: 1.2 !important;
+                color: #000000 !important;
+            }
+
+            .total-points-pill {
+                background: #f4f4f4 !important;
+                border: 1.5px dashed #000000 !important;
+                border-radius: 4px !important;
+                padding: 4px 8px !important;
+                margin-top: 6px !important;
+            }
+
+            .total-points-pill div {
+                font-size: 9.5pt !important;
+                color: #000000 !important;
+            }
+
+            ul {
+                margin-bottom: 4px !important;
+                padding-left: 16px !important;
+            }
+
+            li {
+                font-size: 8.5pt !important;
+                line-height: 1.25 !important;
+                margin-bottom: 3px !important;
+            }
+
+            h1, h2, h3, h4 {
+                page-break-after: avoid !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
     </style>
 </head>
 
@@ -331,6 +548,19 @@
             <!-- Main Body Content -->
             <section class="pt-50 pb-100 dark-bg">
                 <div class="container">
+
+                    <!-- Compact Print Header (Only visible when printing) -->
+                    <div class="print-only-header text-center mb-3">
+                        <div style="font-size: 15pt; font-weight: bold; font-family: 'Righteous', sans-serif; letter-spacing: 0.5px; text-transform: uppercase;">
+                            TEMUGEEK EXPO 2026 — REGLAMENTO OFICIAL COSPLAY
+                        </div>
+                        <div style="font-size: 8.5pt; color: #333333; margin-top: 2px;">
+                            <strong>Fecha:</strong> Domingo 16 de Agosto 2026 • <strong>Lugar:</strong> Recinto SOFO, Temuco • <strong>Sitio Web:</strong> www.temugeek.cl/bases-cosplay
+                        </div>
+                        <div style="font-size: 8.5pt; color: #555555; margin-top: 1px;">
+                            <strong>Modalidad:</strong> Desfile / Pasarela Individual • <strong>Cierre Inscripción:</strong> Viernes 14 de Agosto (23:59 hrs)
+                        </div>
+                    </div>
 
                     <!-- Quick Info Bar -->
                     <div class="row g-3 mb-5 wow fadeInUp" data-wow-delay="100ms">

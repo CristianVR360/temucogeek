@@ -543,53 +543,122 @@ function generateApprovalEmailHTML(lead) {
 }
 
 // Correo de Aprobación / Rechazo enviado desde el Dashboard de Admin
-function generateCosplayStatusEmailHTML(lead, newStatus) {
-    if (newStatus === 'aprobado') {
-        return generateApprovalEmailHTML(lead);
-    }
-
-    const statusTitle = "Actualización de Postulación";
-    const accentColor = "#e92652";
+function generateCosplayApprovalEmailHTML(lead) {
+    const nombre = escapeEmailHtml(lead.nombre_completo || lead.nombre_expositor);
+    const personaje = escapeEmailHtml(lead.personaje || 'tu personaje');
+    const origen = escapeEmailHtml(lead.origen || 'Serie / Origen');
 
     return `
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>${statusTitle} — TemuGeek Expo 2026</title>
+    <title>¡Postulación Cosplay Aprobada! 🎉 — TemuGeek Expo 2026</title>
 </head>
 <body style="margin:0; padding:0; background-color:#0b0c10; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#e2e8f0;">
     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#0b0c10; padding:30px 10px;">
         <tr>
             <td align="center">
-                <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#121522; border:2px solid ${accentColor}; border-radius:20px; overflow:hidden;">
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#121522; border:2px solid #8b5cf6; border-radius:20px; overflow:hidden; box-shadow:0 0 35px rgba(139,92,246,0.3);">
+                    <!-- Header -->
                     <tr>
-                        <td align="center" style="background-color:#1a1e2e; padding:30px; border-bottom:2px solid ${accentColor};">
-                            <h1 style="color:#ffffff; margin:0; font-size:24px; font-weight:bold;">TEMUGEEK EXPO 2026</h1>
-                            <div style="color:${accentColor}; font-size:16px; font-weight:bold; margin-top:6px; text-transform:uppercase;">${statusTitle}</div>
+                        <td align="center" style="background-color:#1a1e2e; padding:30px; border-bottom:2px solid #8b5cf6;">
+                            <div style="background-color:#8b5cf6; color:#ffffff; font-size:11px; font-weight:bold; padding:4px 14px; border-radius:20px; display:inline-block; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">
+                                🎭 SELECCIÓN OFICIAL COSPLAY 2026
+                            </div>
+                            <h1 style="color:#ffffff; margin:0; font-size:26px; font-weight:bold; letter-spacing:1px;">🎉 ¡TU POSTULACIÓN HA SIDO APROBADA!</h1>
+                            <div style="color:#ffe62e; font-size:14px; font-weight:bold; margin-top:6px; text-transform:uppercase; letter-spacing:2px;">TemuGeek Expo 2026 • Recinto SOFO</div>
                         </td>
                     </tr>
+
+                    <!-- Body -->
                     <tr>
                         <td style="padding:35px 30px;">
-                            <h2 style="color:#ffffff; font-size:20px; margin-top:0;">Hola, ${escapeEmailHtml(lead.nombre_completo || lead.nombre_expositor)} 👋</h2>
-                            
-                            <p style="font-size:15px; line-height:1.65; color:#cbd5e1;">
-                                Queremos agradecer tu interés en participar de TemuGeek Expo 2026 con tu propuesta de <strong style="color:#e92652;">"${escapeEmailHtml(lead.personaje || lead.nombre_marca)}"</strong>.
-                                <br><br>
-                                Lamentablemente, en esta oportunidad el cupo o la categoría ha sido completada. Te invitamos a acompañarnos este Domingo 16 de Agosto en el Recinto SOFO y disfrutar de todas las actividades del evento.
+                            <h2 style="color:#ffffff; font-size:20px; margin-top:0;">¡Hola, ${nombre}! 👋✨</h2>
+                            <p style="font-size:15.5px; line-height:1.65; color:#cbd5e1;">
+                                ¡Muchas felicidades! Hemos revisado minuciosamente las postulaciones recibidas y nos alegra informarte que tu propuesta para interpretar al personaje <strong style="color:#ffe62e;">"${personaje}"</strong> (${origen}) en el <strong>Gran Concurso de Cosplay TemuGeek Expo 2026</strong> ha sido <strong style="color:#00d264;">OFICIALMENTE APROBADA</strong>.
                             </p>
 
+                            <!-- Resumen del Personaje Aprobado -->
+                            <div style="background-color:#141724; border:1px solid #2a2d3d; border-radius:12px; padding:18px 20px; margin:22px 0;">
+                                <h3 style="color:#ffe62e; font-size:15px; margin-top:0; margin-bottom:10px; border-bottom:1px solid #2a2d3d; padding-bottom:6px;">
+                                    📋 Resumen de tu Participación:
+                                </h3>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="5" style="font-size:14px; color:#cbd5e1;">
+                                    <tr>
+                                        <td width="40%" style="color:#94a3b8;">Cosplayer:</td>
+                                        <td style="color:#ffffff; font-weight:bold;">${nombre}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">Personaje Inscrito:</td>
+                                        <td style="color:#e92652; font-weight:bold; font-size:15px;">"${personaje}"</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">Serie / Origen:</td>
+                                        <td style="color:#ffffff;">${origen}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8;">Costo de Inscripción:</td>
+                                        <td style="color:#00d264; font-weight:bold;">$0 CLP (Participación Gratuita)</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Invitación a sumar puntos en RRSS -->
+                            <div style="background:linear-gradient(135deg, rgba(139,92,246,0.2), rgba(233,38,82,0.2)); border:2px dashed #8b5cf6; border-radius:16px; padding:22px; margin:25px 0;">
+                                <h3 style="color:#ffe62e; font-size:17px; margin-top:0; margin-bottom:12px;">
+                                    🎬 ¡SUMA PUNTOS EXTRAS EN REDES SOCIALES! ⭐
+                                </h3>
+                                <p style="font-size:14px; color:#e2e8f0; line-height:1.65; margin-bottom:14px;">
+                                    ¡Queremos ver tu talento y preparación! Puedes <strong>sumar puntos adicionales en la evaluación previa</strong> creando y compartiendo un video en tus redes sociales (Instagram Reels o TikTok) mostrando:
+                                </p>
+                                <ul style="font-size:13.5px; color:#cbd5e1; margin:0 0 14px 0; padding-left:20px; line-height:1.7;">
+                                    <li>🧵 Tu proceso de confección, armado de props o utilería.</li>
+                                    <li>💄 Tu prueba de maquillaje, estilizado de peluca o caracterización.</li>
+                                    <li>✨ Un ensayo de pose, actuación o el resultado final de tu cosplay.</li>
+                                </ul>
+                                <p style="font-size:13px; color:#ffe62e; line-height:1.5; margin:0 0 14px 0;">
+                                    📝 <strong>Nota:</strong> Esta bonificación de puntaje extra y sus criterios de asignación están claramente detallados en la pauta de evaluación oficial del concurso (<a href="https://temugeek.cl/bases-cosplay" target="_blank" style="color:#ffffff; font-weight:bold; text-decoration:underline;">ver pauta en Bases Oficiales</a>).
+                                </p>
+                                <div style="background-color:rgba(139,92,246,0.15); border-radius:10px; padding:12px 16px; font-size:13.5px; color:#ffffff; line-height:1.6;">
+                                    📌 <strong>Para validar tus puntos:</strong> Etiquétanos en tu publicación como <a href="https://instagram.com/temugeek.cl" target="_blank" style="color:#ffe62e; font-weight:bold; text-decoration:underline;">@temugeek.cl</a> y utiliza los hashtags <strong style="color:#00d264;">#TemuGeekCosplay #TemuGeek2026</strong>. ¡El jurado y la producción estarán muy atentos!
+                                </div>
+                            </div>
+
+                            <!-- Enlace a las Bases Oficiales de Cosplay -->
+                            <div style="background-color:#141724; border:1px solid #2a2d3d; border-radius:14px; padding:20px; margin-bottom:25px; text-align:center;">
+                                <h3 style="color:#ffffff; font-size:16px; margin-top:0; margin-bottom:10px;">
+                                    📜 Bases Oficiales y Reglamento del Concurso
+                                </h3>
+                                <p style="font-size:14px; color:#94a3b8; line-height:1.6; margin-bottom:16px;">
+                                    Revisa detalladamente el reglamento, tiempos en pasarela, criterios de evaluación y requerimientos para el día del evento en nuestro sitio oficial:
+                                </p>
+                                <a href="https://temugeek.cl/bases-cosplay" target="_blank" style="background-color:#e92652; color:#ffffff; font-weight:bold; text-decoration:none; padding:13px 24px; border-radius:30px; display:inline-block; font-size:14px; margin:4px;">
+                                    📜 Ver Bases Oficiales Cosplay
+                                </a>
+                                <a href="https://temugeek.cl/links" target="_blank" style="background-color:#ffe62e; color:#0b0c10; font-weight:bold; text-decoration:none; padding:13px 24px; border-radius:30px; display:inline-block; font-size:14px; margin:4px;">
+                                    🌐 Hub Oficial de Links
+                                </a>
+                            </div>
+
                             ${lead.notas_internas ? `
-                            <div style="background-color:#1a1e2e; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:15px; margin-top:20px;">
-                                <strong style="color:#ffe62e; font-size:13px;">Mensaje de la Producción:</strong>
-                                <p style="color:#e2e8f0; font-size:14px; margin:5px 0 0 0;">${escapeEmailHtml(lead.notas_internas)}</p>
+                            <div style="background-color:#1a1e2e; border:1px solid #ffe62e; border-radius:12px; padding:16px 20px; margin-bottom:25px;">
+                                <strong style="color:#ffe62e; font-size:14px; display:block; margin-bottom:6px;">📌 Mensaje de la Producción:</strong>
+                                <p style="color:#e2e8f0; font-size:14px; line-height:1.6; margin:0;">${escapeEmailHtml(lead.notas_internas)}</p>
                             </div>
                             ` : ''}
+
+                            <p style="font-size:14px; line-height:1.6; color:#94a3b8; margin-bottom:0;">
+                                Nos vemos este <strong>Domingo 16 de Agosto de 2026</strong> en el Recinto SOFO de Temuco. Recuerda acreditarte con la encargada de cosplay (<strong>Danii</strong>) apenas llegues al evento. Si tienes cualquier consulta, escríbenos a <a href="mailto:hola@temugeek.cl" style="color:#ffe62e; text-decoration:none;">hola@temugeek.cl</a>.
+                            </p>
                         </td>
                     </tr>
+
+                    <!-- Footer -->
                     <tr>
                         <td align="center" style="background-color:#1a1e2e; padding:20px; border-top:1px solid rgba(255,255,255,0.1); font-size:12px; color:#94a3b8;">
-                            TemuGeek Expo 2026 • Recinto SOFO, Temuco
+                            TemuGeek Expo 2026 • Recinto SOFO, Temuco<br>
+                            <a href="https://temugeek.cl" style="color:#ffe62e; text-decoration:none;">www.temugeek.cl</a> • <a href="mailto:hola@temugeek.cl" style="color:#e92652; text-decoration:none;">hola@temugeek.cl</a>
                         </td>
                     </tr>
                 </table>
@@ -601,18 +670,109 @@ function generateCosplayStatusEmailHTML(lead, newStatus) {
     `;
 }
 
+// Plantilla de Rechazo Suave y Motivadora (Expositores y Cosplay)
+function generateRejectionEmailHTML(lead) {
+    const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
+    const nombre = escapeEmailHtml(lead.nombre_completo || lead.nombre_expositor);
+    const itemNombre = isCosplay 
+        ? `personaje "${escapeEmailHtml(lead.personaje)}"` 
+        : `emprendimiento "${escapeEmailHtml(lead.nombre_marca)}"`;
+
+    return `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Información sobre tu postulación — TemuGeek Expo 2026</title>
+</head>
+<body style="margin:0; padding:0; background-color:#0b0c10; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#e2e8f0;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#0b0c10; padding:30px 10px;">
+        <tr>
+            <td align="center">
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#121522; border:2px solid #e92652; border-radius:20px; overflow:hidden;">
+                    <!-- Header -->
+                    <tr>
+                        <td align="center" style="background-color:#1a1e2e; padding:30px; border-bottom:2px solid #e92652;">
+                            <h1 style="color:#ffffff; margin:0; font-size:24px; font-weight:bold; letter-spacing:1px;">TEMUGEEK EXPO 2026</h1>
+                            <div style="color:#e92652; font-size:14px; font-weight:bold; margin-top:6px; text-transform:uppercase; letter-spacing:1.5px;">Actualización de Postulación</div>
+                        </td>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                        <td style="padding:35px 30px;">
+                            <h2 style="color:#ffffff; font-size:20px; margin-top:0;">Hola, ${nombre} 👋</h2>
+                            
+                            <p style="font-size:15px; line-height:1.65; color:#cbd5e1;">
+                                Queremos agradecerte sinceramente por tu tiempo, entusiasmo e interés en ser parte de <strong>TemuGeek Expo 2026</strong> con tu propuesta de <strong style="color:#e92652;">${itemNombre}</strong>.
+                            </p>
+                            <p style="font-size:15px; line-height:1.65; color:#cbd5e1;">
+                                Tras una cuidadosa evaluación por parte del equipo organizador, queremos informarte que en esta oportunidad <strong>los cupos disponibles para tu categoría se han completado en su totalidad</strong>, por lo que no pudimos asignar un espacio en esta edición.
+                            </p>
+                            <p style="font-size:15px; line-height:1.65; color:#cbd5e1;">
+                                Queremos transmitirte que valoramos enormemente tu trabajo y pasión por la cultura geek. Esta decisión fue muy difícil debido a la gran cantidad de excelentes postulaciones recibidas.
+                            </p>
+
+                            <!-- Sección de Ánimo y Redes Sociales -->
+                            <div style="background-color:#141724; border:1px solid #ffe62e; border-radius:14px; padding:22px; margin:25px 0;">
+                                <h3 style="color:#ffe62e; font-size:16px; margin-top:0; margin-bottom:10px;">
+                                    🌟 ¡Mantén la energía y sigamos conectados!
+                                </h3>
+                                <p style="font-size:14px; color:#cbd5e1; line-height:1.6; margin-bottom:12px;">
+                                    Te invitamos a estar muy atento(a) a nuestras redes sociales oficiales en Instagram (<a href="https://instagram.com/temugeek.cl" target="_blank" style="color:#ffe62e; font-weight:bold; text-decoration:underline;">@temugeek.cl</a>), donde anunciaremos oportunamente próximas convocatorias, eventos pop-up y nuevas fechas de TemuGeek Expo.
+                                </p>
+                                <p style="font-size:14px; color:#ffffff; line-height:1.6; margin:0;">
+                                    Además, <strong>¡te esperamos como visitante este Domingo 16 de Agosto en el Recinto SOFO!</strong> Nos encantaría contar con tu presencia para disfrutar juntos de los torneos, espectáculos y toda la comunidad geek de Temuco.
+                                </p>
+                            </div>
+
+                            ${lead.notas_internas ? `
+                            <div style="background-color:#1a1e2e; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:15px; margin-bottom:20px;">
+                                <strong style="color:#ffe62e; font-size:13px;">Mensaje de la Producción:</strong>
+                                <p style="color:#e2e8f0; font-size:14px; margin:5px 0 0 0;">${escapeEmailHtml(lead.notas_internas)}</p>
+                            </div>
+                            ` : ''}
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="background-color:#1a1e2e; padding:20px; border-top:1px solid rgba(255,255,255,0.1); font-size:12px; color:#94a3b8;">
+                            TemuGeek Expo 2026 • Recinto SOFO, Temuco<br>
+                            <a href="https://temugeek.cl" style="color:#ffe62e; text-decoration:none;">www.temugeek.cl</a> • <a href="mailto:hola@temugeek.cl" style="color:#e92652; text-decoration:none;">hola@temugeek.cl</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+    `;
+}
+
+function generateCosplayStatusEmailHTML(lead, newStatus) {
+    if (newStatus === 'aprobado') {
+        return generateCosplayApprovalEmailHTML(lead);
+    }
+    return generateRejectionEmailHTML(lead);
+}
+
 // -------------------------------------------------------------
 // 3. FUNCIONES DE ENVÍO DE CORREOS
 // -------------------------------------------------------------
 
-// Enviar correo oficial de aprobación con datos de pago y recursos de marca
+// Enviar correo oficial de aprobación (distingue entre Expositores y Cosplay)
 async function sendApprovalEmail(lead) {
     if (typeof loadEnvConfig === 'function') {
         await loadEnvConfig();
     }
-    const html = generateApprovalEmailHTML(lead);
-    const item = lead.nombre_marca || lead.personaje || 'Postulación';
-    const subject = `🎉 ¡Tu postulación a TemuGeek Expo 2026 ha sido APROBADA! — ${item}`;
+    const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
+    const html = isCosplay ? generateCosplayApprovalEmailHTML(lead) : generateApprovalEmailHTML(lead);
+    const item = isCosplay ? `Cosplay: ${lead.personaje}` : (lead.nombre_marca || 'Postulación');
+    const subject = isCosplay
+        ? `✨ ¡Tu postulación al Concurso de Cosplay ha sido APROBADA! — ${lead.personaje}`
+        : `🎉 ¡Tu postulación a TemuGeek Expo 2026 ha sido APROBADA! — ${item}`;
 
     console.log("✉️ Despachando correo oficial de aprobación a:", lead.email);
     return await sendResendEmail({
@@ -652,17 +812,33 @@ async function sendCosplayPostulacionEmails(lead) {
     return { applicantSent: resApplicant.success, adminSent: resAdmin.success };
 }
 
-// Enviar correo cuando el Administrador aprueba o cambia estado desde el Dashboard
+// Enviar correo cuando el Administrador cambia estado (Aprobado / Rechazado) desde el Dashboard
 async function sendCosplayStatusUpdateEmail(lead, newStatus) {
-    if (newStatus === 'aprobado') {
-        return await sendApprovalEmail(lead);
-    }
-
     if (typeof loadEnvConfig === 'function') {
         await loadEnvConfig();
     }
 
-    const html = generateCosplayStatusEmailHTML(lead, newStatus);
+    if (newStatus === 'aprobado') {
+        return await sendApprovalEmail(lead);
+    }
+
+    const html = generateRejectionEmailHTML(lead);
+    const subject = `Información sobre tu postulación a TemuGeek Expo 2026`;
+
+    return await sendResendEmail({
+        to: lead.email,
+        subject: subject,
+        html: html
+    });
+}
+
+// Enviar correo de rechazo explícito
+async function sendRejectionEmail(lead) {
+    if (typeof loadEnvConfig === 'function') {
+        await loadEnvConfig();
+    }
+
+    const html = generateRejectionEmailHTML(lead);
     const subject = `Información sobre tu postulación a TemuGeek Expo 2026`;
 
     return await sendResendEmail({
@@ -703,10 +879,14 @@ window.generateApplicantEmailHTML = generateApplicantEmailHTML;
 window.generateAdminEmailHTML = generateAdminEmailHTML;
 window.generateCosplayApplicantEmailHTML = generateCosplayApplicantEmailHTML;
 window.generateCosplayAdminEmailHTML = generateCosplayAdminEmailHTML;
+window.generateCosplayApprovalEmailHTML = generateCosplayApprovalEmailHTML;
+window.generateRejectionEmailHTML = generateRejectionEmailHTML;
 window.generateCosplayStatusEmailHTML = generateCosplayStatusEmailHTML;
 window.generateApprovalEmailHTML = generateApprovalEmailHTML;
 window.sendApprovalEmail = sendApprovalEmail;
+window.sendRejectionEmail = sendRejectionEmail;
 window.sendPostulacionEmails = sendPostulacionEmails;
 window.sendCosplayPostulacionEmails = sendCosplayPostulacionEmails;
 window.sendCosplayStatusUpdateEmail = sendCosplayStatusUpdateEmail;
+
 

@@ -969,8 +969,14 @@
             };
 
             // Enviar Formulario de Cosplay
+            let _isSubmittingCosplay = false;
             formCosplay.addEventListener('submit', async (e) => {
                 e.preventDefault();
+
+                if (_isSubmittingCosplay) {
+                    console.warn('⚠️ Inscripción Cosplay ya en proceso...');
+                    return;
+                }
 
                 // Validar RUT del Participante
                 const rutInput = document.getElementById('rut');
@@ -998,6 +1004,7 @@
                     return;
                 }
 
+                _isSubmittingCosplay = true;
                 btnSubmit.disabled = true;
                 btnSubmit.innerHTML = '<i class="far fa-spinner fa-spin"></i> Enviando Postulación...';
 
@@ -1024,7 +1031,7 @@
                     if (typeof getSupabaseClient === 'function') {
                         const sb = await getSupabaseClient();
                         if (sb) {
-                            // Objeto adaptado para la tabla postulaciones (donde está activo el Webhook de Supabase)
+                            // Objeto adaptado para la tabla postulaciones (donde está activo el Webhook único de Supabase)
                             const payloadPostulaciones = {
                                 id: formData.id,
                                 created_at: formData.fecha_creacion,
@@ -1050,18 +1057,12 @@
                                 estado: 'pendiente'
                             };
 
-                            // 1. Insertar en la tabla postulaciones (Dispara el Webhook de correo activo en Supabase)
+                            // Inserción única en la tabla principal postulaciones (Dispara 1 solo Webhook de correo en Supabase)
                             const { error: err1 } = await sb
                                 .from('postulaciones')
                                 .insert([payloadPostulaciones]);
 
                             if (!err1) enviadoSupabase = true;
-
-                            // 2. Insertar también en postulaciones_cosplay por respaldo de tabla
-                            await sb
-                                .from('postulaciones_cosplay')
-                                .insert([formData])
-                                .catch(() => {});
                         }
                     }
 
@@ -1072,6 +1073,7 @@
                     console.error('Error al procesar inscripción:', err);
                 }
 
+                _isSubmittingCosplay = false;
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = '<i class="far fa-paper-plane"></i> Enviar Mi Inscripción Cosplay';
 

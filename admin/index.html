@@ -618,17 +618,17 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                     <hr class="border-secondary my-3">
                     <h6 class="text-warning font-weight-bold">📧 Notificaciones Automáticas por Correo (Resend API & Supabase Webhooks)</h6>
                     <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
-                        El sitio envía correos directamente vía Resend API usando la clave <code>RESEND_API_KEY</code>. Si deseas que Supabase los envíe automáticamente desde el servidor al insertar registros en la base de datos:
+                        El sitio envía correos automáticamente vía Resend API usando la clave <code>RESEND_API_KEY</code>. Configura un <strong>único Webhook</strong> en Supabase sobre la tabla <code>postulaciones</code> (todas las postulaciones, incluidos cosplayers, se registran ahí):
                     </p>
                     <ol style="font-size: 13px; color: #d1d1d6; padding-left: 20px;">
                         <li>Ve a tu consola de Supabase &rarr; <strong>Database</strong> &rarr; <strong>Webhooks</strong>.</li>
-                        <li>Haz clic en <strong>Create a new webhook</strong>.</li>
-                        <li><strong>Name:</strong> <code>notificar_cosplay_resend</code></li>
-                        <li><strong>Table:</strong> <code>postulaciones_cosplay</code> (Event: <code>INSERT</code>)</li>
+                        <li>Verifica que exista solo 1 Webhook activo (elimina duplicados si existen).</li>
+                        <li><strong>Name:</strong> <code>notificar_postulacion_resend</code></li>
+                        <li><strong>Table:</strong> <code>postulaciones</code> (Event: <code>INSERT</code>)</li>
                         <li><strong>Webhook Type:</strong> HTTP Request</li>
-                        <li><strong>Method:</strong> <code>POST</code> &rarr; <strong>URL:</strong> <code>https://api.resend.com/emails</code></li>
+                        <li><strong>Method:</strong> <code>POST</code> &rarr; <strong>URL:</strong> <code>https://www.temugeek.cl/api/send-email</code> (o tu función backend)</li>
                         <li><strong>HTTP Headers:</strong>
-                            <br><code>Authorization: Bearer TU_RESEND_API_KEY</code>
+                            <br><code>Authorization: Bearer RESEND_API_KEY</code>
                             <br><code>Content-Type: application/json</code>
                         </li>
                     </ol>
@@ -1256,12 +1256,12 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
             let resEmail = null;
             if (newStatus === 'aprobado' && typeof sendApprovalEmail === 'function') {
                 resEmail = await sendApprovalEmail(lead);
+            } else if (newStatus === 'rechazado' && typeof sendRejectionEmail === 'function') {
+                resEmail = await sendRejectionEmail(lead);
             } else {
                 const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
                 if (isCosplay && typeof sendCosplayStatusUpdateEmail === 'function') {
                     resEmail = await sendCosplayStatusUpdateEmail(lead, newStatus);
-                } else if (typeof sendPostulacionEmails === 'function') {
-                    resEmail = await sendPostulacionEmails(lead);
                 }
             }
 
