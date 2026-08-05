@@ -264,6 +264,65 @@
                 font-size: 12px !important;
             }
         }
+
+        /* Copy to Clipboard Toast & Interactive Elements */
+        .toast-copied {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #161822;
+            border: 1px solid #00d264;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 22px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 210, 100, 0.35);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .toast-copied.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .copyable {
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border-radius: 4px;
+            padding: 1px 4px;
+            margin: -1px -4px;
+        }
+
+        .copyable:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffe62e !important;
+            text-decoration: underline;
+        }
+
+        .copyable::after {
+            content: "\f0c5";
+            font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif;
+            font-weight: 400;
+            font-size: 10px;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            color: #ffe62e;
+        }
+
+        .copyable:hover::after {
+            opacity: 0.8;
+        }
     </style>
 </head>
 
@@ -353,9 +412,15 @@
                         Panel de administración para evaluar, filtrar y contactar expositores.
                     </p>
                 </div>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-outline-secondary btn-sm" onclick="exportToCSV()">
-                        <i class="far fa-file-excel"></i> Exportar a CSV
+                <div class="d-flex gap-2 flex-wrap">
+                    <button class="btn btn-success btn-sm font-weight-bold" onclick="openNewLeadModal()">
+                        <i class="far fa-plus-circle me-1"></i> Nueva Postulación
+                    </button>
+                    <button class="btn btn-outline-success btn-sm font-weight-bold" onclick="exportFilteredToExcel()" title="Exportar postulantes filtrados (Nombre y Correo) a Excel">
+                        <i class="far fa-file-excel me-1"></i> Exportar Nombre & Correo (Excel)
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="exportToCSV()" title="Exportar vista filtrada completa a CSV">
+                        <i class="far fa-file-csv me-1"></i> Exportar Completo (CSV)
                     </button>
                     <button class="btn btn-outline-secondary btn-sm" onclick="exportToJSON()">
                         <i class="far fa-download"></i> Backup JSON
@@ -545,6 +610,150 @@
         </div>
     </div>
 
+    <!-- Modal Nueva Postulación Manual -->
+    <div class="modal fade" id="newLeadModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content modal-dash-content">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" style="font-family: 'Righteous', sans-serif; color: #ffffff;">
+                        <i class="far fa-plus-circle me-2 text-success"></i> Nueva Postulación Manual
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="new-lead-form" onsubmit="handleCreateLeadSubmit(event)">
+                    <div class="modal-body">
+                        <!-- Selector Tipo -->
+                        <div class="mb-3">
+                            <label class="form-label text-white font-weight-bold" style="font-size:13px;">Tipo de Postulación</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="new-lead-tipo" id="tipo-expositor" value="expositor" checked onchange="toggleNewLeadTypeFields()">
+                                <label class="btn btn-outline-primary py-2 font-weight-bold" for="tipo-expositor"><i class="far fa-store me-1"></i> Expositor / Stand</label>
+
+                                <input type="radio" class="btn-check" name="new-lead-tipo" id="tipo-cosplay" value="cosplay" onchange="toggleNewLeadTypeFields()">
+                                <label class="btn btn-outline-info py-2 font-weight-bold" for="tipo-cosplay"><i class="far fa-mask me-1"></i> Concurso Cosplay</label>
+                            </div>
+                        </div>
+
+                        <hr class="border-secondary my-3">
+
+                        <!-- Campos del Formulario -->
+                        <div class="row g-3">
+                            <!-- Campos Expositor -->
+                            <div class="col-md-6 field-expositor">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Nombre Marca / Proyecto <span class="text-danger">*</span></label>
+                                <input type="text" id="new-nombre-marca" class="form-control form-control-dash" placeholder="Ej: Sakura Art Studio" required>
+                            </div>
+                            <div class="col-md-6 field-expositor">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Nombre Responsable <span class="text-danger">*</span></label>
+                                <input type="text" id="new-nombre-expositor" class="form-control form-control-dash" placeholder="Ej: Camila Morales" required>
+                            </div>
+
+                            <!-- Campos Cosplay -->
+                            <div class="col-md-6 field-cosplay d-none">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Nombre Completo Participante <span class="text-danger">*</span></label>
+                                <input type="text" id="new-nombre-completo" class="form-control form-control-dash" placeholder="Ej: Camila Morales">
+                            </div>
+                            <div class="col-md-3 field-cosplay d-none">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">RUT <span class="text-danger">*</span></label>
+                                <input type="text" id="new-rut" class="form-control form-control-dash" placeholder="12.345.678-9">
+                            </div>
+                            <div class="col-md-3 field-cosplay d-none">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Edad <span class="text-danger">*</span></label>
+                                <input type="number" id="new-edad" class="form-control form-control-dash" placeholder="22" min="1" max="100">
+                            </div>
+
+                            <div class="col-md-6 field-cosplay d-none">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Personaje a Interpretar <span class="text-danger">*</span></label>
+                                <input type="text" id="new-personaje" class="form-control form-control-dash" placeholder="Ej: Nezuko Kamado">
+                            </div>
+                            <div class="col-md-6 field-cosplay d-none">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Serie / Origen <span class="text-danger">*</span></label>
+                                <input type="text" id="new-origen" class="form-control form-control-dash" placeholder="Ej: Demon Slayer">
+                            </div>
+                            <div class="col-md-12 field-cosplay d-none">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Imagen de Referencia (URL)</label>
+                                <input type="url" id="new-imagen-ref" class="form-control form-control-dash" placeholder="https://drive.google.com/... o enlace de foto">
+                            </div>
+
+                            <!-- Contacto (Ambos) -->
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Correo Electrónico <span class="text-danger">*</span></label>
+                                <input type="email" id="new-email" class="form-control form-control-dash" placeholder="contacto@ejemplo.cl" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Teléfono / WhatsApp <span class="text-danger">*</span></label>
+                                <input type="tel" id="new-telefono" class="form-control form-control-dash" placeholder="+56912345678" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Ciudad</label>
+                                <input type="text" id="new-ciudad" class="form-control form-control-dash" value="Temuco">
+                            </div>
+
+                            <!-- Campos Expositor -->
+                            <div class="col-md-6 field-expositor">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Redes Sociales</label>
+                                <input type="text" id="new-redes" class="form-control form-control-dash" placeholder="@mi_marca_instagram">
+                            </div>
+                            <div class="col-md-6 field-expositor">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Tipo de Espacio / Stand</label>
+                                <select id="new-espacio-tipo" class="form-select form-control-dash">
+                                    <option value="Espacio 2x2m ($20.000 CLP)">Espacio 2x2m ($20.000 CLP)</option>
+                                    <option value="Espacio 3x3m (Módulos) ($40.000 CLP)">Espacio 3x3m ($40.000 CLP)</option>
+                                    <option value="Patio Comida 3x3m ($60.000 CLP)">Patio Comida 3x3m ($60.000 CLP)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 field-expositor">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Categorías (separadas por coma)</label>
+                                <input type="text" id="new-categorias" class="form-control form-control-dash" placeholder="Ilustración, Fanart, Stickers">
+                            </div>
+
+                            <!-- Estado & Opciones -->
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Estado Inicial</label>
+                                <select id="new-estado" class="form-select form-control-dash">
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="contactado">Contactado</option>
+                                    <option value="aprobado">Aprobado</option>
+                                    <option value="pagado">💳 Pagado</option>
+                                    <option value="rechazado">Rechazado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end field-expositor">
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="new-es-canje">
+                                    <label class="form-check-label text-info font-weight-bold" for="new-es-canje" style="font-size:13px;">Modalidad Canje / Costo Cero ($0)</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 field-expositor">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Descripción de Productos</label>
+                                <textarea id="new-descripcion" class="form-control form-control-dash" rows="2" placeholder="Detalle de productos o contenido del stand..."></textarea>
+                            </div>
+
+                            <div class="col-md-12 field-cosplay d-none">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Observaciones / Pasarela Duo</label>
+                                <textarea id="new-observaciones" class="form-control form-control-dash" rows="2" placeholder="Observaciones o notas de pasarela..."></textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Notas Internas (Producción)</label>
+                                <textarea id="new-notas-internas" class="form-control form-control-dash" rows="2" placeholder="Notas solo visibles por el equipo..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer border-secondary justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success font-weight-bold" id="btn-save-new-lead">
+                            <i class="far fa-save me-1"></i> Guardar Postulación
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Script SQL -->
     <div class="modal fade" id="sqlModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -652,6 +861,73 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
         let allLeads = [];
         let filteredLeads = [];
         let selectedLeadId = null;
+
+        // COPY TO CLIPBOARD HELPER
+        function copyToClipboard(text, label = 'Dato', event = null) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            if (!text) return;
+
+            const cleanText = String(text)
+                .replace(/&amp;/g, '&')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"')
+                .replace(/&#39;/g, "'")
+                .trim();
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(cleanText).then(() => {
+                    showCopyToast(`¡${label} copiado!`, cleanText);
+                }).catch(() => {
+                    fallbackCopyTextToClipboard(cleanText, label);
+                });
+            } else {
+                fallbackCopyTextToClipboard(cleanText, label);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text, label) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            textArea.style.top = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopyToast(`¡${label} copiado!`, text);
+                } else {
+                    alert(`No se pudo copiar: ${text}`);
+                }
+            } catch (err) {
+                console.error('Error al copiar:', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showCopyToast(msg, val) {
+            let toast = document.getElementById("toast-copy-notification");
+            if (!toast) {
+                toast = document.createElement("div");
+                toast.id = "toast-copy-notification";
+                toast.className = "toast-copied";
+                document.body.appendChild(toast);
+            }
+
+            toast.innerHTML = `<i class="far fa-check-circle" style="color: #00e676; font-size: 16px;"></i> <span>${escapeHtml(msg)}</span> <code style="background: rgba(255,255,255,0.15); color: #fff; padding: 2px 8px; border-radius: 6px; font-size: 12px; font-family: monospace;">${escapeHtml(val)}</code>`;
+            toast.classList.add("show");
+
+            if (window.copyToastTimeout) clearTimeout(window.copyToastTimeout);
+            window.copyToastTimeout = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 2500);
+        }
 
         document.addEventListener("DOMContentLoaded", function() {
             checkAuthSession();
@@ -895,12 +1171,21 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                             <div class="mt-1">${tipoBadge}</div>
                         </td>
                         <td>
-                            <div style="font-weight: bold; color: #ffffff; font-size: 14px;">${titleText} ${ciudadBadge}</div>
-                            <div style="font-size: 12px; color: var(--text-muted);">${subText}</div>
+                            <div style="font-weight: bold; color: #ffffff; font-size: 14px;">
+                                <span class="copyable" data-copy-text="${escapeHtml(lead.nombre_marca || lead.personaje)}" onclick="copyToClipboard(this.dataset.copyText, 'Marca / Personaje', event)" title="Haz clic para copiar">${titleText}</span>
+                                ${ciudadBadge}
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-muted);">
+                                <span class="copyable" data-copy-text="${escapeHtml(lead.nombre_expositor || lead.nombre_completo)}" onclick="copyToClipboard(this.dataset.copyText, 'Nombre', event)" title="Haz clic para copiar el nombre">${subText}</span>
+                            </div>
                             <div style="font-size: 12px; color: #cbd5e1;" class="mt-1">
-                                <i class="far fa-envelope me-1 text-secondary"></i><a href="mailto:${escapeHtml(lead.email)}" style="color:#cbd5e1; text-decoration:none;">${escapeHtml(lead.email)}</a>
+                                <span class="copyable me-1" data-copy-text="${escapeHtml(lead.email)}" onclick="copyToClipboard(this.dataset.copyText, 'Correo', event)" title="Haz clic para copiar el correo">
+                                    <i class="far fa-envelope text-secondary me-1"></i><span style="color:#cbd5e1;">${escapeHtml(lead.email)}</span>
+                                </span>
                                 <span class="mx-1 text-secondary">•</span>
-                                <i class="fab fa-whatsapp me-1 text-success"></i><a href="https://wa.me/${escapeHtml(lead.telefono).replace(/[^0-9]/g,'')}" target="_blank" style="color:#00d264; text-decoration:none; font-weight:bold;">${escapeHtml(lead.telefono)}</a>
+                                <span class="copyable" data-copy-text="${escapeHtml(lead.telefono)}" onclick="copyToClipboard(this.dataset.copyText, 'Teléfono', event)" title="Haz clic para copiar el teléfono">
+                                    <i class="fab fa-whatsapp text-success me-1"></i><span style="color:#00d264; font-weight:bold;">${escapeHtml(lead.telefono)}</span>
+                                </span>
                             </div>
                         </td>
                         <td>${detailText}</td>
@@ -1113,10 +1398,10 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                         <div class="col-md-6">
                             <div class="p-3 bg-dark rounded border border-secondary">
                                 <h6 style="color: #00d264; font-weight: bold;"><i class="far fa-user me-1"></i> Datos del Participante</h6>
-                                <div><strong>Cosplayer:</strong> ${escapeHtml(lead.nombre_completo)} (RUT: ${escapeHtml(lead.rut)})</div>
+                                <div><strong>Cosplayer:</strong> <span class="copyable" data-copy-text="${escapeHtml(lead.nombre_completo)}" onclick="copyToClipboard(this.dataset.copyText, 'Nombre', event)" title="Haz clic para copiar el nombre">${escapeHtml(lead.nombre_completo)}</span> (RUT: ${escapeHtml(lead.rut)})</div>
                                 <div><strong>Edad:</strong> ${escapeHtml(lead.edad)} años ${esMenor ? '<span class="badge bg-danger">MENOR DE EDAD</span>' : ''}</div>
-                                <div><strong>Correo:</strong> <a href="mailto:${escapeHtml(lead.email)}" style="color: #ffffff;">${escapeHtml(lead.email)}</a></div>
-                                <div><strong>WhatsApp:</strong> ${escapeHtml(lead.telefono)}</div>
+                                <div><strong>Correo:</strong> <span class="copyable" data-copy-text="${escapeHtml(lead.email)}" onclick="copyToClipboard(this.dataset.copyText, 'Correo', event)" title="Haz clic para copiar el correo">${escapeHtml(lead.email)}</span></div>
+                                <div><strong>WhatsApp:</strong> <span class="copyable" data-copy-text="${escapeHtml(lead.telefono)}" onclick="copyToClipboard(this.dataset.copyText, 'Teléfono', event)" title="Haz clic para copiar el teléfono">${escapeHtml(lead.telefono)}</span></div>
                             </div>
                         </div>
 
@@ -1151,8 +1436,8 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                         <div class="col-md-6">
                             <div class="p-3 bg-dark rounded border border-secondary">
                                 <h6 style="color: var(--color-primary); font-weight: bold;">Información Personal & Marca</h6>
-                                <div><strong>Responsable:</strong> ${escapeHtml(lead.nombre_expositor || lead.nombre_completo)}</div>
-                                <div><strong>Marca / Proyecto:</strong> ${escapeHtml(lead.nombre_marca)}</div>
+                                <div><strong>Responsable:</strong> <span class="copyable" data-copy-text="${escapeHtml(lead.nombre_expositor || lead.nombre_completo)}" onclick="copyToClipboard(this.dataset.copyText, 'Nombre', event)" title="Haz clic para copiar el nombre">${escapeHtml(lead.nombre_expositor || lead.nombre_completo)}</span></div>
+                                <div><strong>Marca / Proyecto:</strong> <span class="copyable" data-copy-text="${escapeHtml(lead.nombre_marca)}" onclick="copyToClipboard(this.dataset.copyText, 'Marca', event)" title="Haz clic para copiar la marca">${escapeHtml(lead.nombre_marca)}</span></div>
                                 <div><strong>Redes Sociales:</strong> <a href="${escapeHtml(lead.redes_sociales)}" target="_blank" style="color: #ffe62e;">${escapeHtml(lead.redes_sociales)}</a></div>
                                 <div><strong>Ciudad:</strong> ${escapeHtml(lead.ciudad)}</div>
                             </div>
@@ -1160,8 +1445,8 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                         <div class="col-md-6">
                             <div class="p-3 bg-dark rounded border border-secondary">
                                 <h6 style="color: var(--color-primary); font-weight: bold;">Contacto & Espacio Solicitado</h6>
-                                <div><strong>Correo:</strong> <a href="mailto:${escapeHtml(lead.email)}" style="color: #ffffff;">${escapeHtml(lead.email)}</a></div>
-                                <div><strong>WhatsApp:</strong> ${escapeHtml(lead.telefono)}</div>
+                                <div><strong>Correo:</strong> <span class="copyable" data-copy-text="${escapeHtml(lead.email)}" onclick="copyToClipboard(this.dataset.copyText, 'Correo', event)" title="Haz clic para copiar el correo">${escapeHtml(lead.email)}</span></div>
+                                <div><strong>WhatsApp:</strong> <span class="copyable" data-copy-text="${escapeHtml(lead.telefono)}" onclick="copyToClipboard(this.dataset.copyText, 'Teléfono', event)" title="Haz clic para copiar el teléfono">${escapeHtml(lead.telefono)}</span></div>
                                 <div><strong>Tipo de Espacio:</strong> <span class="badge bg-danger">${escapeHtml(lead.espacio_tipo || 'Stand')}</span></div>
                                 <div><strong>Categorías:</strong> ${escapeHtml(lead.categorias || '-')}</div>
                                 <div class="mt-2 pt-2 border-top border-secondary d-flex align-items-center justify-content-between">
@@ -1217,10 +1502,10 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
 
                 if (supabaseClient) {
                     try {
-                        const table = isCosplay ? 'postulaciones_cosplay' : 'postulaciones';
-                        const { error } = await supabaseClient.from(table).update({ estado: newStatus }).eq('id', selectedLeadId);
-                        if (error && isCosplay) {
-                            await supabaseClient.from('postulaciones').update({ estado: newStatus }).eq('id', selectedLeadId);
+                        // Actualizar siempre la tabla principal 'postulaciones' (donde están todos los registros)
+                        await supabaseClient.from('postulaciones').update({ estado: newStatus }).eq('id', selectedLeadId);
+                        if (isCosplay) {
+                            await supabaseClient.from('postulaciones_cosplay').update({ estado: newStatus }).eq('id', selectedLeadId).catch(() => {});
                         }
                     } catch (e) {
                         console.error("Error actualizando Supabase:", e);
@@ -1286,7 +1571,7 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
             if (!lead) return;
 
             const nombreTarget = lead.nombre_marca || lead.personaje || lead.nombre_completo || 'Postulante';
-            if (!confirm(`¿Deseas enviar el correo oficial de APROBACIÓN con datos de transferencia VINTAGE SPA y manual de marca a "${nombreTarget}" (${lead.email})?`)) {
+            if (!confirm(`¿Deseas enviar el correo oficial de APROBACIÓN a "${nombreTarget}" (${lead.email})?`)) {
                 return;
             }
 
@@ -1307,7 +1592,7 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                         alert(`✅ Correo de Aprobación enviado exitosamente a ${lead.email}`);
                     } else {
                         const errDetail = extractEmailErrorText(res);
-                        alert(`⚠️ Resend API rechazo el envío a ${lead.email}.\n\nCausa del error:\n${errDetail}\n\nVerifica que el dominio temugeek.cl esté verificado en tu cuenta de Resend.`);
+                        alert(`⚠️ Resend API rechazó el envío a ${lead.email}.\n\nCausa del error:\n${errDetail}\n\nVerifica que el dominio temugeek.cl esté verificado en tu cuenta de Resend.`);
                     }
                 } else {
                     alert("❌ Error: La función sendApprovalEmail no está disponible.");
@@ -1341,8 +1626,10 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
             const isCosplay = String(lead.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(lead.personaje);
             if (supabaseClient) {
                 try {
-                    const table = isCosplay ? 'postulaciones_cosplay' : 'postulaciones';
-                    await supabaseClient.from(table).update({ es_canje: isCanje }).eq('id', selectedLeadId);
+                    await supabaseClient.from('postulaciones').update({ es_canje: isCanje }).eq('id', selectedLeadId);
+                    if (isCosplay) {
+                        await supabaseClient.from('postulaciones_cosplay').update({ es_canje: isCanje }).eq('id', selectedLeadId).catch(() => {});
+                    }
                 } catch (e) {
                     console.warn("No se pudo actualizar es_canje en Supabase:", e.message);
                 }
@@ -1362,8 +1649,10 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
             const isCosplay = String(lead.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(lead.personaje);
             if (supabaseClient) {
                 try {
-                    const table = isCosplay ? 'postulaciones_cosplay' : 'postulaciones';
-                    await supabaseClient.from(table).update({ es_canje: newCanje }).eq('id', leadId);
+                    await supabaseClient.from('postulaciones').update({ es_canje: newCanje }).eq('id', leadId);
+                    if (isCosplay) {
+                        await supabaseClient.from('postulaciones_cosplay').update({ es_canje: newCanje }).eq('id', leadId).catch(() => {});
+                    }
                 } catch (e) {
                     console.warn("No se pudo actualizar es_canje en Supabase:", e.message);
                 }
@@ -1385,8 +1674,10 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
             const isCosplay = String(lead.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(lead.personaje);
             if (supabaseClient) {
                 try {
-                    const table = isCosplay ? 'postulaciones_cosplay' : 'postulaciones';
-                    await supabaseClient.from(table).update({ estado: newStatus }).eq('id', leadId);
+                    await supabaseClient.from('postulaciones').update({ estado: newStatus }).eq('id', leadId);
+                    if (isCosplay) {
+                        await supabaseClient.from('postulaciones_cosplay').update({ estado: newStatus }).eq('id', leadId).catch(() => {});
+                    }
                 } catch (e) {
                     console.warn("No se pudo actualizar estado pagado en Supabase:", e.message);
                 }
@@ -1416,8 +1707,14 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                 lead.notas_internas = notes;
                 const isCosplay = lead.tipo_postulacion === 'cosplay' || Boolean(lead.personaje);
                 if (supabaseClient) {
-                    const table = isCosplay ? 'postulaciones_cosplay' : 'postulaciones';
-                    await supabaseClient.from(table).update({ notas_internas: notes }).eq('id', selectedLeadId);
+                    try {
+                        await supabaseClient.from('postulaciones').update({ notas_internas: notes }).eq('id', selectedLeadId);
+                        if (isCosplay) {
+                            await supabaseClient.from('postulaciones_cosplay').update({ notas_internas: notes }).eq('id', selectedLeadId).catch(() => {});
+                        }
+                    } catch (e) {
+                        console.warn("No se pudo actualizar notas_internas en Supabase:", e.message);
+                    }
                 } else {
                     saveLocalLeads();
                 }
@@ -1499,15 +1796,59 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
             alert("Se han cargado 3 postulaciones de prueba en el panel.");
         }
 
-        function exportToCSV() {
-            if (allLeads.length === 0) return alert("No hay postulaciones para exportar.");
+        function exportFilteredToExcel() {
+            const dataToExport = (filteredLeads && filteredLeads.length > 0) ? filteredLeads : allLeads;
 
-            const headers = ["ID", "Fecha", "Nombre Expositor", "Nombre Marca", "Redes Sociales", "Telefono", "Email", "Ciudad", "Categorias", "Espacio", "Formalizado", "RUT Empresa", "Razon Social", "Estado", "Descripcion"];
-            const rows = allLeads.map(l => [
+            if (!dataToExport || dataToExport.length === 0) {
+                return alert("No hay postulaciones filtradas para exportar.");
+            }
+
+            // 1ª columna: Nombre, 2ª columna: Correo
+            const headers = ["Nombre", "Correo"];
+            const rows = dataToExport.map(l => {
+                const isCosplay = String(l.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(l.personaje);
+                const nombre = isCosplay 
+                    ? (l.nombre_completo || l.nombre_expositor || l.personaje || 'Sin Nombre') 
+                    : (l.nombre_expositor || l.nombre_completo || l.nombre_marca || 'Sin Nombre');
+                const correo = l.email || '';
+
+                const cleanNombre = `"${String(nombre).replace(/"/g, '""')}"`;
+                const cleanCorreo = `"${String(correo).replace(/"/g, '""')}"`;
+
+                return `${cleanNombre};${cleanCorreo}`;
+            });
+
+            // BOM \uFEFF + delimitador ';' para apertura nativa e impecable en MS Excel
+            const csvContent = "\uFEFF" + headers.join(";") + "\n" + rows.join("\n");
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+
+            const tipoFiltro = document.getElementById("filter-tipo") ? document.getElementById("filter-tipo").value : '';
+            const estadoFiltro = document.getElementById("filter-estado") ? document.getElementById("filter-estado").value : '';
+            const dateStr = new Date().toISOString().slice(0, 10);
+            const labelFiltro = (tipoFiltro || estadoFiltro) ? `_${tipoFiltro || 'todos'}_${estadoFiltro || 'todos'}` : '';
+
+            link.setAttribute("download", `postulantes_nombre_correo${labelFiltro}_${dateStr}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function exportToCSV() {
+            const dataToExport = (filteredLeads && filteredLeads.length > 0) ? filteredLeads : allLeads;
+            if (!dataToExport || dataToExport.length === 0) return alert("No hay postulaciones para exportar.");
+
+            const headers = ["ID", "Fecha", "Tipo", "Nombre", "Marca / Personaje", "Redes Sociales", "Telefono", "Email", "Ciudad", "Categorias", "Espacio", "Formalizado", "RUT Empresa", "Razon Social", "Estado", "Descripcion"];
+            const rows = dataToExport.map(l => [
                 l.id,
                 l.created_at,
-                `"${l.nombre_expositor || ''}"`,
-                `"${l.nombre_marca || ''}"`,
+                `"${l.tipo_postulacion || (l.personaje ? 'cosplay' : 'expositor')}"`,
+                `"${l.nombre_completo || l.nombre_expositor || ''}"`,
+                `"${l.nombre_marca || l.personaje || ''}"`,
                 `"${l.redes_sociales || ''}"`,
                 `"${l.telefono || ''}"`,
                 `"${l.email || ''}"`,
@@ -1518,17 +1859,19 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                 `"${l.rut_empresa || ''}"`,
                 `"${l.razon_social || ''}"`,
                 l.estado || "pendiente",
-                `"${(l.descripcion_productos || '').replace(/"/g, '""')}"`
+                `"${(l.descripcion_productos || l.observaciones || '').replace(/"/g, '""')}"`
             ]);
 
-            const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
-            const encodedUri = encodeURI(csvContent);
+            const csvContent = "\uFEFF" + [headers.join(";"), ...rows.map(r => r.join(";"))].join("\n");
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `postulaciones_temugeek_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `postulaciones_completas_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            URL.revokeObjectURL(url);
         }
 
         function exportToJSON() {
@@ -1544,6 +1887,121 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
         function openSqlModal() {
             const modal = new bootstrap.Modal(document.getElementById("sqlModal"));
             modal.show();
+        }
+
+        // CREATE NEW MANUAL LEAD LOGIC
+        function openNewLeadModal() {
+            document.getElementById("new-lead-form").reset();
+            document.getElementById("tipo-expositor").checked = true;
+            toggleNewLeadTypeFields();
+            const modal = new bootstrap.Modal(document.getElementById("newLeadModal"));
+            modal.show();
+        }
+
+        function toggleNewLeadTypeFields() {
+            const isCosplay = document.getElementById("tipo-cosplay").checked;
+            const expositorFields = document.querySelectorAll(".field-expositor");
+            const cosplayFields = document.querySelectorAll(".field-cosplay");
+
+            expositorFields.forEach(el => {
+                if (isCosplay) el.classList.add("d-none");
+                else el.classList.remove("d-none");
+            });
+
+            cosplayFields.forEach(el => {
+                if (isCosplay) el.classList.remove("d-none");
+                else el.classList.add("d-none");
+            });
+
+            // Adjust required attributes dynamically
+            document.getElementById("new-nombre-marca").required = !isCosplay;
+            document.getElementById("new-nombre-expositor").required = !isCosplay;
+            document.getElementById("new-nombre-completo").required = isCosplay;
+            document.getElementById("new-rut").required = isCosplay;
+            document.getElementById("new-edad").required = isCosplay;
+            document.getElementById("new-personaje").required = isCosplay;
+            document.getElementById("new-origen").required = isCosplay;
+        }
+
+        async function handleCreateLeadSubmit(e) {
+            e.preventDefault();
+            const btnSave = document.getElementById("btn-save-new-lead");
+            const originalBtnHTML = btnSave.innerHTML;
+            btnSave.disabled = true;
+            btnSave.innerHTML = '<i class="far fa-spinner fa-spin me-1"></i> Guardando...';
+
+            try {
+                const isCosplay = document.getElementById("tipo-cosplay").checked;
+                const newId = "manual-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+
+                let leadData = {
+                    id: newId,
+                    created_at: new Date().toISOString(),
+                    email: document.getElementById("new-email").value.trim(),
+                    telefono: document.getElementById("new-telefono").value.trim(),
+                    ciudad: document.getElementById("new-ciudad").value.trim() || 'Temuco',
+                    estado: document.getElementById("new-estado").value,
+                    notas_internas: document.getElementById("new-notas-internas").value.trim(),
+                    tipo_postulacion: isCosplay ? 'cosplay' : 'expositor'
+                };
+
+                if (isCosplay) {
+                    leadData.nombre_completo = document.getElementById("new-nombre-completo").value.trim();
+                    leadData.rut = document.getElementById("new-rut").value.trim();
+                    leadData.edad = parseInt(document.getElementById("new-edad").value.trim(), 10) || 18;
+                    leadData.personaje = document.getElementById("new-personaje").value.trim();
+                    leadData.origen = document.getElementById("new-origen").value.trim();
+                    leadData.imagen_ref = document.getElementById("new-imagen-ref").value.trim() || 'https://via.placeholder.com/300';
+                    leadData.observaciones = document.getElementById("new-observaciones").value.trim();
+                } else {
+                    leadData.nombre_marca = document.getElementById("new-nombre-marca").value.trim();
+                    leadData.nombre_expositor = document.getElementById("new-nombre-expositor").value.trim();
+                    leadData.redes_sociales = document.getElementById("new-redes").value.trim() || '@temugeek';
+                    leadData.espacio_tipo = document.getElementById("new-espacio-tipo").value;
+                    leadData.categorias = document.getElementById("new-categorias").value.trim() || 'General';
+                    leadData.es_canje = document.getElementById("new-es-canje").checked;
+                    leadData.descripcion_productos = document.getElementById("new-descripcion").value.trim() || 'Sin descripción';
+                }
+
+                // Guardar en Supabase si está disponible
+                if (supabaseClient) {
+                    try {
+                        const targetTable = isCosplay ? 'postulaciones_cosplay' : 'postulaciones';
+                        const { data, error } = await supabaseClient.from(targetTable).insert([leadData]).select();
+                        if (error) {
+                            console.warn("Advertencia al insertar en Supabase:", error.message);
+                            if (targetTable === 'postulaciones_cosplay') {
+                                const { error: errFallback } = await supabaseClient.from('postulaciones').insert([leadData]);
+                                if (errFallback) console.warn("Fallback error:", errFallback.message);
+                            }
+                        }
+                    } catch (errSb) {
+                        console.error("Error al insertar en Supabase:", errSb);
+                    }
+                }
+
+                // Agregar a la lista de leads local y actualizar la interfaz
+                allLeads.unshift(leadData);
+                saveLocalLeads();
+                populateCategoryFilter();
+                applyFilters();
+
+                // Cerrar modal
+                const modalEl = document.getElementById("newLeadModal");
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if (modalInstance) modalInstance.hide();
+
+                const nombreItem = isCosplay ? leadData.personaje : leadData.nombre_marca;
+                showCopyToast(`¡Postulación creada!`, nombreItem);
+                alert(`✅ Postulación de "${nombreItem}" agregada exitosamente.`);
+
+            } catch (err) {
+                console.error("Error al crear postulación:", err);
+                alert(`❌ Error al guardar: ${err.message}`);
+            } finally {
+                btnSave.disabled = false;
+                btnSave.innerHTML = originalBtnHTML;
+            }
         }
 
         function copySqlScript() {
