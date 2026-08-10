@@ -584,9 +584,7 @@
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = '<i class="far fa-spinner fa-spin"></i> Guardando registro...';
 
-            const payload = {
-                id: "nomina-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
-                created_at: new Date().toISOString(),
+            const sbPayload = {
                 nombre_completo: document.getElementById("nombre_completo").value.trim(),
                 emprendimiento: document.getElementById("emprendimiento").value.trim(),
                 rut: rutVal,
@@ -596,17 +594,18 @@
                 tipo_participacion: document.getElementById("tipo_participacion").value
             };
 
+            let insertedItem = null;
+
             // 1. Guardar en Supabase si está disponible
-            let sbSaved = false;
             try {
                 if (window.getSupabaseClient) {
                     const sb = await window.getSupabaseClient();
                     if (sb) {
-                        const { data, error } = await sb.from('nomina_municipal').insert([payload]);
-                        if (!error) {
-                            sbSaved = true;
-                            console.log("✅ Registro de Nómina guardado en Supabase:", data);
-                        } else {
+                        const { data, error } = await sb.from('nomina_municipal').insert([sbPayload]).select();
+                        if (!error && Array.isArray(data) && data.length > 0) {
+                            insertedItem = data[0];
+                            console.log("✅ Registro de Nómina guardado en Supabase:", insertedItem);
+                        } else if (error) {
                             console.warn("Advertencia al guardar en Supabase (nomina_municipal):", error.message);
                         }
                     }
@@ -615,10 +614,19 @@
                 console.error("Excepción Supabase:", errSb);
             }
 
+            // Si no se obtuvo item de Supabase (modo offline / local), genera objeto local
+            if (!insertedItem) {
+                insertedItem = {
+                    id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ("loc-" + Date.now()),
+                    created_at: new Date().toISOString(),
+                    ...sbPayload
+                };
+            }
+
             // 2. Respaldo Resiliente en LocalStorage
             try {
                 const localNomina = JSON.parse(localStorage.getItem("TG_NOMINA_MUNICIPAL") || "[]");
-                localNomina.unshift(payload);
+                localNomina.unshift(insertedItem);
                 localStorage.setItem("TG_NOMINA_MUNICIPAL", JSON.stringify(localNomina));
             } catch (errLoc) {
                 console.error("Error al guardar respaldo local:", errLoc);

@@ -15,16 +15,22 @@ const SUPABASE_CONFIG = {
     isLoaded: false
 };
 
-// Intenta cargar desde el archivo .env en cualquier entorno/subdirectorio
+// Intenta cargar desde el archivo .env solo cuando esté disponible en entorno local
 async function loadEnvConfig() {
     if (SUPABASE_CONFIG.isLoaded) return SUPABASE_CONFIG;
 
-    const pathsToTry = ['./.env', '../.env', '/.env', '../../.env'];
+    // Si ya tenemos credenciales válidas precargadas, las usamos directamente
+    if (SUPABASE_CONFIG.URL && SUPABASE_CONFIG.ANON_KEY && window.location && window.location.protocol.startsWith('http')) {
+        SUPABASE_CONFIG.isLoaded = true;
+        return SUPABASE_CONFIG;
+    }
+
+    const pathsToTry = ['./.env'];
 
     for (const envPath of pathsToTry) {
         try {
             const response = await fetch(envPath);
-            if (response.ok) {
+            if (response && response.ok) {
                 const envText = await response.text();
                 const lines = envText.split('\n');
                 lines.forEach(line => {
@@ -56,10 +62,10 @@ async function loadEnvConfig() {
                         }
                     }
                 });
-                break; // Detener si se cargó exitosamente
+                break;
             }
         } catch (err) {
-            // Continuar con el siguiente path
+            // Continuar sin interrumpir
         }
     }
 

@@ -2677,10 +2677,7 @@ CREATE POLICY "Permitir eliminación pública nomina" ON public.nomina_municipal
             btnSave.innerHTML = '<i class="far fa-spinner fa-spin me-1"></i> Guardando...';
 
             try {
-                const newId = "nomina-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
-                const itemData = {
-                    id: newId,
-                    created_at: new Date().toISOString(),
+                const sbPayload = {
                     nombre_completo: document.getElementById("new-nom-nombre").value.trim(),
                     emprendimiento: document.getElementById("new-nom-emprendimiento").value.trim(),
                     rut: document.getElementById("new-nom-rut").value.trim(),
@@ -2690,15 +2687,30 @@ CREATE POLICY "Permitir eliminación pública nomina" ON public.nomina_municipal
                     tipo_participacion: document.getElementById("new-nom-tipo").value
                 };
 
+                let insertedItem = null;
+
                 if (supabaseClient) {
                     try {
-                        await supabaseClient.from('nomina_municipal').insert([itemData]);
+                        const { data, error } = await supabaseClient.from('nomina_municipal').insert([sbPayload]).select();
+                        if (!error && Array.isArray(data) && data.length > 0) {
+                            insertedItem = data[0];
+                        } else if (error) {
+                            console.warn("Advertencia al guardar en Supabase:", error.message);
+                        }
                     } catch (errSb) {
-                        console.warn("Advertencia al guardar en Supabase:", errSb);
+                        console.warn("Error al guardar en Supabase:", errSb);
                     }
                 }
 
-                allNomina.unshift(itemData);
+                if (!insertedItem) {
+                    insertedItem = {
+                        id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ("loc-" + Date.now()),
+                        created_at: new Date().toISOString(),
+                        ...sbPayload
+                    };
+                }
+
+                allNomina.unshift(insertedItem);
                 saveLocalNomina();
                 applyNominaFilters();
 
@@ -2706,7 +2718,7 @@ CREATE POLICY "Permitir eliminación pública nomina" ON public.nomina_municipal
                 const modalInst = bootstrap.Modal.getInstance(modalEl);
                 if (modalInst) modalInst.hide();
 
-                showCopyToast(`¡Registro creado!`, itemData.nombre_completo);
+                showCopyToast(`¡Registro creado!`, insertedItem.nombre_completo);
             } catch (err) {
                 alert("Error al guardar: " + err.message);
             } finally {
