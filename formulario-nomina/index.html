@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="Formulario de Registro para la Nómina Oficial de Participantes de TemuGeek Expo 2026 a presentar ante la Ilustre Municipalidad de Temuco.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Nómina Oficial de Participantes — TemuGeek Expo 2026</title>
+
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- CSS Include -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/custom-fonts.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/mobile-optimizations.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Supabase JS Client & Global Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+
+    <style>
+        :root {
+            --color-primary: #e92652;
+            --color-secondary: #ffe62e;
+            --color-dark-bg: #141519;
+            --color-card-bg: #181920;
+            --color-card-border: #323541;
+            --color-text-main: #ffffff;
+            --color-text-muted: #9da1b0;
+            --color-success: #00d264;
+        }
+
+        body.design-conference {
+            background-color: var(--color-dark-bg) !important;
+            color: var(--color-text-main) !important;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar Header */
+        .top-nav {
+            background-color: rgba(20, 21, 25, 0.95);
+            border-bottom: 1px solid var(--color-card-border);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-logo img {
+            max-height: 42px;
+            width: auto;
+        }
+
+        /* Card Container */
+        .nomina-card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .nomina-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #e92652, #ffe62e, #00d264);
+        }
+
+        .nomina-card:hover {
+            border-color: var(--color-primary);
+        }
+
+        /* Municipal Explanation Alert Banner */
+        .municipal-alert-box {
+            background: rgba(233, 38, 82, 0.08);
+            border: 1px dashed var(--color-primary);
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .municipal-alert-icon {
+            background: rgba(233, 38, 82, 0.2);
+            color: var(--color-primary);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .municipal-alert-content h4 {
+            font-family: 'Righteous', sans-serif;
+            color: var(--color-secondary);
+            font-size: 18px;
+            margin: 0 0 6px 0;
+        }
+
+        .municipal-alert-content p {
+            color: #e2e8f0;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Form Inputs Custom Styling */
+        .form-label-custom {
+            color: #ffffff !important;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-label-custom span.optional-badge {
+            color: var(--color-secondary);
+            font-weight: 400;
+            font-size: 12px;
+            background: rgba(255, 230, 46, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 230, 46, 0.2);
+        }
+
+        .form-control-custom {
+            background-color: #141519 !important;
+            border: 1px solid var(--color-card-border) !important;
+            color: #ffffff !important;
+            border-radius: 10px !important;
+            padding: 12px 16px !important;
+            font-size: 15px !important;
+            width: 100%;
+            transition: all 0.25s ease;
+        }
+
+        .form-control-custom:focus {
+            outline: none !important;
+            border-color: var(--color-primary) !important;
+            box-shadow: 0 0 15px rgba(233, 38, 82, 0.35) !important;
+            background-color: #191b22 !important;
+        }
+
+        .form-control-custom::placeholder {
+            color: #64748b !important;
+        }
+
+        select.form-control-custom option {
+            background-color: #181920;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        /* RUT Validation Formatting */
+        .rut-feedback {
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        .rut-valid {
+            border-color: #00d264 !important;
+            box-shadow: 0 0 10px rgba(0, 210, 100, 0.3) !important;
+        }
+        .rut-invalid {
+            border-color: #ff4a75 !important;
+            box-shadow: 0 0 10px rgba(255, 74, 117, 0.3) !important;
+        }
+
+        /* Primary Button */
+        .btn-geek-submit {
+            background: linear-gradient(135deg, #e92652 0%, #ff4a75 100%);
+            color: #ffffff !important;
+            font-family: 'Righteous', cursive;
+            font-size: 18px;
+            letter-spacing: 1px;
+            padding: 16px 36px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 8px 25px rgba(233, 38, 82, 0.4);
+            transition: all 0.3s ease;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .btn-geek-submit:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(233, 38, 82, 0.6);
+            color: #ffffff !important;
+        }
+
+        .btn-geek-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Success Overlay Modal */
+        .success-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 12, 16, 0.92);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .success-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .success-modal {
+            background: var(--color-card-bg);
+            border: 2px solid var(--color-success);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 210, 100, 0.25);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .success-overlay.active .success-modal {
+            transform: scale(1);
+        }
+
+        .success-icon-badge {
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 210, 100, 0.15);
+            border: 2px solid #00d264;
+            color: #00d264;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 0 30px rgba(0, 210, 100, 0.4);
+        }
+
+        .summary-box {
+            background: #141519;
+            border: 1px solid var(--color-card-border);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+        .summary-label {
+            color: var(--color-text-muted);
+        }
+        .summary-val {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        @media (max-width: 767px) {
+            .nomina-card {
+                padding: 24px;
+            }
+            .municipal-alert-box {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body class="design-conference">
+
+    <!-- Top Navigation Header -->
+    <header class="top-nav">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="../index.html" class="header-logo">
+                    <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek Expo 2026">
+                </a>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-danger px-3 py-2 text-uppercase" style="font-size: 11px; letter-spacing: 1px;">
+                        <i class="far fa-university me-1"></i> Registro Oficial Municipal
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="py-5 flex-grow-1">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9 col-xl-8">
+
+                    <!-- Title Header -->
+                    <div class="text-center mb-4">
+                        <span class="badge bg-warning text-dark font-weight-bold px-3 py-2 text-uppercase mb-2" style="letter-spacing: 1px; font-size: 12px;">
+                            <i class="far fa-file-certificate me-1"></i> Permisos & Autorización Municipal
+                        </span>
+                        <h1 style="font-family: 'Righteous', sans-serif; font-size: calc(24px + 1.2vw); color: #ffffff; margin-bottom: 10px;">
+                            Nómina Oficial de Participantes
+                        </h1>
+                        <p style="color: var(--color-text-muted); font-size: 15px; max-width: 680px; margin: 0 auto;">
+                            Formulario de acreditación obligatoria para expositores, tiendas, ilustradores y participantes de <strong>TemuGeek Expo 2026</strong>.
+                        </p>
+                    </div>
+
+                    <!-- Form Card -->
+                    <div class="nomina-card">
+
+                        <!-- Municipal Explanation Box -->
+                        <div class="municipal-alert-box">
+                            <div class="municipal-alert-icon">
+                                <i class="far fa-landmark"></i>
+                            </div>
+                            <div class="municipal-alert-content">
+                                <h4><i class="far fa-info-circle me-1"></i> ¿Para qué se solicitan estos datos?</h4>
+                                <p>
+                                    De acuerdo a la normativa vigente para la realización de eventos masivos y la solicitud de decretos de autorización municipal, la <strong>Ilustre Municipalidad de Temuco</strong> exige a la producción presentar la <strong>Nómina Oficial de Participantes y Expositores</strong> con sus correspondientes identificaciones tributarias y de representante legal. Por favor ingresa datos fidedignos.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Form -->
+                        <form id="nomina-form" onsubmit="handleFormSubmit(event)">
+
+                            <div class="row g-4">
+                                <!-- 1. Nombre Completo -->
+                                <div class="col-md-6">
+                                    <label class="form-label-custom" for="nombre_completo">
+                                        <span><i class="far fa-user me-1 text-danger"></i> Nombre Completo Responsable <span class="text-danger">*</span></span>
+                                    </label>
+                                    <input type="text" id="nombre_completo" class="form-control-custom" placeholder="Ej: Camila Andrea Morales Silva" required autocomplete="name">
+                                </div>
+
+                                <!-- 2. Emprendimiento / Marca -->
+                                <div class="col-md-6">
+                                    <label class="form-label-custom" for="emprendimiento">
+                                        <span><i class="far fa-store me-1 text-danger"></i> Nombre Emprendimiento / Marca <span class="text-danger">*</span></span>
+                                    </label>
+                                    <input type="text" id="emprendimiento" class="form-control-custom" placeholder="Ej: Sakura Store / Art Studio" required>
+                                </div>
+
+                                <!-- 3. RUT -->
+                                <div class="col-md-6">
+                                    <label class="form-label-custom" for="rut">
+                                        <span><i class="far fa-id-card me-1 text-danger"></i> RUT (Personal o de Empresa) <span class="text-danger">*</span></span>
+                                    </label>
+                                    <input type="text" id="rut" class="form-control-custom" placeholder="Ej: 12.345.678-9" required oninput="handleRutInput(this)">
+                                    <div id="rut-error-msg" class="rut-feedback text-danger">
+                                        <i class="far fa-exclamation-circle me-1"></i> RUT no válido. Verifica el dígito verificador.
+                                    </div>
+                                </div>
+
+                                <!-- 4. Razón Social (Opcional) -->
+                                <div class="col-md-6">
+                                    <label class="form-label-custom" for="razon_social">
+                                        <span><i class="far fa-building me-1 text-warning"></i> Razón Social</span>
+                                        <span class="optional-badge">En caso de poseerla</span>
+                                    </label>
+                                    <input type="text" id="razon_social" class="form-control-custom" placeholder="Ej: Comercial e Inversiones Morales SpA">
+                                </div>
+
+                                <!-- 5. Correo Electrónico -->
+                                <div class="col-md-6">
+                                    <label class="form-label-custom" for="email">
+                                        <span><i class="far fa-envelope me-1 text-danger"></i> Correo Electrónico <span class="text-danger">*</span></span>
+                                    </label>
+                                    <input type="email" id="email" class="form-control-custom" placeholder="ejemplo@correo.cl" required autocomplete="email">
+                                </div>
+
+                                <!-- 6. Teléfono -->
+                                <div class="col-md-6">
+                                    <label class="form-label-custom" for="telefono">
+                                        <span><i class="far fa-phone me-1 text-danger"></i> Teléfono WhatsApp <span class="text-danger">*</span></span>
+                                    </label>
+                                    <input type="tel" id="telefono" class="form-control-custom" placeholder="+56 9 1234 5678" required autocomplete="tel">
+                                </div>
+
+                                <!-- 7. Tipo de Participación -->
+                                <div class="col-12">
+                                    <label class="form-label-custom" for="tipo_participacion">
+                                        <span><i class="far fa-tag me-1 text-danger"></i> Tipo de Participación / Categoría <span class="text-danger">*</span></span>
+                                    </label>
+                                    <select id="tipo_participacion" class="form-control-custom" required>
+                                        <option value="Expositor / Tienda" selected>🏪 Expositor / Tienda de Productos</option>
+                                        <option value="Ilustrador / Artista">🎨 Artist Alley / Ilustrador</option>
+                                        <option value="Food Truck / Gastronomía">🍔 Food Truck / Gastronomía</option>
+                                        <option value="Cosplay / Concursante">🎭 Concurso Cosplay / Invitado</option>
+                                        <option value="Agrupación / Comunidad">👥 Agrupación / Comunidad Geek</option>
+                                        <option value="Otro">⭐ Otro tipo de participante</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <hr class="my-4 border-secondary opacity-25">
+
+                            <!-- Privacy Notice -->
+                            <div class="d-flex align-items-center gap-2 mb-4 text-muted" style="font-size: 12px;">
+                                <i class="far fa-lock-alt text-success fs-5"></i>
+                                <span>Tus datos son protegidos y transmitidos exclusivamente para fines de acreditación del evento ante la Ilustre Municipalidad de Temuco.</span>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" id="btn-submit" class="btn-geek-submit">
+                                <i class="far fa-paper-plane"></i> Enviar Registro de Nómina
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- Footer Info -->
+                    <div class="text-center mt-4 text-muted" style="font-size: 13px;">
+                        TemuGeek Expo 2026 • Recinto SOFO, Temuco — Sistema de Acreditación Oficial
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal Overlay -->
+    <div id="success-overlay" class="success-overlay">
+        <div class="success-modal">
+            <div class="success-icon-badge">
+                <i class="far fa-check"></i>
+            </div>
+            <h3 style="font-family: 'Righteous', sans-serif; color: #ffffff; font-size: 24px; margin-bottom: 8px;">
+                ¡Registro Recibido!
+            </h3>
+            <p style="color: var(--color-text-muted); font-size: 14px; margin-bottom: 15px;">
+                Los datos han sido incorporados a la Nómina Oficial de Participantes para la Municipalidad de Temuco.
+            </p>
+
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span class="summary-label">Responsable:</span>
+                    <span class="summary-val" id="res-nombre">-</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Emprendimiento:</span>
+                    <span class="summary-val" id="res-emprendimiento">-</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">RUT:</span>
+                    <span class="summary-val" id="res-rut">-</span>
+                </div>
+                <div class="summary-row" id="row-razon-social">
+                    <span class="summary-label">Razón Social:</span>
+                    <span class="summary-val" id="res-razon">-</span>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-outline-light w-100 py-2 rounded-pill font-weight-bold" onclick="resetFormAndCloseModal()">
+                <i class="far fa-plus-circle me-1"></i> Registrar Otro Participante
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Chilean RUT Validation Algorithm
+        function cleanRut(rut) {
+            return String(rut).replace(/[^0-9kK]/g, '').toUpperCase();
+        }
+
+        function formatRutString(rut) {
+            let cleaned = cleanRut(rut);
+            if (cleaned.length <= 1) return cleaned;
+            let dv = cleaned.slice(-1);
+            let body = cleaned.slice(0, -1);
+            let formattedBody = body.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            return `${formattedBody}-${dv}`;
+        }
+
+        function validateRutChile(rut) {
+            let cleaned = cleanRut(rut);
+            if (cleaned.length < 8) return false;
+            let dv = cleaned.slice(-1);
+            let body = cleaned.slice(0, -1);
+
+            let suma = 0;
+            let multiplicador = 2;
+
+            for (let i = body.length - 1; i >= 0; i--) {
+                suma += parseInt(body.charAt(i), 10) * multiplicador;
+                multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+            }
+
+            let dvEsperado = 11 - (suma % 11);
+            let dvCalc = '0';
+            if (dvEsperado === 11) dvCalc = '0';
+            else if (dvEsperado === 10) dvCalc = 'K';
+            else dvCalc = String(dvEsperado);
+
+            return dv.toUpperCase() === dvCalc;
+        }
+
+        function handleRutInput(input) {
+            const rawVal = input.value;
+            const formatted = formatRutString(rawVal);
+            input.value = formatted;
+
+            const errorMsg = document.getElementById("rut-error-msg");
+
+            if (cleanRut(rawVal).length >= 8) {
+                const isValid = validateRutChile(formatted);
+                if (isValid) {
+                    input.classList.remove("rut-invalid");
+                    input.classList.add("rut-valid");
+                    errorMsg.style.display = "none";
+                } else {
+                    input.classList.remove("rut-valid");
+                    input.classList.add("rut-invalid");
+                    errorMsg.style.display = "block";
+                }
+            } else {
+                input.classList.remove("rut-valid", "rut-invalid");
+                errorMsg.style.display = "none";
+            }
+        }
+
+        // Handle Form Submission
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const rutInput = document.getElementById("rut");
+            const rutVal = rutInput.value.trim();
+
+            if (cleanRut(rutVal).length >= 8 && !validateRutChile(rutVal)) {
+                alert("Por favor ingresa un RUT válido antes de enviar.");
+                rutInput.focus();
+                return;
+            }
+
+            const btnSubmit = document.getElementById("btn-submit");
+            const originalHTML = btnSubmit.innerHTML;
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="far fa-spinner fa-spin"></i> Guardando registro...';
+
+            const payload = {
+                id: "nomina-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+                created_at: new Date().toISOString(),
+                nombre_completo: document.getElementById("nombre_completo").value.trim(),
+                emprendimiento: document.getElementById("emprendimiento").value.trim(),
+                rut: rutVal,
+                razon_social: document.getElementById("razon_social").value.trim() || null,
+                email: document.getElementById("email").value.trim(),
+                telefono: document.getElementById("telefono").value.trim(),
+                tipo_participacion: document.getElementById("tipo_participacion").value
+            };
+
+            // 1. Guardar en Supabase si está disponible
+            let sbSaved = false;
+            try {
+                if (window.getSupabaseClient) {
+                    const sb = await window.getSupabaseClient();
+                    if (sb) {
+                        const { data, error } = await sb.from('nomina_municipal').insert([payload]);
+                        if (!error) {
+                            sbSaved = true;
+                            console.log("✅ Registro de Nómina guardado en Supabase:", data);
+                        } else {
+                            console.warn("Advertencia al guardar en Supabase (nomina_municipal):", error.message);
+                        }
+                    }
+                }
+            } catch (errSb) {
+                console.error("Excepción Supabase:", errSb);
+            }
+
+            // 2. Respaldo Resiliente en LocalStorage
+            try {
+                const localNomina = JSON.parse(localStorage.getItem("TG_NOMINA_MUNICIPAL") || "[]");
+                localNomina.unshift(payload);
+                localStorage.setItem("TG_NOMINA_MUNICIPAL", JSON.stringify(localNomina));
+            } catch (errLoc) {
+                console.error("Error al guardar respaldo local:", errLoc);
+            }
+
+            // Mostrar Modal de Éxito
+            document.getElementById("res-nombre").textContent = payload.nombre_completo;
+            document.getElementById("res-emprendimiento").textContent = payload.emprendimiento;
+            document.getElementById("res-rut").textContent = payload.rut;
+
+            const rowRazon = document.getElementById("row-razon-social");
+            if (payload.razon_social) {
+                document.getElementById("res-razon").textContent = payload.razon_social;
+                rowRazon.style.display = "flex";
+            } else {
+                rowRazon.style.display = "none";
+            }
+
+            document.getElementById("success-overlay").classList.add("active");
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = originalHTML;
+        }
+
+        function resetFormAndCloseModal() {
+            document.getElementById("nomina-form").reset();
+            document.getElementById("rut").classList.remove("rut-valid", "rut-invalid");
+            document.getElementById("rut-error-msg").style.display = "none";
+            document.getElementById("success-overlay").classList.remove("active");
+        }
+    </script>
+</body>
+
+</html>

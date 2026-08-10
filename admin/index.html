@@ -323,6 +323,28 @@
         .copyable:hover::after {
             opacity: 0.8;
         }
+
+        /* Custom Dashboard Navigation Tabs */
+        .custom-dash-tabs .nav-link {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 22px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        .custom-dash-tabs .nav-link:hover {
+            color: #ffffff;
+            border-color: var(--color-primary);
+        }
+        .custom-dash-tabs .nav-link.active {
+            background: var(--color-primary);
+            color: #ffffff;
+            border-color: var(--color-primary);
+            box-shadow: 0 4px 15px rgba(233, 38, 82, 0.35);
+        }
     </style>
 </head>
 
@@ -391,7 +413,10 @@
                     <i class="far fa-database"></i> Script SQL Tabla
                 </button>
                 <a href="../postulacion/index.html" target="_blank" class="btn btn-outline-light btn-sm">
-                    <i class="far fa-external-link"></i> Ver Formulario
+                    <i class="far fa-external-link"></i> Ver Formulario Postulación
+                </a>
+                <a href="../formulario-nomina/index.html" target="_blank" class="btn btn-outline-info btn-sm">
+                    <i class="far fa-file-signature"></i> Ver Formulario Nómina
                 </a>
                 <button class="btn btn-outline-danger btn-sm" onclick="logoutAdmin()">
                     <i class="far fa-sign-out-alt"></i> Cerrar Sesión
@@ -402,164 +427,333 @@
         <!-- Main Dashboard Content -->
         <div class="dashboard-container">
 
-            <!-- Page Header -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h1 style="font-family: 'Righteous', sans-serif; font-size: 28px; margin: 0; color: #ffffff;">
-                        Gestión de Postulaciones (Leads)
-                    </h1>
-                    <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px; margin-bottom: 0;">
-                        Panel de administración para evaluar, filtrar y contactar expositores.
-                    </p>
-                </div>
-                <div class="d-flex gap-2 flex-wrap">
-                    <button class="btn btn-success btn-sm font-weight-bold" onclick="openNewLeadModal()">
-                        <i class="far fa-plus-circle me-1"></i> Nueva Postulación
-                    </button>
-                    <button class="btn btn-outline-success btn-sm font-weight-bold" onclick="exportFilteredToExcel()" title="Exportar postulantes filtrados (Nombre y Correo) a Excel">
-                        <i class="far fa-file-excel me-1"></i> Exportar Nombre & Correo (Excel)
-                    </button>
-                    <button class="btn btn-outline-secondary btn-sm" onclick="exportToCSV()" title="Exportar vista filtrada completa a CSV">
-                        <i class="far fa-file-csv me-1"></i> Exportar Completo (CSV)
-                    </button>
-                    <button class="btn btn-outline-secondary btn-sm" onclick="exportToJSON()">
-                        <i class="far fa-download"></i> Backup JSON
-                    </button>
-                    <button class="btn btn-outline-danger btn-sm" onclick="purgeDemoLeads()">
-                        <i class="far fa-trash-alt"></i> Borrar Contactos / Demo
-                    </button>
-                </div>
+            <!-- MAIN NAVIGATION TABS -->
+            <div class="mb-4">
+                <ul class="nav nav-pills custom-dash-tabs gap-2" id="admin-main-tabs">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="tab-postulaciones-btn" onclick="switchMainTab('postulaciones')" type="button">
+                            <i class="far fa-store me-2"></i> 🏬 Postulaciones Expositores
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="tab-nomina-btn" onclick="switchMainTab('nomina')" type="button">
+                            <i class="far fa-landmark me-2"></i> 📋 Nómina Municipalidad
+                        </button>
+                    </li>
+                </ul>
             </div>
 
-            <!-- KPI Cards Grid -->
-            <div class="row g-3 mb-4">
-                <div class="col-md-4 col-xl-2">
-                    <div class="kpi-card" style="--accent-color: #3b82f6;">
-                        <div class="kpi-title">Total Leads</div>
-                        <div class="kpi-value" id="kpi-total">0</div>
-                        <div style="font-size: 11px; color: var(--text-muted);">Leads recibidos</div>
-                        <i class="far fa-clipboard-list kpi-icon"></i>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-2">
-                    <div class="kpi-card" style="--accent-color: #ff9800;">
-                        <div class="kpi-title">Pendientes</div>
-                        <div class="kpi-value" id="kpi-pendientes" style="color: #ffb74d;">0</div>
-                        <div style="font-size: 11px; color: var(--text-muted);">Por evaluar</div>
-                        <i class="far fa-clock kpi-icon"></i>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-2">
-                    <div class="kpi-card" style="--accent-color: #00b0ff;">
-                        <div class="kpi-title">Aprobados</div>
-                        <div class="kpi-value" id="kpi-aprobados" style="color: #40c4ff;">0</div>
-                        <div style="font-size: 11px; color: var(--text-muted);">Pendiente pago</div>
-                        <i class="far fa-check-circle kpi-icon"></i>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-2">
-                    <div class="kpi-card" style="--accent-color: #00e676;">
-                        <div class="kpi-title">Pagados</div>
-                        <div class="kpi-value" id="kpi-pagados" style="color: #00e676;">0</div>
-                        <div style="font-size: 11px; color: var(--text-muted);">Pago confirmado</div>
-                        <i class="far fa-receipt kpi-icon"></i>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-2">
-                    <div class="kpi-card" style="--accent-color: #00e676;">
-                        <div class="kpi-title">Recaudación Real</div>
-                        <div class="kpi-value" id="kpi-recaudacion-real" style="color: #00e676;">$0</div>
-                        <div style="font-size: 11px; color: var(--text-muted);">Caja confirmada</div>
-                        <i class="far fa-wallet kpi-icon"></i>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-2">
-                    <div class="kpi-card" style="--accent-color: #ffe62e;">
-                        <div class="kpi-title">Recaudación Est.</div>
-                        <div class="kpi-value" id="kpi-recaudacion" style="color: #ffe62e;">$0</div>
-                        <div style="font-size: 11px; color: var(--text-muted);">Aprobados + Pagados</div>
-                        <i class="far fa-coins kpi-icon"></i>
-                    </div>
-                </div>
-            </div>
+            <!-- VIEW 1: POSTULACIONES EXPOSITORES (LEADS) -->
+            <div id="view-postulaciones">
 
-            <!-- Filter & Search Toolbar -->
-            <div class="toolbar-card">
-                <div class="row g-2 align-items-center">
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <span class="input-group-text bg-dark border-secondary text-secondary"><i class="far fa-search"></i></span>
-                            <input type="text" id="search-input" class="form-control form-control-dash" placeholder="Buscar marca, nombre, email..." oninput="applyFilters()">
-                        </div>
+                <!-- Page Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 style="font-family: 'Righteous', sans-serif; font-size: 28px; margin: 0; color: #ffffff;">
+                            Gestión de Postulaciones (Leads)
+                        </h1>
+                        <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px; margin-bottom: 0;">
+                            Panel de administración para evaluar, filtrar y contactar expositores.
+                        </p>
                     </div>
-                    <div class="col-md-2">
-                        <select id="filter-tipo" class="form-select form-control-dash" onchange="applyFilters()">
-                            <option value="">Tipo: Todos</option>
-                            <option value="expositor">🏬 Expositores</option>
-                            <option value="cosplay">🎭 Concurso Cosplay</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select id="filter-estado" class="form-select form-control-dash" onchange="applyFilters()">
-                            <option value="">Estado: Todos</option>
-                            <option value="pendiente">Pendiente</option>
-                            <option value="contactado">Contactado</option>
-                            <option value="aprobado">Aprobado</option>
-                            <option value="pagado">💳 Pagado</option>
-                            <option value="rechazado">Rechazado</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select id="filter-espacio" class="form-select form-control-dash" onchange="applyFilters()">
-                            <option value="">Espacio: Todos</option>
-                            <option value="2x2m">Espacio 2x2m ($20.000)</option>
-                            <option value="3x3m">Espacio 3x3m ($40.000)</option>
-                            <option value="60.000">Patio Comida 3x3 ($60.000)</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select id="filter-categoria" class="form-select form-control-dash" onchange="applyFilters()">
-                            <option value="">Categoría: Todas</option>
-                        </select>
-                    </div>
-                    <div class="col-md-1 text-end">
-                        <button class="btn btn-outline-secondary w-100 px-1" onclick="resetFilters()" title="Limpiar todos los filtros">
-                            <i class="far fa-sync"></i>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-success btn-sm font-weight-bold" onclick="openNewLeadModal()">
+                            <i class="far fa-plus-circle me-1"></i> Nueva Postulación
+                        </button>
+                        <button class="btn btn-outline-success btn-sm font-weight-bold" onclick="exportFilteredToExcel()" title="Exportar postulantes filtrados (Nombre y Correo) a Excel">
+                            <i class="far fa-file-excel me-1"></i> Exportar Nombre & Correo (Excel)
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="exportToCSV()" title="Exportar vista filtrada completa a CSV">
+                            <i class="far fa-file-csv me-1"></i> Exportar Completo (CSV)
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="exportToJSON()">
+                            <i class="far fa-download"></i> Backup JSON
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm" onclick="purgeDemoLeads()">
+                            <i class="far fa-trash-alt"></i> Borrar Contactos / Demo
                         </button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Data Table -->
-            <div class="table-card">
-                <div class="table-responsive">
-                    <table class="table-custom">
-                        <thead>
-                            <tr>
-                                <th style="width: 120px;">Fecha / Tipo</th>
-                                <th>Postulante, Proyecto & Contacto</th>
-                                <th>Espacio / Stand</th>
-                                <th style="width: 150px;">Modalidad</th>
-                                <th style="width: 210px;">Estado & Pago</th>
-                                <th class="text-end" style="width: 160px;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leads-table-body">
-                            <!-- Rendered dynamically -->
-                        </tbody>
-                    </table>
+                <!-- KPI Cards Grid -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #3b82f6;">
+                            <div class="kpi-title">Total Leads</div>
+                            <div class="kpi-value" id="kpi-total">0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Leads recibidos</div>
+                            <i class="far fa-clipboard-list kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #ff9800;">
+                            <div class="kpi-title">Pendientes</div>
+                            <div class="kpi-value" id="kpi-pendientes" style="color: #ffb74d;">0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Por evaluar</div>
+                            <i class="far fa-clock kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #00b0ff;">
+                            <div class="kpi-title">Aprobados</div>
+                            <div class="kpi-value" id="kpi-aprobados" style="color: #40c4ff;">0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Pendiente pago</div>
+                            <i class="far fa-check-circle kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #00e676;">
+                            <div class="kpi-title">Pagados</div>
+                            <div class="kpi-value" id="kpi-pagados" style="color: #00e676;">0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Pago confirmado</div>
+                            <i class="far fa-receipt kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #00e676;">
+                            <div class="kpi-title">Recaudación Real</div>
+                            <div class="kpi-value" id="kpi-recaudacion-real" style="color: #00e676;">$0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Caja confirmada</div>
+                            <i class="far fa-wallet kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #ffe62e;">
+                            <div class="kpi-title">Recaudación Est.</div>
+                            <div class="kpi-value" id="kpi-recaudacion" style="color: #ffe62e;">$0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Aprobados + Pagados</div>
+                            <i class="far fa-coins kpi-icon"></i>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Empty State -->
-                <div id="empty-state" class="text-center p-5 d-none">
-                    <i class="far fa-inbox" style="font-size: 48px; color: var(--text-muted); opacity: 0.5;"></i>
-                    <h4 class="mt-3" style="color: #ffffff;">No se encontraron postulaciones</h4>
-                    <p style="color: var(--text-muted); font-size: 14px;">Intenta cambiar los filtros o carga postulaciones de prueba.</p>
-                    <button class="btn btn-outline-info btn-sm mt-2" onclick="loadDemoData()">
-                        <i class="far fa-magic"></i> Cargar 3 Leads de Prueba
-                    </button>
+                <!-- Filter & Search Toolbar -->
+                <div class="toolbar-card">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-secondary text-secondary"><i class="far fa-search"></i></span>
+                                <input type="text" id="search-input" class="form-control form-control-dash" placeholder="Buscar marca, nombre, email..." oninput="applyFilters()">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="filter-tipo" class="form-select form-control-dash" onchange="applyFilters()">
+                                <option value="">Tipo: Todos</option>
+                                <option value="expositor">🏬 Expositores</option>
+                                <option value="cosplay">🎭 Concurso Cosplay</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="filter-estado" class="form-select form-control-dash" onchange="applyFilters()">
+                                <option value="">Estado: Todos</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="contactado">Contactado</option>
+                                <option value="aprobado">Aprobado</option>
+                                <option value="pagado">💳 Pagado</option>
+                                <option value="rechazado">Rechazado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="filter-espacio" class="form-select form-control-dash" onchange="applyFilters()">
+                                <option value="">Espacio: Todos</option>
+                                <option value="2x2m">Espacio 2x2m ($20.000)</option>
+                                <option value="3x3m">Espacio 3x3m ($40.000)</option>
+                                <option value="60.000">Patio Comida 3x3 ($60.000)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="filter-categoria" class="form-select form-control-dash" onchange="applyFilters()">
+                                <option value="">Categoría: Todas</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 text-end">
+                            <button class="btn btn-outline-secondary w-100 px-1" onclick="resetFilters()" title="Limpiar todos los filtros">
+                                <i class="far fa-sync"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Data Table -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th style="width: 120px;">Fecha / Tipo</th>
+                                    <th>Postulante, Proyecto & Contacto</th>
+                                    <th>Espacio / Stand</th>
+                                    <th style="width: 150px;">Modalidad</th>
+                                    <th style="width: 210px;">Estado & Pago</th>
+                                    <th class="text-end" style="width: 160px;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leads-table-body">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="empty-state" class="text-center p-5 d-none">
+                        <i class="far fa-inbox" style="font-size: 48px; color: var(--text-muted); opacity: 0.5;"></i>
+                        <h4 class="mt-3" style="color: #ffffff;">No se encontraron postulaciones</h4>
+                        <p style="color: var(--text-muted); font-size: 14px;">Intenta cambiar los filtros o carga postulaciones de prueba.</p>
+                        <button class="btn btn-outline-info btn-sm mt-2" onclick="loadDemoData()">
+                            <i class="far fa-magic"></i> Cargar 3 Leads de Prueba
+                        </button>
+                    </div>
+                </div>
+
+            </div> <!-- /#view-postulaciones -->
+
+
+            <!-- VIEW 2: NOMINA MUNICIPALIDAD -->
+            <div id="view-nomina" class="d-none">
+
+                <!-- Page Header Nómina -->
+                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                    <div>
+                        <h1 style="font-family: 'Righteous', sans-serif; font-size: 28px; margin: 0; color: #ffffff;">
+                            <i class="far fa-landmark text-warning me-2"></i> Nómina Oficial de Participantes (Municipalidad)
+                        </h1>
+                        <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px; margin-bottom: 0;">
+                            Registro unificado de Nombre Completo, Emprendimiento, RUT y Razón Social requeridos por la Ilustre Municipalidad de Temuco.
+                        </p>
+                    </div>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-success btn-sm font-weight-bold" onclick="openNewNominaModal()">
+                            <i class="far fa-plus-circle me-1"></i> Nuevo Registro Manual
+                        </button>
+                        <button class="btn btn-outline-success btn-sm font-weight-bold" onclick="exportNominaToCSV()" title="Exportar la nómina formateada a Excel / CSV">
+                            <i class="far fa-file-excel me-1"></i> Exportar Nómina (Excel/CSV)
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm font-weight-bold" onclick="printNominaOfficial()" title="Generar vista formal para imprimir o guardar en PDF ante la Municipalidad">
+                            <i class="far fa-print me-1"></i> Imprimir Doc. Oficial
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="exportNominaToJSON()">
+                            <i class="far fa-download"></i> Backup JSON
+                        </button>
+                        <a href="../formulario-nomina/index.html" target="_blank" class="btn btn-outline-info btn-sm">
+                            <i class="far fa-external-link"></i> Abrir Formulario Público
+                        </a>
+                    </div>
+                </div>
+
+                <!-- KPI Cards Grid Nómina -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #ffe62e;">
+                            <div class="kpi-title">Total Registros</div>
+                            <div class="kpi-value" id="kpi-nomina-total" style="color: #ffe62e;">0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">En nómina municipal</div>
+                            <i class="far fa-users kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #00d264;">
+                            <div class="kpi-title">Con Razón Social</div>
+                            <div class="kpi-value" id="kpi-nomina-razon" style="color: #00d264;">0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Formalizadas</div>
+                            <i class="far fa-building kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #e92652;">
+                            <div class="kpi-title">Expositores / Tiendas</div>
+                            <div class="kpi-value" id="kpi-nomina-expositores" style="color: #ff4a75;">0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Stands comerciales</div>
+                            <i class="far fa-store kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #8b5cf6;">
+                            <div class="kpi-title">Artistas / Ilustradores</div>
+                            <div class="kpi-value" id="kpi-nomina-artistas" style="color: #a78bfa;">0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Artist alley</div>
+                            <i class="far fa-palette kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #ff9800;">
+                            <div class="kpi-title">Food Trucks</div>
+                            <div class="kpi-value" id="kpi-nomina-foodtrucks" style="color: #ffb74d;">0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Patio de comidas</div>
+                            <i class="far fa-utensils kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-2">
+                        <div class="kpi-card" style="--accent-color: #00b0ff;">
+                            <div class="kpi-title">Cosplay & Otros</div>
+                            <div class="kpi-value" id="kpi-nomina-otros" style="color: #40c4ff;">0</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Participantes variados</div>
+                            <i class="far fa-mask kpi-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Toolbar Nómina -->
+                <div class="toolbar-card">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-secondary text-secondary"><i class="far fa-search"></i></span>
+                                <input type="text" id="search-nomina-input" class="form-control form-control-dash" placeholder="Buscar por Nombre Completo, Emprendimiento, RUT, Razón Social o Email..." oninput="applyNominaFilters()">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="filter-nomina-tipo" class="form-select form-control-dash" onchange="applyNominaFilters()">
+                                <option value="">Categoría / Tipo: Todos</option>
+                                <option value="Expositor">🏪 Expositores / Tiendas</option>
+                                <option value="Ilustrador">🎨 Ilustradores / Artistas</option>
+                                <option value="Food Truck">🍔 Food Trucks / Gastronomía</option>
+                                <option value="Cosplay">🎭 Cosplay / Concursantes</option>
+                                <option value="Agrupación">👥 Agrupaciones / Comunidades</option>
+                                <option value="Otro">⭐ Otros</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <button class="btn btn-outline-secondary w-100" onclick="resetNominaFilters()" title="Limpiar filtros">
+                                <i class="far fa-sync me-1"></i> Limpiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Table Nómina -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th style="width: 110px;">N° / Fecha</th>
+                                    <th>Nombre Completo Responsable</th>
+                                    <th>Emprendimiento / Marca</th>
+                                    <th>RUT</th>
+                                    <th>Razón Social</th>
+                                    <th>Contacto</th>
+                                    <th>Categoría</th>
+                                    <th class="text-end" style="width: 140px;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="nomina-table-body">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Empty State Nómina -->
+                    <div id="nomina-empty-state" class="text-center p-5 d-none">
+                        <i class="far fa-inbox" style="font-size: 48px; color: var(--text-muted); opacity: 0.5;"></i>
+                        <h4 class="mt-3" style="color: #ffffff;">No se encontraron registros en la Nómina</h4>
+                        <p style="color: var(--text-muted); font-size: 14px;">Inicia agregando registros desde el formulario público o manualmente.</p>
+                        <button class="btn btn-success btn-sm mt-2 font-weight-bold" onclick="openNewNominaModal()">
+                            <i class="far fa-plus-circle me-1"></i> Agregar Primer Registro Manual
+                        </button>
+                    </div>
+                </div>
+
+            </div> <!-- /#view-nomina -->
 
         </div>
 
@@ -754,6 +948,134 @@
         </div>
     </div>
 
+    <!-- Modal Nuevo Registro Nómina Manual -->
+    <div class="modal fade" id="newNominaModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content modal-dash-content">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" style="font-family: 'Righteous', sans-serif; color: #ffffff;">
+                        <i class="far fa-plus-circle me-2 text-success"></i> Nuevo Registro de Nómina Municipal
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="new-nomina-form" onsubmit="handleCreateNominaSubmit(event)">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Nombre Completo Responsable <span class="text-danger">*</span></label>
+                                <input type="text" id="new-nom-nombre" class="form-control form-control-dash" placeholder="Ej: Camila Morales" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Emprendimiento / Marca <span class="text-danger">*</span></label>
+                                <input type="text" id="new-nom-emprendimiento" class="form-control form-control-dash" placeholder="Ej: Sakura Art Studio" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">RUT (Personal o Empresa) <span class="text-danger">*</span></label>
+                                <input type="text" id="new-nom-rut" class="form-control form-control-dash" placeholder="12.345.678-9" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Razón Social <span class="text-warning font-weight-normal">(Opcional)</span></label>
+                                <input type="text" id="new-nom-razon" class="form-control form-control-dash" placeholder="Ej: Morales SpA">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Correo Electrónico <span class="text-danger">*</span></label>
+                                <input type="email" id="new-nom-email" class="form-control form-control-dash" placeholder="ejemplo@correo.cl" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Teléfono WhatsApp <span class="text-danger">*</span></label>
+                                <input type="tel" id="new-nom-telefono" class="form-control form-control-dash" placeholder="+56 9 1234 5678" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Categoría / Tipo de Participación</label>
+                                <select id="new-nom-tipo" class="form-select form-control-dash">
+                                    <option value="Expositor / Tienda" selected>🏪 Expositor / Tienda de Productos</option>
+                                    <option value="Ilustrador / Artista">🎨 Artist Alley / Ilustrador</option>
+                                    <option value="Food Truck / Gastronomía">🍔 Food Truck / Gastronomía</option>
+                                    <option value="Cosplay / Concursante">🎭 Concurso Cosplay / Invitado</option>
+                                    <option value="Agrupación / Comunidad">👥 Agrupación / Comunidad Geek</option>
+                                    <option value="Otro">⭐ Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-secondary justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success font-weight-bold" id="btn-save-new-nomina">
+                            <i class="far fa-save me-1"></i> Guardar en Nómina
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Registro Nómina -->
+    <div class="modal fade" id="editNominaModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content modal-dash-content">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" style="font-family: 'Righteous', sans-serif; color: #ffffff;">
+                        <i class="far fa-edit me-2 text-warning"></i> Editar Registro de Nómina Municipal
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="edit-nomina-form" onsubmit="handleUpdateNominaSubmit(event)">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Nombre Completo Responsable <span class="text-danger">*</span></label>
+                                <input type="text" id="edit-nom-nombre" class="form-control form-control-dash" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Emprendimiento / Marca <span class="text-danger">*</span></label>
+                                <input type="text" id="edit-nom-emprendimiento" class="form-control form-control-dash" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">RUT (Personal o Empresa) <span class="text-danger">*</span></label>
+                                <input type="text" id="edit-nom-rut" class="form-control form-control-dash" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Razón Social <span class="text-warning font-weight-normal">(Opcional)</span></label>
+                                <input type="text" id="edit-nom-razon" class="form-control form-control-dash">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Correo Electrónico <span class="text-danger">*</span></label>
+                                <input type="email" id="edit-nom-email" class="form-control form-control-dash" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Teléfono WhatsApp <span class="text-danger">*</span></label>
+                                <input type="tel" id="edit-nom-telefono" class="form-control form-control-dash" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label text-white font-weight-bold" style="font-size:13px;">Categoría / Tipo de Participación</label>
+                                <select id="edit-nom-tipo" class="form-select form-control-dash">
+                                    <option value="Expositor / Tienda">🏪 Expositor / Tienda de Productos</option>
+                                    <option value="Ilustrador / Artista">🎨 Artist Alley / Ilustrador</option>
+                                    <option value="Food Truck / Gastronomía">🍔 Food Truck / Gastronomía</option>
+                                    <option value="Cosplay / Concursante">🎭 Concurso Cosplay / Invitado</option>
+                                    <option value="Agrupación / Comunidad">👥 Agrupación / Comunidad Geek</option>
+                                    <option value="Otro">⭐ Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-secondary justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning font-weight-bold text-dark" id="btn-save-edit-nomina">
+                            <i class="far fa-check me-1"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Script SQL -->
     <div class="modal fade" id="sqlModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -823,6 +1145,25 @@ CREATE POLICY "Permitir inserciones públicas cosplay" ON postulaciones_cosplay 
 CREATE POLICY "Permitir lectura pública cosplay" ON postulaciones_cosplay FOR SELECT USING (true);
 CREATE POLICY "Permitir actualización pública cosplay" ON postulaciones_cosplay FOR UPDATE USING (true);
 CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay FOR DELETE USING (true);
+
+-- Tabla Oficial para la Nómina Municipal de Participantes
+CREATE TABLE IF NOT EXISTS public.nomina_municipal (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+  nombre_completo TEXT NOT NULL,
+  emprendimiento TEXT NOT NULL,
+  rut TEXT NOT NULL,
+  razon_social TEXT,
+  email TEXT,
+  telefono TEXT,
+  tipo_participacion TEXT DEFAULT 'Expositor / Tienda'
+);
+
+ALTER TABLE public.nomina_municipal ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Permitir inserciones públicas nomina" ON public.nomina_municipal FOR INSERT WITH CHECK (true);
+CREATE POLICY "Permitir lectura pública nomina" ON public.nomina_municipal FOR SELECT USING (true);
+CREATE POLICY "Permitir actualización pública nomina" ON public.nomina_municipal FOR UPDATE USING (true);
+CREATE POLICY "Permitir eliminación pública nomina" ON public.nomina_municipal FOR DELETE USING (true);
 </pre>
                     <hr class="border-secondary my-3">
                     <h6 class="text-warning font-weight-bold">📧 Notificaciones Automáticas por Correo (Resend API & Supabase Webhooks)</h6>
@@ -861,6 +1202,11 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
         let allLeads = [];
         let filteredLeads = [];
         let selectedLeadId = null;
+
+        let allNomina = [];
+        let filteredNomina = [];
+        let selectedNominaId = null;
+        let currentMainTab = 'postulaciones';
 
         // COPY TO CLIPBOARD HELPER
         function copyToClipboard(text, label = 'Dato', event = null) {
@@ -941,6 +1287,7 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                 document.getElementById("dashboard-app").classList.remove("d-none");
                 await initSupabase();
                 loadLeads();
+                loadNominaData();
             } else {
                 document.getElementById("login-screen").classList.remove("d-none");
                 document.getElementById("dashboard-app").classList.add("d-none");
@@ -2017,6 +2364,442 @@ CREATE POLICY "Permitir eliminación pública cosplay" ON postulaciones_cosplay 
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;');
+        }
+
+        // ==========================================
+        // SECCIÓN NÓMINA MUNICIPAL LOGIC & HANDLERS
+        // ==========================================
+
+        function switchMainTab(tabName) {
+            currentMainTab = tabName;
+            const btnPost = document.getElementById("tab-postulaciones-btn");
+            const btnNomina = document.getElementById("tab-nomina-btn");
+            const viewPost = document.getElementById("view-postulaciones");
+            const viewNomina = document.getElementById("view-nomina");
+
+            if (tabName === 'nomina') {
+                btnPost?.classList.remove("active");
+                btnNomina?.classList.add("active");
+                viewPost?.classList.add("d-none");
+                viewNomina?.classList.remove("d-none");
+                applyNominaFilters();
+            } else {
+                btnNomina?.classList.remove("active");
+                btnPost?.classList.add("active");
+                viewNomina?.classList.add("d-none");
+                viewPost?.classList.remove("d-none");
+                applyFilters();
+            }
+        }
+
+        async function loadNominaData() {
+            allNomina = [];
+
+            if (supabaseClient) {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('nomina_municipal')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (!error && Array.isArray(data)) {
+                        allNomina = data;
+                    }
+                } catch (err) {
+                    console.error("Error al cargar nomina_municipal de Supabase:", err);
+                }
+            }
+
+            // Respaldo resiliente desde LocalStorage
+            try {
+                const localData = JSON.parse(localStorage.getItem("TG_NOMINA_MUNICIPAL") || "[]");
+                localData.forEach(item => {
+                    if (!allNomina.some(n => n.id === item.id)) {
+                        allNomina.push(item);
+                    }
+                });
+            } catch (err) {
+                console.error("Error al cargar nómina local:", err);
+            }
+
+            applyNominaFilters();
+        }
+
+        function saveLocalNomina() {
+            localStorage.setItem("TG_NOMINA_MUNICIPAL", JSON.stringify(allNomina));
+        }
+
+        function applyNominaFilters() {
+            const searchVal = (document.getElementById("search-nomina-input")?.value || "").toLowerCase().trim();
+            const filterTipo = (document.getElementById("filter-nomina-tipo")?.value || "").toLowerCase().trim();
+
+            filteredNomina = allNomina.filter(item => {
+                const textToSearch = `${item.nombre_completo || ''} ${item.emprendimiento || ''} ${item.rut || ''} ${item.razon_social || ''} ${item.email || ''} ${item.telefono || ''}`.toLowerCase();
+                const matchesSearch = !searchVal || textToSearch.includes(searchVal);
+
+                const tipoItem = (item.tipo_participacion || '').toLowerCase();
+                const matchesTipo = !filterTipo || tipoItem.includes(filterTipo);
+
+                return matchesSearch && matchesTipo;
+            });
+
+            // Update Nomina KPIs
+            let totalCount = filteredNomina.length;
+            let razonCount = 0;
+            let expCount = 0;
+            let artCount = 0;
+            let foodCount = 0;
+            let otrosCount = 0;
+
+            filteredNomina.forEach(item => {
+                if (item.razon_social && item.razon_social.trim()) razonCount++;
+                const tipo = (item.tipo_participacion || '').toLowerCase();
+                if (tipo.includes('expositor') || tipo.includes('tienda')) expCount++;
+                else if (tipo.includes('ilustrador') || tipo.includes('artista')) artCount++;
+                else if (tipo.includes('food') || tipo.includes('gastronomía')) foodCount++;
+                else otrosCount++;
+            });
+
+            if (document.getElementById("kpi-nomina-total")) document.getElementById("kpi-nomina-total").textContent = totalCount;
+            if (document.getElementById("kpi-nomina-razon")) document.getElementById("kpi-nomina-razon").textContent = razonCount;
+            if (document.getElementById("kpi-nomina-expositores")) document.getElementById("kpi-nomina-expositores").textContent = expCount;
+            if (document.getElementById("kpi-nomina-artistas")) document.getElementById("kpi-nomina-artistas").textContent = artCount;
+            if (document.getElementById("kpi-nomina-foodtrucks")) document.getElementById("kpi-nomina-foodtrucks").textContent = foodCount;
+            if (document.getElementById("kpi-nomina-otros")) document.getElementById("kpi-nomina-otros").textContent = otrosCount;
+
+            renderNominaTable();
+        }
+
+        function resetNominaFilters() {
+            if (document.getElementById("search-nomina-input")) document.getElementById("search-nomina-input").value = "";
+            if (document.getElementById("filter-nomina-tipo")) document.getElementById("filter-nomina-tipo").value = "";
+            applyNominaFilters();
+        }
+
+        function renderNominaTable() {
+            const tbody = document.getElementById("nomina-table-body");
+            const emptyState = document.getElementById("nomina-empty-state");
+            if (!tbody) return;
+
+            tbody.innerHTML = "";
+
+            if (filteredNomina.length === 0) {
+                emptyState?.classList.remove("d-none");
+            } else {
+                emptyState?.classList.add("d-none");
+
+                filteredNomina.forEach((item, index) => {
+                    const tr = document.createElement("tr");
+
+                    const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('es-CL', {
+                        day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+                    }) : 'N/A';
+
+                    const formattedRut = item.rut || 'Sin RUT';
+                    const razonText = item.razon_social ? escapeHtml(item.razon_social) : '<span class="text-muted font-italic" style="font-size: 12px;">No posee</span>';
+                    const emailText = item.email ? escapeHtml(item.email) : '-';
+                    const telText = item.telefono ? escapeHtml(item.telefono) : '-';
+
+                    tr.innerHTML = `
+                        <td>
+                            <div class="fw-bold text-white">#${index + 1}</div>
+                            <div style="font-size:11px; color:var(--text-muted);">${dateStr}</div>
+                        </td>
+                        <td>
+                            <div class="fw-bold text-white fs-6">${escapeHtml(item.nombre_completo || 'Sin nombre')}</div>
+                        </td>
+                        <td>
+                            <div style="color: var(--color-secondary); font-weight:600;"><i class="far fa-store me-1"></i>${escapeHtml(item.emprendimiento || 'Sin emprendimiento')}</div>
+                        </td>
+                        <td>
+                            <span class="copyable text-info font-monospace font-weight-bold" onclick="copyToClipboard('${escapeHtml(formattedRut)}', 'RUT', event)">
+                                ${escapeHtml(formattedRut)}
+                            </span>
+                        </td>
+                        <td>
+                            ${razonText}
+                        </td>
+                        <td>
+                            <div style="font-size: 12px;"><i class="far fa-envelope me-1 text-muted"></i><a href="mailto:${emailText}" class="text-light">${emailText}</a></div>
+                            <div style="font-size: 12px;"><i class="far fa-phone me-1 text-muted"></i><a href="tel:${telText}" class="text-light">${telText}</a></div>
+                        </td>
+                        <td>
+                            <span class="badge bg-dark border border-secondary text-light" style="font-size:11px;">${escapeHtml(item.tipo_participacion || 'Expositor')}</span>
+                        </td>
+                        <td class="text-end">
+                            <button class="btn btn-action btn-sm" onclick="openEditNominaModal('${item.id}')" title="Editar registro">
+                                <i class="far fa-edit"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm" onclick="deleteNominaItem('${item.id}')" title="Eliminar registro">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    `;
+
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        function exportNominaToCSV() {
+            const dataToExport = (filteredNomina && filteredNomina.length > 0) ? filteredNomina : allNomina;
+
+            if (!dataToExport || dataToExport.length === 0) {
+                return alert("No hay registros en la nómina para exportar.");
+            }
+
+            const headers = ["N°", "Fecha Registro", "Nombre Completo Responsable", "Emprendimiento / Marca", "RUT", "Razon Social", "Email", "Telefono", "Tipo Participacion"];
+            
+            const rows = dataToExport.map((item, idx) => {
+                const dateStr = item.created_at ? new Date(item.created_at).toLocaleString('es-CL') : '';
+                const cleanName = `"${String(item.nombre_completo || '').replace(/"/g, '""')}"`;
+                const cleanEmp = `"${String(item.emprendimiento || '').replace(/"/g, '""')}"`;
+                const cleanRut = `"${String(item.rut || '').replace(/"/g, '""')}"`;
+                const cleanRazon = `"${String(item.razon_social || '').replace(/"/g, '""')}"`;
+                const cleanEmail = `"${String(item.email || '').replace(/"/g, '""')}"`;
+                const cleanTel = `"${String(item.telefono || '').replace(/"/g, '""')}"`;
+                const cleanTipo = `"${String(item.tipo_participacion || '').replace(/"/g, '""')}"`;
+
+                return `${idx + 1};"${dateStr}";${cleanName};${cleanEmp};${cleanRut};${cleanRazon};${cleanEmail};${cleanTel};${cleanTipo}`;
+            });
+
+            const csvContent = "\uFEFF" + headers.join(";") + "\n" + rows.join("\n");
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            const dateFileStr = new Date().toISOString().slice(0, 10);
+            link.setAttribute("download", `nomina_oficial_municipalidad_temugeek_${dateFileStr}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function printNominaOfficial() {
+            const dataToPrint = (filteredNomina && filteredNomina.length > 0) ? filteredNomina : allNomina;
+
+            if (!dataToPrint || dataToPrint.length === 0) {
+                return alert("No hay registros en la nómina para imprimir.");
+            }
+
+            const printWin = window.open('', '_blank', 'width=1000,height=800');
+            if (!printWin) return alert("Por favor permite las ventanas emergentes para generar el documento de impresión.");
+
+            const rowsHtml = dataToPrint.map((item, idx) => `
+                <tr>
+                    <td style="border:1px solid #ccc; padding:8px; text-align:center;">${idx + 1}</td>
+                    <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">${escapeHtml(item.nombre_completo)}</td>
+                    <td style="border:1px solid #ccc; padding:8px;">${escapeHtml(item.emprendimiento)}</td>
+                    <td style="border:1px solid #ccc; padding:8px; font-family:monospace;">${escapeHtml(item.rut)}</td>
+                    <td style="border:1px solid #ccc; padding:8px;">${escapeHtml(item.razon_social || '-')}</td>
+                    <td style="border:1px solid #ccc; padding:8px;">${escapeHtml(item.email)} / ${escapeHtml(item.telefono)}</td>
+                    <td style="border:1px solid #ccc; padding:8px;">${escapeHtml(item.tipo_participacion || 'Expositor')}</td>
+                </tr>
+            `).join('');
+
+            printWin.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Nómina Oficial de Participantes - Ilustre Municipalidad de Temuco</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 30px; color: #000; }
+                        .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px; }
+                        .header h2 { margin: 0; font-size: 20px; text-transform: uppercase; }
+                        .header h3 { margin: 5px 0 0 0; font-size: 16px; color: #333; }
+                        .meta { margin-bottom: 20px; font-size: 13px; display: flex; justify-content: space-between; }
+                        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+                        th { background: #f0f0f0; border: 1px solid #ccc; padding: 10px; text-align: left; }
+                        .footer { margin-top: 40px; text-align: right; font-size: 12px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h2>ILUSTRE MUNICIPALIDAD DE TEMUCO</h2>
+                        <h3>TEMUGEEK EXPO 2026 — NÓMINA OFICIAL DE PARTICIPANTES</h3>
+                    </div>
+                    <div class="meta">
+                        <div><strong>Evento:</strong> TemuGeek Expo 2026 (Recinto SOFO)</div>
+                        <div><strong>Fecha Emisión:</strong> ${new Date().toLocaleDateString('es-CL')}</div>
+                        <div><strong>Total Registrados:</strong> ${dataToPrint.length}</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:40px; text-align:center;">N°</th>
+                                <th>Nombre Completo Responsable</th>
+                                <th>Emprendimiento / Marca</th>
+                                <th>RUT</th>
+                                <th>Razón Social</th>
+                                <th>Contacto</th>
+                                <th>Categoría</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHtml}
+                        </tbody>
+                    </table>
+                    <div class="footer">
+                        <p>_____________________________________<br>Producción General TemuGeek Expo 2026</p>
+                    </div>
+                    <script>
+                        window.onload = function() { window.print(); }
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+        }
+
+        function exportNominaToJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allNomina, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `backup_nomina_municipal_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function openNewNominaModal() {
+            document.getElementById("new-nomina-form")?.reset();
+            const modal = new bootstrap.Modal(document.getElementById("newNominaModal"));
+            modal.show();
+        }
+
+        async function handleCreateNominaSubmit(e) {
+            e.preventDefault();
+            const btnSave = document.getElementById("btn-save-new-nomina");
+            const origHTML = btnSave.innerHTML;
+            btnSave.disabled = true;
+            btnSave.innerHTML = '<i class="far fa-spinner fa-spin me-1"></i> Guardando...';
+
+            try {
+                const newId = "nomina-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+                const itemData = {
+                    id: newId,
+                    created_at: new Date().toISOString(),
+                    nombre_completo: document.getElementById("new-nom-nombre").value.trim(),
+                    emprendimiento: document.getElementById("new-nom-emprendimiento").value.trim(),
+                    rut: document.getElementById("new-nom-rut").value.trim(),
+                    razon_social: document.getElementById("new-nom-razon").value.trim() || null,
+                    email: document.getElementById("new-nom-email").value.trim(),
+                    telefono: document.getElementById("new-nom-telefono").value.trim(),
+                    tipo_participacion: document.getElementById("new-nom-tipo").value
+                };
+
+                if (supabaseClient) {
+                    try {
+                        await supabaseClient.from('nomina_municipal').insert([itemData]);
+                    } catch (errSb) {
+                        console.warn("Advertencia al guardar en Supabase:", errSb);
+                    }
+                }
+
+                allNomina.unshift(itemData);
+                saveLocalNomina();
+                applyNominaFilters();
+
+                const modalEl = document.getElementById("newNominaModal");
+                const modalInst = bootstrap.Modal.getInstance(modalEl);
+                if (modalInst) modalInst.hide();
+
+                showCopyToast(`¡Registro creado!`, itemData.nombre_completo);
+            } catch (err) {
+                alert("Error al guardar: " + err.message);
+            } finally {
+                btnSave.disabled = false;
+                btnSave.innerHTML = origHTML;
+            }
+        }
+
+        function openEditNominaModal(id) {
+            const item = allNomina.find(n => n.id === id);
+            if (!item) return;
+
+            selectedNominaId = id;
+            document.getElementById("edit-nom-nombre").value = item.nombre_completo || "";
+            document.getElementById("edit-nom-emprendimiento").value = item.emprendimiento || "";
+            document.getElementById("edit-nom-rut").value = item.rut || "";
+            document.getElementById("edit-nom-razon").value = item.razon_social || "";
+            document.getElementById("edit-nom-email").value = item.email || "";
+            document.getElementById("edit-nom-telefono").value = item.telefono || "";
+            document.getElementById("edit-nom-tipo").value = item.tipo_participacion || "Expositor / Tienda";
+
+            const modal = new bootstrap.Modal(document.getElementById("editNominaModal"));
+            modal.show();
+        }
+
+        async function handleUpdateNominaSubmit(e) {
+            e.preventDefault();
+            if (!selectedNominaId) return;
+
+            const btnSave = document.getElementById("btn-save-edit-nomina");
+            const origHTML = btnSave.innerHTML;
+            btnSave.disabled = true;
+            btnSave.innerHTML = '<i class="far fa-spinner fa-spin me-1"></i> Actualizando...';
+
+            try {
+                const updatedData = {
+                    nombre_completo: document.getElementById("edit-nom-nombre").value.trim(),
+                    emprendimiento: document.getElementById("edit-nom-emprendimiento").value.trim(),
+                    rut: document.getElementById("edit-nom-rut").value.trim(),
+                    razon_social: document.getElementById("edit-nom-razon").value.trim() || null,
+                    email: document.getElementById("edit-nom-email").value.trim(),
+                    telefono: document.getElementById("edit-nom-telefono").value.trim(),
+                    tipo_participacion: document.getElementById("edit-nom-tipo").value
+                };
+
+                if (supabaseClient) {
+                    try {
+                        await supabaseClient.from('nomina_municipal').update(updatedData).eq('id', selectedNominaId);
+                    } catch (errSb) {
+                        console.warn("Advertencia al actualizar en Supabase:", errSb);
+                    }
+                }
+
+                const idx = allNomina.findIndex(n => n.id === selectedNominaId);
+                if (idx !== -1) {
+                    allNomina[idx] = { ...allNomina[idx], ...updatedData };
+                    saveLocalNomina();
+                    applyNominaFilters();
+                }
+
+                const modalEl = document.getElementById("editNominaModal");
+                const modalInst = bootstrap.Modal.getInstance(modalEl);
+                if (modalInst) modalInst.hide();
+
+                showCopyToast(`¡Registro actualizado!`, updatedData.nombre_completo);
+            } catch (err) {
+                alert("Error al actualizar: " + err.message);
+            } finally {
+                btnSave.disabled = false;
+                btnSave.innerHTML = origHTML;
+            }
+        }
+
+        async function deleteNominaItem(id) {
+            const item = allNomina.find(n => n.id === id);
+            const label = item ? item.nombre_completo : 'este registro';
+
+            if (!confirm(`¿Estás seguro de que deseas eliminar a "${label}" de la nómina municipal?`)) {
+                return;
+            }
+
+            if (supabaseClient) {
+                try {
+                    await supabaseClient.from('nomina_municipal').delete().eq('id', id);
+                } catch (err) {
+                    console.warn("Error al borrar en Supabase:", err);
+                }
+            }
+
+            allNomina = allNomina.filter(n => n.id !== id);
+            saveLocalNomina();
+            applyNominaFilters();
+            showCopyToast(`¡Eliminado!`, label);
         }
     </script>
 </body>
