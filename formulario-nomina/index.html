@@ -633,21 +633,27 @@
             }
 
             // Mostrar Modal de Éxito
-            document.getElementById("res-nombre").textContent = payload.nombre_completo;
-            document.getElementById("res-emprendimiento").textContent = payload.emprendimiento;
-            document.getElementById("res-rut").textContent = payload.rut;
+            try {
+                document.getElementById("res-nombre").textContent = insertedItem.nombre_completo || '';
+                document.getElementById("res-emprendimiento").textContent = insertedItem.emprendimiento || '';
+                document.getElementById("res-rut").textContent = insertedItem.rut || '';
 
-            const rowRazon = document.getElementById("row-razon-social");
-            if (payload.razon_social) {
-                document.getElementById("res-razon").textContent = payload.razon_social;
-                rowRazon.style.display = "flex";
-            } else {
-                rowRazon.style.display = "none";
+                const rowRazon = document.getElementById("row-razon-social");
+                if (insertedItem.razon_social) {
+                    document.getElementById("res-razon").textContent = insertedItem.razon_social;
+                    rowRazon.style.display = "flex";
+                } else {
+                    rowRazon.style.display = "none";
+                }
+
+                document.getElementById("success-overlay").classList.add("active");
+            } catch (errModal) {
+                console.error("Error al mostrar modal de éxito:", errModal);
+                alert("¡Registro enviado exitosamente!");
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = originalHTML;
             }
-
-            document.getElementById("success-overlay").classList.add("active");
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = originalHTML;
         }
 
         function resetFormAndCloseModal() {
