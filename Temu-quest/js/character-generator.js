@@ -57,7 +57,7 @@ class CharacterGenerator {
     const paths = [
       './data/character-db.json',
       'data/character-db.json',
-      '/rpg-quest-hub/data/character-db.json',
+      '/the-quest/data/character-db.json',
       '/Temu-quest/data/character-db.json'
     ];
     for (const path of paths) {
@@ -78,7 +78,7 @@ class CharacterGenerator {
     const paths = [
       './data/mottos-db.json',
       'data/mottos-db.json',
-      '/rpg-quest-hub/data/mottos-db.json',
+      '/the-quest/data/mottos-db.json',
       '/Temu-quest/data/mottos-db.json'
     ];
     for (const path of paths) {

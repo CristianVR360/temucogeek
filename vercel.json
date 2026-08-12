@@ -8,7 +8,7 @@
     { "source": "/postulacion", "destination": "/postulacion/index.html" },
     { "source": "/manual-marca", "destination": "/manual-marca/index.html" },
     { "source": "/formulario-nomina", "destination": "/formulario-nomina/index.html" },
-    { "source": "/rpg-quest-hub", "destination": "/rpg-quest-hub/index.html" },
+    { "source": "/the-quest", "destination": "/the-quest/index.html" },
     { "source": "/Temu-quest", "destination": "/Temu-quest/index.html" }
   ]
 }
