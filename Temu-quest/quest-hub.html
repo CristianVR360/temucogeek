@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExpoGeek RPG - Tablero de Misiones</title>
+  <meta name="description" content="Tablero de Misiones de ExpoGeek 2026. Selecciona tus intereses, toma misiones y sube de nivel.">
+  
+  <base href="/rpg-quest-hub/">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="stylesheet" href="/rpg-quest-hub/css/rpg-style.css">
+</head>
+<body>
+
+  <!-- Top Navbar - Mobile Optimized -->
+  <header class="rpg-navbar">
+    <a href="/index.html" class="brand-badge">
+      <img src="/assets/img/logo/logo-horizontal-blanco.png" alt="ExpoGeek Logo">
+      <span class="brand-title">RPG <span>VIVO</span></span>
+    </a>
+    
+    <div class="nav-actions">
+      <!-- Character Mini Profile (populated by JS from sessionStorage) -->
+      <div class="nav-char-profile" id="navCharProfile" style="display: none;">
+        <img class="nav-char-avatar" id="navCharAvatar" src="" alt="">
+        <div class="nav-char-info">
+          <span class="nav-char-name" id="navCharName">Aventurero</span>
+          <span class="nav-char-role" id="navCharRole">Explorador</span>
+        </div>
+      </div>
+
+      <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 4px; background: rgba(0, 240, 255, 0.08); border: 1px solid rgba(0, 240, 255, 0.2); padding: 3px 8px; border-radius: 16px; color: var(--primary-cyan); font-family: var(--font-heading); font-weight: 700; font-size: 0.72rem;">
+        ⬅️ Mi Personaje
+      </a>
+    </div>
+  </header>
+
+  <main class="rpg-container">
+
+    <!-- VIEW 1: CATEGORY SELECTOR -->
+    <section id="viewCategoryPicker">
+      <div style="text-align: center; margin-bottom: 1.25rem;">
+        <h1 class="welcome-title" style="font-size: clamp(1.5rem, 5vw, 2.2rem); margin-bottom: 0.4rem;">📜 ELIGE TUS INTERESES</h1>
+        <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 600px; margin: 0 auto; line-height: 1.4;">
+          Selecciona las categorías que más te gusten. Las misiones marcadas son solo una guía personal de lo que ya hiciste en el evento. ¡No afectan tu puntaje!
+        </p>
+      </div>
+
+      <div id="categoryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 10px; margin-bottom: 1.25rem;">
+        <!-- Dynamically populated -->
+      </div>
+
+      <div style="text-align: center;">
+        <button id="btnConfirmCategories" class="btn-rpg btn-rpg-magenta" style="padding: 11px 26px; font-size: 1rem;" disabled>
+          Ver Mis Misiones ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- VIEW 2: FILTERED QUEST BOARD (Cards open modals) -->
+    <section id="viewQuestBoard" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 8px;">
+        <h1 class="welcome-title" style="font-size: clamp(1.3rem, 4vw, 1.8rem); margin: 0;">🗺️ TUS MISIONES</h1>
+        <div style="display: flex; gap: 6px;">
+          <button id="btnBackToCategories" class="btn-rpg btn-rpg-outline" style="font-size: 0.78rem; padding: 5px 12px;">⬅️ Cambiar</button>
+          <button id="btnShowAll" class="btn-rpg btn-rpg-outline" style="font-size: 0.78rem; padding: 5px 12px;">📜 Todo</button>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div id="categoryFilterBar" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem;">
+        <!-- Dynamically populated -->
+      </div>
+
+      <!-- Progress Bar -->
+      <div style="background: rgba(255,183,0,0.06); border: 1px solid rgba(255,183,0,0.2); border-radius: var(--radius-md); padding: 8px 12px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+        <span style="font-family: var(--font-heading); color: var(--primary-gold); font-weight: bold; font-size: 0.85rem;">MI PROGRESO</span>
+        <div style="display: flex; gap: 12px; font-family: var(--font-code); font-size: 0.8rem;">
+          <span style="color: var(--primary-green);">✅ <span id="completedCount">0</span></span>
+          <span style="color: var(--text-muted);">/ <span id="totalCount">0</span></span>
+        </div>
+      </div>
+
+      <!-- SECRET QUEST UNLOCKED BANNER (Shown when completedQuests >= 5) -->
+      <div id="secretQuestBanner" style="display: none; background: linear-gradient(135deg, rgba(255, 0, 85, 0.2), rgba(139, 92, 246, 0.25)); border: 2px solid var(--primary-magenta); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 1.25rem; box-shadow: 0 0 25px rgba(255, 0, 85, 0.35); animation: pulseGlow 2s infinite ease-in-out;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.8rem;">🔓</span>
+            <div>
+              <span style="font-size: 0.7rem; color: var(--primary-gold); font-family: var(--font-heading); font-weight: 800; letter-spacing: 1px;">MISIÓN SECRETA LIBERADA (5 QUESTS)</span>
+              <h3 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff; margin: 0;">📜 QUEST SECRETA: El Pacto de Eureka</h3>
+            </div>
+          </div>
+          <a href="secret-phase1.html" class="btn-rpg btn-rpg-magenta" style="font-size: 0.85rem; padding: 8px 16px; text-decoration: none;">
+            Ver Misión Secreta ➔
+          </a>
+        </div>
+      </div>
+
+      <!-- Category Cards (tappable → open quest modal) -->
+      <div id="categoryCardsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 10px;">
+        <!-- Dynamically populated -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- QUEST MODAL (bottom-sheet) -->
+  <div class="quest-modal-overlay" id="questModalOverlay">
+    <div class="quest-modal-sheet" id="questModalSheet">
+      <div class="quest-modal-handle"></div>
+      <div class="quest-modal-header">
+        <span class="quest-modal-icon" id="questModalIcon">🎮</span>
+        <div>
+          <div class="quest-modal-title" id="questModalTitle">Categoría</div>
+          <div class="quest-modal-subtitle" id="questModalSubtitle">0 misiones</div>
+        </div>
+        <button id="btnCloseQuestModal" style="margin-left: auto; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 5px 10px; border-radius: 12px; font-size: 0.85rem; cursor: pointer;">✕</button>
+      </div>
+      <div id="questModalBody">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="rpg-toast" id="rpgToastNotification"></div>
+
+  <script>
+  /**
+   * Quest Hub Controller
+   * Category cards → bottom-sheet modal with quest checklist.
+   * Completions are cosmetic/personal (not scoring).
+   */
+  class QuestHubController {
+    constructor() {
+      this.questsDb = null;
+      this.selectedCategories = new Set();
+      this.completedQuests = new Set();
+      this.activeFilter = 'all';
+      this.init();
+    }
+
+    async init() {
+      await this.loadQuestsDatabase();
+      this.restoreProgress();
+      this.loadCharacterProfile();
+      this.renderCategoryPicker();
+      this.bindEvents();
+      this.updateCounts();
+    }
+
+    async loadQuestsDatabase() {
+      const paths = [
+        './data/quests-db.json',
+        'data/quests-db.json',
+        '/rpg-quest-hub/data/quests-db.json',
+        '/Temu-quest/data/quests-db.json'
+      ];
+      for (const path of paths) {
+        try {
+          const r = await fetch(path);
+          if (r.ok) { this.questsDb = await r.json(); return; }
+        } catch (e) {}
+      }
+    }
+
+    /** Load character mini-profile from sessionStorage (set by character-generator.js) */
+    loadCharacterProfile() {
+      const saved = sessionStorage.getItem('expogeek_rpg_character');
+      if (!saved) return;
+      try {
+        const c = JSON.parse(saved);
+        const profileEl = document.getElementById('navCharProfile');
+        const nameEl = document.getElementById('navCharName');
+        const roleEl = document.getElementById('navCharRole');
+        const avatarEl = document.getElementById('navCharAvatar');
+
+        if (c.name && c.name.length > 0 && profileEl) {
+          profileEl.style.display = 'flex';
+          if (nameEl) nameEl.innerText = c.name;
+          if (roleEl) roleEl.innerText = c.mode === 'canon' ? (c.franchise || 'Canon') : (c.role || 'Aventurero');
+          if (avatarEl && c.avatarUrl) avatarEl.src = c.avatarUrl;
+          else if (avatarEl) avatarEl.style.display = 'none';
+        }
+      } catch (e) {}
+    }
+
+    renderCategoryPicker() {
+      if (!this.questsDb) return;
+      const grid = document.getElementById('categoryGrid');
+      grid.innerHTML = this.questsDb.categories.map(cat => {
+        const completedInCat = cat.quests.filter(q => this.completedQuests.has(q.id)).length;
+        return `
+        <div class="category-pick-card" data-catid="${cat.id}">
+          <div style="font-size: 2rem; margin-bottom: 4px;">${cat.icon}</div>
+          <div style="font-family: var(--font-heading); font-weight: 700; color: #fff; font-size: 0.88rem; margin-bottom: 3px; line-height: 1.2;">${cat.title}</div>
+          <div style="color: var(--text-muted); font-size: 0.72rem; line-height: 1.3;">${cat.description}</div>
+          <div style="margin-top: 5px; font-family: var(--font-code); font-size: 0.7rem; color: var(--primary-gold);">${completedInCat}/${cat.quests.length} hechas</div>
+        </div>`;
+      }).join('');
+    }
+
+    /** Renders category CARDS in the quest board (tappable to open modal) */
+    renderQuestBoard() {
+      if (!this.questsDb) return;
+      const container = document.getElementById('categoryCardsGrid');
+      const filterBar = document.getElementById('categoryFilterBar');
+
+      const selectedCats = this.selectedCategories.size > 0
+        ? this.questsDb.categories.filter(c => this.selectedCategories.has(c.id))
+        : this.questsDb.categories;
+
+      // Filter pills
+      filterBar.innerHTML = `
+        <button class="category-filter-pill ${this.activeFilter === 'all' ? 'active' : ''}" data-filter="all">📜 Todas</button>
+        ${selectedCats.map(c => `
+          <button class="category-filter-pill ${this.activeFilter === c.id ? 'active' : ''}" data-filter="${c.id}">${c.icon} ${c.title}</button>
+        `).join('')}
+      `;
+
+      const filteredCats = this.activeFilter === 'all' ? selectedCats : selectedCats.filter(c => c.id === this.activeFilter);
+
+      container.innerHTML = filteredCats.map(cat => {
+        const completedInCat = cat.quests.filter(q => this.completedQuests.has(q.id)).length;
+        const pct = Math.round((completedInCat / cat.quests.length) * 100);
+        return `
+        <div class="category-card-quest" data-catid="${cat.id}" style="cursor: pointer;">
+          <div style="font-size: 2.2rem; margin-bottom: 6px;">${cat.icon}</div>
+          <div style="font-family: var(--font-heading); font-weight: 700; color: #fff; font-size: 0.95rem; margin-bottom: 4px;">${cat.title}</div>
+          <div style="font-family: var(--font-code); font-size: 0.75rem; color: var(--primary-gold); margin-bottom: 6px;">${completedInCat} / ${cat.quests.length} completadas</div>
+          <div style="height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;">
+            <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, var(--primary-cyan), var(--primary-green)); transition: width 0.4s ease;"></div>
+          </div>
+        </div>`;
+      }).join('');
+
+      this.updateCounts();
+    }
+
+    /** Opens the bottom-sheet modal with quests for a specific category */
+    openQuestModal(catId) {
+      const cat = this.questsDb.categories.find(c => c.id === catId);
+      if (!cat) return;
+
+      document.getElementById('questModalIcon').innerText = cat.icon;
+      document.getElementById('questModalTitle').innerText = cat.title;
+
+      const completedInCat = cat.quests.filter(q => this.completedQuests.has(q.id)).length;
+      document.getElementById('questModalSubtitle').innerText = `${completedInCat} / ${cat.quests.length} misiones completadas`;
+
+      const typeStyles = {
+        action:    { bg: 'rgba(0, 240, 255, 0.10)', color: 'var(--primary-cyan)',    label: '⚡ ACCIÓN' },
+        challenge: { bg: 'rgba(255, 0, 85, 0.10)',   color: 'var(--primary-magenta)', label: '🏆 DESAFÍO' },
+        social:    { bg: 'rgba(139, 92, 246, 0.10)', color: 'var(--primary-purple)',  label: '🤝 SOCIAL' },
+        explore:   { bg: 'rgba(255, 183, 0, 0.10)',  color: 'var(--primary-gold)',    label: '🔍 EXPLORAR' },
+        watch:     { bg: 'rgba(16, 185, 129, 0.10)', color: 'var(--primary-green)',   label: '🎬 VER' }
+      };
+
+      const body = document.getElementById('questModalBody');
+      body.innerHTML = cat.quests.map(q => {
+        const done = this.completedQuests.has(q.id);
+        const t = typeStyles[q.type] || typeStyles.action;
+        return `
+        <div class="modal-quest-item ${done ? 'checked' : ''}" id="mqitem_${q.id}">
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <input type="checkbox" class="modal-quest-check" data-quest-id="${q.id}" ${done ? 'checked' : ''}>
+            <div style="flex: 1; min-width: 0;">
+              <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-bottom: 3px;">
+                <span style="font-size: 0.68rem; padding: 1px 7px; border-radius: 8px; background: ${t.bg}; color: ${t.color}; font-family: var(--font-heading); font-weight: 700;">${t.label}</span>
+                ${q.time ? `<span style="font-size: 0.68rem; color: var(--primary-cyan); font-family: var(--font-code);">⏰ ${q.time}</span>` : ''}
+              </div>
+              <div style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; color: ${done ? 'var(--primary-green)' : '#fff'}; line-height: 1.25; margin-bottom: 2px;">
+                ${done ? '✅ ' : ''}${q.title}
+              </div>
+              <div style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.35;">${q.description}</div>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
+      // Show modal
+      const overlay = document.getElementById('questModalOverlay');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    closeQuestModal() {
+      document.getElementById('questModalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    bindEvents() {
+      // Category selection (picker view)
+      document.getElementById('categoryGrid').addEventListener('click', (e) => {
+        const card = e.target.closest('.category-pick-card');
+        if (!card) return;
+        const catId = card.dataset.catid;
+
+        if (this.selectedCategories.has(catId)) {
+          this.selectedCategories.delete(catId);
+          card.classList.remove('selected');
+        } else {
+          this.selectedCategories.add(catId);
+          card.classList.add('selected');
+        }
+
+        document.getElementById('btnConfirmCategories').disabled = this.selectedCategories.size === 0;
+      });
+
+      // Confirm categories → quest board
+      document.getElementById('btnConfirmCategories').addEventListener('click', () => {
+        document.getElementById('viewCategoryPicker').style.display = 'none';
+        document.getElementById('viewQuestBoard').style.display = 'block';
+        this.renderQuestBoard();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Back to categories
+      document.getElementById('btnBackToCategories').addEventListener('click', () => {
+        document.getElementById('viewQuestBoard').style.display = 'none';
+        document.getElementById('viewCategoryPicker').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Show all
+      document.getElementById('btnShowAll').addEventListener('click', () => {
+        this.selectedCategories = new Set(this.questsDb.categories.map(c => c.id));
+        this.activeFilter = 'all';
+        this.renderQuestBoard();
+      });
+
+      // Category filter pills
+      document.getElementById('categoryFilterBar').addEventListener('click', (e) => {
+        const pill = e.target.closest('.category-filter-pill');
+        if (!pill) return;
+        this.activeFilter = pill.dataset.filter;
+        this.renderQuestBoard();
+      });
+
+      // Category card click → open modal
+      document.getElementById('categoryCardsGrid').addEventListener('click', (e) => {
+        const card = e.target.closest('.category-card-quest');
+        if (!card) return;
+        this.openQuestModal(card.dataset.catid);
+      });
+
+      // Close modal
+      document.getElementById('btnCloseQuestModal').addEventListener('click', () => this.closeQuestModal());
+      document.getElementById('questModalOverlay').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) this.closeQuestModal();
+      });
+
+      // Eureka QR Scan Simulator Button
+      document.getElementById('btnSimulateScanEureka')?.addEventListener('click', () => {
+        const box = document.getElementById('eurekaScanResultBox');
+        if (box) {
+          box.style.display = 'block';
+          this.showToast('✨ ¡Has completado el Desafío Eureka! Próxima quest: Grethel');
+        }
+      });
+
+      // Quest checkboxes inside modal (delegated)
+      document.getElementById('questModalBody').addEventListener('change', (e) => {
+        if (!e.target.classList.contains('modal-quest-check')) return;
+        const questId = e.target.dataset.questId;
+        const item = document.getElementById(`mqitem_${questId}`);
+
+        if (e.target.checked) {
+          this.completedQuests.add(questId);
+          if (item) item.classList.add('checked');
+          this.showToast('✅ ¡Misión marcada como completada!');
+        } else {
+          this.completedQuests.delete(questId);
+          if (item) item.classList.remove('checked');
+        }
+
+        // Update modal subtitle count
+        const overlay = document.getElementById('questModalOverlay');
+        if (overlay.classList.contains('open')) {
+          const allChecks = document.querySelectorAll('#questModalBody .modal-quest-check');
+          const checked = document.querySelectorAll('#questModalBody .modal-quest-check:checked');
+          document.getElementById('questModalSubtitle').innerText = `${checked.length} / ${allChecks.length} misiones completadas`;
+        }
+
+        this.saveProgress();
+        this.updateCounts();
+      });
+    }
+
+    updateCounts() {
+      if (!this.questsDb) return;
+      const selectedCats = this.selectedCategories.size > 0
+        ? this.questsDb.categories.filter(c => this.selectedCategories.has(c.id))
+        : this.questsDb.categories;
+
+      let total = 0;
+      selectedCats.forEach(c => { total += c.quests.length; });
+
+      const el = document.getElementById('completedCount');
+      const totalEl = document.getElementById('totalCount');
+      if (el) el.innerText = this.completedQuests.size;
+      if (totalEl) totalEl.innerText = total;
+
+      // Unlock Secret Quest Banner after 5 completed quests
+      const secretBanner = document.getElementById('secretQuestBanner');
+      if (secretBanner) {
+        if (this.completedQuests.size >= 5) {
+          secretBanner.style.display = 'block';
+        } else {
+          secretBanner.style.display = 'none';
+        }
+      }
+    }
+
+    showToast(message) {
+      const toast = document.getElementById('rpgToastNotification');
+      if (!toast) return;
+      toast.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    saveProgress() {
+      sessionStorage.setItem('expogeek_rpg_quests', JSON.stringify({
+        completedQuests: Array.from(this.completedQuests),
+        selectedCategories: Array.from(this.selectedCategories)
+      }));
+    }
+
+    restoreProgress() {
+      const saved = sessionStorage.getItem('expogeek_rpg_quests');
+      if (saved) {
+        try {
+          const p = JSON.parse(saved);
+          this.completedQuests = new Set(p.completedQuests || []);
+          if (p.selectedCategories && p.selectedCategories.length > 0) {
+            this.selectedCategories = new Set(p.selectedCategories);
+            // Auto-jump to quest board
+            document.getElementById('viewCategoryPicker').style.display = 'none';
+            document.getElementById('viewQuestBoard').style.display = 'block';
+            setTimeout(() => this.renderQuestBoard(), 100);
+          }
+        } catch (e) {}
+      }
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    window.questHub = new QuestHubController();
+  });
+  </script>
+
+  <style>
+    /* Category picker cards */
+    .category-pick-card {
+      background: rgba(20, 24, 40, 0.85);
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 1rem 0.75rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .category-pick-card:hover {
+      border-color: rgba(0, 240, 255, 0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+    .category-pick-card.selected {
+      background: linear-gradient(145deg, rgba(0, 240, 255, 0.12), rgba(139, 92, 246, 0.12));
+      border-color: var(--primary-cyan);
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.2);
+    }
+
+    /* Category quest-board cards (tappable) */
+    .category-card-quest {
+      background: rgba(20, 24, 40, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 1rem 0.85rem;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+    .category-card-quest:hover, .category-card-quest:active {
+      border-color: var(--primary-cyan);
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(0, 240, 255, 0.15);
+    }
+
+    /* Filter pills */
+    .category-filter-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .category-filter-pill:hover {
+      border-color: var(--primary-cyan);
+      color: var(--primary-cyan);
+    }
+    .category-filter-pill.active {
+      background: var(--primary-cyan);
+      color: #000;
+      border-color: var(--primary-cyan);
+    }
+  </style>
+
+</body>
+</html>

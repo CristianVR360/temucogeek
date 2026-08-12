@@ -1,0 +1,94 @@
+{
+  "universeMottos": {
+    "Fantasía Epica": [
+      "Por el honor y la espada, la victoria es el único camino sagrado.",
+      "Entre runas antiguas y sombras, forjo mi propio destino sin temor.",
+      "Que el acero hable por mí en la batalla final por el reino.",
+      "Ni dragones ni demonios doblegarán la voluntad del guardián.",
+      "El valor no se mide en victorias, sino en cuántas veces te levantas.",
+      "En la oscuridad de la mazmorra, mi aura brillará como el sol de plata.",
+      "Juramento de fuego y sangre: proteger al inocente hasta el último aliento.",
+      "Las leyendas no nacen en castillos, se forjan en el barro de la batalla.",
+      "Que los antiguos dioses guíen mi arco y protejan mi escudo.",
+      "La magia corre por mis venas, pero es mi honor el que vence."
+    ],
+    "Sci-Fi / Star Wars": [
+      "Que la Fuerza guíe mi sable en los confines más oscuros de la galaxia.",
+      "Cuestión de créditos, honor Mandaloriano y determinación de acero.",
+      "En las estrellas no hay lugar para el miedo, solo para la hipervelocidad.",
+      "Nací entre reactores y estrellas de plasma, nada detendrá mi vuelo.",
+      "Sin ataduras al imperio, el horizonte estelar es mi único amo.",
+      "El lado oscuro tienta con poder, pero la disciplina vence al caos.",
+      "Mi nave es mi hogar, mi bláster es mi ley en el borde exterior.",
+      "Cazando recompensas de sector en sector sin mirar atrás.",
+      "El destino de los mundos se decide en un solo disparo preciso.",
+      "Que el vacío del espacio recuerde el eco de nuestras victorias."
+    ],
+    "Cyberpunk 2077": [
+      "Quemando cromo y hackeando el sistema hasta ver el amanecer.",
+      "En Night City la gloria se paga con sangre y ciberware de élite.",
+      "Ni las megacorporaciones ni los netrunners podrán borrar mi firma.",
+      "Luces neón en la lluvia, balas inteligentes en la recámara.",
+      "Un disparo a la vez, tomando el control de las calles de metal.",
+      "Mi mente está en la red, mi cuerpo forjado en aleación biónica.",
+      "Sin reglas, sin límites, solo el algoritmo de la supervivencia.",
+      "Vivimos rápido, luchamos duro y nos volvemos leyendas cibernéticas.",
+      "En un mundo sintético, el único rasgo real es la lealtad.",
+      "Que el código se corrompa antes de doblar mi rodilla ante un corpo."
+    ],
+    "Steampunk": [
+      "Acelerando los engranajes del destino con vapor, presión y fuego.",
+      "Ingenio, alquimia y mecanismos victoriana contra el caos del mundo.",
+      "El vapor nos eleva, los inventos nos hacen invencibles.",
+      "Navegando los cielos en zeppelines forjados con cobre y bronce.",
+      "En cada reloj de engranajes late la precisión de la victoria.",
+      "La ciencia del vapor sobrepasará cualquier mito del pasado.",
+      "Tuercas, engranajes y una mente brillante desafiando la gravedad.",
+      "Con brújula de bronce y corazón de latón conquistamos los vientos.",
+      "El progreso no pide permiso, se construye a golpe de martillo.",
+      "La presión es el catalizador que transforma el bronce en oro."
+    ],
+    "Post-Apocalíptico": [
+      "Entre ruinas y radiación, solo los más fuertes prevalecen hoy.",
+      "Chatarra, pólvora y la inquebrantable voluntad de sobrevivir al erial.",
+      "El viejo mundo cayó, pero sobre su polvo construiremos el nuevo imperio.",
+      "Sin agua, sin ley, solo el rugido del motor y el instinto salvaje.",
+      "Buscando recursos entre la chatarra sin perder la humanidad.",
+      "Las cicatrices del páramo son los galones de los verdaderos campeones.",
+      "Pólvora seca y miradas firmes frente a la tormenta tóxica.",
+      "El desierto no perdona a los débiles, pero le teme a los perseverantes.",
+      "Mañana es un lujo, hoy luchamos con todo lo que tenemos.",
+      "Sobre la arena ardiente, nuestra bandera flameará indestructible."
+    ],
+    "Genshin Impact / Anime World": [
+      "El viento guiará mi visión elemental hacia la eternidad de los cielos.",
+      "Por la justicia, la amistad y el poder del juramento supremo del gremio.",
+      "Aunque las estrellas se apaguen, mi chispa elemental brillará con fuerza.",
+      "Despertando el poder dormido dentro de mí para proteger el mundo.",
+      "Un viaje de mil leguas comienza con la determinación del corazón.",
+      "Que la tormenta electro limpie el camino de aquellos que amenazan la paz.",
+      "La resonancia de los elementos es la música de nuestra victoria.",
+      "Con mi artefacto legendario y el lazo del destino, no hay derrota posible.",
+      "Seguir el camino del guerrero implica sonreír incluso ante el mayor peligro.",
+      "Nuestra historia será cantada por los bardos de Teyvat por generaciones."
+    ]
+  },
+  "generators": {
+    "prefixes": [
+      "Por el honor de", "Bajo el sello de", "Guiado por el poder de", "Con la fuerza de",
+      "En el corazón de", "Desafiando la sombra de", "Forjado en el fuego de", "Invocando la gracia de",
+      "Siguiendo la senda de", "Sin temor a"
+    ],
+    "values": [
+      "la justicia divina", "la libertad eterna", "la venganza sangrienta", "la sabiduría suprema",
+      "el destino estelar", "la camaradería inquebrantable", "la ciencia del futuro", "el cromo biónico",
+      "las ruinas del pasado", "los dioses elementales"
+    ],
+    "suffixes": [
+      "la victoria será nuestro legado.", "nada detendrá nuestro avance.", "conquistaremos el horizonte.",
+      "las leyendas se escribirán hoy.", "mi fe permanece indestructible.", "el caos caerá ante nosotros.",
+      "los enemigos temblarán al escuchar mi nombre.", "el reino prevalecerá por siempre.",
+      "nuestro nombre brillará entre las estrellas.", "el viaje apenas comienza."
+    ]
+  }
+}

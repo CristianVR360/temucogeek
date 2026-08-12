@@ -1,0 +1,147 @@
+{
+  "categories": [
+    {
+      "id": "esports",
+      "icon": "🎮",
+      "title": "eSports & Gaming",
+      "description": "Torneos, competencias y desafíos gamer en el recinto.",
+      "quests": [
+        { "id": "q_fifa", "title": "Inscríbete en el Campeonato de FC 26", "description": "Busca la zona Gamer y regístrate en el torneo oficial de FC 26.", "xp": 100, "type": "action" },
+        { "id": "q_smash", "title": "Inscríbete en el Campeonato de Smash Bros", "description": "Demuestra tus habilidades en Super Smash Bros. Busca el stand de torneos.", "xp": 100, "type": "action" },
+        { "id": "q_wingame", "title": "Gana una Partida en la Zona Gamer", "description": "Participa y gana al menos 1 partida en cualquier estación de juego.", "xp": 150, "type": "challenge" },
+        { "id": "q_freeplay", "title": "Juega una Partida Libre con un Desconocido", "description": "Conoce a otro aventurero en la zona de freeplay y desafíalo a una partida amistosa.", "xp": 80, "type": "social" }
+      ]
+    },
+    {
+      "id": "tcg",
+      "icon": "🃏",
+      "title": "TCG & Juegos de Rol",
+      "description": "Cartas coleccionables, Pokémon, Yu-Gi-Oh!, Magic y juegos de mesa.",
+      "quests": [
+        { "id": "q_tcg_duel", "title": "Gana un Duelo de Cartas en la Zona Top 8", "description": "Busca la zona TCG Top 8 y reta a un oponente. ¡Gana para completar la misión!", "xp": 150, "type": "challenge" },
+        { "id": "q_tcg_trade", "title": "Intercambia una Carta con otro Aventurero", "description": "Encuentra a otro coleccionista y realiza un intercambio de cartas. ¡El trato es ley!", "xp": 80, "type": "social" },
+        { "id": "q_tcg_oshawott", "title": "Visita Oshawott.Store y Pregunta por la Carta del Día", "description": "Nicolás de Oshawott.Store tiene una carta especial del día. ¡Descúbrela!", "xp": 100, "type": "explore" },
+        { "id": "q_tcg_nippon", "title": "Descubre la Colección Secreta de Nippon Geek", "description": "Daniel de Nippon Geek tiene figuras y cartas raras. Pregunta por su pieza más valiosa.", "xp": 80, "type": "explore" },
+        { "id": "q_tcg_rif", "title": "Compra o Intercambia algo en Rif Anime & Toys", "description": "Rolando tiene cartas TCG, artesanías y stickers. ¡Explora su colección variada!", "xp": 80, "type": "explore" },
+        { "id": "q_rol_mesa", "title": "Participa en una Partida de Juego de Mesa o Rol", "description": "Busca la zona de juegos de mesa y únete a una partida. Pide a Roxy.voy.stamp que te enseñe un juego.", "xp": 120, "type": "action" }
+      ]
+    },
+    {
+      "id": "arte",
+      "icon": "🎨",
+      "title": "Ilustración, Arte & Dibujo",
+      "description": "Talleres creativos, zona de dibujo y artistas del evento.",
+      "quests": [
+        { "id": "q_art_draw", "title": "Crea un Dibujo en la Zona de Dibujo Libre", "description": "Toma un lápiz y papel en la zona de arte y dibuja algo épico. ¡Muéstralo al staff!", "xp": 120, "type": "action" },
+        { "id": "q_art_workshop", "title": "Participa de un Taller o Concurso de Arte", "description": "Inscríbete en un taller creativo del evento y completa la actividad.", "xp": 150, "type": "action" },
+        { "id": "q_art_hoozuki", "title": "Encarga un Retrato Express en Hoozuki Art & Crafts", "description": "Ruth de Hoozuki hace ilustraciones y stickers increíbles. ¡Pídele un dibujo de tu personaje!", "xp": 100, "type": "explore" },
+        { "id": "q_art_arietoroi", "title": "Conoce el Arte de Arietoroi", "description": "Arielle de Arietoroi - Dibujo e ilustración tiene un estilo único. ¡Conversa sobre su proceso creativo!", "xp": 80, "type": "social" },
+        { "id": "q_art_komugo", "title": "Admira las Ilustraciones de Komugo (Valdivia)", "description": "Claudia de Komugo trajo fanart desde Valdivia. ¡Descubre su obra favorita!", "xp": 80, "type": "explore" },
+        { "id": "q_art_magluan", "title": "Descubre los Cómics de MagLuan", "description": "Conzuelo de MagLuan tiene ilustraciones, fanart y arte original. Pregunta por su manga favorito.", "xp": 80, "type": "explore" },
+        { "id": "q_art_batido", "title": "Visita Batido de Frutilla - Ilustración", "description": "Javiera tiene un estilo vibrante de ilustración. ¡Conversa sobre sus técnicas!", "xp": 80, "type": "explore" },
+        { "id": "q_art_hojaseca", "title": "Explora el Arte de Hoja Seca", "description": "Yohariela de Hoja Seca trae fanart, arte original, artesanías y stickers desde Vilcún.", "xp": 80, "type": "explore" },
+        { "id": "q_art_smaddzz", "title": "Descubre los Stickers de S_maddzz", "description": "Natalia tiene ilustraciones, cómics originales y stickers. ¡Encuentra tu favorito!", "xp": 80, "type": "explore" },
+        { "id": "q_art_kaeru", "title": "Visita Kaeru - Fanart & Artesanía", "description": "Millaray de Kaeru tiene ilustraciones y artesanías hechas a mano. ¡Conoce su trabajo!", "xp": 80, "type": "explore" },
+        { "id": "q_art_vaniamonos", "title": "Conoce a Vaniamonos & Kato", "description": "Vania y Katherine tienen fanart, arte original, artesanías y stickers. ¡Doble talento!", "xp": 80, "type": "explore" },
+        { "id": "q_art_huronrin", "title": "Visita Huronrin desde Lonquimay", "description": "Valeria trajo fanart y artesanías desde Lonquimay. ¡Pregunta por su pieza más especial!", "xp": 80, "type": "explore" },
+        { "id": "q_art_aren", "title": "Conoce el Arte Gráfico de Aren Radely", "description": "Adriel de Aren Radely trae ilustración y arte original desde Nueva Imperial.", "xp": 80, "type": "explore" },
+        { "id": "q_art_samuart", "title": "Descubre las Creaciones en Resina de Samuart", "description": "Sasha de Samuart.cl fusiona ilustración con artesanía en resina. ¡Pide ver su técnica!", "xp": 80, "type": "explore" },
+        { "id": "q_art_mimiko", "title": "Explora Mimiko - Fanart & K-Pop", "description": "Emily de Mimiko trae fanart, artesanías, anime y K-Pop desde Lautaro. ¡Conversa con ella!", "xp": 80, "type": "explore" },
+        { "id": "q_art_brujita", "title": "Visita Brujita de Papel", "description": "Valeria tiene stickers y papelería temática anime y K-Pop. ¡Busca tu favorito!", "xp": 80, "type": "explore" },
+        { "id": "q_art_amaterasu", "title": "Explora Amaterasu Manga Store", "description": "Nicolás tiene arte original y cómics/manga. ¡Pregunta por sus títulos recomendados!", "xp": 100, "type": "explore" }
+      ]
+    },
+    {
+      "id": "shows",
+      "icon": "🎵",
+      "title": "Shows & Música en Vivo",
+      "description": "Bandas, covers de anime, tributos y presentaciones en el escenario.",
+      "quests": [
+        { "id": "q_show_guaripolo", "title": "Corea en el Escenario junto a Guaripolo", "description": "La Banda de Guaripolo (Tributo 31 Minutos) tocará en vivo. ¡Sube al escenario y corea con ellos!", "xp": 200, "type": "challenge" },
+        { "id": "q_show_temumizu", "title": "Corea junto a Temumizu - Covers de Anime", "description": "Temumizu toca covers de anime en vivo. ¡Canta tu opening favorito junto a la banda!", "xp": 200, "type": "challenge" },
+        { "id": "q_show_starlight", "title": "Disfruta del Dúo Acústico Starlight", "description": "El Duo Starlight toca versiones acústicas de anime. Escúchalos y tómate una foto con ellos.", "xp": 120, "type": "social" },
+        { "id": "q_show_sing", "title": "Canta una Canción en el Escenario", "description": "Atrévete a subir al escenario y cantar tu opening o ending favorito de anime.", "xp": 250, "type": "challenge" },
+        { "id": "q_show_cosplayer", "title": "Habla con un Cosplayer o Personaje del Staff", "description": "Encuentra a un cosplayer o personaje del staff y mantengan una conversación 'in character'.", "xp": 100, "type": "social" },
+        { "id": "q_show_hasshra", "title": "Conoce a alguien de Hasshra Cosplay", "description": "La comunidad Hasshra Cosplay estará presente. ¡Preséntate y conoce sus proyectos!", "xp": 100, "type": "social" },
+        { "id": "q_show_photo_cosplay", "title": "Tómate una Foto con un Cosplayer Épico", "description": "Busca al cosplayer más impresionante del evento y pídele una foto.", "xp": 80, "type": "social" }
+      ]
+    },
+    {
+      "id": "cine",
+      "icon": "🎬",
+      "title": "Cine Geek Envolvente",
+      "description": "Sala de cine con películas épicas todo el día. ¡Completa el maratón!",
+      "quests": [
+        { "id": "q_cine_hp", "title": "Ve Harry Potter y las Reliquias de la Muerte: Parte 2", "description": "10:00 - 12:10 | Original subtitulado / Latino. ¡Revive la batalla final de Hogwarts!", "xp": 100, "type": "watch", "time": "10:00 - 12:10" },
+        { "id": "q_cine_spiderman", "title": "Ve Spider-Man: No Way Home", "description": "12:20 - 14:48 | Español Latino. ¡Los tres Spider-Man juntos en pantalla grande!", "xp": 100, "type": "watch", "time": "12:20 - 14:48" },
+        { "id": "q_cine_kpop", "title": "Ve K-Pop: Demon Hunters", "description": "15:00 - 16:30 | Español Latino. Una aventura K-Pop sobrenatural.", "xp": 100, "type": "watch", "time": "15:00 - 16:30" },
+        { "id": "q_cine_demon", "title": "Ve Demon Slayer: Mugen Train", "description": "16:45 - 18:42 | Japonés original subtitulado. ¡La película más épica de Tanjiro!", "xp": 100, "type": "watch", "time": "16:45 - 18:42" },
+        { "id": "q_cine_dune", "title": "Ve Dune (Parte 1)", "description": "18:55 - 21:30 | Original subtitulado. ¡Paul Atreides en la pantalla envolvente!", "xp": 100, "type": "watch", "time": "18:55 - 21:30" },
+        { "id": "q_cine_marathon", "title": "🏆 Maratón Completo: Ve 3 Películas o Más", "description": "Quédate para al menos 3 proyecciones. ¡Muestra tus tickets al staff para verificar!", "xp": 300, "type": "challenge" }
+      ]
+    },
+    {
+      "id": "tiendas",
+      "icon": "🏪",
+      "title": "Tiendas & Expositores",
+      "description": "Figuras, artesanías, cosplay props, impresión 3D y más.",
+      "quests": [
+        { "id": "q_shop_dobby", "title": "Visita La Tiendita de Dobby", "description": "Fernando tiene figuras coleccionables, vestuario geek y stickers. ¡Pregunta por su producto estrella!", "xp": 80, "type": "explore" },
+        { "id": "q_shop_webaditas", "title": "Descubre las Props de Webaditas", "description": "Camila tiene cosplay props e impresión 3D. ¡Pide ver su pieza más compleja!", "xp": 100, "type": "explore" },
+        { "id": "q_shop_gojoventas", "title": "Explora GojoVentas - Figuras & Artesanía", "description": "Patricio tiene artesanías y figuras coleccionables épicas. ¡Busca la más rara!", "xp": 80, "type": "explore" },
+        { "id": "q_shop_zekkei", "title": "Recorre Zekkei Shop - Tienda Completa", "description": "Isaías tiene artesanías, anime, K-Pop, figuras, vestuario geek y stickers. ¡Una tienda para todo!", "xp": 80, "type": "explore" },
+        { "id": "q_shop_roxy", "title": "Conoce Roxy.voy.stamp - Cosplay & Juegos", "description": "Roxana tiene cosplay props, anime, K-Pop, vestuario geek y juegos de mesa. ¡Prueba algo nuevo!", "xp": 100, "type": "explore" },
+        { "id": "q_shop_rincon", "title": "Visita El Rincón de Silvy", "description": "Silvana tiene anime, K-Pop, figuras y stickers. ¡Busca tu personaje favorito!", "xp": 80, "type": "explore" },
+        { "id": "q_shop_neko", "title": "Explora Neko Papelería - Anime & K-Pop", "description": "Katherine de Neko Papelería tiene stickers y papelería temática de anime y K-Pop.", "xp": 80, "type": "explore" },
+        { "id": "q_shop_house", "title": "Descubre House of Cars Store", "description": "Juan Pablo tiene figuras coleccionables únicas. ¡Pregunta por su pieza más valiosa!", "xp": 80, "type": "explore" },
+        { "id": "q_shop_taller", "title": "Visita El Taller Silvestre", "description": "Oscar trajo artesanías, anime, K-Pop y stickers desde Villarrica. ¡Conoce su trabajo!", "xp": 80, "type": "explore" },
+        { "id": "q_shop_keijap", "title": "Explora Keijap Store - Anime, K-Pop & Snacks", "description": "Támara tiene anime, K-Pop, stickers y snacks geek. ¡Una combinación perfecta!", "xp": 80, "type": "explore" },
+        { "id": "q_shop_china", "title": "Visita China Latina Store", "description": "Sofía trae artesanías y productos únicos desde Padre las Casas.", "xp": 80, "type": "explore" },
+        { "id": "q_shop_photo", "title": "Tómate una Foto con tu Producto Favorito", "description": "Elige tu producto o artesanía favorita de cualquier stand y tómate una selfie con él.", "xp": 80, "type": "social" }
+      ]
+    },
+    {
+      "id": "3d",
+      "icon": "🖨️",
+      "title": "Impresión 3D & Tecnología",
+      "description": "Figuras 3D, corte láser y creaciones tecnológicas.",
+      "quests": [
+        { "id": "q_3d_kraken", "title": "Visita Kraken3D - Impresión 3D desde Villarrica", "description": "Sebastián de Kraken3D trae creaciones en impresión 3D desde Villarrica. ¡Ve el proceso en vivo!", "xp": 100, "type": "explore" },
+        { "id": "q_3d_sucuteros", "title": "Descubre Sucuteros - Impresión 3D & Láser", "description": "Yessenia trae impresión 3D y corte láser desde Nueva Imperial. ¡Pide ver su catálogo!", "xp": 100, "type": "explore" },
+        { "id": "q_3d_mafe", "title": "Conoce Mafe 3D", "description": "Luis de Mafe 3D imprime figuras y objetos geek en 3D. ¡Pregunta cómo funciona!", "xp": 100, "type": "explore" },
+        { "id": "q_3d_creapelier", "title": "Explora Creapelier - 3D & Stickers", "description": "Margarita de Creapelier combina impresión 3D con stickers. ¡Viene desde Villarrica!", "xp": 80, "type": "explore" },
+        { "id": "q_3d_magma", "title": "Visita Magma Producciones", "description": "Jaime de Magma Producciones trae productos especiales desde Villarrica. ¡Descubre qué traen!", "xp": 80, "type": "explore" }
+      ]
+    },
+    {
+      "id": "craft",
+      "icon": "🧶",
+      "title": "Artesanía & Amigurumis",
+      "description": "Crochet, tejidos, resina y creaciones hechas a mano con amor.",
+      "quests": [
+        { "id": "q_craft_poke", "title": "Encuentra un Pokémon en Poke Crochett", "description": "Thanya de Poke Crochett teje amigurumis de Pokémon. ¡Encuentra a tu favorito!", "xp": 100, "type": "explore" },
+        { "id": "q_craft_broderi", "title": "Visita Broderí - Artesanía Tejida", "description": "Carolina de Broderí tiene artesanías y amigurumis hechos a mano. ¡Descubre su técnica!", "xp": 80, "type": "explore" },
+        { "id": "q_craft_bechi", "title": "Conoce Bechi's Crochet desde Victoria", "description": "Bárbara teje amigurumis desde Victoria. ¡Pregunta cuál fue el más difícil de hacer!", "xp": 80, "type": "explore" },
+        { "id": "q_craft_resina", "title": "Descubre Resina Encantada", "description": "Karen de Resina Encantada crea artesanías mágicas en resina desde Quepe. ¡Admira su trabajo!", "xp": 80, "type": "explore" },
+        { "id": "q_craft_vichito", "title": "Visita Tejidos Vichito", "description": "Alexandra de Tejidos Vichito tiene amigurumis adorables. ¡Elige tu favorito!", "xp": 80, "type": "explore" },
+        { "id": "q_craft_magdaline", "title": "Explora Magdaline Store", "description": "Daniela de Magdaline Store tiene artesanías y amigurumis. ¡Conoce su inspiración!", "xp": 80, "type": "explore" }
+      ]
+    },
+    {
+      "id": "food",
+      "icon": "☕",
+      "title": "Gastronomía & Café Geek",
+      "description": "Cafeterías temáticas, repostería geek, snacks japoneses y food trucks.",
+      "quests": [
+        { "id": "q_food_yuru", "title": "Tómate un Café Temático en Yuru Coffee", "description": "Valentina de Yuru Coffee sirve café y comida temática japonesa/coreana. ¡Pide la especialidad de la casa!", "xp": 100, "type": "action" },
+        { "id": "q_food_dulce_momento", "title": "Prueba los Dulces de Dulce Momento (Osorno)", "description": "Sonia trajo su cafetería/pastelería desde Osorno. ¡Prueba algo y di cuál es tu favorito!", "xp": 100, "type": "action" },
+        { "id": "q_food_dulcemente", "title": "Snacks Geek en Dulcemente Dulce (Valdivia)", "description": "Karla trajo snacks y repostería geek desde Valdivia. ¡Busca el snack más creativo!", "xp": 80, "type": "explore" },
+        { "id": "q_food_sweets", "title": "Descubre los Dulces de Sweets Katty", "description": "Katherinne tiene snacks y repostería geek. ¡Encuentra tu dulce favorito!", "xp": 80, "type": "explore" },
+        { "id": "q_food_choin", "title": "Prueba los Snacks de Choin Tuwe (Villarrica)", "description": "Soledad trae snacks y repostería geek desde Villarrica. ¡Descubre sus sabores!", "xp": 80, "type": "explore" },
+        { "id": "q_food_bajon", "title": "Come en El Bajón de las Carreras", "description": "Víctor tiene su food truck con comida convencional. ¡Date ese bajón geek necesario!", "xp": 80, "type": "action" },
+        { "id": "q_food_astra", "title": "Prueba la Comida de AStra3690", "description": "Cristian ofrece comida temática japonesa/coreana y artesanías. ¡Combo perfecto!", "xp": 80, "type": "explore" },
+        { "id": "q_food_photo", "title": "Tómate una Selfie con tu Comida Geek", "description": "Pide tu plato o bebida geek favorita y tómate una selfie estilizada. ¡Sube tu foto!", "xp": 60, "type": "social" }
+      ]
+    }
+  ]
+}

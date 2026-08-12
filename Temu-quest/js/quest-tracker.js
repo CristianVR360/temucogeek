@@ -1,18 +1,20 @@
 /**
  * ExpoGeek RPG - Quest Tracker & Live Event Engine
- * Handles main quest secret code verification, side quest checklists, world events timers, and XP rank system.
+ * Manages screen navigation, QR code unlocks via URL parameters (?qr=sector_name), global vs specific quests,
+ * and XP rank progression for active attendee sessions.
  */
 
 class QuestTracker {
   constructor() {
     this.xp = 0;
     this.completedQuests = new Set();
+    this.unlockedSectors = new Set();
 
-    // Main Quest Riddle Answers (Case-insensitive verification)
+    // Main Quest Riddle Answers
     this.mainQuestSecrets = {
-      step1: 'NORTE', // Riddle 1 code word
-      step2: 'JEDI', // Riddle 2 code word (buscar Cosplayer)
-      step3: 'ALFA-OMEGA-GEEK' // Final code to tell Jedi Cristian / Esteban
+      step1: 'NORTE',
+      step2: 'JEDI',
+      step3: 'ALFA-OMEGA-GEEK'
     };
 
     this.init();
@@ -20,17 +22,52 @@ class QuestTracker {
 
   init() {
     this.restoreProgress();
+    this.checkUrlForQrUnlocks();
     this.bindEvents();
     this.startWorldEventTimers();
     this.updateRankUI();
   }
 
+  /**
+   * Scans URL parameters (e.g. ?qr=norte or ?qr=mercaderes) to unlock specific sector quests
+   */
+  checkUrlForQrUnlocks() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const scannedQr = urlParams.get('qr') || window.location.hash.replace('#qr-', '');
+
+    if (scannedQr) {
+      const cleanQr = scannedQr.toLowerCase().trim();
+      if (!this.unlockedSectors.has(cleanQr)) {
+        this.unlockedSectors.add(cleanQr);
+        this.saveProgress();
+        setTimeout(() => {
+          this.showToast(`📱 ¡QR Escaneado! Sector '${cleanQr.toUpperCase()}' desbloqueado (+50 XP)!`);
+          this.xp += 50;
+          this.updateRankUI();
+        }, 500);
+      }
+    }
+  }
+
   bindEvents() {
+    // Navigation Screen Switcher Buttons
+    document.querySelectorAll('.btn-goto-generator').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.showScreen('screenGenerator');
+      });
+    });
+
+    document.querySelectorAll('.btn-goto-hub').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.showScreen('screenHub');
+      });
+    });
+
     // Main Quest Step 1 secret code verification
     document.getElementById('btnVerifyMQ1')?.addEventListener('click', () => {
       const input = document.getElementById('inputMQ1')?.value.trim().toUpperCase();
-      if (input === this.mainQuestSecrets.step1 || input.includes('NORTE')) {
-        this.completeQuest('mq_step1');
+      if (input === this.mainQuestSecrets.step1 || input?.includes('NORTE')) {
+        this.completeQuest('mq_step1', 150);
         document.getElementById('mqStep1Content').innerHTML = `
           <div style="color: var(--primary-green); font-weight: bold; padding: 10px; background: rgba(16,185,129,0.1); border-radius: 8px;">
             ✅ ¡Frase secreta correcta! Pista obtenida: "El Caballero Jedi (Cristian) y Esteban custodian el tomo en la Zona Cosplay Central".
@@ -45,11 +82,11 @@ class QuestTracker {
     // Main Quest Final Code verification
     document.getElementById('btnVerifyMQFinal')?.addEventListener('click', () => {
       const input = document.getElementById('inputMQFinal')?.value.trim().toUpperCase();
-      if (input === this.mainQuestSecrets.step3 || input.includes('ALFA-OMEGA')) {
-        this.completeQuest('mq_final');
+      if (input === this.mainQuestSecrets.step3 || input?.includes('ALFA-OMEGA')) {
+        this.completeQuest('mq_final', 500);
         document.getElementById('mqFinalContent').innerHTML = `
           <div style="color: var(--primary-gold); font-weight: bold; padding: 12px; background: rgba(255,183,0,0.15); border: 1px solid var(--primary-gold); border-radius: 8px;">
-            🏆 ¡MAIN QUEST COMPLETADA! Muestra este código en el escenario principal para reclamar tu Pin de Honor y Ticket de Sorteo.
+            🏆 ¡MAIN QUEST COMPLETADA! Muestra este código en el escenario principal para reclamar tu Pin de Honor.
           </div>
         `;
         this.showToast('🏆 ¡HAS RECLAMADO EL MISTERIO DEL RECINTO (+500 XP)!');
@@ -72,6 +109,31 @@ class QuestTracker {
         }
       });
     });
+
+    // QR Simulator Buttons (for easy mobile phone testing)
+    document.querySelectorAll('.btn-sim-qr').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const qrSector = e.currentTarget.dataset.qr;
+        window.history.pushState({}, '', `?qr=${qrSector}`);
+        this.checkUrlForQrUnlocks();
+        this.updateUnlockedQuestsUI();
+      });
+    });
+  }
+
+  showScreen(screenId) {
+    document.querySelectorAll('.app-screen').forEach(s => s.style.display = 'none');
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) targetScreen.style.display = 'block';
+
+    const btnBackNav = document.getElementById('btnNavBackToHub');
+    if (btnBackNav) {
+      btnBackNav.style.display = screenId === 'screenHub' ? 'none' : 'flex';
+    }
+
+    if (window.characterGenerator) {
+      window.characterGenerator.playAudioEffect('click');
+    }
   }
 
   completeQuest(questId, xpReward = 100) {
@@ -81,6 +143,12 @@ class QuestTracker {
 
       const item = document.getElementById(`quest_item_${questId}`);
       if (item) item.classList.add('completed');
+
+      const statusTag = document.getElementById(`quest_tag_${questId}`);
+      if (statusTag) {
+        statusTag.className = 'quest-status-tag tag-completed';
+        statusTag.innerText = '✅ COMPLETADA';
+      }
 
       this.saveProgress();
       this.updateRankUI();
@@ -101,7 +169,7 @@ class QuestTracker {
   }
 
   calculateRank() {
-    if (this.xp >= 1000) return { title: 'Leyenda Geek de Temuco 👑', color: 'var(--primary-gold)', nextXp: 1000 };
+    if (this.xp >= 1000) return { title: 'Leyenda Geek 👑', color: 'var(--primary-gold)', nextXp: 1000 };
     if (this.xp >= 600) return { title: 'Héroe del Recinto 🗡️', color: 'var(--primary-magenta)', nextXp: 1000 };
     if (this.xp >= 250) return { title: 'Aventurero del Gremio 🛡️', color: 'var(--primary-cyan)', nextXp: 600 };
     return { title: 'Novato Escudero 🔰', color: 'var(--text-muted)', nextXp: 250 };
@@ -123,6 +191,17 @@ class QuestTracker {
       const pct = Math.min(100, Math.round((this.xp / rankInfo.nextXp) * 100));
       progressBar.style.width = `${pct}%`;
     }
+
+    this.updateUnlockedQuestsUI();
+  }
+
+  updateUnlockedQuestsUI() {
+    this.unlockedSectors.forEach(sector => {
+      const sectorElement = document.getElementById(`qr_sector_${sector}`);
+      if (sectorElement) {
+        sectorElement.style.display = 'block';
+      }
+    });
   }
 
   startWorldEventTimers() {
@@ -163,32 +242,40 @@ class QuestTracker {
     toast.classList.add('show');
     setTimeout(() => {
       toast.classList.remove('show');
-    }, 3000);
+    }, 3200);
   }
 
   saveProgress() {
-    localStorage.setItem('expogeek_rpg_quests', JSON.stringify({
+    sessionStorage.setItem('expogeek_rpg_quests', JSON.stringify({
       xp: this.xp,
-      completedQuests: Array.from(this.completedQuests)
+      completedQuests: Array.from(this.completedQuests),
+      unlockedSectors: Array.from(this.unlockedSectors)
     }));
   }
 
   restoreProgress() {
-    const saved = localStorage.getItem('expogeek_rpg_quests');
+    const saved = sessionStorage.getItem('expogeek_rpg_quests');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         this.xp = parsed.xp || 0;
         this.completedQuests = new Set(parsed.completedQuests || []);
+        this.unlockedSectors = new Set(parsed.unlockedSectors || []);
 
         this.completedQuests.forEach(id => {
           const item = document.getElementById(`quest_item_${id}`);
           if (item) item.classList.add('completed');
           const cb = document.querySelector(`.side-quest-checkbox[data-quest-id="${id}"]`);
           if (cb) cb.checked = true;
+
+          const statusTag = document.getElementById(`quest_tag_${id}`);
+          if (statusTag) {
+            statusTag.className = 'quest-status-tag tag-completed';
+            statusTag.innerText = '✅ COMPLETADA';
+          }
         });
       } catch (e) {
-        console.warn('Could not restore quest progress', e);
+        // Fallback
       }
     }
   }

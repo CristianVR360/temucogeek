@@ -6,8 +6,8 @@
   --font-code: 'Fira Code', monospace;
 
   --bg-dark: #090a10;
-  --bg-card: rgba(18, 20, 32, 0.75);
-  --bg-card-hover: rgba(28, 32, 52, 0.85);
+  --bg-card: rgba(18, 20, 32, 0.85);
+  --bg-card-hover: rgba(28, 32, 52, 0.95);
 
   --primary-cyan: #00f0ff;
   --primary-magenta: #ff0055;
@@ -51,37 +51,39 @@ body {
   overflow-x: hidden;
 }
 
-/* Header & Nav */
+/* Header & Nav - Mobile-first compact */
 .rpg-navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 2rem;
-  background: rgba(9, 10, 16, 0.85);
+  padding: 8px 12px;
+  background: rgba(9, 10, 16, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   position: sticky;
   top: 0;
   z-index: 100;
+  gap: 8px;
 }
 
 .brand-badge {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .brand-badge img {
-  height: 38px;
+  height: 26px;
   width: auto;
   filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
 }
 
 .brand-title {
   font-family: var(--font-heading);
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 1px;
   color: #fff;
@@ -96,173 +98,131 @@ body {
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 6px;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
-.btn-audio-toggle {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: var(--text-muted);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 0.85rem;
-  font-family: var(--font-heading);
-  cursor: pointer;
-  transition: all 0.2s ease;
+/* Character Mini Profile in Navbar */
+.nav-char-profile {
   display: flex;
   align-items: center;
   gap: 6px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  padding: 3px 8px 3px 3px;
+  border-radius: 20px;
+  max-width: 200px;
+  overflow: hidden;
 }
 
-.btn-audio-toggle:hover {
-  border-color: var(--primary-cyan);
+.nav-char-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--primary-cyan);
+  flex-shrink: 0;
+}
+
+.nav-char-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  min-width: 0;
+}
+
+.nav-char-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.72rem;
   color: #fff;
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-char-role {
+  font-size: 0.6rem;
+  color: var(--primary-cyan);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-back-nav {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-back-nav:hover {
+  background: var(--primary-cyan);
+  color: #000;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
 }
 
 /* Layout Container */
 .rpg-container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 1.5rem 1rem;
 }
 
-/* Hero Section */
-.rpg-hero {
-  text-align: center;
-  margin-bottom: 2.5rem;
-  position: relative;
-}
-
-.rpg-hero-tag {
-  display: inline-block;
-  padding: 4px 16px;
-  background: rgba(0, 240, 255, 0.1);
-  border: 1px solid var(--primary-cyan);
-  color: var(--primary-cyan);
-  font-family: var(--font-heading);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  border-radius: 20px;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.rpg-hero h1 {
-  font-family: var(--font-heading);
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
-  font-weight: 800;
-  letter-spacing: 1px;
-  line-height: 1.1;
-  margin-bottom: 12px;
-  background: linear-gradient(135deg, #ffffff 0%, var(--primary-cyan) 50%, var(--primary-purple) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.rpg-hero p {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  max-width: 720px;
-  margin: 0 auto 1.5rem auto;
-}
-
-/* Navigation Tabs */
-.tab-navigation {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 1rem;
-}
-
-.nav-tab-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--text-muted);
-  padding: 12px 24px;
-  border-radius: var(--radius-md);
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.nav-tab-btn:hover {
-  background: rgba(0, 240, 255, 0.08);
-  color: #fff;
-  border-color: rgba(0, 240, 255, 0.3);
-}
-
-.nav-tab-btn.active {
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(139, 92, 246, 0.2));
-  color: #fff;
-  border-color: var(--primary-cyan);
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
-}
-
-/* Tab Panels */
-.tab-panel {
-  display: none;
-  animation: fadeIn 0.4s ease forwards;
-}
-
-.tab-panel.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Grid Layouts */
-.grid-2col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-@media (max-width: 900px) {
-  .grid-2col {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Glass Card */
-.rpg-card {
-  background: var(--bg-card);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* Welcome Hero Screen */
+.welcome-hero-card {
+  background: linear-gradient(135deg, rgba(16, 20, 36, 0.9), rgba(26, 32, 56, 0.9));
+  border: 2px solid var(--primary-cyan);
   border-radius: var(--radius-lg);
-  padding: 2rem;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+  margin-bottom: 2rem;
   position: relative;
   overflow: hidden;
 }
 
-.rpg-card::before {
+.welcome-hero-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple), var(--primary-magenta));
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-cyan), var(--primary-gold), var(--primary-magenta));
 }
 
-.card-header {
-  margin-bottom: 1.5rem;
+.welcome-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--primary-cyan) 60%, var(--primary-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.card-title {
+/* Quests List Container */
+.quest-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.section-title {
   font-family: var(--font-heading);
   font-size: 1.6rem;
   font-weight: 700;
@@ -272,10 +232,74 @@ body {
   gap: 10px;
 }
 
-.card-subtitle {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-top: 4px;
+/* Quest Card Box */
+.quest-card-item {
+  background: rgba(20, 24, 40, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.quest-card-item:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.quest-card-item.completed {
+  border-color: var(--primary-green);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.quest-status-tag {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.tag-available { background: rgba(0, 240, 255, 0.15); color: var(--primary-cyan); border: 1px solid rgba(0, 240, 255, 0.3); }
+.tag-completed { background: rgba(16, 185, 129, 0.15); color: var(--primary-green); border: 1px solid rgba(16, 185, 129, 0.3); }
+.tag-locked { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid rgba(255, 255, 255, 0.1); }
+.tag-qr-unlocked { background: rgba(255, 183, 0, 0.15); color: var(--primary-gold); border: 1px solid rgba(255, 183, 0, 0.3); }
+
+/* QR Simulator Banner */
+.qr-simulator-box {
+  background: rgba(255, 183, 0, 0.08);
+  border: 1px dashed var(--primary-gold);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Glass Card */
+.rpg-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Step Wizard Form */
@@ -283,7 +307,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   position: relative;
 }
 
@@ -299,8 +323,8 @@ body {
 }
 
 .step-node {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #141724;
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -310,9 +334,8 @@ body {
   justify-content: center;
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
   z-index: 2;
-  transition: all 0.3s ease;
 }
 
 .step-node.active {
@@ -332,7 +355,7 @@ body {
 .bifurcation-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
+  gap: 1rem;
   margin-top: 1rem;
 }
 
@@ -346,16 +369,10 @@ body {
   background: rgba(255, 255, 255, 0.03);
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
-  padding: 1.5rem;
+  padding: 1.25rem;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
-}
-
-.bifurcation-card:hover {
-  background: rgba(0, 240, 255, 0.05);
-  border-color: rgba(0, 240, 255, 0.4);
-  transform: translateY(-3px);
 }
 
 .bifurcation-card.selected {
@@ -365,55 +382,53 @@ body {
 }
 
 .bifurcation-icon {
-  font-size: 2.5rem;
-  margin-bottom: 12px;
+  font-size: 2.2rem;
+  margin-bottom: 8px;
   display: block;
 }
 
 .bifurcation-title {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .bifurcation-desc {
   color: var(--text-muted);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
 }
 
 /* Form Inputs */
 .form-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.1rem;
 }
 
 .form-label {
   display: block;
   font-family: var(--font-heading);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #e2e8f0;
-  margin-bottom: 8px;
-  letter-spacing: 0.5px;
+  margin-bottom: 6px;
 }
 
 .form-input, .form-select {
   width: 100%;
-  padding: 12px 16px;
+  padding: 10px 14px;
   background: rgba(10, 12, 20, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-md);
   color: #fff;
   font-family: var(--font-main);
-  font-size: 1rem;
-  transition: all 0.2s ease;
+  font-size: 0.95rem;
 }
 
 .form-input:focus, .form-select:focus {
   outline: none;
   border-color: var(--primary-cyan);
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
 }
 
 /* Autocomplete List */
@@ -430,7 +445,7 @@ body {
   border: 1px solid var(--primary-cyan);
   border-top: none;
   border-radius: 0 0 var(--radius-md) var(--radius-md);
-  max-height: 200px;
+  max-height: 180px;
   overflow-y: auto;
   z-index: 50;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
@@ -442,56 +457,36 @@ body {
 }
 
 .suggestion-item {
-  padding: 10px 16px;
+  padding: 8px 14px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: background 0.15s ease;
 }
 
 .suggestion-item:hover {
   background: rgba(0, 240, 255, 0.15);
 }
 
-.suggestion-name {
-  font-weight: 600;
-  color: #fff;
-}
-
-.suggestion-tag {
-  font-size: 0.75rem;
-  color: var(--primary-cyan);
-  background: rgba(0, 240, 255, 0.1);
-  padding: 2px 8px;
-  border-radius: 10px;
-}
-
 /* Visual Style Options Pill Selector */
 .pill-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 10px;
-  margin-top: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
 }
 
 .pill-option {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-sm);
-  padding: 10px;
+  padding: 8px;
   text-align: center;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.pill-option:hover {
-  border-color: rgba(0, 240, 255, 0.5);
-  color: #fff;
 }
 
 .pill-option.selected {
@@ -506,24 +501,24 @@ body {
   background: linear-gradient(135deg, var(--primary-cyan), #00a8ff);
   color: #000;
   border: none;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: var(--radius-md);
   font-family: var(--font-heading);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .btn-rpg:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.5);
 }
 
 .btn-rpg-magenta {
@@ -532,7 +527,7 @@ body {
 }
 
 .btn-rpg-magenta:hover {
-  box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+  box-shadow: 0 0 18px rgba(255, 0, 85, 0.5);
 }
 
 .btn-rpg-outline {
@@ -544,23 +539,22 @@ body {
 .btn-rpg-outline:hover {
   border-color: var(--primary-cyan);
   color: var(--primary-cyan);
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
 }
 
 .wizard-footer {
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* RPG Passport Card Preview */
+/* RPG Draft Card */
 .passport-card {
   background: linear-gradient(145deg, #101322, #181c30);
   border: 2px solid var(--primary-cyan);
   border-radius: 20px;
-  padding: 1.5rem;
+  padding: 1.25rem;
   position: relative;
   box-shadow: var(--shadow-neon);
 }
@@ -570,28 +564,14 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
   border-bottom: 1px dashed rgba(0, 240, 255, 0.3);
-}
-
-.passport-brand {
-  font-family: var(--font-heading);
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--primary-cyan);
-  letter-spacing: 1.5px;
-}
-
-.passport-id {
-  font-family: var(--font-code);
-  font-size: 0.8rem;
-  color: var(--text-muted);
 }
 
 .passport-body {
   display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 1.25rem;
+  grid-template-columns: 100px 1fr;
+  gap: 1rem;
 }
 
 @media (max-width: 480px) {
@@ -600,9 +580,10 @@ body {
   }
 }
 
+/* ASPECT RATIO PRESERVING AVATAR FRAME */
 .passport-avatar-wrapper {
-  width: 110px;
-  height: 110px;
+  width: 100px;
+  aspect-ratio: 1 / 1;
   border-radius: 12px;
   border: 2px solid var(--primary-cyan);
   overflow: hidden;
@@ -616,71 +597,16 @@ body {
 .passport-avatar-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-}
-
-.passport-info-col h3 {
-  font-family: var(--font-heading);
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.2;
-}
-
-.passport-role-tag {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: var(--primary-gold);
-  background: rgba(255, 183, 0, 0.1);
-  border: 1px solid rgba(255, 183, 0, 0.3);
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin: 4px 0 10px 0;
-}
-
-.stat-bar-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.stat-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.8rem;
-}
-
-.stat-name {
-  width: 70px;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.stat-bar-bg {
-  flex: 1;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.stat-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
-  border-radius: 4px;
-  transition: width 0.6s ease;
+  object-fit: cover; /* No distortion */
+  aspect-ratio: 1 / 1;
 }
 
 .passport-prompt-box {
-  margin-top: 1.25rem;
+  margin-top: 1rem;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
-  padding: 12px;
-  position: relative;
+  padding: 10px;
 }
 
 .prompt-text {
@@ -693,15 +619,12 @@ body {
 }
 
 .btn-copy-prompt {
-  position: absolute;
-  top: 8px;
-  right: 8px;
   background: rgba(255, 255, 255, 0.1);
   border: none;
   color: #fff;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   cursor: pointer;
 }
 
@@ -710,118 +633,12 @@ body {
   color: #000;
 }
 
-/* Quest Engine Hub Styling */
-.quest-item {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-md);
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  transition: all 0.25s ease;
-}
-
-.quest-item:hover {
-  border-color: rgba(0, 240, 255, 0.3);
-  background: rgba(0, 240, 255, 0.03);
-}
-
-.quest-item.completed {
-  border-color: var(--primary-green);
-  background: rgba(16, 185, 129, 0.05);
-}
-
-.quest-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.quest-badge-type {
-  font-family: var(--font-heading);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  text-transform: uppercase;
-}
-
-.badge-main { background: rgba(255, 0, 85, 0.15); color: var(--primary-magenta); border: 1px solid rgba(255, 0, 85, 0.3); }
-.badge-merchant { background: rgba(255, 183, 0, 0.15); color: var(--primary-gold); border: 1px solid rgba(255, 183, 0, 0.3); }
-.badge-cosplay { background: rgba(139, 92, 246, 0.15); color: var(--primary-purple); border: 1px solid rgba(139, 92, 246, 0.3); }
-.badge-world { background: rgba(0, 240, 255, 0.15); color: var(--primary-cyan); border: 1px solid rgba(0, 240, 255, 0.3); }
-
-.quest-title-text {
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-.quest-riddle-box {
-  background: rgba(0, 0, 0, 0.3);
-  border-left: 3px solid var(--primary-cyan);
-  padding: 10px 14px;
-  font-style: italic;
-  color: #e2e8f0;
-  font-size: 0.95rem;
-  margin: 10px 0;
-  border-radius: 0 6px 6px 0;
-}
-
-.code-input-row {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.code-input-row input {
-  flex: 1;
-  padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-sm);
-  color: var(--primary-cyan);
-  font-family: var(--font-code);
-  font-weight: 600;
-}
-
-/* Toast notification */
-.rpg-toast {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background: #121626;
-  border: 1px solid var(--primary-cyan);
-  color: #fff;
-  padding: 14px 20px;
-  border-radius: var(--radius-md);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  font-family: var(--font-heading);
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  z-index: 1000;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-  pointer-events: none;
-}
-
-.rpg-toast.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-/* Hero Credential Card - Photo-centric Front */
+/* Photo-Centric Vertical Hero Card Front */
 .hero-credential-card {
   background: linear-gradient(160deg, #0b0e1a, #161b33, #0d0f1c);
   border: 2px solid var(--primary-gold);
   border-radius: 24px;
-  padding: 2rem;
+  padding: 1.5rem;
   box-shadow: 0 0 35px rgba(255, 183, 0, 0.25);
   position: relative;
   overflow: hidden;
@@ -839,23 +656,27 @@ body {
   background: linear-gradient(90deg, var(--primary-gold), var(--primary-cyan), var(--primary-magenta));
 }
 
+/* HERO AVATAR - PRESERVES ASPECT RATIO (Square 1:1 or Portrait 4:5) */
 .hero-avatar-container {
   width: 100%;
   max-width: 280px;
-  height: 280px;
-  margin: 0 auto 1.5rem auto;
+  aspect-ratio: 1 / 1; /* Default clean square ratio */
+  margin: 0 auto 1.25rem auto;
   border-radius: 20px;
   border: 3px solid var(--primary-gold);
   box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
   overflow: hidden;
   position: relative;
   background: #090a10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-avatar-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Ensures zero distortion */
 }
 
 .hero-motto-quote {
@@ -864,10 +685,10 @@ body {
   color: #e2e8f0;
   background: rgba(0, 0, 0, 0.4);
   border-left: 3px solid var(--primary-gold);
-  padding: 10px 16px;
+  padding: 10px 14px;
   border-radius: 0 8px 8px 0;
-  margin: 1.25rem 0;
-  font-size: 0.95rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
   text-align: left;
 }
 
@@ -878,16 +699,168 @@ body {
   background: rgba(255, 183, 0, 0.15);
   border: 1px solid var(--primary-gold);
   color: var(--primary-gold);
-  padding: 4px 14px;
+  padding: 4px 12px;
   border-radius: 20px;
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
+}
+
+/* Toast notification */
+.rpg-toast {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #121626;
+  border: 1px solid var(--primary-cyan);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.rpg-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 /* Canvas hidden element */
 #passportCanvas {
   display: none;
+}
+
+/* Quest Modal Overlay */
+.quest-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.quest-modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.quest-modal-sheet {
+  background: linear-gradient(180deg, #141828, #0d0f1a);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-bottom: none;
+  border-radius: 24px 24px 0 0;
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 1.5rem 1.25rem 2rem;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.quest-modal-overlay.open .quest-modal-sheet {
+  transform: translateY(0);
+}
+
+.quest-modal-handle {
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  margin: 0 auto 1rem;
+}
+
+.quest-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.quest-modal-icon {
+  font-size: 2rem;
+}
+
+.quest-modal-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.quest-modal-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Individual quest item inside modal */
+.modal-quest-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.modal-quest-item.checked {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.modal-quest-check {
+  accent-color: var(--primary-green);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .brand-title {
+    display: none;
+  }
+
+  .rpg-navbar {
+    padding: 6px 10px;
+  }
+
+  .nav-char-profile {
+    max-width: 150px;
+  }
+
+  .rpg-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .rpg-toast {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .nav-char-profile {
+    max-width: 180px;
+  }
 }
