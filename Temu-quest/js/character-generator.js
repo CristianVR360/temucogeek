@@ -8,6 +8,7 @@ class CharacterGenerator {
     this.currentStep = 1;
     this.mode = 'canon'; // 'canon' or 'oc'
     this.characterDb = [];
+    this.promptLang = 'en'; // 'en' or 'es'
 
     // Character state
     this.characterData = {
@@ -235,6 +236,17 @@ class CharacterGenerator {
         this.playAudioEffect('success');
       });
     });
+
+    // Translate Prompt Toggle Button
+    document.getElementById('btnTranslatePrompt')?.addEventListener('click', () => {
+      this.promptLang = this.promptLang === 'en' ? 'es' : 'en';
+      const btn = document.getElementById('btnTranslatePrompt');
+      if (btn) {
+        btn.innerHTML = this.promptLang === 'en' ? '🌐 Traducir a Español' : '🇬🇧 Ver en Inglés';
+      }
+      this.updatePassportUI();
+      this.playAudioEffect('click');
+    });
   }
 
   toggleModeFormFields() {
@@ -305,23 +317,41 @@ class CharacterGenerator {
     }
   }
 
-  compilePrompt() {
+  compilePrompt(lang = this.promptLang) {
     const photoRef = this.characterData.avatarUrl ? '[[USER_PHOTO_URL]]' : '[[USER_REFERENCE]]';
     
-    if (this.mode === 'canon') {
-      const charName = this.characterData.name || 'Denji';
-      const franchise = this.characterData.franchise ? `from ${this.characterData.franchise}` : '';
-      const style = this.characterData.visualStyle || 'Fotorrealista';
+    if (lang === 'es') {
+      if (this.mode === 'canon') {
+        const charName = this.characterData.name || 'Denji';
+        const franchise = this.characterData.franchise ? `de ${this.characterData.franchise}` : '';
+        const style = this.characterData.visualStyle || 'Fotorrealista';
 
-      return `A highly detailed cosplay portrait of ${photoRef} as ${charName} ${franchise}. Keep the exact iconic outfit, colors, and props of the character, but adapt the facial features to match the reference photo. Style: ${style}. 8k resolution, cinematic lighting, masterpiece.`;
+        return `Un retrato fotorrealista de cosplay de ${photoRef} como ${charName} ${franchise}. Mantiene el atuendo, colores y accesorios icónicos del personaje, adaptando los rasgos faciales a la foto de referencia. Estilo: ${style}. Resolución 8k, iluminación cinematográfica, obra maestra.`;
+      } else {
+        const charName = this.characterData.name || 'Aventurero Desconocido';
+        const role = this.characterData.role || 'Espadachín Rúnico';
+        const universe = this.characterData.universe || 'Fantasía Epica';
+        const trait = this.characterData.distinctiveTrait || 'Ojos biónicos neón';
+        const motto = this.characterData.motto || 'La victoria es el único camino';
+
+        return `Un diseño de personaje de arte conceptual altamente detallado inspirado en la estructura facial de ${photoRef}. El personaje es un/a ${role} original llamado/a ${charName} en el universo de ${universe}. Rasgo distintivo: ${trait}. Usando vestimenta acorde a la historia. Expresión facial basada en el lema: '${motto}'. Resolución 8k, iluminación volumétrica.`;
+      }
     } else {
-      const charName = this.characterData.name || 'Aventurero Desconocido';
-      const role = this.characterData.role || 'Espadachín Rúnico';
-      const universe = this.characterData.universe || 'Fantasía Epica';
-      const trait = this.characterData.distinctiveTrait || 'Ojos biónicos neón';
-      const motto = this.characterData.motto || 'La victoria es el único camino';
+      if (this.mode === 'canon') {
+        const charName = this.characterData.name || 'Denji';
+        const franchise = this.characterData.franchise ? `from ${this.characterData.franchise}` : '';
+        const style = this.characterData.visualStyle || 'Fotorrealista';
 
-      return `A detailed concept art character design inspired by the facial structure of ${photoRef}. The character is an original ${role} named ${charName} existing in the universe of ${universe}. Distinctive feature: ${trait}. Wearing lore-accurate armor and clothing. Facial expression reflects the motto: '${motto}'. 8k resolution, volumetric lighting, epic framing.`;
+        return `A highly detailed cosplay portrait of ${photoRef} as ${charName} ${franchise}. Keep the exact iconic outfit, colors, and props of the character, but adapt the facial features to match the reference photo. Style: ${style}. 8k resolution, cinematic lighting, masterpiece.`;
+      } else {
+        const charName = this.characterData.name || 'Aventurero Desconocido';
+        const role = this.characterData.role || 'Espadachín Rúnico';
+        const universe = this.characterData.universe || 'Fantasía Epica';
+        const trait = this.characterData.distinctiveTrait || 'Ojos biónicos neón';
+        const motto = this.characterData.motto || 'La victoria es el único camino';
+
+        return `A detailed concept art character design inspired by the facial structure of ${photoRef}. The character is an original ${role} named ${charName} existing in the universe of ${universe}. Distinctive feature: ${trait}. Wearing lore-accurate armor and clothing. Facial expression reflects the motto: '${motto}'. 8k resolution, volumetric lighting, epic framing.`;
+      }
     }
   }
 

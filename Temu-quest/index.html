@@ -237,12 +237,22 @@
               </div>
             </div>
 
+            <!-- Subtle English Tip Alert -->
+            <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 1.25rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; background: rgba(0, 240, 255, 0.05); padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(0, 240, 255, 0.15);">
+              <span>💡</span> <span><em>Tip: Los generadores de IA (Midjourney, DALL-E) logran mejores detalles en inglés, pero puedes traducirlo a español.</em></span>
+            </div>
+
             <!-- Generated Prompt Box -->
             <div class="passport-prompt-box">
-              <button id="btnCopyPrompt" class="btn-copy-prompt">📋 Copiar Prompt</button>
-              <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: bold;">PROMPT DE IA RESULTANTE:</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: bold;">PROMPT DE IA RESULTANTE:</span>
+                <div style="display: flex; gap: 6px;">
+                  <button id="btnTranslatePrompt" class="btn-copy-prompt" style="position: static;">🌐 Traducir a Español</button>
+                  <button id="btnCopyPrompt" class="btn-copy-prompt" style="position: static;">📋 Copiar</button>
+                </div>
+              </div>
               <div id="generatedPromptText" class="prompt-text">
-                A photorealistic cosplay portrait of [[USER_REFERENCE]] as Denji from Chainsaw Man. Keep iconic outfit...
+                A photorealistic cosplay portrait of [[USER_REFERENCE]] as Denji from Chainsaw Man...
               </div>
             </div>
 
