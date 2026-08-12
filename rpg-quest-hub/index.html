@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExpoGeek RPG Live - Hub de Aventureros & Generador Dinámico</title>
+  <meta name="description" content="Gamifica tu experiencia en ExpoGeek 2026. Crea tu aventurero, completa misiones del recinto y gana recompensas exclusivas.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="css/rpg-style.css">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="rpg-navbar">
+    <a href="../index.html" class="brand-badge">
+      <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="ExpoGeek Logo">
+      <span class="brand-title">RPG <span>VIVO</span></span>
+    </a>
+    
+    <div class="nav-actions">
+      <button class="btn-audio-toggle" onclick="window.characterGenerator?.playAudioEffect('click')">
+        🔊 Sonido FX
+      </button>
+      <div style="display: flex; align-items: center; gap: 8px; background: rgba(0, 240, 255, 0.1); border: 1px solid var(--primary-cyan); padding: 4px 12px; border-radius: 20px;">
+        <span style="font-size: 0.85rem; color: var(--text-muted);">RANGO:</span>
+        <span id="userRankDisplay" style="font-family: var(--font-heading); font-weight: 700; color: var(--primary-cyan);">Novato Escudero 🔰</span>
+        <span id="userXpDisplay" style="font-family: var(--font-code); font-size: 0.85rem; color: var(--primary-gold); font-weight: bold; margin-left: 6px;">0 XP</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="rpg-container">
+
+    <!-- Hero Header -->
+    <section class="rpg-hero">
+      <span class="rpg-hero-tag">⚡ Ecosistema Inmersivo ExpoGeek 2026</span>
+      <h1>EL EVENTO COMO UN RPG VIVO 🎲✨</h1>
+      <p>Transforma tu visita en una aventura épica. Elige tu rol, resuelve acertijos en el recinto, colecciona sellos de mercaderes y desentraña el Misterio del Recinto.</p>
+
+      <!-- XP Bar -->
+      <div style="max-width: 500px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; font-family: var(--font-heading);">
+          <span>PROGRESO DE EXPOGEEK</span>
+          <span>NIVEL DE AVENTURERO</span>
+        </div>
+        <div style="height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; border: 1px solid rgba(0,240,255,0.3);">
+          <div id="userXpProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary-cyan), var(--primary-magenta)); transition: width 0.5s ease;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="tab-navigation">
+      <button class="nav-tab-btn active" data-tab="tabGenerator">
+        🎭 1. Creador de Aventurero
+      </button>
+      <button class="nav-tab-btn" data-tab="tabQuests">
+        🗺️ 2. Hub de Misiones
+      </button>
+      <button class="nav-tab-btn" data-tab="tabLore">
+        📜 3. Guía del Lore & Reglas
+      </button>
+    </nav>
+
+    <!-- TAB 1: GENERADOR DINÁMICO DE PERSONAJE -->
+    <section id="tabGenerator" class="tab-panel active">
+      <div class="grid-2col">
+
+        <!-- Wizard Card -->
+        <div class="rpg-card">
+          <div class="card-header">
+            <h2 class="card-title">🧠 Generador Dinámico de Aventurero</h2>
+            <p class="card-subtitle">Quest #1: Define tu identidad visual y genera tu Prompt para IA o Cosplay</p>
+          </div>
+
+          <!-- Progress Nodes -->
+          <div class="step-progress-bar">
+            <div class="step-node active" id="nodeStep1">1</div>
+            <div class="step-node" id="nodeStep2">2</div>
+            <div class="step-node" id="nodeStep3">3</div>
+          </div>
+
+          <!-- STEP 1: LA GRAN BIFURCACIÓN -->
+          <div id="wizardStep1" class="wizard-panel">
+            <h3 style="font-family: var(--font-heading); color: #fff; margin-bottom: 12px;">Paso 1: ¿Quién quieres ser hoy?</h3>
+            
+            <div class="bifurcation-container">
+              <div class="bifurcation-card selected" data-mode="canon">
+                <span class="bifurcation-icon">⚔️</span>
+                <h4 class="bifurcation-title">Personaje Existente</h4>
+                <p class="bifurcation-desc">Quiero interpretar un personaje Canon / Cosplay exacto (Ej: Denji, Luke Skywalker, 2B, Tanjiro).</p>
+              </div>
+
+              <div class="bifurcation-card" data-mode="oc">
+                <span class="bifurcation-icon">✨</span>
+                <h4 class="bifurcation-title">Crear Mi Leyenda (OC)</h4>
+                <p class="bifurcation-desc">Quiero crear mi propio personaje original desde cero ajustando rol, rasgos y universo.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: DETALLES & SELECCIÓN -->
+          <div id="wizardStep2" class="wizard-panel" style="display: none;">
+            
+            <!-- CANON FLOW -->
+            <div id="stepContentCanon">
+              <h3 style="font-family: var(--font-heading); color: #fff; margin-bottom: 12px;">Paso 2A: Tu Personaje Canon</h3>
+              
+              <div class="form-group autocomplete-wrapper">
+                <label class="form-label">¿A quién vas a interpretar?</label>
+                <input type="text" id="canonCharInput" class="form-input" placeholder="Ej. Denji, Gojo, Link, Jinx, Spider-Man..." autocomplete="off">
+                <div id="charSuggestions" class="suggestions-dropdown"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">¿En qué estilo visual deseas tu render/prompt?</label>
+                <div class="pill-grid">
+                  <div class="pill-option selected" data-style="Fotorrealista">Fotorrealista</div>
+                  <div class="pill-option" data-style="Cyberpunk 2077">Cyberpunk</div>
+                  <div class="pill-option" data-style="Anime 90s Vintage">Anime 90s</div>
+                  <div class="pill-option" data-style="Acuarela Fantasía">Acuarela</div>
+                  <div class="pill-option" data-style="Concept Art RPG">Concept Art</div>
+                  <div class="pill-option" data-style="Retro Comic Book">Retro Comic</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- OC FLOW -->
+            <div id="stepContentOC" style="display: none;">
+              <h3 style="font-family: var(--font-heading); color: #fff; margin-bottom: 12px;">Paso 2B: Tu Personaje Original (OC)</h3>
+
+              <div class="form-group">
+                <label class="form-label">Nombre de tu Aventurero</label>
+                <input type="text" id="ocNameInput" class="form-input" placeholder="Ej. Kaelen Sombragrís">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">¿En qué mundo habitas?</label>
+                <select id="ocUniverseSelect" class="form-select">
+                  <option value="Fantasía Epica">Fantasía Épica (D&D, Skyrim)</option>
+                  <option value="Sci-Fi / Star Wars">Sci-Fi Estelar (Star Wars, Dune)</option>
+                  <option value="Cyberpunk 2077">Cyberpunk / Night City</option>
+                  <option value="Steampunk">Steampunk Victorian</option>
+                  <option value="Post-Apocalíptico">Post-Apocalíptico (Fallout, Mad Max)</option>
+                  <option value="Genshin Impact / Anime World">Genshin Impact / Anime</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Tu Rol o Clase Condicionada</label>
+                <select id="ocRoleSelect" class="form-select">
+                  <!-- Dynamically populated -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">¿Qué te hace único a simple vista? (Rasgo Distintivo)</label>
+                <select id="ocTraitSelect" class="form-select">
+                  <option value="Ojos biónicos neón">Ojos biónicos neón</option>
+                  <option value="Cuernos demoníacos de fuego">Cuernos demoníacos de fuego</option>
+                  <option value="Tatuajes rúnicos brillantes">Tatuajes rúnicos brillantes</option>
+                  <option value="Cicatriz de batalla legendaria">Cicatriz de batalla legendaria</option>
+                  <option value="Aura elemental fluyente">Aura elemental fluyente</option>
+                  <option value="Alas cibernéticas de plasma">Alas cibernéticas de plasma</option>
+                  <option value="Máscara misteriosa de cuarzo">Máscara misteriosa de cuarzo</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">¿Cuál es tu lema o actitud?</label>
+                <input type="text" id="ocMottoInput" class="form-input" placeholder="Ej. La victoria es el único camino" value="La victoria es el único camino">
+              </div>
+            </div>
+
+            <!-- Reference Photo Upload -->
+            <div class="form-group" style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed rgba(255,255,255,0.1);">
+              <label class="form-label">📷 Foto de Referencia para tu Avatar (Opcional)</label>
+              <input type="file" id="avatarFileInput" class="form-input" accept="image/*">
+            </div>
+
+          </div>
+
+          <!-- STEP 3: CONFIRMACIÓN -->
+          <div id="wizardStep3" class="wizard-panel" style="display: none;">
+            <h3 style="font-family: var(--font-heading); color: var(--primary-green); margin-bottom: 12px;">✅ ¡Ficha de Aventurero lista!</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+              Tu prompt de generación de imagen IA ha sido sintetizado. Revisa tus stats a la derecha y descarga tu tarjeta oficial de ExpoGeek.
+            </p>
+          </div>
+
+          <!-- Wizard Footer Controls -->
+          <div class="wizard-footer">
+            <button id="btnWizardPrev" class="btn-rpg btn-rpg-outline">⬅️ Atrás</button>
+            <button id="btnWizardNext" class="btn-rpg">Siguiente ➔</button>
+          </div>
+
+        </div>
+
+        <!-- Passport Card Preview -->
+        <div>
+          <div class="passport-card">
+            <div class="passport-badge-header">
+              <span class="passport-brand">EXPOGEEK 2026 // PASAPORTE RPG</span>
+              <span class="passport-id">ID: #EG-8849</span>
+            </div>
+
+            <div class="passport-body">
+              <div class="passport-avatar-wrapper">
+                <img id="passportAvatarImg" src="../assets/img/logo/foto-perfil.png" alt="Avatar Preview" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23141724\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2300f0ff\' font-size=\'40\'>🎲</text></svg>'">
+              </div>
+
+              <div class="passport-info-col">
+                <h3 id="passportNameDisplay">Denji (Chainsaw Man)</h3>
+                <span id="passportRoleDisplay" class="passport-role-tag">Cosplay Canon // Fotorrealista</span>
+
+                <div class="stat-bar-group">
+                  <div class="stat-row">
+                    <span class="stat-name">FUERZA</span>
+                    <div class="stat-bar-bg"><div id="statStrFill" class="stat-bar-fill" style="width: 85%;"></div></div>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-name">AGILIDAD</span>
+                    <div class="stat-bar-bg"><div id="statAgiFill" class="stat-bar-fill" style="width: 90%;"></div></div>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-name">CARISMA</span>
+                    <div class="stat-bar-bg"><div id="statIntFill" class="stat-bar-fill" style="width: 78%;"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Generated Prompt Box -->
+            <div class="passport-prompt-box">
+              <button id="btnCopyPrompt" class="btn-copy-prompt">📋 Copiar Prompt</button>
+              <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: bold;">PROMPT DE IA RESULTANTE:</div>
+              <div id="generatedPromptText" class="prompt-text">
+                A photorealistic cosplay portrait of [[USER_REFERENCE]] as Denji from Chainsaw Man. Keep iconic outfit...
+              </div>
+            </div>
+
+            <div style="margin-top: 1.25rem; text-align: center;">
+              <button id="btnDownloadPassportCard" class="btn-rpg btn-rpg-magenta" style="width: 100%;">
+                📥 Descargar Ficha de Aventurero (PNG)
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 2: HUB DE MISIONES (LIVE QUEST SYSTEM) -->
+    <section id="tabQuests" class="tab-panel">
+      <div class="rpg-card" style="margin-bottom: 2rem;">
+        <div class="card-header">
+          <h2 class="card-title">🗺️ Misión Principal (Main Quest)</h2>
+          <p class="card-subtitle">"El Misterio del Recinto" — Completa las pistas para descifrar el código final</p>
+        </div>
+
+        <!-- Stage 1 -->
+        <div id="quest_item_mq_step1" class="quest-item">
+          <div class="quest-header-row">
+            <span class="quest-badge-type badge-main">Main Quest - Etapa 1</span>
+            <span style="font-family: var(--font-code); color: var(--primary-gold); font-size: 0.85rem; font-weight: bold;">+150 XP</span>
+          </div>
+          <h3 class="quest-title-text">1. El Acertijo del Sector Norte</h3>
+          <div class="quest-riddle-box">
+            "Donde sopla el viento helado en el recinto, busca la señal dorada en la pared norte para hallar la palabra clave secreta."
+          </div>
+          <div id="mqStep1Content">
+            <div class="code-input-row">
+              <input type="text" id="inputMQ1" placeholder="Ingresa la palabra clave..." autocomplete="off">
+              <button id="btnVerifyMQ1" class="btn-rpg" style="padding: 8px 16px; font-size: 0.95rem;">Verificar 🔓</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 2 / Final -->
+        <div id="quest_item_mq_final" class="quest-item">
+          <div class="quest-header-row">
+            <span class="quest-badge-type badge-main">Main Quest - Etapa Final</span>
+            <span style="font-family: var(--font-code); color: var(--primary-gold); font-size: 0.85rem; font-weight: bold;">+500 XP</span>
+          </div>
+          <h3 class="quest-title-text">2. La Orden del Caballero Jedi & El Gremio</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">
+            Busca en el mapa al <strong>Caballero Jedi (Cristian)</strong> o al <strong>Jefe de Gremio (Esteban)</strong>. Diles la frase de la Etapa 1 para recibir la contraseña Alfa-Omega.
+          </p>
+          <div id="mqFinalContent">
+            <div class="code-input-row">
+              <input type="text" id="inputMQFinal" placeholder="Ingresa el código Alfa-Omega..." autocomplete="off">
+              <button id="btnVerifyMQFinal" class="btn-rpg btn-rpg-magenta" style="padding: 8px 16px; font-size: 0.95rem;">Reclamar Premio 🏆</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side Quests Grid -->
+      <div class="grid-2col">
+
+        <!-- Merchant Quests -->
+        <div class="rpg-card">
+          <div class="card-header">
+            <h2 class="card-title">🏪 Gremio Comercial (Side Quests)</h2>
+            <p class="card-subtitle">Misiones de exploración en stands de expositores</p>
+          </div>
+
+          <div id="quest_item_sq_shop1" class="quest-item">
+            <div class="quest-header-row">
+              <span class="quest-badge-type badge-merchant">Mercaderes</span>
+              <label style="cursor: pointer; font-size: 0.9rem; color: var(--primary-cyan); font-weight: bold;">
+                <input type="checkbox" class="side-quest-checkbox" data-quest-id="sq_shop1" data-xp="100"> Marcar Hecho
+              </label>
+            </div>
+            <h3 class="quest-title-text">Caza del Tesoro Mercante</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Tómate una foto probándote un accesorio en cualquier stand de la Zona Mercante y muéstrasela al expositor.
+            </p>
+          </div>
+
+          <div id="quest_item_sq_shop2" class="quest-item">
+            <div class="quest-header-row">
+              <span class="quest-badge-type badge-merchant">Mercaderes</span>
+              <label style="cursor: pointer; font-size: 0.9rem; color: var(--primary-cyan); font-weight: bold;">
+                <input type="checkbox" class="side-quest-checkbox" data-quest-id="sq_shop2" data-xp="100"> Marcar Hecho
+              </label>
+            </div>
+            <h3 class="quest-title-text">Apoyo al Artesano Local</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Sigue a una tienda de ilustradores o arte independiente en Instagram y muestra el follow en el mostrador.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cosplayer & World Events -->
+        <div class="rpg-card">
+          <div class="card-header">
+            <h2 class="card-title">⚔️ Caza de Cosplayers & World Events</h2>
+            <p class="card-subtitle">Misiones de interacción social y eventos de escenario</p>
+          </div>
+
+          <div id="quest_item_sq_cosplay1" class="quest-item">
+            <div class="quest-header-row">
+              <span class="quest-badge-type badge-cosplay">NPC Interacción</span>
+              <label style="cursor: pointer; font-size: 0.9rem; color: var(--primary-cyan); font-weight: bold;">
+                <input type="checkbox" class="side-quest-checkbox" data-quest-id="sq_cosplay1" data-xp="120"> Marcar Hecho
+              </label>
+            </div>
+            <h3 class="quest-title-text">Choque de Puños Cosplay</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Encuentra a un cosplayer (Ej. Jedi, Cazador de Demonios o Brawl Stars) y tómate una foto chocando los puños.
+            </p>
+          </div>
+
+          <!-- World Event Timer -->
+          <div id="quest_item_we_gamer" class="quest-item">
+            <div class="quest-header-row">
+              <span class="quest-badge-type badge-world">World Event</span>
+              <span class="timer-display" data-target-time="2026-08-12T16:00:00" style="font-family: var(--font-code); font-size: 0.85rem; font-weight: bold;"></span>
+            </div>
+            <h3 class="quest-title-text">Torneo FC26 & Zona Gamer</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Compite en la Zona Gamer durante la ventana de tiempo del campeonato para obtener el sello del Gremio Gamer.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 3: LORE & REGLAS -->
+    <section id="tabLore" class="tab-panel">
+      <div class="rpg-card">
+        <div class="card-header">
+          <h2 class="card-title">📜 Lore del Evento & Dinámica de Juego</h2>
+          <p class="card-subtitle">El modelo de gamificación híbrida de ExpoGeek</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+          <div style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 12px; border-left: 3px solid var(--primary-cyan);">
+            <h4 style="color: var(--primary-cyan); font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 6px;">🛡️ Los Actores del Reino</h4>
+            <ul style="color: var(--text-muted); font-size: 0.95rem; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 6px;">
+              <li><strong>Staff / Organizadores:</strong> Quest Givers finales y Jefes de Gremio.</li>
+              <li><strong>Cosplayers:</strong> NPCs interactivos con misiones secretas y frases.</li>
+              <li><strong>Tiendas:</strong> Mercaderes con sellos de misiones secundarias.</li>
+              <li><strong>Escenario / Bandas:</strong> World Events temporales.</li>
+            </ul>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 12px; border-left: 3px solid var(--primary-magenta);">
+            <h4 style="color: var(--primary-magenta); font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 6px;">🚀 Beneficios del Modelo Win-Win</h4>
+            <ul style="color: var(--text-muted); font-size: 0.95rem; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 6px;">
+              <li><strong>Cero Fricción:</strong> QRs estáticos, tarjetas físicas y validación visual humana.</li>
+              <li><strong>Flujo Inteligente:</strong> Dirige al público hacia zonas comerciales o de menor concurrencia.</li>
+              <li><strong>Comunidad:</strong> Rompe el hielo entre cosplayers, tiendas y asistentes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Hidden Canvas for PNG Card Download -->
+  <canvas id="passportCanvas" width="800" height="1000"></canvas>
+
+  <!-- JS Dependencies -->
+  <script src="js/character-generator.js"></script>
+  <script src="js/quest-tracker.js"></script>
+  <script src="js/card-exporter.js"></script>
+
+  <script>
+    // Tab Switcher Controller
+    document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+        const targetTab = e.currentTarget.dataset.tab;
+        e.currentTarget.classList.add('active');
+        const panel = document.getElementById(targetTab);
+        if (panel) panel.classList.add('active');
+
+        if (window.characterGenerator) {
+          window.characterGenerator.playAudioEffect('click');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
