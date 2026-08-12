@@ -48,15 +48,26 @@ class CharacterGenerator {
   }
 
   async loadCharacterDatabase() {
-    try {
-      const response = await fetch('./data/character-db.json');
-      if (response.ok) {
-        this.characterDb = await response.json();
+    const paths = [
+      './data/character-db.json',
+      'data/character-db.json',
+      '/rpg-quest-hub/data/character-db.json',
+      '/Temu-quest/data/character-db.json'
+    ];
+    for (const path of paths) {
+      try {
+        const response = await fetch(path);
+        if (response.ok) {
+          this.characterDb = await response.json();
+          console.log(`Successfully loaded character DB from: ${path}`);
+          return;
+        }
+      } catch (e) {
+        // Continue to next fallback path
       }
-    } catch (e) {
-      console.warn('Could not load offline character DB, fallback to empty array', e);
-      this.characterDb = [];
     }
+    console.warn('Could not load offline character DB from any path');
+    this.characterDb = [];
   }
 
   playAudioEffect(type) {
