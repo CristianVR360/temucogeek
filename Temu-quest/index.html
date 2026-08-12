@@ -203,11 +203,12 @@
 
         </div>
 
-        <!-- Passport Card Preview -->
+        <!-- Right Column: Card Previews & Confirmation Flow -->
         <div>
-          <div class="passport-card">
+          <!-- Draft Card (Prompt & Stats View) -->
+          <div id="draftPassportCard" class="passport-card">
             <div class="passport-badge-header">
-              <span class="passport-brand">EXPOGEEK 2026 // PASAPORTE RPG</span>
+              <span class="passport-brand">EXPOGEEK 2026 // BORRADOR DE FICHA</span>
               <span class="passport-id">ID: #EG-8849</span>
             </div>
 
@@ -257,12 +258,54 @@
             </div>
 
             <div style="margin-top: 1.25rem; text-align: center;">
-              <button id="btnDownloadPassportCard" class="btn-rpg btn-rpg-magenta" style="width: 100%;">
-                📥 Descargar Ficha de Aventurero (PNG)
+              <button id="btnConfirmCredential" class="btn-rpg btn-rpg-magenta" style="width: 100%;">
+                ✨ Confirmar Ficha de Aventurero ➔
               </button>
             </div>
-
           </div>
+
+          <!-- Final Hero Credential View (Photo Protagonist - No Prompt) -->
+          <div id="finalCredentialCard" class="hero-credential-card" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <span class="credential-seal-badge">🛡️ CREDENCIAL OFICIAL</span>
+              <span style="font-family: var(--font-code); color: var(--primary-gold); font-size: 0.8rem; font-weight: bold;">#EG-2026-AVENTURERO</span>
+            </div>
+
+            <!-- Hero Photo - Max Protagonism -->
+            <div class="hero-avatar-container">
+              <img id="heroAvatarDisplay" src="/assets/img/logo/foto-perfil.png" alt="Foto de Aventurero" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'><rect width=\'200\' height=\'200\' fill=\'%23141724\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2300f0ff\' font-size=\'60\'>🎲</text></svg>'">
+            </div>
+
+            <h2 id="heroNameDisplay" style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 4px;">Denji</h2>
+            <div id="heroRoleDisplay" style="font-family: var(--font-heading); color: var(--primary-gold); font-weight: 700; font-size: 1.1rem; text-transform: uppercase;">Cosplay Canon // Chainsaw Man</div>
+
+            <!-- Motto Quote -->
+            <div class="hero-motto-quote">
+              💬 <span id="heroMottoText">"La victoria es el único camino."</span>
+            </div>
+
+            <!-- Key Specs Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; text-align: left; font-size: 0.85rem;">
+              <div style="background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">
+                <div style="color: var(--text-muted); font-size: 0.75rem;">RASGO DISTINTIVO</div>
+                <div id="heroTraitDisplay" style="color: #fff; font-weight: bold;">Ojos biónicos neón</div>
+              </div>
+              <div style="background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">
+                <div style="color: var(--text-muted); font-size: 0.75rem;">ESTILO VISUAL</div>
+                <div id="heroStyleDisplay" style="color: var(--primary-cyan); font-weight: bold;">Fotorrealista</div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 1.5rem;">
+              <button id="btnDownloadPassportCard" class="btn-rpg btn-rpg-magenta" style="flex: 1;">
+                📥 Descargar Ficha (PNG)
+              </button>
+              <button id="btnEditCredential" class="btn-rpg btn-rpg-outline">
+                ✏️ Modificar
+              </button>
+            </div>
+          </div>
+
         </div>
 
       </div>

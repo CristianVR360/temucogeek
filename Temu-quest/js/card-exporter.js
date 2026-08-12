@@ -1,6 +1,6 @@
 /**
  * ExpoGeek RPG - Canvas Card Exporter
- * Renders and exports high-resolution downloadable PNG RPG Adventurer Passports.
+ * Renders and exports high-resolution downloadable PNG RPG Adventurer Credentials with max photo protagonism.
  */
 
 class CardExporter {
@@ -13,8 +13,10 @@ class CardExporter {
   }
 
   bindEvents() {
-    document.getElementById('btnDownloadPassportCard')?.addEventListener('click', () => {
-      this.generateAndDownloadCard();
+    document.body.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'btnDownloadPassportCard') {
+        this.generateAndDownloadCard();
+      }
     });
   }
 
@@ -27,138 +29,158 @@ class CardExporter {
     const name = data.name || (gen.mode === 'canon' ? 'Aventurero Canon' : 'Leyenda OC');
     const role = gen.mode === 'canon' ? `Cosplay: ${data.name || 'Canon'}` : `${data.role} (${data.universe})`;
     const style = data.visualStyle || 'Fotorrealista';
+    const motto = data.motto || 'La victoria es el único camino.';
+    const trait = gen.mode === 'oc' ? data.distinctiveTrait : (data.franchise || 'Canon Original');
 
     // 1. Background Gradient
     const bgGrad = ctx.createLinearGradient(0, 0, 800, 1000);
-    bgGrad.addColorStop(0, '#090a14');
-    bgGrad.addColorStop(0.5, '#12162a');
-    bgGrad.addColorStop(1, '#080a11');
+    bgGrad.addColorStop(0, '#090b16');
+    bgGrad.addColorStop(0.5, '#14182e');
+    bgGrad.addColorStop(1, '#090b14');
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, 800, 1000);
 
-    // Outer Glow Border
-    ctx.strokeStyle = '#00f0ff';
+    // Outer Glow Border (Gold & Cyan)
+    ctx.strokeStyle = '#ffb700';
     ctx.lineWidth = 6;
     ctx.strokeRect(20, 20, 760, 960);
 
-    ctx.strokeStyle = '#ff0055';
+    ctx.strokeStyle = '#00f0ff';
     ctx.lineWidth = 2;
     ctx.strokeRect(28, 28, 744, 944);
 
     // 2. Header
     ctx.font = 'bold 36px Rajdhani, sans-serif';
     ctx.fillStyle = '#00f0ff';
-    ctx.fillText('EXPOGEEK 2026', 60, 80);
+    ctx.fillText('EXPOGEEK 2026', 50, 75);
 
-    ctx.font = 'bold 24px Rajdhani, sans-serif';
+    ctx.font = 'bold 22px Rajdhani, sans-serif';
     ctx.fillStyle = '#ffb700';
-    ctx.fillText('PASAPORTE DE AVENTURERO RPG', 60, 120);
+    ctx.fillText('CREDENCIAL OFICIAL DE AVENTURERO RPG', 50, 110);
+
+    // Verified Seal Badge on top right
+    ctx.fillStyle = 'rgba(255, 183, 0, 0.15)';
+    ctx.strokeStyle = '#ffb700';
+    ctx.lineWidth = 1;
+    ctx.fillRect(520, 55, 230, 45);
+    ctx.strokeRect(520, 55, 230, 45);
+
+    ctx.font = 'bold 16px Rajdhani, sans-serif';
+    ctx.fillStyle = '#ffb700';
+    ctx.fillText('🛡️ REGISTRADO // #EG-2026', 535, 83);
 
     // Header divider
     ctx.strokeStyle = 'rgba(0, 240, 255, 0.3)';
     ctx.beginPath();
-    ctx.moveTo(60, 140);
-    ctx.lineTo(740, 140);
+    ctx.moveTo(50, 130);
+    ctx.lineTo(750, 130);
     ctx.stroke();
 
-    // 3. Avatar Box
-    const avatarX = 60;
-    const avatarY = 170;
-    const avatarSize = 220;
+    // 3. Hero Avatar Photo - MAXIMUM PROTAGONISM (Centered & Giant)
+    const avatarX = 220;
+    const avatarY = 155;
+    const avatarWidth = 360;
+    const avatarHeight = 360;
 
-    ctx.fillStyle = '#0a0d18';
-    ctx.fillRect(avatarX, avatarY, avatarSize, avatarSize);
-    ctx.strokeStyle = '#00f0ff';
+    ctx.fillStyle = '#090a10';
+    ctx.fillRect(avatarX, avatarY, avatarWidth, avatarHeight);
+    
+    ctx.strokeStyle = '#ffb700';
     ctx.lineWidth = 4;
-    ctx.strokeRect(avatarX, avatarY, avatarSize, avatarSize);
+    ctx.strokeRect(avatarX, avatarY, avatarWidth, avatarHeight);
+
+    ctx.strokeStyle = '#00f0ff';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(avatarX - 4, avatarY - 4, avatarWidth + 8, avatarHeight + 8);
 
     if (data.avatarUrl) {
       try {
         const img = await this.loadImage(data.avatarUrl);
-        ctx.drawImage(img, avatarX, avatarY, avatarSize, avatarSize);
+        ctx.drawImage(img, avatarX, avatarY, avatarWidth, avatarHeight);
       } catch (e) {
-        this.drawAvatarFallback(ctx, avatarX, avatarY, avatarSize);
+        this.drawAvatarFallback(ctx, avatarX, avatarY, avatarWidth, avatarHeight);
       }
     } else {
-      this.drawAvatarFallback(ctx, avatarX, avatarY, avatarSize);
+      this.drawAvatarFallback(ctx, avatarX, avatarY, avatarWidth, avatarHeight);
     }
 
-    // 4. Character Details (Right Column)
-    const textX = 310;
-    ctx.font = 'bold 42px Rajdhani, sans-serif';
+    // 4. Character Title & Role
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 44px Rajdhani, sans-serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(name.substring(0, 22), textX, 210);
+    ctx.fillText(name.substring(0, 24), 400, 565);
 
     ctx.font = 'bold 24px Rajdhani, sans-serif';
     ctx.fillStyle = '#ffb700';
-    ctx.fillText(`CLASE: ${role.substring(0, 30)}`, textX, 255);
+    ctx.fillText(role.toUpperCase().substring(0, 36), 400, 600);
+    ctx.textAlign = 'left';
 
-    ctx.font = 'bold 20px Rajdhani, sans-serif';
-    ctx.fillStyle = '#94a3b8';
-    ctx.fillText(`ESTILO: ${style}`, textX, 290);
-
-    if (gen.mode === 'oc') {
-      ctx.fillText(`RASGO: ${data.distinctiveTrait}`, textX, 325);
-    } else {
-      ctx.fillText(`FRANQUICIA: ${data.franchise || 'Canon Original'}`, textX, 325);
-    }
-
-    // 5. Stat Bars
-    ctx.font = 'bold 22px Rajdhani, sans-serif';
-    ctx.fillStyle = '#00f0ff';
-    ctx.fillText('ESTADÍSTICAS DEL AVENTURERO', 60, 440);
-
-    this.drawStatBar(ctx, 'FUERZA', 85, 60, 470);
-    this.drawStatBar(ctx, 'AGILIDAD', 90, 60, 520);
-    this.drawStatBar(ctx, 'CARISMA', 78, 60, 570);
-    this.drawStatBar(ctx, 'SABIDURÍA GEEK', 95, 60, 620);
-
-    // 6. Prompt Box
-    ctx.font = 'bold 22px Rajdhani, sans-serif';
-    ctx.fillStyle = '#ff0055';
-    ctx.fillText('PROMPT DE GENERACIÓN IA', 60, 690);
-
+    // 5. Motto Quote Box
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(60, 710, 680, 160);
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-    ctx.strokeRect(60, 710, 680, 160);
+    ctx.fillRect(50, 625, 700, 65);
+    ctx.strokeStyle = '#ffb700';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(50, 625);
+    ctx.lineTo(50, 690);
+    ctx.stroke();
 
-    const compiledPrompt = gen.compilePrompt();
-    ctx.font = '16px "Fira Code", monospace';
+    ctx.font = 'italic 18px Outfit, sans-serif';
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillText(`💬 "${motto.substring(0, 75)}"`, 70, 663);
+
+    // 6. Character Specs & Stat Meters
+    ctx.font = 'bold 20px Rajdhani, sans-serif';
     ctx.fillStyle = '#00f0ff';
-    this.wrapText(ctx, compiledPrompt, 75, 740, 650, 24);
+    ctx.fillText('DATOS CLAVE & ESTADÍSTICAS', 50, 725);
 
-    // 7. Footer
     ctx.font = 'bold 18px Rajdhani, sans-serif';
     ctx.fillStyle = '#94a3b8';
-    ctx.fillText('EXPO GEEK TEMUCO 2026 - SISTEMA HÍBRIDO RPG VIVO', 60, 930);
+    ctx.fillText(`RASGO: ${trait}`, 50, 760);
+    ctx.fillText(`ESTILO VISUAL: ${style}`, 420, 760);
+
+    this.drawStatBar(ctx, 'FUERZA', 85, 50, 785, 310);
+    this.drawStatBar(ctx, 'AGILIDAD', 90, 420, 785, 310);
+    this.drawStatBar(ctx, 'CARISMA', 78, 50, 840, 310);
+    this.drawStatBar(ctx, 'SABIDURÍA GEEK', 95, 420, 840, 310);
+
+    // 7. Footer
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+    ctx.beginPath();
+    ctx.moveTo(50, 910);
+    ctx.lineTo(750, 910);
+    ctx.stroke();
+
+    ctx.font = 'bold 18px Rajdhani, sans-serif';
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText('EXPO GEEK TEMUCO 2026 - ECOSISTEMA RPG VIVO', 50, 945);
 
     // Trigger download
     const link = document.createElement('a');
-    link.download = `ExpoGeek_Aventurero_${name.replace(/\s+/g, '_')}.png`;
+    link.download = `Credencial_ExpoGeek_${name.replace(/\s+/g, '_')}.png`;
     link.href = this.canvas.toDataURL('image/png');
     link.click();
 
-    window.questTracker?.showToast('💾 ¡Ficha de Aventurero descargada en PNG!');
+    window.questTracker?.showToast('💾 ¡Credencial Oficial descargada en PNG!');
   }
 
-  drawAvatarFallback(ctx, x, y, size) {
-    ctx.fillStyle = '#1e2338';
-    ctx.fillRect(x, y, size, size);
-    ctx.font = '60px sans-serif';
+  drawAvatarFallback(ctx, x, y, w, h) {
+    ctx.fillStyle = '#181d33';
+    ctx.fillRect(x, y, w, h);
+    ctx.font = '100px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('🎲', x + size / 2, y + size / 2 + 20);
+    ctx.fillText('🎲', x + w / 2, y + h / 2 + 35);
     ctx.textAlign = 'left';
   }
 
-  drawStatBar(ctx, label, val, x, y) {
-    ctx.font = 'bold 18px Rajdhani, sans-serif';
+  drawStatBar(ctx, label, val, x, y, width) {
+    ctx.font = 'bold 16px Rajdhani, sans-serif';
     ctx.fillStyle = '#e2e8f0';
-    ctx.fillText(label, x, y + 16);
+    ctx.fillText(label, x, y + 14);
 
-    const barX = x + 180;
-    const barW = 480;
-    const barH = 16;
+    const barX = x + 120;
+    const barW = width - 120;
+    const barH = 14;
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
     ctx.fillRect(barX, y, barW, barH);
@@ -169,26 +191,6 @@ class CardExporter {
     grad.addColorStop(1, '#8b5cf6');
     ctx.fillStyle = grad;
     ctx.fillRect(barX, y, fillW, barH);
-  }
-
-  wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-    const words = text.split(' ');
-    let line = '';
-    let currentY = y;
-
-    for (let n = 0; n < words.length; n++) {
-      const testLine = line + words[n] + ' ';
-      const metrics = ctx.measureText(testLine);
-      if (metrics.width > maxWidth && n > 0) {
-        ctx.fillText(line, x, currentY);
-        line = words[n] + ' ';
-        currentY += lineHeight;
-        if (currentY > y + 130) break; // Clamp overflow
-      } else {
-        line = testLine;
-      }
-    }
-    ctx.fillText(line, x, currentY);
   }
 
   loadImage(src) {

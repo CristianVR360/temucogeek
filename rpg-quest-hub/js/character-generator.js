@@ -247,6 +247,28 @@ class CharacterGenerator {
       this.updatePassportUI();
       this.playAudioEffect('click');
     });
+
+    // Confirm Credential Button -> Show Photo-centric Hero Card
+    document.getElementById('btnConfirmCredential')?.addEventListener('click', () => {
+      const draftCard = document.getElementById('draftPassportCard');
+      const finalCard = document.getElementById('finalCredentialCard');
+      if (draftCard) draftCard.style.display = 'none';
+      if (finalCard) finalCard.style.display = 'block';
+
+      this.updatePassportUI();
+      this.playAudioEffect('success');
+      window.questTracker?.showToast('🎉 ¡Ficha de Aventurero Confirmada!');
+    });
+
+    // Edit Credential Button -> Return to Draft
+    document.getElementById('btnEditCredential')?.addEventListener('click', () => {
+      const draftCard = document.getElementById('draftPassportCard');
+      const finalCard = document.getElementById('finalCredentialCard');
+      if (draftCard) draftCard.style.display = 'block';
+      if (finalCard) finalCard.style.display = 'none';
+
+      this.playAudioEffect('click');
+    });
   }
 
   toggleModeFormFields() {
@@ -383,6 +405,23 @@ class CharacterGenerator {
     if (strBar) strBar.style.width = `${Math.min(100, 70 + seed)}%`;
     if (agiBar) agiBar.style.width = `${Math.min(100, 65 + (seed * 2) % 35)}%`;
     if (intBar) intBar.style.width = `${Math.min(100, 75 + (seed * 3) % 25)}%`;
+
+    // Update Hero Credential Card elements
+    const heroAvatar = document.getElementById('heroAvatarDisplay');
+    const heroName = document.getElementById('heroNameDisplay');
+    const heroRole = document.getElementById('heroRoleDisplay');
+    const heroMotto = document.getElementById('heroMottoText');
+    const heroTrait = document.getElementById('heroTraitDisplay');
+    const heroStyle = document.getElementById('heroStyleDisplay');
+
+    if (heroAvatar && this.characterData.avatarUrl) {
+      heroAvatar.src = this.characterData.avatarUrl;
+    }
+    if (heroName) heroName.innerText = name;
+    if (heroRole) heroRole.innerText = role;
+    if (heroMotto) heroMotto.innerText = `"${this.characterData.motto || 'La victoria es el único camino.'}"`;
+    if (heroTrait) heroTrait.innerText = this.mode === 'oc' ? this.characterData.distinctiveTrait : (this.characterData.franchise || 'Canon');
+    if (heroStyle) heroStyle.innerText = this.characterData.visualStyle || 'Fotorrealista';
   }
 
   saveToLocalStorage() {
