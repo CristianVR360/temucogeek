@@ -9,6 +9,10 @@
     { "source": "/manual-marca", "destination": "/manual-marca/index.html" },
     { "source": "/formulario-nomina", "destination": "/formulario-nomina/index.html" },
     { "source": "/the-quest", "destination": "/the-quest/index.html" },
-    { "source": "/Temu-quest", "destination": "/Temu-quest/index.html" }
+    { "source": "/Temu-quest", "destination": "/Temu-quest/index.html" },
+    { "source": "/links", "destination": "/links/index.html" },
+    { "source": "/cosplay", "destination": "/cosplay/index.html" },
+    { "source": "/bases-cosplay", "destination": "/bases-cosplay/index.html" },
+    { "source": "/bases-participacion", "destination": "/bases-participacion/index.html" }
   ]
 }
