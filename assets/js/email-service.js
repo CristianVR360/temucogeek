@@ -222,10 +222,10 @@ function generateCosplayApplicantEmailHTML(lead) {
                                         <td width="40%" style="color:#94a3b8;">Cosplayer:</td>
                                         <td style="color:#ffffff; font-weight:bold;">${escapeEmailHtml(lead.nombre_completo)}</td>
                                     </tr>
-                                    <tr>
-                                        <td style="color:#94a3b8;">RUT / DNI:</td>
-                                        <td style="color:#ffffff;">${escapeEmailHtml(lead.rut)}</td>
-                                    </tr>
+                                     <tr>
+                                         <td style="color:#94a3b8;">RUT / DNI:</td>
+                                         <td style="color:#ffffff;">${escapeEmailHtml(lead.rut)}</td>
+                                     </tr>
                                     <tr>
                                         <td style="color:#94a3b8;">Edad:</td>
                                         <td style="color:#ffffff;">${escapeEmailHtml(lead.edad)} años</td>

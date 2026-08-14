@@ -3,7 +3,7 @@
  * Incluye valores por defecto y lectura asíncrona de .env cuando está disponible.
  */
 
-const SUPABASE_CONFIG = {
+var SUPABASE_CONFIG = window.SUPABASE_CONFIG || {
     // Credenciales públicas de Supabase (diseñadas para ser expuestas en frontend)
     URL: "https://ffhjyzdsfemmfcbdsxuc.supabase.co",
     ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmaGp5emRzZmVtbWZjYmRzeHVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2Mzg0MTUsImV4cCI6MjA5OTIxNDQxNX0.nhbLWs9dfSGWQ7eWoY0K2TxrPE_XcE0IP56oGZvj6LM",
