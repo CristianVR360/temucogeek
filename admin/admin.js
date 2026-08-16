@@ -1642,7 +1642,42 @@
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
-        }
+        } 
+// Export tournaments to PDF (FC26 / Smash)
+function exportTorneosPDF(game) {
+    const dataSet = (filteredTorneos && filteredTorneos.length > 0) ? filteredTorneos : allTorneos;
+    const filteredData = dataSet.filter(item => (item.torneo || '').toLowerCase().includes(game.toLowerCase()));
+    if (!filteredData || filteredData.length === 0) {
+        return alert('No hay inscripciones para el juego seleccionado.');
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(14);
+    doc.text(`Torneos ${game.toUpperCase()} - TemuGeek Expo 2026`, 14, 15);
+    const rows = filteredData.map((item, idx) => [
+        idx + 1,
+        item.created_at ? new Date(item.created_at).toLocaleString('es-CL') : '',
+        item.torneo || '',
+        item.gamertag || '',
+        item.nombre_completo || '',
+        item.rut || '',
+        item.passline_code || '',
+        item.email || '',
+        item.telefono || '',
+        item.detendidos_tecnicos || '',
+        item.estado || ''
+    ]);
+    doc.autoTable({
+        startY: 20,
+        head: [['N°','Fecha Registro','Torneo','Gamertag','Nombre Completo','RUT','Ticket','Email','Teléfono','Detalles','Estado']],
+        body: rows,
+        theme: 'grid',
+        headStyles: { fillColor: [33, 150, 243] }
+    });
+    const dateStr = new Date().toISOString().slice(0,10);
+    doc.save(`torneos_${game.toLowerCase()}_${dateStr}.pdf`);
+}
+window.exportTorneosPDF = exportTorneosPDF;
 
         function printTorneosOfficial() {
             const dataToPrint = (filteredTorneos && filteredTorneos.length > 0) ? filteredTorneos : allTorneos;

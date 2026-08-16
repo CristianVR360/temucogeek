@@ -334,15 +334,35 @@ function saveEvaluation() {
     const payload = {
         ...activeScores,
         total: total,
-        timestamp: new Date().toISOString()
+        notes: activeScores.notes,
+        updated_at: new Date().toISOString()
     };
 
-    localStorage.setItem(`TG_COSPLAY_SCORE_${activeParticipant.id}`, JSON.stringify(payload));
-    showToast("💾 ¡Evaluación guardada exitosamente!");
-    
-    // Refresh lists and leaderboard views
-    renderParticipantsList();
-    renderRankingList();
+    // Try Supabase upsert; fallback to localStorage on error
+    if (supabaseClient) {
+        supabaseClient.from('evaluaciones_cosplay')
+            .upsert({
+                participant_id: activeParticipant.id,
+                scores: payload,
+                total: total,
+                notes: payload.notes,
+                updated_at: payload.updated_at
+            })
+            .then(({ error }) => {
+                if (error) {
+                    console.warn('Supabase upsert failed, falling back to localStorage', error);
+                    localStorage.setItem(`TG_COSPLAY_SCORE_${activeParticipant.id}`, JSON.stringify(payload));
+                }
+                showToast('💾 ¡Evaluación guardada exitosamente!');
+                renderParticipantsList();
+                renderRankingList();
+            });
+    } else {
+        localStorage.setItem(`TG_COSPLAY_SCORE_${activeParticipant.id}`, JSON.stringify(payload));
+        showToast('💾 ¡Evaluación guardada exitosamente!');
+        renderParticipantsList();
+        renderRankingList();
+    }
 }
 
 function resetEvaluation() {
@@ -368,40 +388,105 @@ function resetEvaluation() {
 }
 
 function getSavedScore(id) {
+    // Try Supabase first
+    if (supabaseClient) {
+        return supabaseClient.from('evaluaciones_cosplay')
+            .select('scores, total, notes')
+            .eq('participant_id', id)
+            .single()
+            .then(({ data, error }) => {
+                if (!error && data) {
+                    return { ...data.scores, total: data.total, notes: data.notes };
+                }
+                // fallback to localStorage if not found or error
+                const raw = localStorage.getItem(`TG_COSPLAY_SCORE_${id}`);
+                if (raw) {
+                    try { return JSON.parse(raw); } catch (e) {}
     const raw = localStorage.getItem(`TG_COSPLAY_SCORE_${id}`);
     if (raw) {
-        try {
-            return JSON.parse(raw);
-        } catch (e) {}
+        try { return JSON.parse(raw); } catch (e) {}
     }
     return null;
 }
 
-// ── RANKING / LEADERBOARD ──
-function renderRankingList() {
+// ── FETCH SCORE FROM SUPABASE (ASYNC) ──
+async function fetchScoreFromSupabase(id) {
+    if (!supabaseClient) return null;
+    const { data, error } = await supabaseClient
+        .from('evaluaciones_cosplay')
+        .select('scores, total, notes')
+        .eq('participant_id', id)
+        .single();
+    if (error || !data) return null;
+    // data.scores contains the full score object
+    return { ...data.scores, total: data.total, notes: data.notes };
+}
+
+// Updated to async to fetch scores from Supabase with fallback to localStorage
+async function renderParticipantsList() {
+    const listContainer = document.getElementById("participants-list");
+    if (!listContainer) return;
+
+    listContainer.innerHTML = "";
+
+    if (filteredParticipants.length === 0) {
+        listContainer.innerHTML = `<div class="text-center py-4 text-muted" style="font-size: 0.85rem;">Ningún cosplayer encontrado</div>`;
+        return;
+    }
+
+    for (const p of filteredParticipants) {
+        // Try Supabase first, then fallback to localStorage
+        let scoreData = await fetchScoreFromSupabase(p.id);
+        if (!scoreData) scoreData = getSavedScore(p.id);
+        const evaluated = scoreData !== null;
+        const total = evaluated ? scoreData.total : 0;
+        const isSelected = activeParticipant && activeParticipant.id === p.id;
+        const item = document.createElement("div");
+        item.className = `cosplayer-item ${isSelected ? 'active' : ''} ${evaluated ? 'evaluated' : ''}`;
+        item.dataset.id = p.id;
+        item.innerHTML = `
+            <div class="cosplayer-badge">
+                ${evaluated ? '🏆' : '🎭'}
+            </div>
+            <div class="cosplayer-meta">
+                <div class="cosplayer-name">${escapeHtml(p.nombre_completo)}</div>
+                <div class="cosplayer-char">${escapeHtml(p.personaje)} (${escapeHtml(p.origen)})</div>
+            </div>
+            <div class="score-pill">
+                ${evaluated ? `${total} Pts` : '—'}
+            </div>
+        `;
+        item.addEventListener("click", () => selectParticipant(p));
+        listContainer.appendChild(item);
+    }
+}
+
+// Updated ranking rendering to async fetch scores
+async function renderRankingList() {
     const tbody = document.getElementById("ranking-table-body");
     if (!tbody) return;
-
     tbody.innerHTML = "";
 
-    // 1. Calculate scores and map to list
-    const scoredList = allParticipants.map(p => {
-        const scoreData = getSavedScore(p.id);
-        return {
+    // Build scored list with async fetch
+    const scoredList = [];
+    for (const p of allParticipants) {
+        let scoreData = await fetchScoreFromSupabase(p.id);
+        if (!scoreData) scoreData = getSavedScore(p.id);
+        scoredList.push({
             participant: p,
             score: scoreData ? scoreData.total : null,
             notes: scoreData ? scoreData.notes : "",
             evaluated: scoreData !== null
-        };
-    });
+        });
+    }
 
-    // 2. Sort: Evaluated first, higher score first
+    // Sort: Evaluated first, higher score first
     scoredList.sort((a, b) => {
         if (a.evaluated !== b.evaluated) {
-            return a.evaluated ? -1 : 1; // Evaluated first
+            return a.evaluated ? -1 : 1;
         }
         if (a.evaluated) {
-            return b.score - a.score; // Higher score first
+            return b.score - a.score;
         }
         return a.participant.nombre_completo.localeCompare(b.participant.nombre_completo);
     });
@@ -415,7 +500,6 @@ function renderRankingList() {
         const p = item.participant;
         const tr = document.createElement("tr");
         tr.style.borderBottom = "1px solid var(--border-color)";
-
         let medal = `${index + 1}°`;
         if (item.evaluated) {
             if (index === 0) medal = "🥇 1°";
@@ -424,7 +508,6 @@ function renderRankingList() {
         } else {
             medal = "—";
         }
-
         tr.innerHTML = `
             <td class="px-4 py-3 fw-bold text-white" style="font-family: var(--font-code); font-size: 1rem;">
                 ${item.evaluated ? `<span style="color: ${index < 3 ? 'var(--primary-gold)' : '#fff'};">${medal}</span>` : '<span style="color: var(--text-muted);">Sin Evaluar</span>'}
