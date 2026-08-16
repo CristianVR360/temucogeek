@@ -12,6 +12,7 @@
     { "source": "/Temu-quest", "destination": "/Temu-quest/index.html" },
     { "source": "/links", "destination": "/links/index.html" },
     { "source": "/cosplay", "destination": "/cosplay/index.html" },
+    { "source": "/jurado-cosplay", "destination": "/jurado-cosplay/index.html" },
     { "source": "/bases-cosplay", "destination": "/bases-cosplay/index.html" },
     { "source": "/bases-participacion", "destination": "/bases-participacion/index.html" },
     { "source": "/campeonatos", "destination": "/campeonatos/index.html" }

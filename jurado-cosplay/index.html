@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Juez & Evaluación Cosplay — TemuGeek Expo 2026</title>
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- CSS Includes -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/custom-fonts.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&family=Space+Grotesk:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <!-- Supabase Client & Global Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #090a10;
+            --bg-sidebar: #0f111a;
+            --bg-card: #151826;
+            --bg-card-hover: #1e2236;
+            --border-color: #2b3047;
+            --primary-cyan: #00f0ff;
+            --primary-magenta: #ff0055;
+            --primary-gold: #ffb700;
+            --primary-green: #00e676;
+            --text-main: #e2e8f0;
+            --text-muted: #8e98b0;
+            --font-heading: 'Righteous', cursive;
+            --font-body: 'Poppins', sans-serif;
+            --font-code: 'Share Tech Mono', monospace;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Login Screen Gate */
+        #login-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #05060a;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border: 2px solid var(--primary-magenta);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 0 40px rgba(255, 0, 85, 0.25);
+            text-align: center;
+        }
+
+        .login-logo {
+            max-width: 180px;
+            margin-bottom: 25px;
+        }
+
+        /* Top Navbar */
+        .cosplay-navbar {
+            background-color: var(--bg-sidebar);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand-title {
+            font-family: var(--font-heading);
+            font-size: 1.45rem;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-title span {
+            color: var(--primary-magenta);
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 66px);
+        }
+
+        /* Left Sidebar: Cosplayers List */
+        .cosplayers-sidebar {
+            width: 360px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .cosplayers-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                height: 380px;
+            }
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-input {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .cosplayer-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .cosplayer-item {
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cosplayer-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: var(--border-color);
+        }
+
+        .cosplayer-item.active {
+            background: rgba(0, 240, 255, 0.06);
+            border-color: var(--primary-cyan);
+        }
+
+        .cosplayer-badge {
+            width: 46px;
+            height: 46px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .cosplayer-item.active .cosplayer-badge {
+            border-color: var(--primary-cyan);
+            color: var(--primary-cyan);
+            background-color: rgba(0, 240, 255, 0.1);
+        }
+
+        .cosplayer-item.evaluated .cosplayer-badge {
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+            background-color: rgba(0, 230, 118, 0.1);
+        }
+
+        .cosplayer-meta {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cosplayer-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+
+        .cosplayer-char {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cosplayer-item.evaluated .cosplayer-char {
+            color: var(--primary-green);
+            font-weight: 500;
+        }
+
+        .score-pill {
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-family: var(--font-code);
+            font-size: 0.78rem;
+            color: #fff;
+        }
+
+        .cosplayer-item.evaluated .score-pill {
+            background-color: rgba(0, 230, 118, 0.1);
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+
+        /* Right Content Panel */
+        .dashboard-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Score input items */
+        .criterion-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            transition: border-color 0.2s ease;
+        }
+
+        .criterion-card:hover {
+            border-color: rgba(0, 240, 255, 0.25);
+        }
+
+        .criterion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .criterion-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .criterion-max {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: var(--font-code);
+        }
+
+        .slider-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .range-slider {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #202436;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-cyan);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            transition: transform 0.1s ease;
+        }
+
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .val-display {
+            width: 50px;
+            text-align: center;
+            font-family: var(--font-code);
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-cyan);
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 6px;
+            padding: 2px 0;
+        }
+
+        /* Large Score Ring badge */
+        .total-score-box {
+            background: linear-gradient(135deg, rgba(255, 0, 85, 0.15), rgba(0, 240, 255, 0.1));
+            border: 2px solid var(--primary-magenta);
+            box-shadow: 0 0 25px rgba(255, 0, 85, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .total-score-val {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            line-height: 1;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .total-score-val span {
+            font-size: 1.8rem;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+        }
+
+        /* Tab Switchers */
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-cyan);
+            border-bottom-color: var(--primary-cyan);
+        }
+
+        /* Toast notification copied */
+        .toast-copied {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #181920;
+            border: 1.5px solid var(--primary-green);
+            padding: 14px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+
+        .toast-copied.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- AUTHENTICATION GATE -->
+    <div id="login-screen">
+        <div class="login-card">
+            <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek Logo" class="login-logo">
+            <h2 style="font-family: var(--font-heading); font-size: 1.4rem; color: #fff; margin-bottom: 8px;">🔐 JURADO DE COSPLAY</h2>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 25px;">Ingresa la contraseña de administración para comenzar a evaluar.</p>
+            
+            <form id="login-form">
+                <div class="mb-3">
+                    <input type="password" id="login-password" class="form-control text-center" placeholder="Contraseña de Juez" required 
+                           style="background-color: var(--bg-dark); border: 1.5px solid var(--border-color); color: #fff; border-radius: 10px; padding: 12px;">
+                </div>
+                <div id="login-error-msg" class="text-danger mb-3 d-none" style="font-size: 0.82rem; font-weight: 600;">
+                    ❌ Contraseña incorrecta. Por favor vuelve a intentarlo.
+                </div>
+                <button type="submit" class="btn w-100 py-2" style="background: var(--primary-magenta); color: #fff; font-family: var(--font-heading); border-radius: 10px; box-shadow: 0 4px 15px rgba(255, 0, 85, 0.3);">
+                    INGRESAR AL PANEL ➔
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP SCREEN -->
+    <div id="app-screen" class="d-none">
+        
+        <!-- Top Navbar -->
+        <header class="cosplay-navbar d-flex justify-content-between align-items-center">
+            <a href="javascript:void(0)" class="brand-title">
+                TEMUGEEK <span>COSPLAY</span>
+            </a>
+            
+            <div class="d-flex align-items-center gap-3">
+                <div id="db-status-badge" style="background: rgba(0, 230, 118, 0.1); border: 1px solid var(--primary-green); color: var(--primary-green); font-size: 0.72rem; padding: 3px 10px; border-radius: 20px; font-weight: 700; font-family: var(--font-code);">
+                    ONLINE
+                </div>
+                <button id="btnLogout" class="btn btn-outline-danger btn-sm" style="font-family: var(--font-heading); font-size: 0.75rem; border-radius: 8px;">
+                    ✕ SALIR
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs Bar -->
+        <div style="background-color: var(--bg-sidebar); border-bottom: 1px solid var(--border-color); display: flex; justify-content: center; gap: 10px;">
+            <button class="tab-btn active" data-tab="tab-eval">📋 EVALUACIÓN</button>
+            <button class="tab-btn" data-tab="tab-ranking">🏆 RANKING / RESULTADOS</button>
+            <button class="tab-btn" data-tab="tab-rules">📜 REGLAMENTO & CRITERIOS</button>
+        </div>
+
+        <div class="dashboard-container">
+            
+            <!-- LEFT SIDEBAR: PARTICIPANTS LIST -->
+            <aside class="cosplayers-sidebar" id="sidebar-panel">
+                <div class="sidebar-header">
+                    <input type="text" id="searchBar" class="search-input" placeholder="🔍 Buscar cosplayer o personaje...">
+                </div>
+                <div class="cosplayer-list" id="participants-list">
+                    <!-- Loaded dynamically -->
+                </div>
+            </aside>
+
+            <!-- RIGHT MAIN PANEL -->
+            <main class="dashboard-content">
+                
+                <!-- VIEW 1: EVALUATION (ACTIVE BY DEFAULT) -->
+                <div id="tab-eval" class="tab-view">
+                    
+                    <div id="no-selection-state" class="text-center py-5">
+                        <span style="font-size: 4rem;">🎭</span>
+                        <h3 style="font-family: var(--font-heading); margin-top: 15px;">Selecciona un Cosplayer</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Elige un participante de la lista izquierda para comenzar la calificación en tiempo real.</p>
+                    </div>
+
+                    <div id="evaluation-panel" class="row d-none">
+                        
+                        <!-- Left Details Column -->
+                        <div class="col-lg-5 col-md-12 mb-4">
+                            
+                            <!-- Cosplayer Header Card -->
+                            <div class="geek-card p-4" style="background-color: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 16px; margin-bottom: 20px;">
+                                <span style="font-family: var(--font-heading); color: var(--primary-gold); font-size: 0.75rem; letter-spacing: 1px;">COSPALAYER ACTIVO</span>
+                                <h2 id="eval-name" style="font-family: var(--font-heading); font-size: 1.8rem; margin: 4px 0 2px 0;">Cosplayer Name</h2>
+                                <div id="eval-char" style="color: var(--primary-cyan); font-weight: bold; font-size: 1.1rem; margin-bottom: 12px;">Personaje</div>
+                                
+                                <hr style="border-top-color: var(--border-color);">
+
+                                <div style="font-size: 0.85rem; display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 15px;">
+                                    <div><span style="color: var(--text-muted);">Serie / Origen:</span> <strong id="eval-origen">Ficción</strong></div>
+                                    <div><span style="color: var(--text-muted);">RUT / Edad:</span> <span id="eval-rut-edad">12.345.678-9 (20 años)</span></div>
+                                    <div><span style="color: var(--text-muted);">Teléfono:</span> <span id="eval-telefono">+56912345678</span></div>
+                                    <div><span style="color: var(--text-muted);">E-mail:</span> <span id="eval-email">email@test.com</span></div>
+                                    <div id="apoderado-block" style="display: none; background: rgba(255,183,0,0.06); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,183,0,0.15); margin-top: 4px;">
+                                        <div style="font-size: 0.7rem; color: var(--primary-gold); font-weight: bold;">ADULTO RESPONSABLE</div>
+                                        <div id="eval-apoderado" style="font-size: 0.8rem; color: #fff;">Juan Pérez (RUT: 11.222.333-4)</div>
+                                    </div>
+                                </div>
+
+                                <div id="ref-image-block" class="mb-3 d-none">
+                                    <span style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Imagen de Referencia:</span>
+                                    <a id="eval-ref-link" href="#" target="_blank" class="btn btn-outline-info btn-sm w-100 py-2" style="font-family: var(--font-heading); font-size: 0.8rem; border-radius: 8px;">
+                                        👁️ VER IMAGEN DE REFERENCIA ➔
+                                    </a>
+                                </div>
+
+                                <div class="mb-3">
+                                    <span style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">Observaciones / Notas de Inscripción:</span>
+                                    <p id="eval-observaciones" style="background: rgba(0,0,0,0.25); padding: 10px; border-radius: 8px; font-size: 0.8rem; line-height: 1.4; color: var(--text-muted); margin: 0;">Ninguna</p>
+                                </div>
+                            </div>
+
+                            <!-- Total Score Indicator -->
+                            <div class="total-score-box">
+                                <div style="font-family: var(--font-heading); color: var(--primary-gold); font-size: 0.85rem; letter-spacing: 1.5px; margin-bottom: 5px;">PUNTAJE ACUMULADO</div>
+                                <div class="total-score-val" id="eval-total-score">0 <span>/ 36 pts</span></div>
+                            </div>
+
+                            <!-- Save / Actions Box -->
+                            <div class="d-flex flex-column gap-2">
+                                <button id="btnSaveEvaluation" class="btn py-3 w-100" style="background: var(--primary-green); color: #000; font-family: var(--font-heading); font-weight: 800; border-radius: 12px; font-size: 1.05rem; box-shadow: 0 4px 15px rgba(0, 230, 118, 0.25);">
+                                    💾 GUARDAR EVALUACIÓN
+                                </button>
+                                <button id="btnResetEvaluation" class="btn btn-outline-danger py-2 w-100" style="font-family: var(--font-heading); border-radius: 12px; font-size: 0.85rem;">
+                                    🗑️ BORRAR CALIFICACIONES
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Scoring Sliders Column -->
+                        <div class="col-lg-7 col-md-12">
+                            
+                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                                <span style="background: var(--primary-cyan); width: 12px; height: 12px; border-radius: 50%; display: inline-block;"></span>
+                                HOJA DE EVALUACIÓN
+                            </h3>
+
+                            <!-- SECTION 1: CUMPLIMIENTO DE BASES (10 pts max) -->
+                            <div class="mb-4">
+                                <div style="font-family: var(--font-heading); font-size: 0.85rem; color: var(--primary-magenta); letter-spacing: 1px; margin-bottom: 10px;">ITEM 1: CUMPLIMIENTO DE BASES (MÁX 10 PUNTOS)</div>
+                                
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">B1. Imagen de cuerpo completo</div>
+                                        <div class="criterion-max">Máx 2 pts</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="b1" min="0" max="2" value="0">
+                                        <div class="val-display" id="val-b1">0</div>
+                                    </div>
+                                </div>
+
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">B2. Acreditación / Llegada a tiempo</div>
+                                        <div class="criterion-max">Máx 1 pt</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="b2" min="0" max="1" value="0">
+                                        <div class="val-display" id="val-b2">0</div>
+                                    </div>
+                                </div>
+
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">B3. Subir de forma ordenada al escenario</div>
+                                        <div class="criterion-max">Máx 1 pt</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="b3" min="0" max="1" value="0">
+                                        <div class="val-display" id="val-b3">0</div>
+                                    </div>
+                                </div>
+
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">B4. Paseo Delantero y Parada Central</div>
+                                        <div class="criterion-max">Máx 1 pt</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="b4" min="0" max="1" value="0">
+                                        <div class="val-display" id="val-b4">0</div>
+                                    </div>
+                                </div>
+
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">B5. Realizar entre 3 a 4 poses típicas</div>
+                                        <div class="criterion-max">Máx 2 pts</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="b5" min="0" max="2" value="0">
+                                        <div class="val-display" id="val-b5">0</div>
+                                    </div>
+                                </div>
+
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">B6. Duración de poses (5 a 7 segundos c/u)</div>
+                                        <div class="criterion-max">Máx 3 pts</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="b6" min="0" max="3" value="0">
+                                        <div class="val-display" id="val-b6">0</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SECTION 2: EVALUACION DEL TRAJE (15 pts max) -->
+                            <div class="mb-4">
+                                <div style="font-family: var(--font-heading); font-size: 0.85rem; color: var(--primary-cyan); letter-spacing: 1px; margin-bottom: 10px;">ITEM 2: EVALUACIÓN TÉCNICA DEL TRAJE (MÁX 15 PUNTOS)</div>
+                                
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">E1. Confección y selección de materiales</div>
+                                        <div class="criterion-max">Máx 6 pts</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="e1" min="0" max="6" value="0">
+                                        <div class="val-display" id="val-e1">0</div>
+                                    </div>
+                                </div>
+
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">E2. Estilizado de peluca y maquillaje</div>
+                                        <div class="criterion-max">Máx 5 pts</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="e2" min="0" max="5" value="0">
+                                        <div class="val-display" id="val-e2">0</div>
+                                    </div>
+                                </div>
+
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">E3. Desplante escénico de personaje</div>
+                                        <div class="criterion-max">Máx 4 pts</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="e3" min="0" max="4" value="0">
+                                        <div class="val-display" id="val-e3">0</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SECTION 3: COMUNIDAD (3 pts max) -->
+                            <div class="mb-4">
+                                <div style="font-family: var(--font-heading); font-size: 0.85rem; color: var(--primary-green); letter-spacing: 1px; margin-bottom: 10px;">ITEM 3: COMUNIDAD (MÁX 3 PUNTOS)</div>
+                                
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">C1. Interacción y disposición con el público</div>
+                                        <div class="criterion-max">Máx 3 pts</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="c1" min="0" max="3" value="0">
+                                        <div class="val-display" id="val-c1">0</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SECTION 4: VIDEO PROMOCIONAL (8 pts max) -->
+                            <div class="mb-4">
+                                <div style="font-family: var(--font-heading); font-size: 0.85rem; color: var(--primary-gold); letter-spacing: 1px; margin-bottom: 10px;">ITEM 4: VIDEO PROMOCIONAL PREVIO (MÁX 8 PUNTOS)</div>
+                                
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">V1. Entrega y cumplimiento de plazos</div>
+                                        <div class="criterion-max">Máx 2 pts</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="v1" min="0" max="2" value="0">
+                                        <div class="val-display" id="val-v1">0</div>
+                                    </div>
+                                </div>
+
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">V2. Promoción de asistencia y convocatoria</div>
+                                        <div class="criterion-max">Máx 3 pts</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="v2" min="0" max="3" value="0">
+                                        <div class="val-display" id="val-v2">0</div>
+                                    </div>
+                                </div>
+
+                                <div class="criterion-card">
+                                    <div class="criterion-header">
+                                        <div class="criterion-title">V3. Caracterización, actuación y transiciones</div>
+                                        <div class="criterion-max">Máx 3 pts</div>
+                                    </div>
+                                    <div class="slider-wrapper">
+                                        <input type="range" class="range-slider score-input" data-crit="v3" min="0" max="3" value="0">
+                                        <div class="val-display" id="val-v3">0</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Comments -->
+                            <div class="mb-4">
+                                <div style="font-family: var(--font-heading); font-size: 0.85rem; color: #fff; letter-spacing: 1px; margin-bottom: 10px;">NOTAS / COMENTARIOS DEL JURADO</div>
+                                <textarea id="eval-notes" class="form-control" rows="3" placeholder="Ingresa detalles sobre su vestuario, desplante escénico o justificación de puntos..." 
+                                          style="background-color: var(--bg-card); border: 1px solid var(--border-color); color: #fff; border-radius: 10px; font-size: 0.85rem;"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- VIEW 2: RANKING / LEADERBOARD -->
+                <div id="tab-ranking" class="tab-view d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                        <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: #fff; margin: 0;">🏆 TABLA DE CLASIFICACIÓN</h2>
+                        <div class="d-flex gap-2">
+                            <button id="btnExportCSV" class="btn btn-outline-info btn-sm px-3" style="font-family: var(--font-heading); border-radius: 8px;">
+                                📥 EXPORTAR CSV
+                            </button>
+                            <button id="btnResetAllScores" class="btn btn-outline-danger btn-sm px-3" style="font-family: var(--font-heading); border-radius: 8px;">
+                                ⚠️ LIMPIAR EVALUACIONES
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px;">
+                        <table class="table align-middle text-white mb-0" style="background: transparent;">
+                            <thead style="background-color: rgba(255, 255, 255, 0.02);">
+                                <tr>
+                                    <th class="border-0 px-4 py-3" style="font-family: var(--font-heading); color: var(--primary-gold); font-size: 0.85rem;">PUESTO</th>
+                                    <th class="border-0 px-4 py-3" style="font-family: var(--font-heading); color: var(--primary-gold); font-size: 0.85rem;">COSPLAYER</th>
+                                    <th class="border-0 px-4 py-3" style="font-family: var(--font-heading); color: var(--primary-gold); font-size: 0.85rem;">PERSONAJE</th>
+                                    <th class="border-0 px-4 py-3" style="font-family: var(--font-heading); color: var(--primary-gold); font-size: 0.85rem;">SERIE / ORIGEN</th>
+                                    <th class="border-0 px-4 py-3 text-center" style="font-family: var(--font-heading); color: var(--primary-gold); font-size: 0.85rem;">PUNTOS</th>
+                                    <th class="border-0 px-4 py-3" style="font-family: var(--font-heading); color: var(--primary-gold); font-size: 0.85rem;">NOTAS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ranking-table-body">
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- VIEW 3: BASES & CRITERIOS REFERENCE -->
+                <div id="tab-rules" class="tab-view d-none">
+                    <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: #fff; margin-bottom: 20px;">📜 CRITERIOS DE EVALUACIÓN OFICIALES</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="geek-card p-4 h-100" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px;">
+                                <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--primary-magenta); margin-bottom: 12px;">ITEM 1: CUMPLIMIENTO DE BASES (MÁX 10 PTS)</h3>
+                                <ul style="font-size: 0.85rem; line-height: 1.6; padding-left: 20px; color: var(--text-muted);">
+                                    <li><strong>B1 (2 pts):</strong> Enviar imagen cuerpo completo del personaje para validar traje completo.</li>
+                                    <li><strong>B2 (1 pt):</strong> Acreditación a tiempo el día de la convención con Danii (encargada).</li>
+                                    <li><strong>B3 (1 pt):</strong> Subida ordenada al escenario de acuerdo al llamado del staff.</li>
+                                    <li><strong>B4 (1 pt):</strong> Recorrido por la pasarela delantera del escenario y pose central.</li>
+                                    <li><strong>B5 (2 pts):</strong> Realización de 3 a 4 poses temáticas acordes al personaje.</li>
+                                    <li><strong>B6 (3 pts):</strong> Duración de 5 a 7 segundos estáticos en cada pose (para fotos y jurado).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="geek-card p-4 h-100" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px;">
+                                <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--primary-cyan); margin-bottom: 12px;">ITEM 2: EVALUACIÓN TÉCNICA DEL TRAJE (MÁX 15 PTS)</h3>
+                                <ul style="font-size: 0.85rem; line-height: 1.6; padding-left: 20px; color: var(--text-muted);">
+                                    <li><strong>E1 (6 pts): Confección y materiales:</strong> Nivel de fidelidad, selección de telas, texturas y props de acuerdo a la imagen oficial de referencia.</li>
+                                    <li><strong>E2 (5 pts): Peluca y maquillaje:</strong> Estilizado, forma, volumen de la peluca y maquillaje característico que complemente el rostro del personaje.</li>
+                                    <li><strong>E3 (4 pts): Desplante actoral:</strong> Actitud, poses y movimientos escénicos característicos que den vida al personaje.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="geek-card p-4 h-100" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px;">
+                                <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--primary-green); margin-bottom: 12px;">ITEM 3: COMUNIDAD (MÁX 3 PTS)</h3>
+                                <ul style="font-size: 0.85rem; line-height: 1.6; padding-left: 20px; color: var(--text-muted);">
+                                    <li><strong>C1 (3 pts): Interacción con público:</strong> Buena disposición, cordialidad y cortesía al interactuar y tomarse fotos con los asistentes en el recinto.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="geek-card p-4 h-100" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px;">
+                                <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--primary-gold); margin-bottom: 12px;">ITEM 4: VIDEO DE PROMOCIÓN PREVIO (MÁX 8 PTS)</h3>
+                                <ul style="font-size: 0.85rem; line-height: 1.6; padding-left: 20px; color: var(--text-muted);">
+                                    <li><strong>V1 (2 pts): Plazo y entrega:</strong> Video entregado o subido antes del viernes 14 de Agosto a las 23:59 hrs.</li>
+                                    <li><strong>V2 (3 pts): Convocatoria:</strong> Invitación explícita al festival TemuGeek y llamado de apoyo en el certamen.</li>
+                                    <li><strong>V3 (3 pts): Calidad actoral/Edición:</strong> Creatividad en el teaser, actuación "in-character" y transiciones de video.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+    </div>
+
+    <!-- JS Logic file -->
+    <script src="jurado.js"></script>
+
+</body>
+</html>
