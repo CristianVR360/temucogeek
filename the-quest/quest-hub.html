@@ -238,6 +238,43 @@
       this.updateCounts();
     }
 
+    getRoleplayDialogHtml() {
+      let rpgClass = 'Aventurero';
+      const saved = sessionStorage.getItem('expogeek_rpg_character') || localStorage.getItem('expogeek_rpg_character_flat');
+      if (saved) {
+        try {
+          const c = JSON.parse(saved);
+          if (c.role) rpgClass = c.role;
+        } catch (e) {}
+      }
+
+      const dialogues = {
+        'Guerrero': '⚔️ Guerrero: "¡Saludos, noble mercader! He venido a afilar mi acero con tus tesoros. ¿Qué mercancías tienes para mi travesía?"',
+        'Mago': '🔮 Mago: "¡Saludos! Siento una poderosa vibración arcana en tu puesto. Muéstrame tus reliquias y artefactos mágicos."',
+        'Arquero': '🏹 Arquero: "¡Buenas! Busco provisiones y flechas del mejor artesano para mi próxima cacería en los bosques. ¿Qué tienes?"',
+        'Pícaro': '🗝️ Pícaro: "¡Shh... silenciemos el paso! ¿Tienes algún objeto exótico traído del mercado negro o alguna ganga oculta?"',
+        'Clérigo': '✝️ Clérigo: "¡Que la divina luz bendiga tu stand! Vengo en busca de amuletos sagrados o ungüentos para sanar a mi grupo."',
+        'Bardo': '🎵 Bardo: "¡Hola! Si tus mercancías son tan buenas como dicen, cantaré hermosas baladas sobre tu tienda en todo el reino."',
+        'Paladín': '🛡️ Paladín: "¡Saludos, ciudadano! Como fiel paladín protector, vengo a patrocinar tus mercancías. ¿Qué nobles objetos vendes?"'
+      };
+
+      const line = dialogues[rpgClass] || `🎲 Aventurero: "¡Hola, noble artesano! Vengo en una misión del reino TemuGeek. ¿Qué tesoros tienes hoy?"`;
+
+      return `
+        <div style="background: rgba(255, 183, 0, 0.08); border: 1.5px dashed var(--primary-gold); border-radius: 12px; padding: 12px; margin-bottom: 15px; font-size: 0.85rem;">
+          <div style="font-family: var(--font-heading); color: var(--primary-gold); font-weight: 800; font-size: 0.9rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+            <span>🎭 DIÁLOGO SECRETO DE ROLPLAY</span>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.76rem; margin: 0 0 8px 0; line-height: 1.3;">
+            ¡Dile esta frase al expositor en su stand para meterte en el papel de tu personaje y reclamar tu <b>Carta Física de Puntos de Experiencia (XP)</b>! 🃏✨
+          </p>
+          <div style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 8px; color: #fff; font-family: var(--font-code); font-style: italic; border-left: 3px solid var(--primary-cyan); line-height: 1.4; word-break: break-word;">
+            ${line}
+          </div>
+        </div>
+      `;
+    }
+
     /** Opens the bottom-sheet modal with quests for a specific category */
     openQuestModal(catId) {
       const cat = this.questsDb.categories.find(c => c.id === catId);
@@ -258,7 +295,14 @@
       };
 
       const body = document.getElementById('questModalBody');
-      body.innerHTML = cat.quests.map(q => {
+      let html = '';
+
+      const shopCats = ['tcg', 'arte', 'tiendas', '3d', 'craft', 'food'];
+      if (shopCats.includes(catId)) {
+        html += this.getRoleplayDialogHtml();
+      }
+
+      html += cat.quests.map(q => {
         const done = this.completedQuests.has(q.id);
         const t = typeStyles[q.type] || typeStyles.action;
         return `
@@ -278,6 +322,8 @@
           </div>
         </div>`;
       }).join('');
+
+      body.innerHTML = html;
 
       // Show modal
       const overlay = document.getElementById('questModalOverlay');
@@ -446,7 +492,28 @@
     }
   }
 
+  function hydrateNavbarProfile() {
+    const savedChar = sessionStorage.getItem('expogeek_rpg_character') || localStorage.getItem('expogeek_rpg_character_flat');
+    if (savedChar) {
+      try {
+        const data = JSON.parse(savedChar);
+        const profileEl = document.getElementById('navCharProfile');
+        const avatarEl = document.getElementById('navCharAvatar');
+        const nameEl = document.getElementById('navCharName');
+        const roleEl = document.getElementById('navCharRole');
+
+        if (profileEl && data.name) {
+          profileEl.style.display = 'flex';
+          if (nameEl) nameEl.innerText = data.name;
+          if (roleEl) roleEl.innerText = `${data.role || 'Guerrero'} ${data.race || 'Humano'}`;
+          if (avatarEl && data.avatarUrl) avatarEl.src = data.avatarUrl;
+        }
+      } catch (e) {}
+    }
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
+    hydrateNavbarProfile();
     window.questHub = new QuestHubController();
   });
   </script>

@@ -42,20 +42,91 @@
 
   <main class="rpg-container">
 
-    <!-- STEP 0: WELCOME & GAME HOOK (Initial View) -->
+    <!-- STEP 0: WELCOME & QUICK CHARACTER SELECTION (Initial View) -->
     <section id="discoveryStep0" class="discovery-section">
-      <div class="welcome-hero-card">
-        <span class="rpg-hero-tag">⚡ Ecosistema Inmersivo ExpoGeek 2026</span>
-        <h1 class="welcome-title">🎮 EL DESPERTAR DEL AVENTURERO 🎲✨</h1>
-        <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 650px; margin: 0 auto 1.5rem auto;">
-          Te encuentras en las puertas de la convención. Para emprender tu travesía, desbloquear misiones en el recinto y reclamar tu pasaporte del reino, primero debes forjar tu personaje...
-        </p>
-
-        <div>
-          <button id="btnStartAdventure" class="btn-rpg btn-rpg-magenta" style="padding: 14px 32px; font-size: 1.15rem; box-shadow: 0 0 25px rgba(255, 0, 85, 0.4);">
-            ✨ Forjar Mi Personaje ➔
-          </button>
+      <div class="welcome-hero-card" style="max-width: 720px; margin: 0 auto;">
+        
+        <!-- Logo & Welcome Header -->
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <img src="/assets/img/logo/logo-horizontal-blanco.png" alt="Temu-Geek Logo" class="temu-logo-hero">
+          <h1 class="welcome-title" style="font-size: 2.1rem; margin-bottom: 0.5rem;">🎮 Bienvenido a Temu-geek 🎲✨</h1>
+          <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 650px; margin: 0 auto; line-height: 1.6;">
+            Te encuentras en las puertas de la convención. Para emprender tu travesía, desbloquear misiones en el recinto y reclamar tu pasaporte del reino, primero debes forjar tu personaje...
+          </p>
         </div>
+
+        <!-- Quick Character Creation Form -->
+        <div class="rpg-card" style="background: rgba(14, 17, 28, 0.88); border: 1.5px solid var(--primary-cyan); padding: 1.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-neon); text-align: left;">
+          
+          <div class="card-header" style="text-align: center; margin-bottom: 1.25rem;">
+            <span style="font-family: var(--font-heading); color: var(--primary-cyan); font-weight: bold; letter-spacing: 1px; font-size: 0.85rem;">⚡ SELECCIÓN RÁPIDA DE PERSONAJE</span>
+            <h2 class="card-title" style="justify-content: center; font-size: 1.5rem; margin-top: 4px;">🎨 Personaliza Tu Personaje</h2>
+          </div>
+
+          <!-- Field 1: Nombre -->
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-weight: 600; color: var(--primary-cyan); font-size: 0.92rem; margin-bottom: 5px; display: block;">👤 Nombre de tu Aventurero</label>
+            <input type="text" id="quickNameInput" class="form-input" placeholder="Ej. Kaelen, Lord Geek, Shadow..." value="Aventurero Geek" style="width: 100%;">
+          </div>
+
+          <!-- Field 2: Raza -->
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-weight: 600; color: var(--primary-cyan); font-size: 0.92rem; margin-bottom: 5px; display: block;">🧝 Raza</label>
+            <select id="quickRaceSelect" class="form-select" style="width: 100%;">
+              <option value="Humano">🗡️ Humano</option>
+              <option value="Elfo">🧝 Elfo</option>
+              <option value="Enano">⛏️ Enano</option>
+              <option value="Orco">👹 Orco</option>
+            </select>
+          </div>
+
+          <!-- Field 3: Clase -->
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-weight: 600; color: var(--primary-cyan); font-size: 0.92rem; margin-bottom: 5px; display: block;">⚔️ Clase</label>
+            <select id="quickClassSelect" class="form-select" style="width: 100%;">
+              <option value="Guerrero">🗡️ Guerrero</option>
+              <option value="Mago">🔮 Mago</option>
+              <option value="Arquero">🏹 Arquero</option>
+              <option value="Pícaro">🗝️ Pícaro</option>
+              <option value="Clérigo">✝️ Clérigo</option>
+              <option value="Bardo">🎵 Bardo</option>
+              <option value="Paladín">🛡️ Paladín</option>
+            </select>
+          </div>
+
+          <!-- Field 4: Género (H - M - Otro) -->
+          <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label class="form-label" style="font-weight: 600; color: var(--primary-cyan); font-size: 0.92rem; margin-bottom: 6px; display: block;">⚧ Género</label>
+            <div class="gender-selector">
+              <button type="button" class="gender-btn active" data-gender="H">👨 H</button>
+              <button type="button" class="gender-btn" data-gender="M">👩 M</button>
+              <button type="button" class="gender-btn" data-gender="Otro">✨ Otro</button>
+            </div>
+          </div>
+
+          <!-- API Avatar Selection Grid (4 Avatars) -->
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label class="form-label" style="font-weight: 600; color: var(--primary-gold); font-size: 0.92rem; margin-bottom: 0;">🎨 Elige tu Avatar</label>
+              <button type="button" id="btnRefreshAvatars" class="btn-rpg btn-rpg-outline" style="padding: 3px 10px; font-size: 0.75rem;">
+                🔄 Regenerar
+              </button>
+            </div>
+            
+            <div id="avatarPickerGrid" class="avatar-grid">
+              <!-- 4 Avatar options injected dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Action Button: Direct to Step 5 Card -->
+          <div style="text-align: center; margin-top: 1.5rem;">
+            <button id="btnCreateDirectCard" class="btn-rpg btn-rpg-magenta" style="width: 100%; padding: 14px 24px; font-size: 1.15rem; font-weight: 800; box-shadow: 0 0 25px rgba(255, 0, 85, 0.4);">
+              ⚔️ Crear Credencial & Ver Personaje ➔
+            </button>
+          </div>
+
+        </div>
+
       </div>
     </section>
 
@@ -292,12 +363,12 @@
           <!-- Key Specs Grid -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; text-align: left; font-size: 0.82rem;">
             <div style="background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">
-              <div style="color: var(--text-muted); font-size: 0.72rem;">RASGO DISTINTIVO</div>
-              <div id="heroTraitDisplay" style="color: #fff; font-weight: bold;">Ojos biónicos neón</div>
+              <div style="color: var(--text-muted); font-size: 0.72rem;">🧝 RAZA</div>
+              <div id="heroTraitDisplay" style="color: #fff; font-weight: bold;">Humano</div>
             </div>
             <div style="background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">
-              <div style="color: var(--text-muted); font-size: 0.72rem;">ESTILO VISUAL</div>
-              <div id="heroStyleDisplay" style="color: var(--primary-cyan); font-weight: bold;">Fotorrealista</div>
+              <div style="color: var(--text-muted); font-size: 0.72rem;">⚔️ CLASE</div>
+              <div id="heroStyleDisplay" style="color: var(--primary-cyan); font-weight: bold;">Guerrero</div>
             </div>
           </div>
 

@@ -16,39 +16,75 @@
       "id": "tcg",
       "icon": "🃏",
       "title": "TCG & Juegos de Rol",
-      "description": "Cartas coleccionables, Pokémon, Yu-Gi-Oh!, Magic y juegos de mesa.",
+      "description": "Cartas coleccionables, juegos de mesa y tiendas de rol.",
       "quests": [
-        { "id": "q_tcg_duel", "title": "Gana un Duelo de Cartas en la Zona Top 8", "description": "Busca la zona TCG Top 8 y reta a un oponente. ¡Gana para completar la misión!", "xp": 150, "type": "challenge" },
-        { "id": "q_tcg_trade", "title": "Intercambia una Carta con otro Aventurero", "description": "Encuentra a otro coleccionista y realiza un intercambio de cartas. ¡El trato es ley!", "xp": 80, "type": "social" },
-        { "id": "q_tcg_oshawott", "title": "Visita Oshawott.Store y Pregunta por la Carta del Día", "description": "Nicolás de Oshawott.Store tiene una carta especial del día. ¡Descúbrela!", "xp": 100, "type": "explore" },
-        { "id": "q_tcg_nippon", "title": "Descubre la Colección Secreta de Nippon Geek", "description": "Daniel de Nippon Geek tiene figuras y cartas raras. Pregunta por su pieza más valiosa.", "xp": 80, "type": "explore" },
-        { "id": "q_tcg_rif", "title": "Compra o Intercambia algo en Rif Anime & Toys", "description": "Rolando tiene cartas TCG, artesanías y stickers. ¡Explora su colección variada!", "xp": 80, "type": "explore" },
-        { "id": "q_rol_mesa", "title": "Participa en una Partida de Juego de Mesa o Rol", "description": "Busca la zona de juegos de mesa y únete a una partida. Pide a Roxy.voy.stamp que te enseñe un juego.", "xp": 120, "type": "action" }
+        { "id": "q_tcg_duel", "title": "Gana un Duelo de Cartas en la Zona Top 8", "description": "Reta a un oponente en la zona TCG Top 8. ¡Gana para completar la misión!", "xp": 150, "type": "challenge" },
+        { "id": "q_tcg_trade", "title": "Intercambia una Carta con otro Aventurero", "description": "Encuentra a otro coleccionista y realiza un trueque de cartas.", "xp": 80, "type": "social" },
+        { "id": "q_rol_mesa", "title": "Únete a una Partida de Juego de Mesa o Rol", "description": "Busca la zona de juegos de mesa y participa en una partida demostrativa.", "xp": 120, "type": "action" },
+        
+        { "id": "q_tcg_oshawott_buy", "title": "Oshawott.Store - Adquisición de Cartas", "description": "Compra una carta, sobre o producto en Oshawott.Store de Nicolás.", "xp": 100, "type": "explore" },
+        { "id": "q_tcg_oshawott_social", "title": "Oshawott.Store - Redes Sociales", "description": "Sigue a @oshawott.store en Instagram y sube una historia etiquetándolos.", "xp": 80, "type": "social" },
+
+        { "id": "q_tcg_nippon_buy", "title": "Nippon Geek - Adquisición Geek", "description": "Compra una figura, accesorio o carta coleccionable en Nippon Geek de Daniel.", "xp": 100, "type": "explore" },
+        { "id": "q_tcg_nippon_social", "title": "Nippon Geek - Redes Sociales", "description": "Sigue a @nippon_geek en Instagram y sube una historia de su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_tcg_rif_buy", "title": "Rif Anime & Toys - Compra de Coleccionables", "description": "Compra una carta TCG, artesanía o sticker en Rif Anime & Toys de Rolando.", "xp": 100, "type": "explore" },
+        { "id": "q_tcg_rif_social", "title": "Rif Anime & Toys - Redes Sociales", "description": "Sigue su Instagram y sube una historia etiquetándolos.", "xp": 80, "type": "social" }
       ]
     },
     {
       "id": "arte",
       "icon": "🎨",
-      "title": "Ilustración, Arte & Dibujo",
-      "description": "Talleres creativos, zona de dibujo y artistas del evento.",
+      "title": "Ilustración & Arte",
+      "description": "Artistas, talleres creativos y zona de dibujo del evento.",
       "quests": [
-        { "id": "q_art_draw", "title": "Crea un Dibujo en la Zona de Dibujo Libre", "description": "Toma un lápiz y papel en la zona de arte y dibuja algo épico. ¡Muéstralo al staff!", "xp": 120, "type": "action" },
-        { "id": "q_art_workshop", "title": "Participa de un Taller o Concurso de Arte", "description": "Inscríbete en un taller creativo del evento y completa la actividad.", "xp": 150, "type": "action" },
-        { "id": "q_art_hoozuki", "title": "Encarga un Retrato Express en Hoozuki Art & Crafts", "description": "Ruth de Hoozuki hace ilustraciones y stickers increíbles. ¡Pídele un dibujo de tu personaje!", "xp": 100, "type": "explore" },
-        { "id": "q_art_arietoroi", "title": "Conoce el Arte de Arietoroi", "description": "Arielle de Arietoroi - Dibujo e ilustración tiene un estilo único. ¡Conversa sobre su proceso creativo!", "xp": 80, "type": "social" },
-        { "id": "q_art_komugo", "title": "Admira las Ilustraciones de Komugo (Valdivia)", "description": "Claudia de Komugo trajo fanart desde Valdivia. ¡Descubre su obra favorita!", "xp": 80, "type": "explore" },
-        { "id": "q_art_magluan", "title": "Descubre los Cómics de MagLuan", "description": "Conzuelo de MagLuan tiene ilustraciones, fanart y arte original. Pregunta por su manga favorito.", "xp": 80, "type": "explore" },
-        { "id": "q_art_batido", "title": "Visita Batido de Frutilla - Ilustración", "description": "Javiera tiene un estilo vibrante de ilustración. ¡Conversa sobre sus técnicas!", "xp": 80, "type": "explore" },
-        { "id": "q_art_hojaseca", "title": "Explora el Arte de Hoja Seca", "description": "Yohariela de Hoja Seca trae fanart, arte original, artesanías y stickers desde Vilcún.", "xp": 80, "type": "explore" },
-        { "id": "q_art_smaddzz", "title": "Descubre los Stickers de S_maddzz", "description": "Natalia tiene ilustraciones, cómics originales y stickers. ¡Encuentra tu favorito!", "xp": 80, "type": "explore" },
-        { "id": "q_art_kaeru", "title": "Visita Kaeru - Fanart & Artesanía", "description": "Millaray de Kaeru tiene ilustraciones y artesanías hechas a mano. ¡Conoce su trabajo!", "xp": 80, "type": "explore" },
-        { "id": "q_art_vaniamonos", "title": "Conoce a Vaniamonos & Kato", "description": "Vania y Katherine tienen fanart, arte original, artesanías y stickers. ¡Doble talento!", "xp": 80, "type": "explore" },
-        { "id": "q_art_huronrin", "title": "Visita Huronrin desde Lonquimay", "description": "Valeria trajo fanart y artesanías desde Lonquimay. ¡Pregunta por su pieza más especial!", "xp": 80, "type": "explore" },
-        { "id": "q_art_aren", "title": "Conoce el Arte Gráfico de Aren Radely", "description": "Adriel de Aren Radely trae ilustración y arte original desde Nueva Imperial.", "xp": 80, "type": "explore" },
-        { "id": "q_art_samuart", "title": "Descubre las Creaciones en Resina de Samuart", "description": "Sasha de Samuart.cl fusiona ilustración con artesanía en resina. ¡Pide ver su técnica!", "xp": 80, "type": "explore" },
-        { "id": "q_art_mimiko", "title": "Explora Mimiko - Fanart & K-Pop", "description": "Emily de Mimiko trae fanart, artesanías, anime y K-Pop desde Lautaro. ¡Conversa con ella!", "xp": 80, "type": "explore" },
-        { "id": "q_art_brujita", "title": "Visita Brujita de Papel", "description": "Valeria tiene stickers y papelería temática anime y K-Pop. ¡Busca tu favorito!", "xp": 80, "type": "explore" },
-        { "id": "q_art_amaterasu", "title": "Explora Amaterasu Manga Store", "description": "Nicolás tiene arte original y cómics/manga. ¡Pregunta por sus títulos recomendados!", "xp": 100, "type": "explore" }
+        { "id": "q_art_draw", "title": "Crea un Dibujo en la Zona de Dibujo Libre", "description": "Dibuja algo épico en la zona de arte libre y muéstralo al staff.", "xp": 120, "type": "action" },
+        { "id": "q_art_workshop", "title": "Participa de un Taller Creativo", "description": "Inscríbete y completa una de las actividades del taller de arte.", "xp": 150, "type": "action" },
+
+        { "id": "q_art_hoozuki_buy", "title": "Hoozuki Art - Encargar Retrato o Stickers", "description": "Adquiere stickers o encarga un retrato express a Ruth de Hoozuki Art & Crafts.", "xp": 100, "type": "explore" },
+        { "id": "q_art_hoozuki_social", "title": "Hoozuki Art - Redes Sociales", "description": "Sigue su Instagram y comparte una historia mostrando sus ilustraciones.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_arietoroi_buy", "title": "Arietoroi - Adquisición Artística", "description": "Compra un print o ilustración original en Arietoroi de Arielle.", "xp": 100, "type": "explore" },
+        { "id": "q_art_arietoroi_social", "title": "Arietoroi - Redes Sociales", "description": "Síguelos en Instagram y publica una historia etiquetando su arte.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_komugo_buy", "title": "Komugo - Compra de Fanart Valdiviano", "description": "Compra una obra o sticker de Komugo (Claudia), traída desde Valdivia.", "xp": 100, "type": "explore" },
+        { "id": "q_art_komugo_social", "title": "Komugo - Redes Sociales", "description": "Síguelos en Instagram y sube una historia etiquetando su obra favorita.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_magluan_buy", "title": "MagLuan - Compra de Cómics/Stickers", "description": "Adquiere un cómic o ilustración en el stand de Conzuelo de MagLuan.", "xp": 100, "type": "explore" },
+        { "id": "q_art_magluan_social", "title": "MagLuan - Redes Sociales", "description": "Síguelos en Instagram y sube una historia apoyando su trabajo.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_batido_buy", "title": "Batido de Frutilla - Compra de Ilustración", "description": "Adquiere un print o sticker en Batido de Frutilla de Javiera.", "xp": 100, "type": "explore" },
+        { "id": "q_art_batido_social", "title": "Batido de Frutilla - Redes Sociales", "description": "Síguelos en Instagram y sube una historia de su tierno estilo.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_hojaseca_buy", "title": "Hoja Seca - Compra de Stickers o Arte", "description": "Compra stickers o fanart a Yohariela de Hoja Seca, traído desde Vilcún.", "xp": 100, "type": "explore" },
+        { "id": "q_art_hojaseca_social", "title": "Hoja Seca - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_smaddzz_buy", "title": "S_maddzz - Compra de Stickers y Cómics", "description": "Compra un cómic original o sticker en el stand de Natalia de S_maddzz.", "xp": 100, "type": "explore" },
+        { "id": "q_art_smaddzz_social", "title": "S_maddzz - Redes Sociales", "description": "Síguelos en Instagram y comparte una historia de tu sticker favorito.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_kaeru_buy", "title": "Kaeru - Compra de Fanart & Artesanías", "description": "Compra un fanart o artesanía hecha a mano en Kaeru de Millaray.", "xp": 100, "type": "explore" },
+        { "id": "q_art_kaeru_social", "title": "Kaeru - Redes Sociales", "description": "Síguelos en Instagram y publica una historia apoyando su artesanía.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_vaniamonos_buy", "title": "Vaniamonos & Kato - Compra Creativa", "description": "Adquiere stickers o arte original en el stand de Vania y Katherine.", "xp": 100, "type": "explore" },
+        { "id": "q_art_vaniamonos_social", "title": "Vaniamonos & Kato - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de su doble talento.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_huronrin_buy", "title": "Huronrin - Compra de Arte Lonquimay", "description": "Compra una pieza o artesanía a Valeria de Huronrin, traída desde Lonquimay.", "xp": 100, "type": "explore" },
+        { "id": "q_art_huronrin_social", "title": "Huronrin - Redes Sociales", "description": "Síguelos en Instagram y comparte una historia destacando su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_aren_buy", "title": "Aren Radely - Compra Gráfica", "description": "Compra ilustraciones o stickers a Adriel de Aren Radely (Nueva Imperial).", "xp": 100, "type": "explore" },
+        { "id": "q_art_aren_social", "title": "Aren Radely - Redes Sociales", "description": "Síguelos en Instagram y comparte una historia del arte gráfico.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_samuart_buy", "title": "Samuart - Compra de Resina e Ilustración", "description": "Compra un accesorio en resina o ilustración a Sasha de Samuart.cl.", "xp": 100, "type": "explore" },
+        { "id": "q_art_samuart_social", "title": "Samuart - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de su técnica en resina.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_mimiko_buy", "title": "Mimiko - Compra de K-Pop & Fanart", "description": "Adquiere stickers, pins o fanart a Emily de Mimiko (Lautaro).", "xp": 100, "type": "explore" },
+        { "id": "q_art_mimiko_social", "title": "Mimiko - Redes Sociales", "description": "Síguelos en Instagram y publica una historia apoyando su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_brujita_buy", "title": "Brujita de Papel - Compra de Papelería", "description": "Compra papelería temática o stickers en el stand de Valeria.", "xp": 100, "type": "explore" },
+        { "id": "q_art_brujita_social", "title": "Brujita de Papel - Redes Sociales", "description": "Síguelos en Instagram y comparte una historia de su papelería.", "xp": 80, "type": "social" },
+
+        { "id": "q_art_amaterasu_buy", "title": "Amaterasu Manga Store - Compra de Manga/Arte", "description": "Compra un manga o arte original a Nicolás de Amaterasu Manga Store.", "xp": 100, "type": "explore" },
+        { "id": "q_art_amaterasu_social", "title": "Amaterasu Manga Store - Redes Sociales", "description": "Síguelos en Instagram y publica una historia con tu tomo comprado.", "xp": 80, "type": "social" }
       ]
     },
     {
@@ -57,13 +93,13 @@
       "title": "Shows & Música en Vivo",
       "description": "Bandas, covers de anime, tributos y presentaciones en el escenario.",
       "quests": [
-        { "id": "q_show_guaripolo", "title": "Corea en el Escenario junto a Guaripolo", "description": "La Banda de Guaripolo (Tributo 31 Minutos) tocará en vivo. ¡Sube al escenario y corea con ellos!", "xp": 200, "type": "challenge" },
-        { "id": "q_show_temumizu", "title": "Corea junto a Temumizu - Covers de Anime", "description": "Temumizu toca covers de anime en vivo. ¡Canta tu opening favorito junto a la banda!", "xp": 200, "type": "challenge" },
-        { "id": "q_show_starlight", "title": "Disfruta del Dúo Acústico Starlight", "description": "El Duo Starlight toca versiones acústicas de anime. Escúchalos y tómate una foto con ellos.", "xp": 120, "type": "social" },
-        { "id": "q_show_sing", "title": "Canta una Canción en el Escenario", "description": "Atrévete a subir al escenario y cantar tu opening o ending favorito de anime.", "xp": 250, "type": "challenge" },
-        { "id": "q_show_cosplayer", "title": "Habla con un Cosplayer o Personaje del Staff", "description": "Encuentra a un cosplayer o personaje del staff y mantengan una conversación 'in character'.", "xp": 100, "type": "social" },
-        { "id": "q_show_hasshra", "title": "Conoce a alguien de Hasshra Cosplay", "description": "La comunidad Hasshra Cosplay estará presente. ¡Preséntate y conoce sus proyectos!", "xp": 100, "type": "social" },
-        { "id": "q_show_photo_cosplay", "title": "Tómate una Foto con un Cosplayer Épico", "description": "Busca al cosplayer más impresionante del evento y pídele una foto.", "xp": 80, "type": "social" }
+        { "id": "q_show_guaripolo", "title": "Corea en el Escenario junto a Guaripolo", "description": "La Banda de Guaripolo (Tributo 31 Minutos) tocará en vivo. ¡Canta con ellos!", "xp": 200, "type": "challenge" },
+        { "id": "q_show_temumizu", "title": "Corea junto a Temumizu - Covers de Anime", "description": "Temumizu toca covers de anime en vivo. ¡Canta tu opening favorito!", "xp": 200, "type": "challenge" },
+        { "id": "q_show_starlight", "title": "Disfruta del Dúo Acústico Starlight", "description": "El Duo Starlight toca versiones acústicas de anime. Escúchalos y sácate una foto.", "xp": 120, "type": "social" },
+        { "id": "q_show_sing", "title": "Canta una Canción en el Escenario", "description": "Sube al escenario y canta tu opening o ending favorito en el karaoke libre.", "xp": 250, "type": "challenge" },
+        { "id": "q_show_cosplayer", "title": "Habla con un Cosplayer o Personaje del Staff", "description": "Encuentra a un cosplayer y mantengan una conversación 'in character'.", "xp": 100, "type": "social" },
+        { "id": "q_show_hasshra", "title": "Conoce a la Comunidad Hasshra Cosplay", "description": "Preséntate en la zona de Hasshra Cosplay y conoce sus proyectos.", "xp": 100, "type": "social" },
+        { "id": "q_show_photo_cosplay", "title": "Tómate una Foto con un Cosplayer Épico", "description": "Busca al cosplayer más impresionante y pídele una foto para el recuerdo.", "xp": 80, "type": "social" }
       ]
     },
     {
@@ -72,75 +108,127 @@
       "title": "Cine Geek Envolvente",
       "description": "Sala de cine con películas épicas todo el día. ¡Completa el maratón!",
       "quests": [
-        { "id": "q_cine_hp", "title": "Ve Harry Potter y las Reliquias de la Muerte: Parte 2", "description": "10:00 - 12:10 | Original subtitulado / Latino. ¡Revive la batalla final de Hogwarts!", "xp": 100, "type": "watch", "time": "10:00 - 12:10" },
-        { "id": "q_cine_spiderman", "title": "Ve Spider-Man: No Way Home", "description": "12:20 - 14:48 | Español Latino. ¡Los tres Spider-Man juntos en pantalla grande!", "xp": 100, "type": "watch", "time": "12:20 - 14:48" },
-        { "id": "q_cine_kpop", "title": "Ve K-Pop: Demon Hunters", "description": "15:00 - 16:30 | Español Latino. Una aventura K-Pop sobrenatural.", "xp": 100, "type": "watch", "time": "15:00 - 16:30" },
-        { "id": "q_cine_demon", "title": "Ve Demon Slayer: Mugen Train", "description": "16:45 - 18:42 | Japonés original subtitulado. ¡La película más épica de Tanjiro!", "xp": 100, "type": "watch", "time": "16:45 - 18:42" },
-        { "id": "q_cine_dune", "title": "Ve Dune (Parte 1)", "description": "18:55 - 21:30 | Original subtitulado. ¡Paul Atreides en la pantalla envolvente!", "xp": 100, "type": "watch", "time": "18:55 - 21:30" },
-        { "id": "q_cine_marathon", "title": "🏆 Maratón Completo: Ve 3 Películas o Más", "description": "Quédate para al menos 3 proyecciones. ¡Muestra tus tickets al staff para verificar!", "xp": 300, "type": "challenge" }
+        { "id": "q_cine_hp", "title": "Ve Harry Potter y las Reliquias de la Muerte: Parte 2", "description": "10:00 - 12:10 | ¡Revive la batalla final de Hogwarts!", "xp": 100, "type": "watch", "time": "10:00 - 12:10" },
+        { "id": "q_cine_spiderman", "title": "Ve Spider-Man: No Way Home", "description": "12:20 - 14:48 | ¡Los tres Spider-Man juntos en pantalla grande!", "xp": 100, "type": "watch", "time": "12:20 - 14:48" },
+        { "id": "q_cine_kpop", "title": "Ve K-Pop: Demon Hunters", "description": "15:00 - 16:30 | Una aventura K-Pop sobrenatural.", "xp": 100, "type": "watch", "time": "15:00 - 16:30" },
+        { "id": "q_cine_demon", "title": "Ve Demon Slayer: Mugen Train", "description": "16:45 - 18:42 | ¡La película más épica de Tanjiro!", "xp": 100, "type": "watch", "time": "16:45 - 18:42" },
+        { "id": "q_cine_dune", "title": "Ve Dune (Parte 1)", "description": "18:55 - 21:30 | ¡Paul Atreides en la pantalla envolvente!", "xp": 100, "type": "watch", "time": "18:55 - 21:30" },
+        { "id": "q_cine_marathon", "title": "🏆 Maratón Completo: Ve 3 Películas o Más", "description": "Quédate para al menos 3 proyecciones y avísale al staff al finalizar.", "xp": 300, "type": "challenge" }
       ]
     },
     {
       "id": "tiendas",
       "icon": "🏪",
       "title": "Tiendas & Expositores",
-      "description": "Figuras, artesanías, cosplay props, impresión 3D y más.",
+      "description": "Figuras, accesorios, cosplay props, vestuario geek y stickers.",
       "quests": [
-        { "id": "q_shop_dobby", "title": "Visita La Tiendita de Dobby", "description": "Fernando tiene figuras coleccionables, vestuario geek y stickers. ¡Pregunta por su producto estrella!", "xp": 80, "type": "explore" },
-        { "id": "q_shop_webaditas", "title": "Descubre las Props de Webaditas", "description": "Camila tiene cosplay props e impresión 3D. ¡Pide ver su pieza más compleja!", "xp": 100, "type": "explore" },
-        { "id": "q_shop_gojoventas", "title": "Explora GojoVentas - Figuras & Artesanía", "description": "Patricio tiene artesanías y figuras coleccionables épicas. ¡Busca la más rara!", "xp": 80, "type": "explore" },
-        { "id": "q_shop_zekkei", "title": "Recorre Zekkei Shop - Tienda Completa", "description": "Isaías tiene artesanías, anime, K-Pop, figuras, vestuario geek y stickers. ¡Una tienda para todo!", "xp": 80, "type": "explore" },
-        { "id": "q_shop_roxy", "title": "Conoce Roxy.voy.stamp - Cosplay & Juegos", "description": "Roxana tiene cosplay props, anime, K-Pop, vestuario geek y juegos de mesa. ¡Prueba algo nuevo!", "xp": 100, "type": "explore" },
-        { "id": "q_shop_rincon", "title": "Visita El Rincón de Silvy", "description": "Silvana tiene anime, K-Pop, figuras y stickers. ¡Busca tu personaje favorito!", "xp": 80, "type": "explore" },
-        { "id": "q_shop_neko", "title": "Explora Neko Papelería - Anime & K-Pop", "description": "Katherine de Neko Papelería tiene stickers y papelería temática de anime y K-Pop.", "xp": 80, "type": "explore" },
-        { "id": "q_shop_house", "title": "Descubre House of Cars Store", "description": "Juan Pablo tiene figuras coleccionables únicas. ¡Pregunta por su pieza más valiosa!", "xp": 80, "type": "explore" },
-        { "id": "q_shop_taller", "title": "Visita El Taller Silvestre", "description": "Oscar trajo artesanías, anime, K-Pop y stickers desde Villarrica. ¡Conoce su trabajo!", "xp": 80, "type": "explore" },
-        { "id": "q_shop_keijap", "title": "Explora Keijap Store - Anime, K-Pop & Snacks", "description": "Támara tiene anime, K-Pop, stickers y snacks geek. ¡Una combinación perfecta!", "xp": 80, "type": "explore" },
-        { "id": "q_shop_china", "title": "Visita China Latina Store", "description": "Sofía trae artesanías y productos únicos desde Padre las Casas.", "xp": 80, "type": "explore" },
-        { "id": "q_shop_photo", "title": "Tómate una Foto con tu Producto Favorito", "description": "Elige tu producto o artesanía favorita de cualquier stand y tómate una selfie con él.", "xp": 80, "type": "social" }
+        { "id": "q_shop_dobby_buy", "title": "La Tiendita de Dobby - Adquisición Mágica", "description": "Compra figuras coleccionables, vestuario o stickers en La Tiendita de Dobby.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_dobby_social", "title": "La Tiendita de Dobby - Redes Sociales", "description": "Síguelos en Instagram y sube una historia mostrando tu producto o stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_shop_webaditas_buy", "title": "Webaditas - Adquisición 3D/Props", "description": "Compra cosplay props, llaveros o adornos en 3D en Webaditas de Camila.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_webaditas_social", "title": "Webaditas - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de tu compra o de su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_shop_gojoventas_buy", "title": "GojoVentas - Compra de Figuras", "description": "Compra figuras coleccionables o artesanía en GojoVentas de Patricio.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_gojoventas_social", "title": "GojoVentas - Redes Sociales", "description": "Síguelos en Instagram y publica una historia etiquetando su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_shop_zekkei_buy", "title": "Zekkei Shop - Adquisición Anime/K-Pop", "description": "Compra vestuario, figuras, stickers o anime en Zekkei Shop de Isaías.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_zekkei_social", "title": "Zekkei Shop - Redes Sociales", "description": "Síguelos en Instagram y sube una historia mostrando su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_shop_roxy_buy", "title": "Roxy.voy.stamp - Compra de Cosplay/Juegos", "description": "Adquiere cosplay props, vestuario o juegos de mesa en Roxy.voy.stamp.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_roxy_social", "title": "Roxy.voy.stamp - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de tu visita a su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_shop_rincon_buy", "title": "El Rincón de Silvy - Adquisición Kawaii", "description": "Compra anime, K-Pop, figuras o stickers en El Rincón de Silvy.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_rincon_social", "title": "El Rincón de Silvy - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de su colección.", "xp": 80, "type": "social" },
+
+        { "id": "q_shop_neko_buy", "title": "Neko Papelería - Compra de Papelería/Stickers", "description": "Compra papelería o stickers de anime y K-Pop a Katherine de Neko.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_neko_social", "title": "Neko Papelería - Redes Sociales", "description": "Síguelos en Instagram y comparte una historia etiquetándolos.", "xp": 80, "type": "social" },
+
+        { "id": "q_shop_house_buy", "title": "House of Cars - Adquisición Diecast", "description": "Compra un auto coleccionable o figura en House of Cars Store de Juan Pablo.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_house_social", "title": "House of Cars - Redes Sociales", "description": "Síguelos en Instagram y sube una historia mostrando sus modelos.", "xp": 80, "type": "social" },
+
+        { "id": "q_shop_taller_buy", "title": "El Taller Silvestre - Compra Artesanal", "description": "Adquiere artesanías, stickers o poleras en El Taller Silvestre de Oscar.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_taller_social", "title": "El Taller Silvestre - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_shop_keijap_buy", "title": "Keijap Store - Adquisición de Snacks/Anime", "description": "Compra snacks importados, stickers o productos anime en Keijap Store.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_keijap_social", "title": "Keijap Store - Redes Sociales", "description": "Síguelos en Instagram y publica una historia del stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_shop_china_buy", "title": "China Latina - Compra de Accesorios", "description": "Compra artesanías o productos únicos a Sofía de China Latina Store.", "xp": 100, "type": "explore" },
+        { "id": "q_shop_china_social", "title": "China Latina - Redes Sociales", "description": "Síguelos en Instagram y sube una historia apoyando su tienda.", "xp": 80, "type": "social" }
       ]
     },
     {
       "id": "3d",
       "icon": "🖨️",
-      "title": "Impresión 3D & Tecnología",
-      "description": "Figuras 3D, corte láser y creaciones tecnológicas.",
+      "title": "Impresión 3D",
+      "description": "Figuras en resina/filamento, corte láser y creaciones tecnológicas.",
       "quests": [
-        { "id": "q_3d_kraken", "title": "Visita Kraken3D - Impresión 3D desde Villarrica", "description": "Sebastián de Kraken3D trae creaciones en impresión 3D desde Villarrica. ¡Ve el proceso en vivo!", "xp": 100, "type": "explore" },
-        { "id": "q_3d_sucuteros", "title": "Descubre Sucuteros - Impresión 3D & Láser", "description": "Yessenia trae impresión 3D y corte láser desde Nueva Imperial. ¡Pide ver su catálogo!", "xp": 100, "type": "explore" },
-        { "id": "q_3d_mafe", "title": "Conoce Mafe 3D", "description": "Luis de Mafe 3D imprime figuras y objetos geek en 3D. ¡Pregunta cómo funciona!", "xp": 100, "type": "explore" },
-        { "id": "q_3d_creapelier", "title": "Explora Creapelier - 3D & Stickers", "description": "Margarita de Creapelier combina impresión 3D con stickers. ¡Viene desde Villarrica!", "xp": 80, "type": "explore" },
-        { "id": "q_3d_magma", "title": "Visita Magma Producciones", "description": "Jaime de Magma Producciones trae productos especiales desde Villarrica. ¡Descubre qué traen!", "xp": 80, "type": "explore" }
+        { "id": "q_3d_kraken_buy", "title": "Kraken3D - Adquisición Impresión 3D", "description": "Compra una figura o adorno impreso en 3D en Kraken3D de Sebastián.", "xp": 100, "type": "explore" },
+        { "id": "q_3d_kraken_social", "title": "Kraken3D - Redes Sociales", "description": "Síguelos en Instagram y comparte una historia con su impresión 3D.", "xp": 80, "type": "social" },
+
+        { "id": "q_3d_sucuteros_buy", "title": "Sucuteros - Compra Corte Láser", "description": "Compra un llavero o artesanía en corte láser a Yessenia de Sucuteros.", "xp": 100, "type": "explore" },
+        { "id": "q_3d_sucuteros_social", "title": "Sucuteros - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_3d_mafe_buy", "title": "Mafe 3D - Adquisición de Llaveros/Modelos", "description": "Compra una figura o accesorio 3D en el stand de Luis de Mafe 3D.", "xp": 100, "type": "explore" },
+        { "id": "q_3d_mafe_social", "title": "Mafe 3D - Redes Sociales", "description": "Síguelos en Instagram y sube una historia del stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_3d_creapelier_buy", "title": "Creapelier - Compra 3D & Stickers", "description": "Compra un adorno en resina o sticker a Margarita de Creapelier.", "xp": 100, "type": "explore" },
+        { "id": "q_3d_creapelier_social", "title": "Creapelier - Redes Sociales", "description": "Síguelos en Instagram y sube una historia mostrando tu sticker o figura.", "xp": 80, "type": "social" },
+
+        { "id": "q_3d_magma_buy", "title": "Magma Producciones - Compra Coleccionable", "description": "Compra un accesorio o producto a Jaime de Magma Producciones.", "xp": 100, "type": "explore" },
+        { "id": "q_3d_magma_social", "title": "Magma Producciones - Redes Sociales", "description": "Síguelos en Instagram y sube una historia apoyando su stand.", "xp": 80, "type": "social" }
       ]
     },
     {
       "id": "craft",
       "icon": "🧶",
-      "title": "Artesanía & Amigurumis",
-      "description": "Crochet, tejidos, resina y creaciones hechas a mano con amor.",
+      "title": "Artesanía & Crochet",
+      "description": "Amigurumis, tejidos, resina y creaciones hechas a mano con amor.",
       "quests": [
-        { "id": "q_craft_poke", "title": "Encuentra un Pokémon en Poke Crochett", "description": "Thanya de Poke Crochett teje amigurumis de Pokémon. ¡Encuentra a tu favorito!", "xp": 100, "type": "explore" },
-        { "id": "q_craft_broderi", "title": "Visita Broderí - Artesanía Tejida", "description": "Carolina de Broderí tiene artesanías y amigurumis hechos a mano. ¡Descubre su técnica!", "xp": 80, "type": "explore" },
-        { "id": "q_craft_bechi", "title": "Conoce Bechi's Crochet desde Victoria", "description": "Bárbara teje amigurumis desde Victoria. ¡Pregunta cuál fue el más difícil de hacer!", "xp": 80, "type": "explore" },
-        { "id": "q_craft_resina", "title": "Descubre Resina Encantada", "description": "Karen de Resina Encantada crea artesanías mágicas en resina desde Quepe. ¡Admira su trabajo!", "xp": 80, "type": "explore" },
-        { "id": "q_craft_vichito", "title": "Visita Tejidos Vichito", "description": "Alexandra de Tejidos Vichito tiene amigurumis adorables. ¡Elige tu favorito!", "xp": 80, "type": "explore" },
-        { "id": "q_craft_magdaline", "title": "Explora Magdaline Store", "description": "Daniela de Magdaline Store tiene artesanías y amigurumis. ¡Conoce su inspiración!", "xp": 80, "type": "explore" }
+        { "id": "q_craft_poke_buy", "title": "Poke Crochett - Adquisición Amigurumi", "description": "Compra un amigurumi tejido de tu Pokémon favorito en Poke Crochett de Thanya.", "xp": 100, "type": "explore" },
+        { "id": "q_craft_poke_social", "title": "Poke Crochett - Redes Sociales", "description": "Síguelos en Instagram y comparte una historia etiquetándolos.", "xp": 80, "type": "social" },
+
+        { "id": "q_craft_broderi_buy", "title": "Broderí - Compra de Tejidos", "description": "Compra un amigurumi o tejido artesanal hecho a mano en Broderí de Carolina.", "xp": 100, "type": "explore" },
+        { "id": "q_craft_broderi_social", "title": "Broderí - Redes Sociales", "description": "Síguelos en Instagram y sube una historia mostrando su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_craft_bechi_buy", "title": "Bechi's Crochet - Adquisición de Victoria", "description": "Compra un amigurumi a Bárbara de Bechi's Crochet (Victoria).", "xp": 100, "type": "explore" },
+        { "id": "q_craft_bechi_social", "title": "Bechi's Crochet - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de tu amigurumi.", "xp": 80, "type": "social" },
+
+        { "id": "q_craft_resina_buy", "title": "Resina Encantada - Compra de Accesorios", "description": "Compra un adorno de resina mágico a Karen de Resina Encantada.", "xp": 100, "type": "explore" },
+        { "id": "q_craft_resina_social", "title": "Resina Encantada - Redes Sociales", "description": "Síguelos en Instagram y sube una historia de su artesanía.", "xp": 80, "type": "social" },
+
+        { "id": "q_craft_vichito_buy", "title": "Tejidos Vichito - Adquisición Lanosa", "description": "Compra un amigurumi o llavero en Tejidos Vichito de Alexandra.", "xp": 100, "type": "explore" },
+        { "id": "q_craft_vichito_social", "title": "Tejidos Vichito - Redes Sociales", "description": "Síguelos en Instagram y sube una historia de su stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_craft_magdaline_buy", "title": "Magdaline Store - Compra de Crochet", "description": "Compra un amigurumi o llavero artesanal en Magdaline Store de Daniela.", "xp": 100, "type": "explore" },
+        { "id": "q_craft_magdaline_social", "title": "Magdaline Store - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de tu compra.", "xp": 80, "type": "social" }
       ]
     },
     {
       "id": "food",
       "icon": "☕",
-      "title": "Gastronomía & Café Geek",
-      "description": "Cafeterías temáticas, repostería geek, snacks japoneses y food trucks.",
+      "title": "Gastronomía & Café",
+      "description": "Cafeterías temáticas, repostería geek, snacks japoneses y comida en vivo.",
       "quests": [
-        { "id": "q_food_yuru", "title": "Tómate un Café Temático en Yuru Coffee", "description": "Valentina de Yuru Coffee sirve café y comida temática japonesa/coreana. ¡Pide la especialidad de la casa!", "xp": 100, "type": "action" },
-        { "id": "q_food_dulce_momento", "title": "Prueba los Dulces de Dulce Momento (Osorno)", "description": "Sonia trajo su cafetería/pastelería desde Osorno. ¡Prueba algo y di cuál es tu favorito!", "xp": 100, "type": "action" },
-        { "id": "q_food_dulcemente", "title": "Snacks Geek en Dulcemente Dulce (Valdivia)", "description": "Karla trajo snacks y repostería geek desde Valdivia. ¡Busca el snack más creativo!", "xp": 80, "type": "explore" },
-        { "id": "q_food_sweets", "title": "Descubre los Dulces de Sweets Katty", "description": "Katherinne tiene snacks y repostería geek. ¡Encuentra tu dulce favorito!", "xp": 80, "type": "explore" },
-        { "id": "q_food_choin", "title": "Prueba los Snacks de Choin Tuwe (Villarrica)", "description": "Soledad trae snacks y repostería geek desde Villarrica. ¡Descubre sus sabores!", "xp": 80, "type": "explore" },
-        { "id": "q_food_bajon", "title": "Come en El Bajón de las Carreras", "description": "Víctor tiene su food truck con comida convencional. ¡Date ese bajón geek necesario!", "xp": 80, "type": "action" },
-        { "id": "q_food_astra", "title": "Prueba la Comida de AStra3690", "description": "Cristian ofrece comida temática japonesa/coreana y artesanías. ¡Combo perfecto!", "xp": 80, "type": "explore" },
-        { "id": "q_food_photo", "title": "Tómate una Selfie con tu Comida Geek", "description": "Pide tu plato o bebida geek favorita y tómate una selfie estilizada. ¡Sube tu foto!", "xp": 60, "type": "social" }
+        { "id": "q_food_yuru_buy", "title": "Yuru Coffee - Adquisición de Café", "description": "Compra un café o waffle temático en Yuru Coffee de Valentina.", "xp": 100, "type": "action" },
+        { "id": "q_food_yuru_social", "title": "Yuru Coffee - Redes Sociales", "description": "Síguelos en Instagram y sube una historia del café o stand.", "xp": 80, "type": "social" },
+
+        { "id": "q_food_dulce_momento_buy", "title": "Dulce Momento - Compra Repostería Osorno", "description": "Compra un muffin o postre a Sonia de Dulce Momento, traído desde Osorno.", "xp": 100, "type": "action" },
+        { "id": "q_food_dulce_momento_social", "title": "Dulce Momento - Redes Sociales", "description": "Síguelos en Instagram y sube una historia con tu dulce favorito.", "xp": 80, "type": "social" },
+
+        { "id": "q_food_dulcemente_buy", "title": "Dulcemente Dulce - Compra Repostería Valdivia", "description": "Compra snacks o dulces geeks a Karla de Dulcemente Dulce (Valdivia).", "xp": 100, "type": "explore" },
+        { "id": "q_food_dulcemente_social", "title": "Dulcemente Dulce - Redes Sociales", "description": "Síguelos en Instagram y sube una historia del snack creativo.", "xp": 80, "type": "social" },
+
+        { "id": "q_food_sweets_buy", "title": "Sweets Katty - Compra de Postre Geek", "description": "Compra snacks o repostería en Sweets Katty de Katherinne.", "xp": 100, "type": "explore" },
+        { "id": "q_food_sweets_social", "title": "Sweets Katty - Redes Sociales", "description": "Síguelos en Instagram y sube una historia etiquetándolos.", "xp": 80, "type": "social" },
+
+        { "id": "q_food_choin_buy", "title": "Choin Tuwe - Adquisición de Repostería", "description": "Compra repostería o snacks a Soledad de Choin Tuwe (Villarrica).", "xp": 100, "type": "explore" },
+        { "id": "q_food_choin_social", "title": "Choin Tuwe - Redes Sociales", "description": "Síguelos en Instagram y publica una historia de tu snack.", "xp": 80, "type": "social" },
+
+        { "id": "q_food_bajon_buy", "title": "El Bajón de las Carreras - Adquisición de Bajón", "description": "Disfruta de completos, papas fritas o sándwiches en el food truck de Víctor.", "xp": 100, "type": "action" },
+        { "id": "q_food_bajon_social", "title": "El Bajón de las Carreras - Redes Sociales", "description": "Síguelos en redes sociales y sube una historia apoyando el bajón.", "xp": 80, "type": "social" },
+
+        { "id": "q_food_astra_buy", "title": "AStra3690 - Compra Asiática", "description": "Compra comida asiática o artesanías en AStra3690 de Cristian.", "xp": 100, "type": "explore" },
+        { "id": "q_food_astra_social", "title": "AStra3690 - Redes Sociales", "description": "Síguelos en Instagram y sube una historia con tu comida asiática.", "xp": 80, "type": "social" }
       ]
     }
   ]
