@@ -42,9 +42,8 @@ function handleLoginSubmit(e) {
 
     errorMsg.classList.add("d-none");
 
-    const masterPass = window.SUPABASE_CONFIG ? window.SUPABASE_CONFIG.ADMIN_MASTER_PASS : "temugeek2026admin";
-
-    if (pass === masterPass || pass === "temugeek2026admin" || pass === "temugeek2026") {
+    const ADMIN_MASTER_PASS = "temugeek2026admin";
+    if (pass === ADMIN_MASTER_PASS || pass === "temugeek2026admin" || pass === "temugeek2026") {
         sessionStorage.setItem("TG_COSPLAY_AUTH", "true");
         checkAuthSession();
     } else {
@@ -69,12 +68,11 @@ async function initApp() {
 
 async function initSupabaseClient() {
     const statusBadge = document.getElementById("db-status-badge");
-    try {
-        if (typeof getSupabaseClient === 'function') {
-            supabaseClient = await getSupabaseClient();
-        }
-    } catch (e) {
-        console.warn("Supabase init failed, falling back to local mode:", e);
+    // Initialize Supabase client via provided helper, fallback to null
+    if (typeof getSupabaseClient === "function") {
+        supabaseClient = await getSupabaseClient();
+    } else {
+        supabaseClient = null;
     }
 
     if (supabaseClient) {
@@ -89,6 +87,8 @@ async function initSupabaseClient() {
         statusBadge.style.backgroundColor = "rgba(255, 183, 0, 0.1)";
     }
 }
+}
+
 
 // ── FETCH & MERGE DATA ──
 async function fetchParticipants() {
