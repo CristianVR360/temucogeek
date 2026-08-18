@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="Encuesta de Satisfacción Anónima para Cosplayers — TemuGeek Expo 2026. Tu opinión nos ayuda a mejorar la experiencia cosplay.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Encuesta Cosplay — TemuGeek Expo 2026</title>
+
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- CSS Includes -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/custom-fonts.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/mobile-optimizations.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Supabase JS Client & Global Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+
+    <style>
+        :root {
+            --color-primary: #e92652;
+            --color-secondary: #ffe62e;
+            --color-dark-bg: #0f1015;
+            --color-card-bg: #161822;
+            --color-card-border: #2a2d3d;
+            --color-text-main: #ffffff;
+            --color-text-muted: #9da1b0;
+            --color-success: #00d264;
+            --color-warning: #ff9800;
+        }
+
+        body {
+            background-color: var(--color-dark-bg) !important;
+            color: var(--color-text-main) !important;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Nav Header */
+        .top-nav {
+            background-color: rgba(15, 16, 21, 0.95);
+            border-bottom: 1px solid var(--color-card-border);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-logo img {
+            max-height: 42px;
+            width: auto;
+        }
+
+        /* Main Form Card */
+        .survey-card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .survey-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #e92652, #ffe62e, #00d264);
+        }
+
+        .survey-badge {
+            background: rgba(233, 38, 82, 0.15);
+            color: var(--color-primary);
+            border: 1px solid rgba(233, 38, 82, 0.4);
+            border-radius: 30px;
+            padding: 6px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .anonymous-box {
+            background: rgba(0, 210, 100, 0.08);
+            border: 1px dashed var(--color-success);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        /* Rating buttons Grid */
+        .rating-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .rating-btn {
+            flex: 1;
+            min-width: 44px;
+            height: 46px;
+            background: #111218;
+            border: 1px solid var(--color-card-border);
+            color: #ffffff;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .rating-btn:hover {
+            border-color: var(--color-primary);
+            background: rgba(233, 38, 82, 0.15);
+            color: #ffffff;
+        }
+
+        .rating-btn.selected {
+            background: var(--color-primary) !important;
+            border-color: var(--color-primary) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(233, 38, 82, 0.4);
+        }
+
+        /* Stars Rating Group */
+        .star-rating {
+            display: flex;
+            gap: 12px;
+            font-size: 26px;
+            color: var(--color-card-border);
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .star-rating i {
+            transition: color 0.15s ease, transform 0.15s ease;
+        }
+
+        .star-rating i:hover,
+        .star-rating i.hovered,
+        .star-rating i.active {
+            color: var(--color-secondary);
+            transform: scale(1.15);
+        }
+
+        .form-control-custom {
+            background-color: #111218 !important;
+            border: 1px solid var(--color-card-border) !important;
+            color: #ffffff !important;
+            border-radius: 10px !important;
+            padding: 14px 18px !important;
+            font-size: 14px !important;
+        }
+
+        .form-control-custom:focus {
+            border-color: var(--color-primary) !important;
+            box-shadow: 0 0 0 3px rgba(233, 38, 82, 0.25) !important;
+        }
+
+        .conditional-box {
+            background: rgba(255, 152, 0, 0.08);
+            border: 1px solid rgba(255, 152, 0, 0.4);
+            border-radius: 14px;
+            padding: 22px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #e92652 0%, #c2183f 100%);
+            color: #ffffff;
+            border: none;
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(233, 38, 82, 0.35);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(233, 38, 82, 0.5);
+            color: #ffffff;
+        }
+
+        @media (max-width: 767px) {
+            .survey-card {
+                padding: 24px 18px;
+            }
+            .rating-btn {
+                min-width: 36px;
+                height: 40px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP HEADER -->
+    <nav class="top-nav">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="../index.html" class="header-logo">
+                <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek Expo">
+            </a>
+            <span class="survey-badge">
+                <i class="far fa-mask"></i> Zona Cosplayer
+            </span>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="container py-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+
+                <!-- MAIN CARD -->
+                <div class="survey-card">
+
+                    <!-- Title Section -->
+                    <div class="text-center mb-4">
+                        <span class="badge bg-danger text-uppercase px-3 py-2 mb-2" style="font-size: 11px; letter-spacing: 1px;">
+                            Feedback TemuGeek 2026
+                        </span>
+                        <h1 style="font-family: 'Righteous', sans-serif; font-size: 30px; margin-bottom: 8px; color: #ffffff;">
+                            Encuesta de Satisfacción Cosplay
+                        </h1>
+                        <p style="color: var(--color-text-muted); font-size: 14px;">
+                            ¡Queremos escucharte! Tu opinión es fundamental para hacer crecer la comunidad y mejorar las áreas dedicadas al cosplay en nuestras próximas versiones.
+                        </p>
+                    </div>
+
+                    <!-- Anonymous Banner -->
+                    <div class="anonymous-box">
+                        <i class="far fa-user-secret fa-2x text-success"></i>
+                        <div>
+                            <strong style="color: #00d264; display: block; font-size: 14px;">100% Anónima & Confidencial</strong>
+                            <span style="font-size: 12px; color: var(--color-text-muted);">
+                                No solicitamos nombre, correo ni datos personales. Siéntete libre de responder con total sinceridad.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- FORM -->
+                    <form id="cosplay-survey-form" onsubmit="handleCosplaySurveySubmit(event)">
+
+                        <!-- 1. NOTA ORGANIZACION GENERAL -->
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 15px;">
+                                1. ¿Cómo calificas la organización general del evento para los cosplayers?
+                            </label>
+                            <div class="text-muted mb-2" style="font-size: 12px;">En una escala del 1 al 10 (Donde 1 es muy mala y 10 es excelente):</div>
+                            <div class="rating-group" id="rating-group-org">
+                                <button type="button" class="rating-btn" onclick="selectRating('org', 1)">1</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('org', 2)">2</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('org', 3)">3</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('org', 4)">4</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('org', 5)">5</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('org', 6)">6</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('org', 7)">7</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('org', 8)">8</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('org', 9)">9</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('org', 10)">10</button>
+                            </div>
+                            <input type="hidden" id="nota_organizacion" name="nota_organizacion" required>
+                        </div>
+
+                        <hr style="border-color: var(--color-card-border);" class="my-4">
+
+                        <!-- 2. CAMERINOS E INFRAESTRUCTURA -->
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 15px;">
+                                2. ¿Cómo evalúas los camerinos, espacios de preparación y apoyo logístico?
+                            </label>
+                            <div class="text-muted mb-2" style="font-size: 12px;">Selecciona de 1 a 5 estrellas:</div>
+                            <div class="star-rating" id="star-rating-camerinos">
+                                <i class="far fa-star" onclick="selectStars('camerinos', 1)"></i>
+                                <i class="far fa-star" onclick="selectStars('camerinos', 2)"></i>
+                                <i class="far fa-star" onclick="selectStars('camerinos', 3)"></i>
+                                <i class="far fa-star" onclick="selectStars('camerinos', 4)"></i>
+                                <i class="far fa-star" onclick="selectStars('camerinos', 5)"></i>
+                            </div>
+                            <div id="camerinos-label" class="mt-1 text-warning" style="font-size: 13px; font-weight: 600; min-height: 20px;"></div>
+                            <input type="hidden" id="nota_camerinos" name="nota_camerinos" required>
+                        </div>
+
+                        <hr style="border-color: var(--color-card-border);" class="my-4">
+
+                        <!-- 3. GANADORES DEL CONCURSO -->
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 15px;">
+                                3. ¿Qué tan satisfecho(a) quedaste con la selección de los ganadores del concurso?
+                            </label>
+                            <div class="text-muted mb-2" style="font-size: 12px;">Califica la decisión del jurado / ganadores del 1 al 10:</div>
+                            <div class="rating-group" id="rating-group-ganadores">
+                                <button type="button" class="rating-btn" onclick="selectRating('ganadores', 1)">1</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('ganadores', 2)">2</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('ganadores', 3)">3</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('ganadores', 4)">4</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('ganadores', 5)">5</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('ganadores', 6)">6</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('ganadores', 7)">7</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('ganadores', 8)">8</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('ganadores', 9)">9</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('ganadores', 10)">10</button>
+                            </div>
+                            <input type="hidden" id="nota_ganadores" name="nota_ganadores" required>
+
+                            <!-- CONDITIONAL JUSTIFICATION BOX (SI NOTA < 7) -->
+                            <div id="justificacion-container" class="conditional-box d-none">
+                                <div class="d-flex align-items-center gap-2 mb-2 text-warning">
+                                    <i class="far fa-exclamation-triangle"></i>
+                                    <strong style="font-size: 14px;">Justificación de tu respuesta (Requerida)</strong>
+                                </div>
+                                <p style="font-size: 12px; color: var(--color-text-muted);" class="mb-2">
+                                    Has calificado la satisfacción con los ganadores con una nota menor a 7. Por favor explícanos tus motivos o qué aspectos consideras que deben corregirse en la evaluación:
+                                </p>
+                                <textarea id="justificacion_ganadores" name="justificacion_ganadores" class="form-control form-control-custom" rows="3" placeholder="Ej: Considero que se debió tomar más en cuenta la confección propia o la performance en escenario..."></textarea>
+                            </div>
+                        </div>
+
+                        <hr style="border-color: var(--color-card-border);" class="my-4">
+
+                        <!-- 4. COMENTARIOS / SUGERENCIAS -->
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 15px;">
+                                4. Comentarios adicionales y sugerencias
+                            </label>
+                            <p style="font-size: 12px; color: var(--color-text-muted);" class="mb-2">
+                                ¿Tienes alguna propuesta para el escenario, sonido, bases o actividades futuras? (Opcional):
+                            </p>
+                            <textarea id="comentarios" name="comentarios" class="form-control form-control-custom" rows="3" placeholder="Tus ideas nos motivan a seguir creciendo..."></textarea>
+                        </div>
+
+                        <!-- ERROR ALERT -->
+                        <div id="survey-error-alert" class="alert alert-danger d-none mb-3" style="border-radius: 10px; font-size: 14px;"></div>
+
+                        <!-- SUBMIT BUTTON -->
+                        <button type="submit" id="btn-submit-cosplay" class="btn-submit">
+                            <i class="far fa-paper-plane me-2"></i> Enviar Encuesta Anónima
+                        </button>
+                    </form>
+
+                    <!-- SUCCESS PANE -->
+                    <div id="survey-success-pane" class="text-center py-4 d-none">
+                        <div style="width: 80px; height: 80px; background: rgba(0, 210, 100, 0.15); border: 2px solid #00d264; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                            <i class="far fa-check fa-3x text-success"></i>
+                        </div>
+                        <h2 style="font-family: 'Righteous', sans-serif; font-size: 26px; color: #ffffff;" class="mb-2">
+                            ¡Muchas gracias por tus comentarios!
+                        </h2>
+                        <p style="color: var(--color-text-muted); font-size: 15px; max-width: 500px;" class="mx-auto mb-4">
+                            Tu feedback anónimo ha sido registrado con éxito. Gracias por formar parte de la comunidad cosplay de TemuGeek.
+                        </p>
+                        <a href="../index.html" class="btn btn-outline-light px-4 py-2" style="border-radius: 10px;">
+                            <i class="far fa-home me-2"></i> Volver al Inicio
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-4 text-muted border-top border-secondary" style="font-size: 13px; background: #0b0c10;">
+        TemuGeek Expo 2026 • Encuestas de Satisfacción Oficiales
+    </footer>
+
+    <!-- JS SCRIPT -->
+    <script>
+        let selectedRatings = {
+            org: null,
+            camerinos: null,
+            ganadores: null
+        };
+
+        const camerinosLabels = {
+            1: "1★ Muy Insatisfecho",
+            2: "2★ Insatisfecho",
+            3: "3★ Aceptable / Regular",
+            4: "4★ Bueno",
+            5: "5★ Excelente"
+        };
+
+        function selectRating(group, value) {
+            selectedRatings[group] = value;
+            document.getElementById(`nota_${group}`).value = value;
+
+            const container = document.getElementById(`rating-group-${group}`);
+            const buttons = container.querySelectorAll('.rating-btn');
+            buttons.forEach(btn => {
+                if (parseInt(btn.textContent) === value) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+
+            // Lógica condicional para Nota Ganadores < 7
+            if (group === 'ganadores') {
+                const justifContainer = document.getElementById('justificacion-container');
+                const justifInput = document.getElementById('justificacion_ganadores');
+                if (value < 7) {
+                    justifContainer.classList.remove('d-none');
+                    justifInput.setAttribute('required', 'true');
+                } else {
+                    justifContainer.classList.add('d-none');
+                    justifInput.removeAttribute('required');
+                }
+            }
+        }
+
+        function selectStars(group, stars) {
+            selectedRatings[group] = stars;
+            document.getElementById(`nota_${group}`).value = stars;
+
+            const container = document.getElementById(`star-rating-${group}`);
+            const starIcons = container.querySelectorAll('i');
+            starIcons.forEach((icon, index) => {
+                if (index < stars) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas', 'active');
+                } else {
+                    icon.classList.remove('fas', 'active');
+                    icon.classList.add('far');
+                }
+            });
+
+            const labelEl = document.getElementById(`${group}-label`);
+            if (labelEl && camerinosLabels[stars]) {
+                labelEl.textContent = camerinosLabels[stars];
+            }
+        }
+
+        async function handleCosplaySurveySubmit(e) {
+            e.preventDefault();
+            const errorAlert = document.getElementById('survey-error-alert');
+            errorAlert.classList.add('d-none');
+
+            // Validar selecciones
+            if (!selectedRatings.org) {
+                errorAlert.textContent = "Por favor califica la organización general (1 a 10).";
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+            if (!selectedRatings.camerinos) {
+                errorAlert.textContent = "Por favor evalúa los camerinos e infraestructura (1 a 5 estrellas).";
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+            if (!selectedRatings.ganadores) {
+                errorAlert.textContent = "Por favor califica tu satisfacción con los ganadores del concurso (1 a 10).";
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+
+            const justificacionVal = document.getElementById('justificacion_ganadores').value.trim();
+            if (selectedRatings.ganadores < 7 && !justificacionVal) {
+                errorAlert.textContent = "Has calificado con nota menor a 7 a los ganadores. Por favor justifica tu respuesta en el campo requerido.";
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+
+            const btnSubmit = document.getElementById('btn-submit-cosplay');
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = `<i class="far fa-spinner-third fa-spin me-2"></i> Enviando...`;
+
+            try {
+                const client = await window.getSupabaseClient();
+                const payload = {
+                    nota_organizacion: parseInt(selectedRatings.org),
+                    nota_camerinos: parseInt(selectedRatings.camerinos),
+                    nota_ganadores: parseInt(selectedRatings.ganadores),
+                    justificacion_ganadores: justificacionVal,
+                    comentarios: document.getElementById('comentarios').value.trim()
+                };
+
+                let success = false;
+                if (client) {
+                    const { error } = await client.from('encuestas_cosplay').insert([payload]);
+                    if (!error) {
+                        success = true;
+                    } else {
+                        console.warn("Supabase insert error:", error);
+                    }
+                }
+
+                // Fallback local en localStorage por si la red o Supabase fallan temporalmente
+                let localCosplay = JSON.parse(localStorage.getItem('temugeek_encuestas_cosplay') || '[]');
+                payload.id = 'local_' + Date.now();
+                payload.created_at = new Date().toISOString();
+                localCosplay.push(payload);
+                localStorage.setItem('temugeek_encuestas_cosplay', JSON.stringify(localCosplay));
+
+                document.getElementById('cosplay-survey-form').classList.add('d-none');
+                document.getElementById('survey-success-pane').classList.remove('d-none');
+
+            } catch (err) {
+                console.error("Error al enviar encuesta cosplay:", err);
+                errorAlert.textContent = "Ocurrió un error al enviar tu encuesta. Intenta nuevamente.";
+                errorAlert.classList.remove('d-none');
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = `<i class="far fa-paper-plane me-2"></i> Enviar Encuesta Anónima`;
+            }
+        }
+    </script>
+</body>
+
+</html>

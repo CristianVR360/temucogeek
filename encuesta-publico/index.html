@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="Encuesta de Satisfacción Público General — TemuGeek Expo 2026. ¡Responde la encuesta y recibe una entrada GRATIS para la próxima versión de TemuGeek!">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Encuesta Público General & Entrada Gratis — TemuGeek Expo 2026</title>
+
+    <link rel="shortcut icon" href="../assets/img/logo/favicon-color.png" type="image/png">
+
+    <!-- CSS Includes -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/custom-fonts.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/mobile-optimizations.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Supabase JS Client & Global Config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+
+    <style>
+        :root {
+            --color-primary: #e92652;
+            --color-secondary: #ffe62e;
+            --color-dark-bg: #0f1015;
+            --color-card-bg: #161822;
+            --color-card-border: #2a2d3d;
+            --color-text-main: #ffffff;
+            --color-text-muted: #9da1b0;
+            --color-success: #00d264;
+            --color-info: #00b0ff;
+        }
+
+        body {
+            background-color: var(--color-dark-bg) !important;
+            color: var(--color-text-main) !important;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Nav Header */
+        .top-nav {
+            background-color: rgba(15, 16, 21, 0.95);
+            border-bottom: 1px solid var(--color-card-border);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-logo img {
+            max-height: 42px;
+            width: auto;
+        }
+
+        /* Hero Banner Ticket Promo */
+        .ticket-reward-banner {
+            background: linear-gradient(135deg, rgba(255, 230, 46, 0.15) 0%, rgba(233, 38, 82, 0.15) 100%);
+            border: 2px dashed var(--color-secondary);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ticket-reward-badge {
+            background: var(--color-secondary);
+            color: #0f1015;
+            font-weight: 800;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        /* Main Form Card */
+        .survey-card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .survey-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #ffe62e, #e92652, #00d264);
+        }
+
+        /* Rating buttons Grid */
+        .rating-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .rating-btn {
+            flex: 1;
+            min-width: 44px;
+            height: 46px;
+            background: #111218;
+            border: 1px solid var(--color-card-border);
+            color: #ffffff;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .rating-btn:hover {
+            border-color: var(--color-secondary);
+            background: rgba(255, 230, 46, 0.15);
+            color: #ffffff;
+        }
+
+        .rating-btn.selected {
+            background: var(--color-secondary) !important;
+            border-color: var(--color-secondary) !important;
+            color: #0f1015 !important;
+            box-shadow: 0 4px 15px rgba(255, 230, 46, 0.4);
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 10px;
+            font-size: 24px;
+            color: var(--color-card-border);
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        .star-rating i {
+            transition: color 0.15s ease, transform 0.15s ease;
+        }
+
+        .star-rating i:hover,
+        .star-rating i.hovered,
+        .star-rating i.active {
+            color: var(--color-secondary);
+            transform: scale(1.15);
+        }
+
+        .form-control-custom {
+            background-color: #111218 !important;
+            border: 1px solid var(--color-card-border) !important;
+            color: #ffffff !important;
+            border-radius: 10px !important;
+            padding: 12px 16px !important;
+            font-size: 14px !important;
+        }
+
+        .form-control-custom:focus {
+            border-color: var(--color-secondary) !important;
+            box-shadow: 0 0 0 3px rgba(255, 230, 46, 0.25) !important;
+        }
+
+        /* Section Subheaders */
+        .section-subheader {
+            color: var(--color-secondary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 17px;
+            border-bottom: 1px solid var(--color-card-border);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Ley de Datos Box */
+        .data-privacy-box {
+            background: rgba(20, 25, 35, 0.8);
+            border: 1px solid rgba(0, 176, 255, 0.3);
+            border-radius: 14px;
+            padding: 20px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #ffe62e 0%, #ff9800 100%);
+            color: #0f1015;
+            border: none;
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 17px;
+            letter-spacing: 0.5px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(255, 230, 46, 0.35);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(255, 230, 46, 0.5);
+            color: #0f1015;
+        }
+
+        @media (max-width: 767px) {
+            .survey-card {
+                padding: 24px 18px;
+            }
+            .rating-btn {
+                min-width: 34px;
+                height: 38px;
+                font-size: 13px;
+            }
+            .star-rating {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP HEADER -->
+    <nav class="top-nav">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="../index.html" class="header-logo">
+                <img src="../assets/img/logo/logo-horizontal-blanco.png" alt="TemuGeek Expo">
+            </a>
+            <span class="badge bg-warning text-dark px-3 py-2 fw-bold" style="border-radius: 20px; font-size: 12px;">
+                <i class="far fa-ticket-alt me-1"></i> Promo Entrada Gratis 2027
+            </span>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="container py-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+
+                <!-- PROMO REWARD BANNER -->
+                <div class="ticket-reward-banner">
+                    <span class="ticket-reward-badge">
+                        <i class="far fa-gift me-1"></i> Beneficio Exclusivo Asistentes
+                    </span>
+                    <h2 style="font-family: 'Righteous', sans-serif; font-size: 24px; color: #ffffff; margin-bottom: 8px;">
+                        ¡Gana 1 Entrada Gratis para TemuGeek 2027!
+                    </h2>
+                    <p style="color: #e2e8f0; font-size: 14px; margin-bottom: 0;">
+                        Completa esta encuesta de satisfacción sobre tu experiencia en TemuGeek Expo 2026 y te enviaremos una entrada digital garantizada a tu correo electrónico para nuestra próxima edición.
+                    </p>
+                </div>
+
+                <!-- MAIN CARD -->
+                <div class="survey-card">
+
+                    <!-- Title Section -->
+                    <div class="text-center mb-4">
+                        <h1 style="font-family: 'Righteous', sans-serif; font-size: 28px; margin-bottom: 8px; color: #ffffff;">
+                            Encuesta de Experiencia del Público
+                        </h1>
+                        <p style="color: var(--color-text-muted); font-size: 14px;">
+                            Tu opinión honesta es la guía principal para mejorar las actividades, la seguridad, los contenidos y el confort en nuestras próximas versiones.
+                        </p>
+                    </div>
+
+                    <!-- FORM -->
+                    <form id="public-survey-form" onsubmit="handlePublicSurveySubmit(event)">
+
+                        <!-- SECCIÓN 1: DIFUSIÓN Y EXPECTATIVAS -->
+                        <h5 class="section-subheader">
+                            <i class="far fa-bullhorn me-2"></i> 1. ¿Cómo nos conociste?
+                        </h5>
+
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 14px;">
+                                ¿Por qué medio te enteraste de TemuGeek Expo 2026? *
+                            </label>
+                            <select id="medio_difusion" name="medio_difusion" class="form-select form-control-custom" required>
+                                <option value="" disabled selected>Selecciona una opción...</option>
+                                <option value="Instagram / Facebook oficial">Instagram / Facebook oficial</option>
+                                <option value="TikTok / Reels de conocidos">TikTok / Videos cortos en redes</option>
+                                <option value="Recomendación de amigos o familiares">Recomendación de un amigo o familiar</option>
+                                <option value="Afiches / Publicidad en la ciudad">Afiches o publicidad impresos en la ciudad</option>
+                                <option value="Prensa / Radio / Medios locales">Prensa, radio o sitios de noticias</option>
+                                <option value="Pasé caminando por el recinto">Pasé caminando por el recinto el día del evento</option>
+                            </select>
+                        </div>
+
+                        <!-- SECCIÓN 2: EVALUACIÓN GLOBAL Y ZONAS -->
+                        <h5 class="section-subheader">
+                            <i class="far fa-star me-2"></i> 2. Evaluación General del Evento
+                        </h5>
+
+                        <!-- Nota General (1 a 10) -->
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 14px;">
+                                Del 1 al 10, ¿Cómo calificas tu experiencia general en TemuGeek 2026? *
+                            </label>
+                            <div class="rating-group" id="rating-group-general">
+                                <button type="button" class="rating-btn" onclick="selectRating('general', 1)">1</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('general', 2)">2</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('general', 3)">3</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('general', 4)">4</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('general', 5)">5</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('general', 6)">6</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('general', 7)">7</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('general', 8)">8</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('general', 9)">9</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('general', 10)">10</button>
+                            </div>
+                            <input type="hidden" id="nota_general" name="nota_general" required>
+                        </div>
+
+                        <!-- Zona Favorita -->
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 14px;">
+                                ¿Cuál fue tu zona o actividad favorita del evento? *
+                            </label>
+                            <select id="zona_favorita" name="zona_favorita" class="form-select form-control-custom" required>
+                                <option value="Concurso & Zona Cosplay">🎭 Concurso & Pasarela Cosplay</option>
+                                <option value="Torneos Gamer & Esports">🎮 Torneos Gamer & Esports</option>
+                                <option value="Stands de Tiendas e Ilustradores">🎨 Artist Alley & Stands de Tiendas</option>
+                                <option value="Minijuegos Arcade & Retro">🕹️ Minijuegos Arcade & Consolas Retro</option>
+                                <option value="Shows en Escenario & Música">🎤 Shows en Escenario, Banda & Anima</option>
+                                <option value="Comida & Zonas de Descanso">🍔 Patio de Comida & Zonas de Descanso</option>
+                            </select>
+                        </div>
+
+                        <!-- NPS Recomendación (1 al 10) -->
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 14px;">
+                                Del 1 al 10, ¿Qué tan probable es que recomiendes asistir a TemuGeek a un amigo o familiar? *
+                            </label>
+                            <div class="rating-group" id="rating-group-nps">
+                                <button type="button" class="rating-btn" onclick="selectRating('nps', 1)">1</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('nps', 2)">2</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('nps', 3)">3</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('nps', 4)">4</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('nps', 5)">5</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('nps', 6)">6</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('nps', 7)">7</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('nps', 8)">8</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('nps', 9)">9</button>
+                                <button type="button" class="rating-btn" onclick="selectRating('nps', 10)">10</button>
+                            </div>
+                            <input type="hidden" id="nps_recomendacion" name="nps_recomendacion" required>
+                        </div>
+
+                        <!-- SECCIÓN 3: PUNTOS CLAVE DE MEJORA (LOGÍSTICA Y COMODIDAD) -->
+                        <h5 class="section-subheader">
+                            <i class="far fa-sliders-h me-2"></i> 3. Evaluación Detallada por Servicios (1 a 5 ★)
+                        </h5>
+
+                        <div class="row g-3 mb-4">
+                            <!-- Instalaciones y Sonido -->
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">A) Calidad de Sonido, Iluminación y Escenario *</label>
+                                <div class="star-rating" id="star-rating-instalaciones">
+                                    <i class="far fa-star" onclick="selectStars('instalaciones', 1)"></i>
+                                    <i class="far fa-star" onclick="selectStars('instalaciones', 2)"></i>
+                                    <i class="far fa-star" onclick="selectStars('instalaciones', 3)"></i>
+                                    <i class="far fa-star" onclick="selectStars('instalaciones', 4)"></i>
+                                    <i class="far fa-star" onclick="selectStars('instalaciones', 5)"></i>
+                                </div>
+                                <div id="instalaciones-label" class="mt-1 text-warning" style="font-size: 12px; min-height: 18px;"></div>
+                                <input type="hidden" id="nota_instalaciones" name="nota_instalaciones" required>
+                            </div>
+
+                            <!-- Ingreso y Filas -->
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">B) Rapidez en el Ingreso y Control de Filas *</label>
+                                <div class="star-rating" id="star-rating-ingreso">
+                                    <i class="far fa-star" onclick="selectStars('ingreso', 1)"></i>
+                                    <i class="far fa-star" onclick="selectStars('ingreso', 2)"></i>
+                                    <i class="far fa-star" onclick="selectStars('ingreso', 3)"></i>
+                                    <i class="far fa-star" onclick="selectStars('ingreso', 4)"></i>
+                                    <i class="far fa-star" onclick="selectStars('ingreso', 5)"></i>
+                                </div>
+                                <div id="ingreso-label" class="mt-1 text-warning" style="font-size: 12px; min-height: 18px;"></div>
+                                <input type="hidden" id="nota_ingreso" name="nota_ingreso" required>
+                            </div>
+
+                            <!-- Oferta Gastronómica -->
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">C) Oferta de Comida, Bebidas y Precios *</label>
+                                <div class="star-rating" id="star-rating-comida">
+                                    <i class="far fa-star" onclick="selectStars('comida', 1)"></i>
+                                    <i class="far fa-star" onclick="selectStars('comida', 2)"></i>
+                                    <i class="far fa-star" onclick="selectStars('comida', 3)"></i>
+                                    <i class="far fa-star" onclick="selectStars('comida', 4)"></i>
+                                    <i class="far fa-star" onclick="selectStars('comida', 5)"></i>
+                                </div>
+                                <div id="comida-label" class="mt-1 text-warning" style="font-size: 12px; min-height: 18px;"></div>
+                                <input type="hidden" id="nota_comida" name="nota_comida" required>
+                            </div>
+
+                            <!-- Limpieza y Baños -->
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">D) Limpieza, Baños y Espacio de Transición *</label>
+                                <div class="star-rating" id="star-rating-limpieza">
+                                    <i class="far fa-star" onclick="selectStars('limpieza', 1)"></i>
+                                    <i class="far fa-star" onclick="selectStars('limpieza', 2)"></i>
+                                    <i class="far fa-star" onclick="selectStars('limpieza', 3)"></i>
+                                    <i class="far fa-star" onclick="selectStars('limpieza', 4)"></i>
+                                    <i class="far fa-star" onclick="selectStars('limpieza', 5)"></i>
+                                </div>
+                                <div id="limpieza-label" class="mt-1 text-warning" style="font-size: 12px; min-height: 18px;"></div>
+                                <input type="hidden" id="nota_limpieza" name="nota_limpieza" required>
+                            </div>
+
+                            <!-- Variedad de Tiendas -->
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">E) Variedad de Productos en Tiendas & Ilustradores *</label>
+                                <div class="star-rating" id="star-rating-tiendas">
+                                    <i class="far fa-star" onclick="selectStars('tiendas', 1)"></i>
+                                    <i class="far fa-star" onclick="selectStars('tiendas', 2)"></i>
+                                    <i class="far fa-star" onclick="selectStars('tiendas', 3)"></i>
+                                    <i class="far fa-star" onclick="selectStars('tiendas', 4)"></i>
+                                    <i class="far fa-star" onclick="selectStars('tiendas', 5)"></i>
+                                </div>
+                                <div id="tiendas-label" class="mt-1 text-warning" style="font-size: 12px; min-height: 18px;"></div>
+                                <input type="hidden" id="nota_tiendas" name="nota_tiendas" required>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 4: PRECIOS Y ASPECTOS CLAVE DE MEJORA -->
+                        <h5 class="section-subheader">
+                            <i class="far fa-lightbulb me-2"></i> 4. Feedback Comercial y de Futuro
+                        </h5>
+
+                        <!-- Precio Calidad -->
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 14px;">
+                                ¿Qué te pareció la relación Precio / Calidad general del evento? *
+                            </label>
+                            <select id="precio_calidad" name="precio_calidad" class="form-select form-control-custom" required>
+                                <option value="Muy conveniente / Excelente valor por el precio">Muy conveniente / Excelente valor por el precio</option>
+                                <option value="Adecuado / Justo" selected>Adecuado / Justo</option>
+                                <option value="Algo elevado para lo ofrecido">Algo elevado para lo ofrecido</option>
+                                <option value="Muy caro">Muy caro</option>
+                            </select>
+                        </div>
+
+                        <!-- Aspecto Prioritario a Mejorar -->
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 14px;">
+                                En tu opinión, ¿Cuál es el punto prioritario a mejorar en TemuGeek 2027? *
+                            </label>
+                            <select id="aspecto_mejora" name="aspecto_mejora" class="form-select form-control-custom" required>
+                                <option value="Ampliar el espacio del recinto / Mayor comodidad">Espacio del recinto (Buscar un lugar más amplio)</option>
+                                <option value="Mejorar la climatización, sombra y ventilación">Climatización, aire acondicionado y sombra</option>
+                                <option value="Mayor variedad de tiendas e ilustradores">Mayor cantidad y variedad de Tiendas & Ilustradores</option>
+                                <option value="Aumentar estaciones de juego y torneos gamer">Más estaciones gamer, consolas y torneos</option>
+                                <option value="Mejorar sonido e infraestructura de escenario">Sonido, luces y pantalla del escenario principal</option>
+                                <option value="Agilizar el acceso e ingreso de personas">Agilizar filas de entrada y boletería</option>
+                                <option value="Mejorar precios y variedad del patio de comidas">Más variedad y mejores precios en comida/bebidas</option>
+                            </select>
+                        </div>
+
+                        <!-- Sugerencias e Invitados -->
+                        <div class="mb-4">
+                            <label class="form-label font-weight-bold text-white mb-1" style="font-size: 14px;">
+                                ¿Qué cosplayers, ilustradores, bandas o invitados te gustaría ver en la próxima edición?
+                            </label>
+                            <textarea id="sugerencias" name="sugerencias" class="form-control form-control-custom" rows="3" placeholder="Tus sugerencias para la próxima versión..."></textarea>
+                        </div>
+
+                        <hr style="border-color: var(--color-card-border);" class="my-4">
+
+                        <!-- SECCIÓN 5: DATOS PERSONALES PARA REGALO DE ENTRADA -->
+                        <h5 class="section-subheader">
+                            <i class="far fa-ticket-alt me-2"></i> 5. Datos para la Entrega de tu Entrada Gratis
+                        </h5>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">Nombre Completo *</label>
+                                <input type="text" id="nombre_completo" name="nombre_completo" class="form-control form-control-custom" placeholder="Ej: Camila Soto" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">RUT / DNI *</label>
+                                <input type="text" id="rut" name="rut" class="form-control form-control-custom" placeholder="12.345.678-K" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">Correo Electrónico (Para recibir el Ticket) *</label>
+                                <input type="email" id="email" name="email" class="form-control form-control-custom" placeholder="tu-email@ejemplo.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">Teléfono / WhatsApp *</label>
+                                <input type="tel" id="telefono" name="telefono" class="form-control form-control-custom" placeholder="+56 9 8765 4321" required>
+                            </div>
+                        </div>
+
+                        <!-- CUMPLIMIENTO LEY N° 21.716 DE PROTECCIÓN DE DATOS PERSONALES -->
+                        <div class="data-privacy-box">
+                            <div class="d-flex align-items-center gap-2 mb-2 text-info">
+                                <i class="far fa-shield-check fa-lg"></i>
+                                <strong style="font-size: 13px;">Protección de Datos Personales (Ley N° 21.716)</strong>
+                            </div>
+                            <p style="font-size: 12px; color: var(--color-text-muted); text-align: justify;" class="mb-3">
+                                En conformidad con la Ley N° 21.716 sobre Protección de Datos Personales en Chile, se le informa que los datos personales recopilados en este formulario (Nombre, RUT, Email y Teléfono) serán tratados de forma estrictamente confidencial y utilizados **exclusivamente** por la producción de TemuGeek Expo para la validación, emisión y entrega de su entrada gratuita para la edición 2027, así como el envío de comunicaciones oficiales del evento. Sus datos no serán transferidos a terceros.
+                            </p>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="acepta_ley_datos" required style="cursor: pointer; width: 18px; height: 18px; border-color: var(--color-info);">
+                                <label class="form-check-label text-white ms-2" for="acepta_ley_datos" style="font-size: 13px; cursor: pointer;">
+                                    Acepto explícitamente el tratamiento de mis datos personales conforme a la Ley N° 21.716 y autorizo el envío de mi entrada gratuita a mi correo electrónico. *
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- ERROR ALERT -->
+                        <div id="public-error-alert" class="alert alert-danger d-none mb-3" style="border-radius: 10px; font-size: 14px;"></div>
+
+                        <!-- SUBMIT BUTTON -->
+                        <button type="submit" id="btn-submit-public" class="btn-submit">
+                            <i class="far fa-gift me-2"></i> Enviar Encuesta y Solicitar Entrada Gratis
+                        </button>
+                    </form>
+
+                    <!-- SUCCESS PANE -->
+                    <div id="public-success-pane" class="text-center py-4 d-none">
+                        <div style="width: 80px; height: 80px; background: rgba(255, 230, 46, 0.15); border: 2px solid var(--color-secondary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                            <i class="far fa-ticket-alt fa-3x text-warning"></i>
+                        </div>
+                        <h2 style="font-family: 'Righteous', sans-serif; font-size: 26px; color: #ffffff;" class="mb-2">
+                            ¡Solicitud Registrada con Éxito!
+                        </h2>
+                        <p style="color: #e2e8f0; font-size: 15px; max-width: 520px;" class="mx-auto mb-3">
+                            ¡Gracias por tus valiosas opiniones! Tu feedback servirá directamente para planificar la mejor versión posible de TemuGeek 2027. Tu entrada digital ha sido reservada a nombre de <strong id="success-user-name" class="text-warning"></strong>.
+                        </p>
+                        <div class="alert alert-dark d-inline-block px-4 py-2 mb-4" style="border: 1px solid var(--color-card-border); border-radius: 10px; font-size: 13px;">
+                            <i class="far fa-envelope me-2 text-info"></i> Recibirás el código de confirmación en <span id="success-user-email" class="fw-bold text-white"></span>.
+                        </div>
+                        <br>
+                        <a href="../index.html" class="btn btn-outline-light px-4 py-2" style="border-radius: 10px;">
+                            <i class="far fa-home me-2"></i> Volver al Inicio
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-4 text-muted border-top border-secondary" style="font-size: 13px; background: #0b0c10;">
+        TemuGeek Expo 2026 • Sistema Oficial de Encuestas y Beneficios
+    </footer>
+
+    <!-- JS SCRIPT -->
+    <script>
+        let selectedRatings = {
+            general: null,
+            nps: null,
+            instalaciones: null,
+            ingreso: null,
+            comida: null,
+            limpieza: null,
+            tiendas: null
+        };
+
+        const ratingLabels = {
+            1: "1★ Muy Deficiente",
+            2: "2★ Insuficiente",
+            3: "3★ Regular",
+            4: "4★ Bueno",
+            5: "5★ Excelente"
+        };
+
+        function selectRating(group, value) {
+            selectedRatings[group] = value;
+            document.getElementById(`${group === 'general' ? 'nota_general' : group === 'nps' ? 'nps_recomendacion' : group}`).value = value;
+
+            const container = document.getElementById(`rating-group-${group}`);
+            const buttons = container.querySelectorAll('.rating-btn');
+            buttons.forEach(btn => {
+                if (parseInt(btn.textContent) === value) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+        }
+
+        function selectStars(group, stars) {
+            selectedRatings[group] = stars;
+            const hiddenInput = document.getElementById(`nota_${group}`);
+            if (hiddenInput) hiddenInput.value = stars;
+
+            const container = document.getElementById(`star-rating-${group}`);
+            if (container) {
+                const starIcons = container.querySelectorAll('i');
+                starIcons.forEach((icon, index) => {
+                    if (index < stars) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas', 'active');
+                    } else {
+                        icon.classList.remove('fas', 'active');
+                        icon.classList.add('far');
+                    }
+                });
+            }
+
+            const labelEl = document.getElementById(`${group}-label`);
+            if (labelEl && ratingLabels[stars]) {
+                labelEl.textContent = ratingLabels[stars];
+            }
+        }
+
+        async function handlePublicSurveySubmit(e) {
+            e.preventDefault();
+            const errorAlert = document.getElementById('public-error-alert');
+            errorAlert.classList.add('d-none');
+
+            if (!selectedRatings.general) {
+                errorAlert.textContent = "Por favor califica tu experiencia general del 1 al 10.";
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+
+            if (!selectedRatings.nps) {
+                errorAlert.textContent = "Por favor responde qué tan probable es que recomiendes TemuGeek (1 al 10).";
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+
+            const starGroups = ['instalaciones', 'ingreso', 'comida', 'limpieza', 'tiendas'];
+            for (const group of starGroups) {
+                if (!selectedRatings[group]) {
+                    errorAlert.textContent = `Por favor asigna una calificación de 1 a 5 estrellas para: ${group.toUpperCase()}`;
+                    errorAlert.classList.remove('d-none');
+                    return;
+                }
+            }
+
+            const aceptaLey = document.getElementById('acepta_ley_datos').checked;
+            if (!aceptaLey) {
+                errorAlert.textContent = "Debes aceptar la casilla de tratamiento de datos personales (Ley N° 21.716) para recibir tu entrada gratis.";
+                errorAlert.classList.remove('d-none');
+                return;
+            }
+
+            const nombreCompleto = document.getElementById('nombre_completo').value.trim();
+            const rut = document.getElementById('rut').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+
+            const btnSubmit = document.getElementById('btn-submit-public');
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = `<i class="far fa-spinner-third fa-spin me-2"></i> Procesando Solicitud...`;
+
+            try {
+                const client = await window.getSupabaseClient();
+                const payload = {
+                    nombre_completo: nombreCompleto,
+                    rut: rut,
+                    email: email,
+                    telefono: telefono,
+                    medio_difusion: document.getElementById('medio_difusion').value,
+                    nota_general: parseInt(selectedRatings.general),
+                    zona_favorita: document.getElementById('zona_favorita').value,
+                    nps_recomendacion: parseInt(selectedRatings.nps),
+                    nota_instalaciones: parseInt(selectedRatings.instalaciones),
+                    nota_ingreso: parseInt(selectedRatings.ingreso),
+                    nota_comida: parseInt(selectedRatings.comida),
+                    nota_limpieza: parseInt(selectedRatings.limpieza),
+                    nota_tiendas: parseInt(selectedRatings.tiendas),
+                    precio_calidad: document.getElementById('precio_calidad').value,
+                    aspecto_mejora: document.getElementById('aspecto_mejora').value,
+                    sugerencias: document.getElementById('sugerencias').value.trim(),
+                    acepta_ley_datos: true,
+                    estado_entrada: 'Pendiente'
+                };
+
+                let success = false;
+                if (client) {
+                    const { error } = await client.from('encuestas_publico').insert([payload]);
+                    if (!error) {
+                        success = true;
+                    } else {
+                        console.warn("Supabase insert error:", error);
+                    }
+                }
+
+                // Fallback local en localStorage
+                let localPub = JSON.parse(localStorage.getItem('temugeek_encuestas_publico') || '[]');
+                payload.id = 'local_' + Date.now();
+                payload.created_at = new Date().toISOString();
+                localPub.push(payload);
+                localStorage.setItem('temugeek_encuestas_publico', JSON.stringify(localPub));
+
+                document.getElementById('success-user-name').textContent = nombreCompleto;
+                document.getElementById('success-user-email').textContent = email;
+
+                document.getElementById('public-survey-form').classList.add('d-none');
+                document.getElementById('public-success-pane').classList.remove('d-none');
+
+            } catch (err) {
+                console.error("Error al enviar encuesta público:", err);
+                errorAlert.textContent = "Ocurrió un error al procesar tu solicitud. Intenta nuevamente.";
+                errorAlert.classList.remove('d-none');
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = `<i class="far fa-gift me-2"></i> Enviar Encuesta y Solicitar Entrada Gratis`;
+            }
+        }
+    </script>
+</body>
+
+</html>

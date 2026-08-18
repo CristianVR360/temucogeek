@@ -448,6 +448,11 @@
                             <i class="far fa-trophy me-2"></i> 🎮 Torneos Gamer & Beyblade
                         </button>
                     </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="tab-encuestas-btn" onclick="switchMainTab('encuestas')" type="button">
+                            <i class="far fa-poll-h me-2"></i> 📊 Encuestas de Satisfacción
+                        </button>
+                    </li>
                 </ul>
             </div>
 
@@ -903,6 +908,96 @@
                 </div>
 
             </div> <!-- /#view-torneos -->
+
+            <!-- VIEW 4: ENCUESTAS DE SATISFACCIÓN -->
+            <div id="view-encuestas" class="d-none">
+
+                <!-- Page Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                    <div>
+                        <h1 style="font-family: 'Righteous', sans-serif; font-size: 28px; margin: 0; color: #ffffff;">
+                            <i class="far fa-poll-h me-2" style="color: var(--color-primary);"></i> Encuestas de Satisfacción TemuGeek
+                        </h1>
+                        <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px; margin-bottom: 0;">
+                            Monitoreo en tiempo real del feedback de Cosplayers (Anónimo), Expositores y Público General con gestión de entradas gratis.
+                        </p>
+                    </div>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="../encuesta-cosplay/index.html" target="_blank" class="btn btn-outline-danger btn-sm">
+                            <i class="far fa-external-link me-1"></i> Form Cosplay
+                        </a>
+                        <a href="../encuesta-expositores/index.html" target="_blank" class="btn btn-outline-info btn-sm">
+                            <i class="far fa-external-link me-1"></i> Form Expositores
+                        </a>
+                        <a href="../encuesta-publico/index.html" target="_blank" class="btn btn-outline-warning btn-sm" style="color: #ffe62e; border-color: #ffe62e;">
+                            <i class="far fa-external-link me-1"></i> Form Público (Entrada)
+                        </a>
+                        <button class="btn btn-outline-success btn-sm font-weight-bold" onclick="exportEncuestasToCSV()">
+                            <i class="far fa-file-excel me-1"></i> Exportar (CSV)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUB TABS DE ENCUESTAS -->
+                <div class="mb-4">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary active px-4 py-2 fw-bold" id="btn-enc-subtab-cosplay" onclick="switchEncuestasSubtab('cosplay')">
+                            <i class="far fa-mask me-2"></i> 🎭 Cosplay (Anónimo)
+                        </button>
+                        <button type="button" class="btn btn-outline-primary px-4 py-2 fw-bold" id="btn-enc-subtab-expositores" onclick="switchEncuestasSubtab('expositores')">
+                            <i class="far fa-store me-2"></i> 🏬 Expositores & Tiendas
+                        </button>
+                        <button type="button" class="btn btn-outline-primary px-4 py-2 fw-bold" id="btn-enc-subtab-publico" onclick="switchEncuestasSubtab('publico')">
+                            <i class="far fa-users me-2"></i> 👥 Público General (Entradas)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPI CARDS GRID ENCUESTAS -->
+                <div class="row g-3 mb-4" id="encuestas-kpis-container">
+                    <!-- Dynamic KPIs generated via JS -->
+                </div>
+
+                <!-- SEARCH & FILTER TOOLBAR -->
+                <div class="toolbar-card mb-4">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-secondary text-muted"><i class="far fa-search"></i></span>
+                                <input type="text" id="encuestas-search-input" class="form-control form-control-dash" placeholder="Buscar en encuestas..." oninput="filterEncuestasData()">
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="encuestas-filter-extra-container">
+                            <!-- Dynamic extra select if needed -->
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <span style="font-size: 13px; color: var(--text-muted);" id="encuestas-counter-text">Cargando encuestas...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLE CARD ENCUESTAS -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="table-custom" id="encuestas-table">
+                            <thead id="encuestas-table-head">
+                                <!-- Dynamic headers based on subtab -->
+                            </thead>
+                            <tbody id="encuestas-table-body">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- EMPTY STATE -->
+                    <div id="encuestas-empty-state" class="text-center p-5 d-none">
+                        <i class="far fa-inbox" style="font-size: 48px; color: var(--text-muted); opacity: 0.5;"></i>
+                        <h4 class="mt-3" style="color: #ffffff;">No se encontraron encuestas registradas</h4>
+                        <p style="color: var(--text-muted); font-size: 14px;">Las respuestas enviadas desde los formularios públicos aparecerán automáticamente aquí.</p>
+                    </div>
+                </div>
+
+            </div> <!-- /#view-encuestas -->
 
         </div>
 
@@ -1463,6 +1558,65 @@ CREATE POLICY "Permitir inserciones públicas nomina" ON public.nomina_municipal
 CREATE POLICY "Permitir lectura pública nomina" ON public.nomina_municipal FOR SELECT USING (true);
 CREATE POLICY "Permitir actualización pública nomina" ON public.nomina_municipal FOR UPDATE USING (true);
 CREATE POLICY "Permitir eliminación pública nomina" ON public.nomina_municipal FOR DELETE USING (true);
+
+-- ======================================================
+-- Tablas Oficiales para Encuestas de Satisfacción
+-- ======================================================
+CREATE TABLE IF NOT EXISTS public.encuestas_cosplay (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+  nota_organizacion INT CHECK (nota_organizacion BETWEEN 1 AND 10),
+  nota_camerinos INT CHECK (nota_camerinos BETWEEN 1 AND 5),
+  nota_ganadores INT CHECK (nota_ganadores BETWEEN 1 AND 10),
+  justificacion_ganadores TEXT DEFAULT '',
+  comentarios TEXT DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS public.encuestas_expositores (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+  nombre_stand TEXT NOT NULL,
+  nombre_contacto TEXT NOT NULL,
+  email TEXT NOT NULL,
+  telefono TEXT NOT NULL,
+  tipo_stand TEXT DEFAULT 'Comercial',
+  nota_logistica INT CHECK (nota_logistica BETWEEN 1 AND 5),
+  nota_publico INT CHECK (nota_publico BETWEEN 1 AND 5),
+  resultado_comercial TEXT DEFAULT 'Bueno',
+  interes_proxima_edicion TEXT DEFAULT 'Sí, definitivamente',
+  feedback_mejoras TEXT DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS public.encuestas_publico (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+  nombre_completo TEXT NOT NULL,
+  rut TEXT NOT NULL,
+  email TEXT NOT NULL,
+  telefono TEXT NOT NULL,
+  medio_difusion TEXT DEFAULT '',
+  nota_general INT CHECK (nota_general BETWEEN 1 AND 10),
+  zona_favorita TEXT DEFAULT 'Cosplay',
+  nps_recomendacion INT CHECK (nps_recomendacion BETWEEN 1 AND 10),
+  nota_instalaciones INT CHECK (nota_instalaciones BETWEEN 1 AND 5),
+  nota_ingreso INT CHECK (nota_ingreso BETWEEN 1 AND 5),
+  nota_comida INT CHECK (nota_comida BETWEEN 1 AND 5),
+  nota_limpieza INT CHECK (nota_limpieza BETWEEN 1 AND 5),
+  nota_tiendas INT CHECK (nota_tiendas BETWEEN 1 AND 5),
+  precio_calidad TEXT DEFAULT '',
+  aspecto_mejora TEXT DEFAULT '',
+  sugerencias TEXT DEFAULT '',
+  acepta_ley_datos BOOLEAN NOT NULL DEFAULT true,
+  estado_entrada TEXT DEFAULT 'Pendiente'
+);
+
+ALTER TABLE public.encuestas_cosplay ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.encuestas_expositores ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.encuestas_publico ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Permitir insercion cosplay" ON public.encuestas_cosplay FOR ALL USING (true);
+CREATE POLICY "Permitir insercion expositores" ON public.encuestas_expositores FOR ALL USING (true);
+CREATE POLICY "Permitir insercion publico" ON public.encuestas_publico FOR ALL USING (true);
 </pre>
                     <hr class="border-secondary my-3">
                     <h6 class="text-warning font-weight-bold">📧 Notificaciones Automáticas por Correo (Resend API & Supabase Webhooks)</h6>

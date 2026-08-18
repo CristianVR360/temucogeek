@@ -11,6 +11,11 @@
         let filteredTorneos = [];
         let selectedTorneoId = null;
 
+        let allEncuestasCosplay = [];
+        let allEncuestasExpositores = [];
+        let allEncuestasPublico = [];
+        let currentEncuestasSubtab = 'cosplay';
+
         let currentMainTab = 'postulaciones';
 
         // COPY TO CLIPBOARD HELPER
@@ -94,6 +99,7 @@
                 loadLeads();
                 loadNominaData();
                 loadTorneosData();
+                loadEncuestasData();
             } else {
                 document.getElementById("login-screen").classList.remove("d-none");
                 document.getElementById("dashboard-app").classList.add("d-none");
@@ -1181,16 +1187,20 @@
             const btnPost = document.getElementById("tab-postulaciones-btn");
             const btnNomina = document.getElementById("tab-nomina-btn");
             const btnTorneos = document.getElementById("tab-torneos-btn");
+            const btnEncuestas = document.getElementById("tab-encuestas-btn");
             const viewPost = document.getElementById("view-postulaciones");
             const viewNomina = document.getElementById("view-nomina");
             const viewTorneos = document.getElementById("view-torneos");
+            const viewEncuestas = document.getElementById("view-encuestas");
 
             btnPost?.classList.remove("active");
             btnNomina?.classList.remove("active");
             btnTorneos?.classList.remove("active");
+            btnEncuestas?.classList.remove("active");
             viewPost?.classList.add("d-none");
             viewNomina?.classList.add("d-none");
             viewTorneos?.classList.add("d-none");
+            viewEncuestas?.classList.add("d-none");
 
             if (tabName === 'nomina') {
                 btnNomina?.classList.add("active");
@@ -1200,6 +1210,10 @@
                 btnTorneos?.classList.add("active");
                 viewTorneos?.classList.remove("d-none");
                 applyTorneosFilters();
+            } else if (tabName === 'encuestas') {
+                btnEncuestas?.classList.add("active");
+                viewEncuestas?.classList.remove("d-none");
+                renderEncuestasView();
             } else {
                 btnPost?.classList.add("active");
                 viewPost?.classList.remove("d-none");
@@ -2104,4 +2118,533 @@ window.exportTorneosPDF = exportTorneosPDF;
             saveLocalNomina();
             applyNominaFilters();
             showCopyToast(`¡Eliminado!`, label);
+        }
+
+        // ==========================================
+        // SECCIÓN ENCUESTAS DE SATISFACCIÓN LOGIC
+        // ==========================================
+
+        async function loadEncuestasData() {
+            allEncuestasCosplay = [];
+            allEncuestasExpositores = [];
+            allEncuestasPublico = [];
+
+            if (supabaseClient) {
+                try {
+                    const [resCos, resExp, resPub] = await Promise.all([
+                        supabaseClient.from('encuestas_cosplay').select('*').order('created_at', { ascending: false }),
+                        supabaseClient.from('encuestas_expositores').select('*').order('created_at', { ascending: false }),
+                        supabaseClient.from('encuestas_publico').select('*').order('created_at', { ascending: false })
+                    ]);
+
+                    if (resCos.data && Array.isArray(resCos.data)) allEncuestasCosplay = resCos.data;
+                    if (resExp.data && Array.isArray(resExp.data)) allEncuestasExpositores = resExp.data;
+                    if (resPub.data && Array.isArray(resPub.data)) allEncuestasPublico = resPub.data;
+                } catch (err) {
+                    console.warn("Error al cargar encuestas desde Supabase:", err);
+                }
+            }
+
+            // Unir con fallbacks locales si existen
+            const localCos = JSON.parse(localStorage.getItem('temugeek_encuestas_cosplay') || '[]');
+            const localExp = JSON.parse(localStorage.getItem('temugeek_encuestas_expositores') || '[]');
+            const localPub = JSON.parse(localStorage.getItem('temugeek_encuestas_publico') || '[]');
+
+            localCos.forEach(item => {
+                if (!allEncuestasCosplay.some(c => c.id === item.id)) allEncuestasCosplay.push(item);
+            });
+            localExp.forEach(item => {
+                if (!allEncuestasExpositores.some(e => e.id === item.id)) allEncuestasExpositores.push(item);
+            });
+            localPub.forEach(item => {
+                if (!allEncuestasPublico.some(p => p.id === item.id)) allEncuestasPublico.push(item);
+            });
+
+            if (currentMainTab === 'encuestas') {
+                renderEncuestasView();
+            }
+        }
+
+        function switchEncuestasSubtab(subtab) {
+            currentEncuestasSubtab = subtab;
+
+            const btnCos = document.getElementById("btn-enc-subtab-cosplay");
+            const btnExp = document.getElementById("btn-enc-subtab-expositores");
+            const btnPub = document.getElementById("btn-enc-subtab-publico");
+
+            btnCos?.classList.remove("active", "btn-primary");
+            btnCos?.classList.add("btn-outline-primary");
+            btnExp?.classList.remove("active", "btn-primary");
+            btnExp?.classList.add("btn-outline-primary");
+            btnPub?.classList.remove("active", "btn-primary");
+            btnPub?.classList.add("btn-outline-primary");
+
+            if (subtab === 'expositores') {
+                btnExp?.classList.remove("btn-outline-primary");
+                btnExp?.classList.add("btn-primary", "active");
+            } else if (subtab === 'publico') {
+                btnPub?.classList.remove("btn-outline-primary");
+                btnPub?.classList.add("btn-primary", "active");
+            } else {
+                btnCos?.classList.remove("btn-outline-primary");
+                btnCos?.classList.add("btn-primary", "active");
+            }
+
+            renderEncuestasView();
+        }
+
+        function renderEncuestasView() {
+            renderEncuestasKPIs();
+            renderEncuestasTable();
+        }
+
+        function renderEncuestasKPIs() {
+            const container = document.getElementById("encuestas-kpis-container");
+            if (!container) return;
+
+            let html = "";
+
+            if (currentEncuestasSubtab === 'cosplay') {
+                const total = allEncuestasCosplay.length;
+                const avgOrg = total > 0 ? (allEncuestasCosplay.reduce((acc, c) => acc + (c.nota_organizacion || 0), 0) / total).toFixed(1) : "0.0";
+                const avgGan = total > 0 ? (allEncuestasCosplay.reduce((acc, c) => acc + (c.nota_ganadores || 0), 0) / total).toFixed(1) : "0.0";
+                const numLowGan = allEncuestasCosplay.filter(c => (c.nota_ganadores || 0) < 7).length;
+
+                html = `
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #e92652;">
+                            <div class="kpi-title">Total Respuestas Cosplay</div>
+                            <div class="kpi-value">${total}</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Encuestas anónimas</div>
+                            <i class="far fa-mask kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #00d264;">
+                            <div class="kpi-title">Nota Org. General</div>
+                            <div class="kpi-value" style="color: #00d264;">${avgOrg} <span style="font-size:16px;">/10</span></div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Promedio evaluación general</div>
+                            <i class="far fa-star kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #ffe62e;">
+                            <div class="kpi-title">Nota Ganadores Concurso</div>
+                            <div class="kpi-value" style="color: #ffe62e;">${avgGan} <span style="font-size:16px;">/10</span></div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Satisfacción con la premiación</div>
+                            <i class="far fa-trophy kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #ff9800;">
+                            <div class="kpi-title">Alertas Justificadas (< 7)</div>
+                            <div class="kpi-value" style="color: #ffb74d;">${numLowGan}</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Notas de ganadores con observaciones</div>
+                            <i class="far fa-exclamation-triangle kpi-icon"></i>
+                        </div>
+                    </div>
+                `;
+            } else if (currentEncuestasSubtab === 'expositores') {
+                const total = allEncuestasExpositores.length;
+                const avgLog = total > 0 ? (allEncuestasExpositores.reduce((acc, e) => acc + (e.nota_logistica || 0), 0) / total).toFixed(1) : "0.0";
+                const avgPub = total > 0 ? (allEncuestasExpositores.reduce((acc, e) => acc + (e.nota_publico || 0), 0) / total).toFixed(1) : "0.0";
+                const siInteres = allEncuestasExpositores.filter(e => (e.interes_proxima_edicion || '').includes('Sí')).length;
+
+                html = `
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #00b0ff;">
+                            <div class="kpi-title">Total Expositores</div>
+                            <div class="kpi-value" style="color: #00b0ff;">${total}</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Stands e ilustradores</div>
+                            <i class="far fa-store kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #00d264;">
+                            <div class="kpi-title">Nota Logística & Org</div>
+                            <div class="kpi-value" style="color: #00d264;">${avgLog} <span style="font-size:16px;">/5★</span></div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Carga, acreditación y soporte</div>
+                            <i class="far fa-truck-loading kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #ffe62e;">
+                            <div class="kpi-title">Flujo & Visibilidad</div>
+                            <div class="kpi-value" style="color: #ffe62e;">${avgPub} <span style="font-size:16px;">/5★</span></div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Evaluación de afluencia</div>
+                            <i class="far fa-users kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #ce93d8;">
+                            <div class="kpi-title">Interés 2027</div>
+                            <div class="kpi-value" style="color: #ce93d8;">${total > 0 ? Math.round((siInteres/total)*100) : 0}%</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">${siInteres} expositores confirmados</div>
+                            <i class="far fa-repeat kpi-icon"></i>
+                        </div>
+                    </div>
+                `;
+            } else if (currentEncuestasSubtab === 'publico') {
+                const total = allEncuestasPublico.length;
+                const avgGen = total > 0 ? (allEncuestasPublico.reduce((acc, p) => acc + (p.nota_general || 0), 0) / total).toFixed(1) : "0.0";
+                const avgNps = total > 0 ? (allEncuestasPublico.reduce((acc, p) => acc + (p.nps_recomendacion || p.nota_general || 0), 0) / total).toFixed(1) : "0.0";
+                const pendientes = allEncuestasPublico.filter(p => p.estado_entrada !== 'Entrada Enviada').length;
+                const enviadas = allEncuestasPublico.filter(p => p.estado_entrada === 'Entrada Enviada').length;
+
+                // Contar aspecto de mejora principal
+                const mejorasCount = {};
+                allEncuestasPublico.forEach(p => {
+                    if (p.aspecto_mejora) {
+                        mejorasCount[p.aspecto_mejora] = (mejorasCount[p.aspecto_mejora] || 0) + 1;
+                    }
+                });
+                let topMejora = "Ninguna";
+                let topCount = 0;
+                Object.keys(mejorasCount).forEach(k => {
+                    if (mejorasCount[k] > topCount) {
+                        topCount = mejorasCount[k];
+                        topMejora = k;
+                    }
+                });
+                if (topMejora.length > 25) topMejora = topMejora.substring(0, 25) + '...';
+
+                html = `
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #ffe62e;">
+                            <div class="kpi-title">Encuestas Público</div>
+                            <div class="kpi-value" style="color: #ffe62e;">${total}</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Asistentes registrados</div>
+                            <i class="far fa-ticket-alt kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #00d264;">
+                            <div class="kpi-title">Nota Experiencia</div>
+                            <div class="kpi-value" style="color: #00d264;">${avgGen} <span style="font-size:16px;">/10</span></div>
+                            <div style="font-size: 11px; color: var(--text-muted);">NPS Recomendación: ${avgNps}/10</div>
+                            <i class="far fa-heart kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #ff9800;">
+                            <div class="kpi-title">Entradas Pendientes</div>
+                            <div class="kpi-value" style="color: #ffb74d;">${pendientes}</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">${enviadas} enviadas correctamente</div>
+                            <i class="far fa-clock kpi-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card" style="--accent-color: #00b0ff;">
+                            <div class="kpi-title">Prioridad Mejora</div>
+                            <div class="kpi-value" style="color: #40c4ff; font-size:16px; margin-top:14px; font-weight:700;">${escapeHtml(topMejora)}</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Aspecto más votado a corregir</div>
+                            <i class="far fa-exclamation-circle kpi-icon"></i>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function filterEncuestasData() {
+            renderEncuestasTable();
+        }
+
+        function renderEncuestasTable() {
+            const tableHead = document.getElementById("encuestas-table-head");
+            const tableBody = document.getElementById("encuestas-table-body");
+            const emptyState = document.getElementById("encuestas-empty-state");
+            const counterText = document.getElementById("encuestas-counter-text");
+            const searchVal = (document.getElementById("encuestas-search-input")?.value || "").toLowerCase().trim();
+
+            if (!tableHead || !tableBody) return;
+
+            let items = [];
+            if (currentEncuestasSubtab === 'cosplay') {
+                items = allEncuestasCosplay.filter(c => {
+                    if (!searchVal) return true;
+                    return (c.justificacion_ganadores || '').toLowerCase().includes(searchVal) ||
+                           (c.comentarios || '').toLowerCase().includes(searchVal);
+                });
+
+                tableHead.innerHTML = `
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Nota Org.</th>
+                        <th>Camerinos</th>
+                        <th>Nota Ganadores</th>
+                        <th>Justificación (Si < 7)</th>
+                        <th>Comentarios / Sugerencias</th>
+                    </tr>
+                `;
+
+                if (items.length === 0) {
+                    tableBody.innerHTML = "";
+                    emptyState?.classList.remove("d-none");
+                } else {
+                    emptyState?.classList.add("d-none");
+                    tableBody.innerHTML = items.map(item => {
+                        const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('es-CL', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }) : '-';
+                        const isLow = (item.nota_ganadores || 0) < 7;
+                        const lowClass = isLow ? 'background: rgba(255,152,0,0.15); color: #ffe62e; font-weight: bold;' : '';
+
+                        return `
+                            <tr>
+                                <td><span style="font-size:12px; color:var(--text-muted);">${escapeHtml(dateStr)}</span></td>
+                                <td><span class="badge bg-primary" style="font-size:13px;">${item.nota_organizacion || '-'} / 10</span></td>
+                                <td><span class="badge bg-secondary" style="font-size:13px;">${item.nota_camerinos ? item.nota_camerinos + ' ★' : '-'}</span></td>
+                                <td><span class="badge" style="font-size:13px; ${lowClass}">${item.nota_ganadores || '-'} / 10</span></td>
+                                <td>
+                                    ${item.justificacion_ganadores ? `<div style="max-width:300px; font-size:13px; color:#ffb74d;" class="p-2 border border-warning rounded">${escapeHtml(item.justificacion_ganadores)}</div>` : '<span class="text-muted">-</span>'}
+                                </td>
+                                <td>
+                                    ${item.comentarios ? `<div style="max-width:300px; font-size:13px;">${escapeHtml(item.comentarios)}</div>` : '<span class="text-muted">-</span>'}
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+            } else if (currentEncuestasSubtab === 'expositores') {
+                items = allEncuestasExpositores.filter(e => {
+                    if (!searchVal) return true;
+                    return (e.nombre_stand || '').toLowerCase().includes(searchVal) ||
+                           (e.nombre_contacto || '').toLowerCase().includes(searchVal) ||
+                           (e.email || '').toLowerCase().includes(searchVal) ||
+                           (e.telefono || '').toLowerCase().includes(searchVal) ||
+                           (e.tipo_stand || '').toLowerCase().includes(searchVal);
+                });
+
+                tableHead.innerHTML = `
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Stand / Marca</th>
+                        <th>Contacto</th>
+                        <th>Tipo Stand</th>
+                        <th>Logística</th>
+                        <th>Público</th>
+                        <th>Resultado Comercial</th>
+                        <th>Interés 2027</th>
+                        <th>Feedback</th>
+                    </tr>
+                `;
+
+                if (items.length === 0) {
+                    tableBody.innerHTML = "";
+                    emptyState?.classList.remove("d-none");
+                } else {
+                    emptyState?.classList.add("d-none");
+                    tableBody.innerHTML = items.map(item => {
+                        const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('es-CL', { day:'2-digit', month:'2-digit' }) : '-';
+                        const cleanPhone = (item.telefono || '').replace(/\D/g, '');
+                        const waLink = cleanPhone ? `https://wa.me/${cleanPhone}` : '#';
+
+                        return `
+                            <tr>
+                                <td><span style="font-size:12px; color:var(--text-muted);">${escapeHtml(dateStr)}</span></td>
+                                <td>
+                                    <strong style="color: #ffffff;">${escapeHtml(item.nombre_stand || '-')}</strong>
+                                </td>
+                                <td>
+                                    <div>${escapeHtml(item.nombre_contacto || '-')}</div>
+                                    <div style="font-size:12px;" class="text-muted copyable" onclick="copyToClipboard('${escapeHtml(item.email)}', 'Correo')">${escapeHtml(item.email || '')}</div>
+                                    ${cleanPhone ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp py-0 px-2 mt-1" style="font-size:11px;"><i class="fab fa-whatsapp me-1"></i> ${escapeHtml(item.telefono)}</a>` : ''}
+                                </td>
+                                <td><span class="badge bg-dark border border-secondary" style="font-size:11px;">${escapeHtml(item.tipo_stand || 'Stand')}</span></td>
+                                <td><span class="badge bg-info text-dark" style="font-size:12px;">${item.nota_logistica ? item.nota_logistica + ' ★' : '-'}</span></td>
+                                <td><span class="badge bg-warning text-dark" style="font-size:12px;">${item.nota_publico ? item.nota_publico + ' ★' : '-'}</span></td>
+                                <td><span class="badge bg-secondary">${escapeHtml(item.resultado_comercial || '-')}</span></td>
+                                <td>
+                                    <span class="badge ${ (item.interes_proxima_edicion || '').includes('Sí') ? 'badge-pagado' : 'badge-pendiente' }">
+                                        ${escapeHtml(item.interes_proxima_edicion || '-')}
+                                    </span>
+                                </td>
+                                <td>
+                                    ${item.feedback_mejoras ? `<div style="max-width:250px; font-size:12px; color:var(--text-muted);">${escapeHtml(item.feedback_mejoras)}</div>` : '<span class="text-muted">-</span>'}
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+            } else if (currentEncuestasSubtab === 'publico') {
+                items = allEncuestasPublico.filter(p => {
+                    if (!searchVal) return true;
+                    return (p.nombre_completo || '').toLowerCase().includes(searchVal) ||
+                           (p.rut || '').toLowerCase().includes(searchVal) ||
+                           (p.email || '').toLowerCase().includes(searchVal) ||
+                           (p.telefono || '').toLowerCase().includes(searchVal) ||
+                           (p.zona_favorita || '').toLowerCase().includes(searchVal) ||
+                           (p.medio_difusion || '').toLowerCase().includes(searchVal) ||
+                           (p.aspecto_mejora || '').toLowerCase().includes(searchVal);
+                });
+
+                tableHead.innerHTML = `
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Nombre & RUT</th>
+                        <th>Contacto</th>
+                        <th>Medio Difusión</th>
+                        <th>Exp / NPS</th>
+                        <th>Zona Favorita</th>
+                        <th>Evaluaciones Clave (1-5★)</th>
+                        <th>Precio / Calidad</th>
+                        <th>Prioridad Mejora</th>
+                        <th>Estado Entrada</th>
+                        <th>Acción Ticket</th>
+                    </tr>
+                `;
+
+                if (items.length === 0) {
+                    tableBody.innerHTML = "";
+                    emptyState?.classList.remove("d-none");
+                } else {
+                    emptyState?.classList.add("d-none");
+                    tableBody.innerHTML = items.map(item => {
+                        const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('es-CL', { day:'2-digit', month:'2-digit' }) : '-';
+                        const cleanPhone = (item.telefono || '').replace(/\D/g, '');
+                        const waLink = cleanPhone ? `https://wa.me/${cleanPhone}` : '#';
+                        const isEnviado = item.estado_entrada === 'Entrada Enviada';
+                        const statusBadge = isEnviado ? '<span class="badge badge-pagado"><i class="far fa-check-circle me-1"></i> Entrada Enviada</span>' : '<span class="badge badge-pendiente"><i class="far fa-clock me-1"></i> Pendiente</span>';
+
+                        return `
+                            <tr>
+                                <td><span style="font-size:12px; color:var(--text-muted);">${escapeHtml(dateStr)}</span></td>
+                                <td>
+                                    <strong style="color: #ffffff;">${escapeHtml(item.nombre_completo || '-')}</strong>
+                                    <div style="font-size:12px; color:var(--color-secondary);" class="copyable" onclick="copyToClipboard('${escapeHtml(item.rut)}', 'RUT')">RUT: ${escapeHtml(item.rut || '-')}</div>
+                                </td>
+                                <td>
+                                    <div class="copyable text-info" style="font-size:13px;" onclick="copyToClipboard('${escapeHtml(item.email)}', 'Correo')">${escapeHtml(item.email || '')}</div>
+                                    ${cleanPhone ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp py-0 px-2 mt-1" style="font-size:11px;"><i class="fab fa-whatsapp me-1"></i> ${escapeHtml(item.telefono)}</a>` : ''}
+                                </td>
+                                <td><span class="badge bg-dark border border-secondary" style="font-size:11px;">${escapeHtml(item.medio_difusion || 'Redes Sociales')}</span></td>
+                                <td>
+                                    <div><span class="badge bg-primary" style="font-size:12px;">Exp: ${item.nota_general || '-'} / 10</span></div>
+                                    <div class="mt-1"><span class="badge bg-warning text-dark" style="font-size:11px;">NPS: ${item.nps_recomendacion || item.nota_general || '-'} / 10</span></div>
+                                </td>
+                                <td><span class="badge bg-dark border border-secondary" style="font-size:11px;">${escapeHtml(item.zona_favorita || '-')}</span></td>
+                                <td>
+                                    <div style="font-size:11px; line-height:1.4;">
+                                        <div>Escenario/Sonido: <strong class="text-warning">${item.nota_instalaciones || '-'}★</strong></div>
+                                        <div>Acceso/Filas: <strong class="text-warning">${item.nota_ingreso || '-'}★</strong></div>
+                                        <div>Comida: <strong class="text-warning">${item.nota_comida || '-'}★</strong></div>
+                                        <div>Limpieza: <strong class="text-warning">${item.nota_limpieza || '-'}★</strong></div>
+                                        <div>Tiendas: <strong class="text-warning">${item.nota_tiendas || '-'}★</strong></div>
+                                    </div>
+                                </td>
+                                <td><span class="badge bg-secondary" style="font-size:11px;">${escapeHtml(item.precio_calidad || 'Justo')}</span></td>
+                                <td><span class="badge bg-danger" style="font-size:11px; font-weight:normal;">${escapeHtml(item.aspecto_mejora || '-')}</span></td>
+                                <td>${statusBadge}</td>
+                                <td>
+                                    <button class="btn ${isEnviado ? 'btn-outline-secondary' : 'btn-success'} btn-sm fw-bold" style="font-size:12px;" onclick="toggleTicketStatus('${item.id}', '${item.estado_entrada}')">
+                                        ${isEnviado ? '<i class="far fa-undo me-1"></i> Revertir' : '<i class="far fa-ticket-alt me-1"></i> Marcar Enviada'}
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+            }
+
+            if (counterText) {
+                counterText.textContent = `Mostrando ${items.length} encuestas`;
+            }
+        }
+
+        async function toggleTicketStatus(id, currentStatus) {
+            const newStatus = currentStatus === 'Entrada Enviada' ? 'Pendiente' : 'Entrada Enviada';
+            
+            const item = allEncuestasPublico.find(p => p.id === id);
+            if (item) {
+                item.estado_entrada = newStatus;
+            }
+
+            if (supabaseClient && id && !id.startsWith('local_')) {
+                try {
+                    await supabaseClient.from('encuestas_publico').update({ estado_entrada: newStatus }).eq('id', id);
+                } catch (err) {
+                    console.warn("Error actualizando estado ticket:", err);
+                }
+            }
+
+            // Actualizar localStorage si es local
+            let localPub = JSON.parse(localStorage.getItem('temugeek_encuestas_publico') || '[]');
+            localPub.forEach(p => {
+                if (p.id === id) p.estado_entrada = newStatus;
+            });
+            localStorage.setItem('temugeek_encuestas_publico', JSON.stringify(localPub));
+
+            renderEncuestasView();
+            showCopyToast(`Estado de entrada actualizado a: ${newStatus}`, item ? item.nombre_completo : '');
+        }
+
+        function exportEncuestasToCSV() {
+            let filename = `encuestas_${currentEncuestasSubtab}_temugeek.csv`;
+            let rows = [];
+
+            if (currentEncuestasSubtab === 'cosplay') {
+                rows.push(["Fecha", "Nota Organizacion", "Nota Camerinos", "Nota Ganadores", "Justificacion Ganadores", "Comentarios"]);
+                allEncuestasCosplay.forEach(item => {
+                    rows.push([
+                        item.created_at || '',
+                        item.nota_organizacion || '',
+                        item.nota_camerinos || '',
+                        item.nota_ganadores || '',
+                        `"${(item.justificacion_ganadores || '').replace(/"/g, '""')}"`,
+                        `"${(item.comentarios || '').replace(/"/g, '""')}"`
+                    ]);
+                });
+            } else if (currentEncuestasSubtab === 'expositores') {
+                rows.push(["Fecha", "Stand", "Contacto", "Email", "Telefono", "Tipo Stand", "Nota Logistica", "Nota Publico", "Resultado Comercial", "Interes 2027", "Feedback"]);
+                allEncuestasExpositores.forEach(item => {
+                    rows.push([
+                        item.created_at || '',
+                        `"${(item.nombre_stand || '').replace(/"/g, '""')}"`,
+                        `"${(item.nombre_contacto || '').replace(/"/g, '""')}"`,
+                        item.email || '',
+                        item.telefono || '',
+                        item.tipo_stand || '',
+                        item.nota_logistica || '',
+                        item.nota_publico || '',
+                        item.resultado_comercial || '',
+                        item.interes_proxima_edicion || '',
+                        `"${(item.feedback_mejoras || '').replace(/"/g, '""')}"`
+                    ]);
+                });
+            } else if (currentEncuestasSubtab === 'publico') {
+                rows.push(["Fecha", "Nombre Completo", "RUT", "Email", "Telefono", "Medio Difusion", "Nota General", "NPS Recomendacion", "Zona Favorita", "Nota Escenario/Sonido", "Nota Ingreso", "Nota Comida", "Nota Limpieza", "Nota Tiendas", "Precio Calidad", "Aspecto Mejora", "Sugerencias", "Acepta Ley 21.716", "Estado Entrada"]);
+                allEncuestasPublico.forEach(item => {
+                    rows.push([
+                        item.created_at || '',
+                        `"${(item.nombre_completo || '').replace(/"/g, '""')}"`,
+                        item.rut || '',
+                        item.email || '',
+                        item.telefono || '',
+                        `"${(item.medio_difusion || '').replace(/"/g, '""')}"`,
+                        item.nota_general || '',
+                        item.nps_recomendacion || item.nota_general || '',
+                        item.zona_favorita || '',
+                        item.nota_instalaciones || '',
+                        item.nota_ingreso || '',
+                        item.nota_comida || '',
+                        item.nota_limpieza || '',
+                        item.nota_tiendas || '',
+                        `"${(item.precio_calidad || '').replace(/"/g, '""')}"`,
+                        `"${(item.aspecto_mejora || '').replace(/"/g, '""')}"`,
+                        `"${(item.sugerencias || '').replace(/"/g, '""')}"`,
+                        item.acepta_ley_datos ? "SI" : "NO",
+                        item.estado_entrada || 'Pendiente'
+                    ]);
+                });
+            }
+
+            const csvContent = "\uFEFF" + rows.map(e => e.join(";")).join("\n");
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
