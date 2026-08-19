@@ -214,23 +214,6 @@
                                 <label class="form-label text-white font-weight-bold" style="font-size: 13px;">Nombre del Contacto / Responsable *</label>
                                 <input type="text" id="nombre_contacto" name="nombre_contacto" class="form-control form-control-custom" placeholder="Ej: Juan Pérez" required>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">Correo Electrónico *</label>
-                                <input type="email" id="email" name="email" class="form-control form-control-custom" placeholder="contacto@mitienda.cl" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">Teléfono / WhatsApp *</label>
-                                <input type="tel" id="telefono" name="telefono" class="form-control form-control-custom" placeholder="+56 9 1234 5678" required>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label text-white font-weight-bold" style="font-size: 13px;">Categoría de Exposición *</label>
-                                <select id="tipo_stand" name="tipo_stand" class="form-select form-control-custom" required>
-                                    <option value="Stand Comercial / Tienda">Stand Comercial / Tienda</option>
-                                    <option value="Ilustrador / Artesano / Callejón del Arte">Ilustrador / Artesano / Callejón del Arte</option>
-                                    <option value="Gastronomía / Foodtrack">Gastronomía / Foodtrack</option>
-                                    <option value="Comunidad / Agrupación Geek">Comunidad / Agrupación Geek</option>
-                                </select>
-                            </div>
                         </div>
 
                         <hr style="border-color: var(--color-card-border);" class="my-4">
@@ -403,9 +386,9 @@
                 const payload = {
                     nombre_stand: document.getElementById('nombre_stand').value.trim(),
                     nombre_contacto: document.getElementById('nombre_contacto').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    telefono: document.getElementById('telefono').value.trim(),
-                    tipo_stand: document.getElementById('tipo_stand').value,
+                    email: "",
+                    telefono: "",
+                    tipo_stand: "No especificado",
                     nota_logistica: parseInt(selectedStars.logistica),
                     nota_publico: parseInt(selectedStars.publico),
                     resultado_comercial: document.getElementById('resultado_comercial').value,

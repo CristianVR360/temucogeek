@@ -874,6 +874,152 @@ async function sendPostulacionEmails(lead) {
     return { applicantSent: resApplicant.success, adminSent: resAdmin.success };
 }
 
+// -------------------------------------------------------------
+// PLANTILLAS DE AGRADECIMIENTO E INVITACIÓN A ENCUESTAS
+// -------------------------------------------------------------
+
+function generateExhibitorSurveyEmailHTML(lead) {
+    const leadName = escapeEmailHtml(lead.nombre_contacto || lead.nombre_expositor || lead.nombre_completo || 'Expositor');
+    const brandName = escapeEmailHtml(lead.nombre_marca || lead.nombre_stand || 'tu emprendimiento');
+    const surveyUrl = 'https://www.temugeek.cl/encuesta-expositores/index.html';
+
+    return `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>¡Gracias por ser parte de TemuGeek Expo 2026!</title>
+</head>
+<body style="margin:0; padding:0; background-color:#0f1015; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#d1d1d6;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#0f1015; padding:30px 10px;">
+        <tr>
+            <td align="center">
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#161822; border:1px solid #2a2d3d; border-radius:16px; overflow:hidden;">
+                    <tr>
+                        <td align="center" style="background-color:#141519; padding:30px; border-bottom:2px solid #00b0ff;">
+                            <h1 style="color:#ffffff; margin:0; font-size:26px; letter-spacing:1px;">TEMUGEEK EXPO 2026</h1>
+                            <div style="color:#00b0ff; font-size:13px; font-weight:bold; margin-top:5px; text-transform:uppercase; letter-spacing:2px;">
+                                🏪 Agradecimiento a Expositores & Tiendas
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:35px 30px;">
+                            <h2 style="color:#ffffff; font-size:22px; margin-top:0;">
+                                ¡Muchas gracias por una jornada inolvidable, ${leadName}! 🙌
+                            </h2>
+                            <p style="font-size:15px; line-height:1.7; color:#d1d1d6;">
+                                Queremos expresar nuestro más sincero agradecimiento a ti y a todo el equipo de <strong style="color:#00b0ff;">"${brandName}"</strong> por haber formado parte de <strong>TemuGeek Expo 2026</strong>. Fue una jornada increíble llena de energía, gran afluencia de público y pasión geek, nada de lo cual habría sido posible sin el compromiso, la calidad de sus productos y la confianza que depositaron en nuestra organización.
+                            </p>
+                            <p style="font-size:15px; line-height:1.7; color:#d1d1d6;">
+                                Para nosotros, la experiencia de nuestros expositores, ilustradores y tiendas es el pilar fundamental para seguir creciendo. Por eso, nos gustaría conocer tu opinión sincera sobre la logística, el flujo de público y la organización.
+                            </p>
+                            
+                            <!-- CALL TO ACTION BUTTON -->
+                            <div style="text-align:center; margin:35px 0;">
+                                <a href="${surveyUrl}" target="_blank" style="background:linear-gradient(135deg, #00b0ff 0%, #0077b6 100%); color:#ffffff; text-decoration:none; padding:16px 32px; border-radius:12px; font-weight:bold; font-size:16px; display:inline-block; box-shadow:0 8px 20px rgba(0, 176, 255, 0.4);">
+                                    📋 Responder Encuesta de Expositores (3 min)
+                                </a>
+                            </div>
+
+                            <p style="font-size:14px; line-height:1.6; color:#8e95a5; background:#141519; border:1px solid #2a2d3d; border-radius:10px; padding:16px;">
+                                💡 <strong>Tu feedback cuenta:</strong> Usaremos tus comentarios para definir mejoras en logística, difusión y espacios para la próxima edición <strong>TemuGeek 2027</strong>, donde contarás con prioridad de reserva.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="background-color:#141519; padding:20px; border-top:1px solid #2a2d3d; font-size:12px; color:#8e95a5;">
+                            Con enorme gratitud, <strong>Equipo de Producción TemuGeek Expo</strong><br>
+                            hola@temugeek.cl • Temuco, Chile
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+    `;
+}
+
+function generateCosplaySurveyEmailHTML(lead) {
+    const leadName = escapeEmailHtml(lead.nombre_completo || lead.nombre_contacto || 'Cosplayer');
+    const characterName = escapeEmailHtml(lead.personaje ? `con tu interpretación de "${lead.personaje}"` : 'con tu increíble cosplay');
+    const surveyUrl = 'https://www.temugeek.cl/encuesta-cosplay/index.html';
+
+    return `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>¡Gracias por llenar de magia y arte TemuGeek Expo 2026!</title>
+</head>
+<body style="margin:0; padding:0; background-color:#0f1015; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#d1d1d6;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#0f1015; padding:30px 10px;">
+        <tr>
+            <td align="center">
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#161822; border:1px solid #2a2d3d; border-radius:16px; overflow:hidden;">
+                    <tr>
+                        <td align="center" style="background-color:#141519; padding:30px; border-bottom:2px solid #e92652;">
+                            <h1 style="color:#ffffff; margin:0; font-size:26px; letter-spacing:1px;">TEMUGEEK EXPO 2026</h1>
+                            <div style="color:#e92652; font-size:13px; font-weight:bold; margin-top:5px; text-transform:uppercase; letter-spacing:2px;">
+                                🎭 Agradecimiento Especial Comunidad Cosplay
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:35px 30px;">
+                            <h2 style="color:#ffffff; font-size:22px; margin-top:0;">
+                                ¡Eres increíble, ${leadName}! ✨🎭
+                            </h2>
+                            <p style="font-size:15px; line-height:1.7; color:#d1d1d6;">
+                                Todo el equipo de producción de <strong>TemuGeek Expo 2026</strong> quiere hacerte llegar un enorme y sentido agradecimiento por llenar de arte, color, pasión y vida cada rincón de nuestro evento ${characterName}. Ver tu talento y dedicación en el escenario y en el recinto fue verdaderamente espectacular.
+                            </p>
+                            <p style="font-size:15px; line-height:1.7; color:#d1d1d6;">
+                                Valoramos inmensamente la confianza que depositaste en nuestra organización y en el concurso de Cosplay. Para nosotros, la comunidad cosplayer es el corazón latente de la convención, y nuestro compromiso es ofrecerte siempre camerinos, logística y juzgamiento de primer nivel.
+                            </p>
+                            
+                            <!-- CALL TO ACTION BUTTON -->
+                            <div style="text-align:center; margin:35px 0;">
+                                <a href="${surveyUrl}" target="_blank" style="background:linear-gradient(135deg, #e92652 0%, #c2183f 100%); color:#ffffff; text-decoration:none; padding:16px 32px; border-radius:12px; font-weight:bold; font-size:16px; display:inline-block; box-shadow:0 8px 20px rgba(233, 38, 82, 0.4);">
+                                    🎭 Responder Encuesta Cosplay (100% Anónima)
+                                </a>
+                            </div>
+
+                            <p style="font-size:14px; line-height:1.6; color:#8e95a5; background:#141519; border:1px solid #2a2d3d; border-radius:10px; padding:16px;">
+                                🔒 <strong>100% Anónima & Confidencial:</strong> Esta encuesta no solicitará tu nombre ni datos personales. Queremos tu evaluación franca sobre camerinos, tiempos y juzgamiento para perfeccionar nuestras bases en <strong>TemuGeek 2027</strong>.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="background-color:#141519; padding:20px; border-top:1px solid #2a2d3d; font-size:12px; color:#8e95a5;">
+                            Con profunda admiración y gratitud, <strong>Equipo de Producción TemuGeek Expo</strong><br>
+                            hola@temugeek.cl • Temuco, Chile
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+    `;
+}
+
+async function sendExhibitorSurveyEmail(lead) {
+    if (!lead || !lead.email) return { success: false, error: 'Sin email' };
+    const html = generateExhibitorSurveyEmailHTML(lead);
+    const subject = `¡Gracias por ser parte de TemuGeek Expo 2026! 🏬 Tu feedback nos ayuda a mejorar`;
+    return await sendResendEmail({ to: lead.email, subject, html });
+}
+
+async function sendCosplaySurveyEmail(lead) {
+    if (!lead || !lead.email) return { success: false, error: 'Sin email' };
+    const html = generateCosplaySurveyEmailHTML(lead);
+    const subject = `¡Gracias por llenar de magia TemuGeek Expo 2026! 🎭 Encuesta de Satisfacción Cosplay`;
+    return await sendResendEmail({ to: lead.email, subject, html });
+}
+
 // Exportar funciones globalmente en window
 window.generateApplicantEmailHTML = generateApplicantEmailHTML;
 window.generateAdminEmailHTML = generateAdminEmailHTML;
@@ -883,10 +1029,15 @@ window.generateCosplayApprovalEmailHTML = generateCosplayApprovalEmailHTML;
 window.generateRejectionEmailHTML = generateRejectionEmailHTML;
 window.generateCosplayStatusEmailHTML = generateCosplayStatusEmailHTML;
 window.generateApprovalEmailHTML = generateApprovalEmailHTML;
+window.generateExhibitorSurveyEmailHTML = generateExhibitorSurveyEmailHTML;
+window.generateCosplaySurveyEmailHTML = generateCosplaySurveyEmailHTML;
 window.sendApprovalEmail = sendApprovalEmail;
 window.sendRejectionEmail = sendRejectionEmail;
 window.sendPostulacionEmails = sendPostulacionEmails;
 window.sendCosplayPostulacionEmails = sendCosplayPostulacionEmails;
 window.sendCosplayStatusUpdateEmail = sendCosplayStatusUpdateEmail;
+window.sendExhibitorSurveyEmail = sendExhibitorSurveyEmail;
+window.sendCosplaySurveyEmail = sendCosplaySurveyEmail;
+
 
 

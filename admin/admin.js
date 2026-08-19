@@ -354,6 +354,9 @@
                             <button class="btn-whatsapp me-1" onclick="openWhatsApp('${escapeHtml(lead.telefono)}', '${escapeHtml(lead.nombre_completo || lead.nombre_expositor)}', '${escapeHtml(lead.personaje || lead.nombre_marca)}', ${isCosplay})" title="Contactar por WhatsApp">
                                 <i class="fab fa-whatsapp"></i> WSP
                             </button>
+                            <button class="btn btn-sm btn-outline-info me-1" onclick="sendIndividualSurveyEmail('${lead.id}')" title="Enviar Correo Agradecimiento & Encuesta">
+                                <i class="far fa-poll-h me-1"></i> Encuesta
+                            </button>
                             <button class="btn btn-sm btn-outline-warning me-1" onclick="sendQuickApprovalEmail('${lead.id}')" title="Reenviar Correo de Aprobación Oficial">
                                 <i class="far fa-paper-plane"></i>
                             </button>
@@ -2647,4 +2650,204 @@ window.exportTorneosPDF = exportTorneosPDF;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+
+        // ==========================================
+        // DISPARO MASIVO DE CORREOS DE ENCUESTA LOGIC
+        // ==========================================
+
+        function openSendSurveyEmailsModal(group) {
+            const selectEl = document.getElementById("survey-email-target-group");
+            if (selectEl) {
+                selectEl.value = group || 'expositores';
+            }
+            document.getElementById("mode-all").checked = true;
+            toggleSurveyEmailCustomInput();
+            updateSurveyEmailPreview();
+
+            const modal = new bootstrap.Modal(document.getElementById("surveyEmailsModal"));
+            modal.show();
+        }
+
+        function toggleSurveyEmailCustomInput() {
+            const isTest = document.getElementById("mode-test")?.checked;
+            const container = document.getElementById("survey-test-email-container");
+            if (container) {
+                if (isTest) {
+                    container.classList.remove("d-none");
+                } else {
+                    container.classList.add("d-none");
+                }
+            }
+        }
+
+        function updateSurveyEmailPreview() {
+            const group = document.getElementById("survey-email-target-group")?.value || 'expositores';
+            const previewBox = document.getElementById("survey-email-preview-box");
+            const badgeCount = document.getElementById("survey-target-count-badge");
+
+            let targetList = [];
+            let sampleLead = {};
+
+            if (group === 'expositores') {
+                targetList = allLeads.filter(l => l.email && (l.tipo_postulacion !== 'cosplay' && !l.personaje));
+                sampleLead = targetList[0] || { nombre_contacto: 'Camila Morales', nombre_expositor: 'Camila Morales', nombre_marca: 'Sakura Store' };
+                if (previewBox && window.generateExhibitorSurveyEmailHTML) {
+                    previewBox.innerHTML = window.generateExhibitorSurveyEmailHTML(sampleLead);
+                }
+            } else {
+                targetList = allLeads.filter(l => l.email && (l.tipo_postulacion === 'cosplay' || l.personaje));
+                sampleLead = targetList[0] || { nombre_completo: 'Carlos Silva', personaje: 'Nezuko Kamado' };
+                if (previewBox && window.generateCosplaySurveyEmailHTML) {
+                    previewBox.innerHTML = window.generateCosplaySurveyEmailHTML(sampleLead);
+                }
+            }
+
+            if (badgeCount) {
+                badgeCount.textContent = `${targetList.length} contactos registrados`;
+            }
+        }
+
+        async function dispatchSurveyEmails() {
+            const group = document.getElementById("survey-email-target-group")?.value || 'expositores';
+            const isTest = document.getElementById("mode-test")?.checked;
+            const testEmail = document.getElementById("survey-test-email")?.value.trim();
+            const logAlert = document.getElementById("survey-email-log-alert");
+            const btnSubmit = document.getElementById("btn-dispatch-survey-emails");
+
+            if (isTest && !testEmail) {
+                alert("Por favor ingresa un correo electrónico de prueba válido.");
+                return;
+            }
+
+            const origHTML = btnSubmit.innerHTML;
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = `<i class="far fa-spinner-third fa-spin me-2"></i> Enviando...`;
+            logAlert?.classList.remove("d-none");
+
+            let targetList = [];
+            if (isTest) {
+                targetList = [{ email: testEmail, nombre_contacto: 'Prueba', nombre_completo: 'Prueba', nombre_marca: 'Test Brand' }];
+            } else {
+                if (group === 'expositores') {
+                    targetList = allLeads.filter(l => l.email && (l.tipo_postulacion !== 'cosplay' && !l.personaje));
+                } else {
+                    targetList = allLeads.filter(l => l.email && (l.tipo_postulacion === 'cosplay' || l.personaje));
+                }
+            }
+
+            if (targetList.length === 0) {
+                alert("No se encontraron destinatarios registrados para enviar.");
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = origHTML;
+                return;
+            }
+
+            let sentCount = 0;
+            let errorCount = 0;
+
+            logAlert.innerHTML = `<i class="far fa-sync fa-spin me-1"></i> Iniciando envío de ${targetList.length} correo(s)...`;
+
+            for (let i = 0; i < targetList.length; i++) {
+                const item = targetList[i];
+                logAlert.innerHTML = `<i class="far fa-spinner-third fa-spin me-1"></i> Enviando (${i + 1}/${targetList.length}): <strong>${escapeHtml(item.email)}</strong>...`;
+
+                let res = { success: false };
+                try {
+                    if (group === 'expositores') {
+                        if (window.sendExhibitorSurveyEmail) {
+                            res = await window.sendExhibitorSurveyEmail(item);
+                        }
+                    } else {
+                        if (window.sendCosplaySurveyEmail) {
+                            res = await window.sendCosplaySurveyEmail(item);
+                        }
+                    }
+                } catch (e) {
+                    console.error("Error al enviar a:", item.email, e);
+                }
+
+                if (res && res.success) {
+                    sentCount++;
+                } else {
+                    errorCount++;
+                }
+            }
+
+            logAlert.className = "alert alert-success border-success mt-3 p-2 font-size-13";
+            logAlert.innerHTML = `<i class="far fa-check-circle text-success me-1"></i> <strong>¡Proceso finalizado!</strong> ${sentCount} correo(s) enviado(s) con éxito. ${errorCount > 0 ? `(${errorCount} fallidos)` : ''}`;
+
+            showCopyToast(`¡Proceso finalizado! ${sentCount} correos de encuesta despachados.`, group.toUpperCase());
+
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = origHTML;
+        }
+
+        // ==========================================
+        // ENVÍO INDIVIDUAL DE ENCUESTA POR LEAD
+        // ==========================================
+
+        async function sendIndividualSurveyEmail(leadId) {
+            const lead = allLeads.find(l => String(l.id) === String(leadId));
+            if (!lead) {
+                alert("No se encontró el registro del participante seleccionado.");
+                return;
+            }
+
+            const isCosplay = String(lead.tipo_postulacion || '').toLowerCase() === 'cosplay' || Boolean(lead.personaje);
+            const leadName = lead.nombre_contacto || lead.nombre_expositor || lead.nombre_completo || 'Participante';
+            const defaultEmail = lead.email || '';
+
+            const userChoice = prompt(
+                `📧 ENVIAR CORREO DE ENCUESTA Y AGRADECIMIENTO\n\n` +
+                `Participante: ${leadName}\n` +
+                `Categoría: ${isCosplay ? '🎭 Cosplay' : '🏬 Expositor'}\n\n` +
+                `💡 CONSEJO DE PRUEBA: Para ver cómo llega a tu bandeja antes de enviarlo al participante, puedes cambiar el correo de abajo por tu correo personal:\n\n` +
+                `Correo destinatario:`,
+                defaultEmail
+            );
+
+            if (userChoice === null) return; // El usuario canceló la acción
+
+            const targetEmail = userChoice.trim();
+            if (!targetEmail) {
+                alert("Por favor ingresa un correo electrónico válido.");
+                return;
+            }
+
+            const isTest = targetEmail.toLowerCase() !== defaultEmail.toLowerCase();
+            const tempLead = { ...lead, email: targetEmail };
+
+            showCopyToast(`Enviando correo a ${targetEmail}...`, leadName);
+
+            try {
+                let res = { success: false };
+                if (isCosplay) {
+                    if (window.sendCosplaySurveyEmail) {
+                        res = await window.sendCosplaySurveyEmail(tempLead);
+                    }
+                } else {
+                    if (window.sendExhibitorSurveyEmail) {
+                        res = await window.sendExhibitorSurveyEmail(tempLead);
+                    }
+                }
+
+                if (res && res.success) {
+                    alert(`✅ ¡Correo entregado con éxito a ${targetEmail}!\n\n${isTest ? '🧪 (Enviado a tu correo personal de prueba)' : '📩 (Enviado al participante real)'}`);
+                    showCopyToast(`¡Correo despachado a ${targetEmail}!`, 'Éxito');
+                } else {
+                    alert(`❌ No se pudo enviar el correo: ${JSON.stringify(res.error || 'Error de conexión o servidor')}`);
+                }
+            } catch (err) {
+                console.error("Error enviando correo individual de encuesta:", err);
+                alert("Ocurrió un error al despachar el correo: " + err.message);
+            }
+        }
+
+        async function sendCurrentLeadSurveyEmail() {
+            if (selectedLeadId) {
+                sendIndividualSurveyEmail(selectedLeadId);
+            } else {
+                alert("No hay ningún participante seleccionado.");
+            }
         }
