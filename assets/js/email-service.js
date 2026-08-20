@@ -1020,6 +1020,141 @@ async function sendCosplaySurveyEmail(lead) {
     return await sendResendEmail({ to: lead.email, subject, html });
 }
 
+// -------------------------------------------------------------
+// 4. PLANTILLA DE CORREO DE FELICITACIONES AL GANADOR DE COSPLAY
+// -------------------------------------------------------------
+
+function generateCosplayWinnerEmailHTML(winner) {
+    const nombre = escapeEmailHtml(winner.nombre || winner.nombre_completo || 'Yenifer Liset Valdivia Mora');
+    const personaje = escapeEmailHtml(winner.personaje || 'Alice');
+    const lugar = escapeEmailHtml(winner.lugar || winner.categoria || '3er Lugar');
+    const email = escapeEmailHtml(winner.email || 'y.chan2515@gmail.com');
+    const telefono = escapeEmailHtml(winner.telefono || '+56 9 3906 7878');
+
+    let badgeIcon = '🥉';
+    let borderColor = '#cd7f32';
+    if (lugar.toLowerCase().includes('1') || lugar.toLowerCase().includes('primer')) {
+        badgeIcon = '🏆';
+        borderColor = '#ffe62e';
+    } else if (lugar.toLowerCase().includes('2') || lugar.toLowerCase().includes('segundo')) {
+        badgeIcon = '🥈';
+        borderColor = '#cbd5e1';
+    }
+
+    return `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${badgeIcon} ¡${lugar} Concurso Cosplay! — TemuGeek</title>
+</head>
+<body style="margin:0; padding:0; background-color:#0b0c10; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#e2e8f0; -webkit-font-smoothing:antialiased;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#0b0c10; padding:30px 10px; width:100%;">
+        <tr>
+            <td align="center">
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="max-width:600px; width:100%; background-color:#121522; border:2px solid ${borderColor}; border-radius:20px; overflow:hidden; box-shadow:0 0 35px rgba(205,127,50,0.25);">
+                    <tr>
+                        <td align="center" style="background:linear-gradient(180deg, #1c2033 0%, #121522 100%); padding:32px 25px 22px 25px; border-bottom:3px solid #e92652; text-align:center;">
+                            <div style="background-color:#e92652; color:#ffffff; font-size:11px; font-weight:800; padding:5px 16px; border-radius:20px; display:inline-block; text-transform:uppercase; letter-spacing:2px; margin-bottom:10px;">
+                                ${badgeIcon} CONCURSO COSPLAY 2026
+                            </div>
+                            <h1 style="color:#ffffff; margin:6px 0 0 0; font-size:28px; font-weight:900; letter-spacing:2px; text-transform:uppercase;">
+                                TEMUGEEK
+                            </h1>
+                            <div style="color:#ffe62e; font-size:13px; font-weight:bold; margin-top:5px; text-transform:uppercase; letter-spacing:2px;">
+                                Recinto SOFO • Temuco, Chile
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="background:radial-gradient(circle at center, rgba(205,127,50,0.18) 0%, rgba(18,21,34,0) 70%); padding:30px 25px 15px 25px; text-align:center;">
+                            <div style="font-size:56px; line-height:1; margin-bottom:12px;">
+                                ${badgeIcon}
+                            </div>
+                            <h2 style="color:${borderColor}; margin:0 0 8px 0; font-size:24px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">
+                                ¡FELICITACIONES POR EL ${lugar.toUpperCase()}!
+                            </h2>
+                            <p style="color:#cbd5e1; font-size:14.5px; margin:0; line-height:1.5;">
+                                Reconocimiento oficial en el Concurso de Cosplay TemuGeek 2026.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:15px 30px 30px 30px;">
+                            <p style="font-size:16px; line-height:1.6; color:#ffffff; margin-top:0;">
+                                ¡Hola, <strong>${nombre}</strong>! 👋✨
+                            </p>
+                            <p style="font-size:14.5px; line-height:1.65; color:#cbd5e1;">
+                                De parte de todo el equipo organizador y jurado evaluador de <strong>TemuGeek</strong>, queremos felicitarte sinceramente por haber obtenido el <strong style="color:${borderColor};">${lugar}</strong> en nuestro Concurso Oficial de Cosplay con tu increíble interpretación de <strong style="color:#e92652;">"${personaje}"</strong>.
+                            </p>
+                            <div style="background-color:#161a2b; border:1px solid ${borderColor}; border-radius:14px; padding:20px; margin:22px 0;">
+                                <div style="text-align:center; border-bottom:1px solid rgba(205,127,50,0.25); padding-bottom:10px; margin-bottom:14px;">
+                                    <span style="color:${borderColor}; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1.5px;">
+                                        📋 FICHA OFICIAL DEL GANADOR
+                                    </span>
+                                </div>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="6" style="font-size:14px; color:#cbd5e1;">
+                                    <tr>
+                                        <td width="35%" style="color:#94a3b8; font-weight:600;">${badgeIcon} Lugar:</td>
+                                        <td style="color:${borderColor}; font-weight:bold; font-size:16px;">${lugar}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8; font-weight:600;">👤 Cosplayer:</td>
+                                        <td style="color:#ffffff; font-weight:bold;">${nombre}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8; font-weight:600;">🎭 Personaje:</td>
+                                        <td style="color:#e92652; font-weight:bold; font-size:15px;">${personaje}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8; font-weight:600;">✉️ Correo:</td>
+                                        <td style="color:#ffffff;">${email}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:#94a3b8; font-weight:600;">📱 Teléfono:</td>
+                                        <td style="color:#00d264; font-weight:bold;">${telefono}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="background-color:#1a1e2e; border:1px solid #2a2d3d; border-radius:12px; padding:18px; margin-bottom:24px;">
+                                <h4 style="color:#ffe62e; font-size:15px; margin:0 0 10px 0; text-transform:uppercase; letter-spacing:1px;">
+                                    📌 Entrega y Coordinación del Premio
+                                </h4>
+                                <p style="font-size:14px; color:#cbd5e1; line-height:1.6; margin:0;">
+                                    Para la entrega del premio monetario o certificado de premiación, por favor responde directamente a este correo confirmando tus datos de cuenta bancaria (RUT, Banco y Número de Cuenta) o contáctanos por WhatsApp al <strong style="color:#00d264;">+56 9 8430 5751</strong>.
+                                </p>
+                            </div>
+                            <div style="text-align:center; margin:25px 0 10px 0;">
+                                <a href="https://wa.me/56984305751?text=Hola,%20soy%20${encodeURIComponent(nombre)}%20(Ganador%20Cosplay%20${encodeURIComponent(personaje)})" target="_blank" style="background:linear-gradient(135deg, #00d264 0%, #00a850 100%); color:#ffffff; font-weight:bold; text-decoration:none; padding:14px 28px; border-radius:28px; display:inline-block; font-size:15px; box-shadow:0 4px 15px rgba(0,210,100,0.3);">
+                                    💬 Contactar a Producción por WhatsApp
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="background-color:#161926; padding:20px 25px; border-top:1px solid #2a2d3d; font-size:12px; color:#8e95a5; text-align:center;">
+                            <strong style="color:#ffffff;">TemuGeek</strong> • Recinto SOFO, Temuco<br>
+                            Consultas: <a href="mailto:hola@temugeek.cl" style="color:#e92652; text-decoration:none;">hola@temugeek.cl</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+    `;
+}
+
+async function sendCosplayWinnerEmail(winner) {
+    if (!winner || !winner.email) return { success: false, error: 'Falta el correo electrónico del ganador' };
+    const html = generateCosplayWinnerEmailHTML(winner);
+    const lugar = winner.lugar || winner.categoria || '3er Lugar';
+    const subject = `🥉 ¡FELICITACIONES! ${lugar} Concurso Cosplay TemuGeek — ${winner.personaje || 'Alice'}`;
+    return await sendResendEmail({ to: winner.email, subject, html });
+}
+
 // Exportar funciones globalmente en window
 window.generateApplicantEmailHTML = generateApplicantEmailHTML;
 window.generateAdminEmailHTML = generateAdminEmailHTML;
@@ -1031,6 +1166,7 @@ window.generateCosplayStatusEmailHTML = generateCosplayStatusEmailHTML;
 window.generateApprovalEmailHTML = generateApprovalEmailHTML;
 window.generateExhibitorSurveyEmailHTML = generateExhibitorSurveyEmailHTML;
 window.generateCosplaySurveyEmailHTML = generateCosplaySurveyEmailHTML;
+window.generateCosplayWinnerEmailHTML = generateCosplayWinnerEmailHTML;
 window.sendApprovalEmail = sendApprovalEmail;
 window.sendRejectionEmail = sendRejectionEmail;
 window.sendPostulacionEmails = sendPostulacionEmails;
@@ -1038,6 +1174,8 @@ window.sendCosplayPostulacionEmails = sendCosplayPostulacionEmails;
 window.sendCosplayStatusUpdateEmail = sendCosplayStatusUpdateEmail;
 window.sendExhibitorSurveyEmail = sendExhibitorSurveyEmail;
 window.sendCosplaySurveyEmail = sendCosplaySurveyEmail;
+window.sendCosplayWinnerEmail = sendCosplayWinnerEmail;
+
 
 
 
